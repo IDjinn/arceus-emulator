@@ -11,6 +11,8 @@
     <modules>
         <module>emulator</module>
         <module>api</module>
+        <module>networking</module>
+        <module>database</module>
     </modules>
 
     <properties>

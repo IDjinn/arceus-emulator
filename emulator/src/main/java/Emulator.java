@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 
 public class Emulator extends AbstractModule {
-    @Inject private Logger logger;
+     private final Logger logger = LogManager.getLogger();
     @Inject private IConfigurationManager configurationManager;
 
     public static void main(String[] args){
@@ -19,13 +19,11 @@ public class Emulator extends AbstractModule {
 
     public void run() {
         logger.error("Orion emulator -> init");
-        configurationManager.Nothing();
         logger.info("Orion emulator -> done!");
     }
 
     @Override
     protected void configure() {
-        bind(Logger.class).toProvider(LogManager::getLogger);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
     }
 }
