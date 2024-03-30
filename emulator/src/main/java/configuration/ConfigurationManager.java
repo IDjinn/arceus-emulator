@@ -1,22 +1,24 @@
 package configuration;
 
-import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+@Singleton
 public class ConfigurationManager  implements IConfigurationManager{
     private final Logger logger = LogManager.getLogger();
     private Properties properties;
-    public void configureFromFile(@NotNull String fileName){
+    public void configureFromFile(@NotNull String fileName) {
         properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(fileName)) {
-            properties.load(fis);
+        var inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+        try {
+            if (inputStream != null)
+                properties.load(inputStream);
         } catch (FileNotFoundException ex) {
             logger.error("Configuration file with name {0} was not found", fileName);
         } catch (IOException ex) {

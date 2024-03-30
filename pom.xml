@@ -12,7 +12,7 @@
         <module>emulator</module>
         <module>api</module>
         <module>networking</module>
-        <module>database</module>
+        <module>storage</module>
     </modules>
 
     <properties>
