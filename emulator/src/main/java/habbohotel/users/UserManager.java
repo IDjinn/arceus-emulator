@@ -51,6 +51,7 @@ public class UserManager implements IUserManager {
         for (var message : messages) {
             ctx.channel().write(message.getBuffer());
         }
+        ctx.channel().flush();
         return true;
     }
 }

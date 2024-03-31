@@ -83,7 +83,8 @@ public class PacketManager implements IPacketManager {
         try {
             var incomingEvent = guestEvents.get(packet.getHeader());
             if (incomingEvent == null) {
-                clientManager.disconnectGuest(ctx);
+                if (incomingEvents.containsKey(packet.getHeader()))
+                    clientManager.disconnectGuest(ctx);
                 return;
             }
 

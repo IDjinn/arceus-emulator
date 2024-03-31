@@ -4,35 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="feat: incoming auto inject">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingHeaders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/guest/SecureLoginOkComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/CfhTopicsMessageComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/MysteryBoxKeysComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/buildersclub/BuildersClubExpiredComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/calendar/AdventCalendarDataComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/habboclub/UserClubComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/hotel/AvailabilityStatusMessageComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/inventory/InventoryAchievementsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/inventory/InventoryRefreshComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/EnableNotificationsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/IsFirstLoginOfDayComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/NewUserIdentityComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserAchievementScoreComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserEffectsListComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserPermissionsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/rooms/FavoriteRoomsCountComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/rooms/UserHomeRoomComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/wardobe/UserClothesComposer.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="wip sso handshake">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IUserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IUserManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/MachineIdEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/MachineIdEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/ReleaseVersionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/ReleaseVersionEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/handlers/IdleTimeoutHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +130,7 @@
       <workItem from="1711818285823" duration="51000" />
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
-      <workItem from="1711885902563" duration="9091000" />
+      <workItem from="1711885902563" duration="11036000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -204,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711901856882</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="wip sso handshake">
+      <option name="closed" value="true" />
+      <created>1711916268763</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711916268763</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -229,7 +213,8 @@
     <MESSAGE value="feat: networking" />
     <MESSAGE value="fix network channel reading" />
     <MESSAGE value="feat: incoming auto inject" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: incoming auto inject" />
+    <MESSAGE value="wip sso handshake" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip sso handshake" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -258,9 +243,9 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="45" />
+          <url>file://$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="67" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
