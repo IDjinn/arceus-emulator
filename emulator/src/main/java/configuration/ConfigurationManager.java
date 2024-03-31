@@ -20,9 +20,9 @@ public class ConfigurationManager  implements IConfigurationManager{
             if (inputStream != null)
                 properties.load(inputStream);
         } catch (FileNotFoundException ex) {
-            logger.error("Configuration file with name {0} was not found", fileName);
+            logger.error("Configuration file with name {} was not found", fileName);
         } catch (IOException ex) {
-            logger.error("Configuration file exception: {0}", ex.getMessage(), ex);
+            logger.error("Configuration file exception: {}", ex.getMessage(), ex);
         }
     }
     @Override
