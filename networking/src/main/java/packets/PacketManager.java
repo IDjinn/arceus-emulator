@@ -8,6 +8,7 @@ import networking.client.INitroClientManager;
 import networking.packets.IPacketManager;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
+import networking.packets.incoming.guest.SecureLoginEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,16 +23,35 @@ public class PacketManager implements IPacketManager {
     private final Executor packetManagerExecutor = Executors.newVirtualThreadPerTaskExecutor();
     @Inject private INitroClientManager clientManager;
 
-    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<Integer, IncomingEvent>(){
-        { }
-    };
-    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<Integer, IncomingEvent>(){
-        { }
-    };
+    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<Integer, IncomingEvent>();
+    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<Integer, IncomingEvent>();
+
+    public PacketManager() {
+        registerGuestEvents();
+        registerIncomingEvents();
+    }
+
+    private void registerIncomingEvents() {
+
+    }
+
+    private void registerGuestEvents() {
+        this.registerGuestEvent(new SecureLoginEvent());
+    }
+
+    private void registerGuestEvent(IncomingEvent event) {
+        guestEvents.put(event.getHeaderId(), event);
+    }
     
     @Override
     public String getIncomingEventName(int headerId) {
-        return incomingEvents.get(headerId).getClass().getName();
+        if (incomingEvents.containsKey(headerId))
+            return incomingEvents.get(headerId).getClass().getName();
+
+        if (guestEvents.containsKey(headerId))
+            return guestEvents.get(headerId).getClass().getName();
+
+        return "Unknown";
     }
 
     @Override

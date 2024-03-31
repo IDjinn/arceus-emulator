@@ -1,6 +1,7 @@
 package decoders;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -14,8 +15,10 @@ import util.GameServerAttributes;
 
 import java.io.IOException;
 
+
+@Singleton
 @ChannelHandler.Sharable
-public class GameMessageHandler extends ChannelInboundHandlerAdapter {
+public class PacketParser extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LogManager.getLogger();
     @Inject private INitroClientManager nitroClientManager;
     @Inject private IPacketManager packetManager;
@@ -29,7 +32,7 @@ public class GameMessageHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) {
-        ctx.channel().close();
+        nitroClientManager.disconnectGuest(ctx);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class GameMessageHandler extends ChannelInboundHandlerAdapter {
         var message = (IncomingPacket) msg;
 
         try {
-            var client = (INitroClient) ctx.attr(GameServerAttributes.CLIENT);
+            var client = (INitroClient) ctx.attr(GameServerAttributes.CLIENT).get();
             if (client == null) {
                 packetManager.ParseForGuest(message, ctx);
                 return;
@@ -51,7 +54,7 @@ public class GameMessageHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        ctx.channel().close();
+        nitroClientManager.disconnectGuest(ctx);
     }
 
     @Override

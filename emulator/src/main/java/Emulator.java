@@ -9,6 +9,8 @@ import core.IEmulator;
 import core.IHotel;
 import database.Database;
 import database.DatabasePool;
+import decoders.IncomingPacketLogger;
+import decoders.PacketParser;
 import habbohotel.Hotel;
 import networking.INetworkingManager;
 import networking.client.INitroClientManager;
@@ -44,6 +46,8 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(INetworkingManager.class).to(NetworkingManager.class);
         bind(IPacketManager.class).to(PacketManager.class);
         bind(INitroClientManager.class).to(NitroClientManager.class);
+        bind(IncomingPacketLogger.class);
+        bind(PacketParser.class);
         bind(IHotel.class).to(Hotel.class);
     }
 

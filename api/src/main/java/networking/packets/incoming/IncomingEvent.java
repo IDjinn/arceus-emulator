@@ -5,6 +5,8 @@ import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 
 public abstract class IncomingEvent {
+    public abstract int getHeaderId();
+    
     
     public void Parse(IncomingPacket packet, INitroClient client){
         

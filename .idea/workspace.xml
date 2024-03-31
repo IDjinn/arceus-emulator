@@ -4,45 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix logging arguments in config manager">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/IHotel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/IHotelService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/furniture/IFurniture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/furniture/IFurnitureManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/Hotel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/INetworkingManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IncomingPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Initializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/furniture/FurnitureManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/SSLCertificateLoader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/codec/WebSocketCodec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameByteDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameByteFrameDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameMessageHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameMessageRateLimit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GamePolicyDecoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/IncomingPacketLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/util/GameServerAttributes.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="feat: networking">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/PingComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/handlers/IdleTimeoutHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/configuration/IConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/configuration/IConfigurationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/core/IEmulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/core/IEmulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/configuration/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/configuration/ConfigurationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/networking/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/decoders/GameMessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/decoders/IncomingPacketLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/IncomingPacketLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +135,7 @@
       <workItem from="1711817506377" duration="766000" />
       <workItem from="1711818285823" duration="51000" />
       <workItem from="1711818347775" duration="2251000" />
-      <workItem from="1711820667145" duration="19704000" />
+      <workItem from="1711820667145" duration="22817000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -185,7 +161,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711843238875</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feat: networking">
+      <option name="closed" value="true" />
+      <created>1711852934469</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711852934469</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +191,46 @@
     <MESSAGE value="setup projects" />
     <MESSAGE value="feat: configs and db" />
     <MESSAGE value="fix logging arguments in config manager" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix logging arguments in config manager" />
+    <MESSAGE value="feat: networking" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: networking" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

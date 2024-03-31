@@ -1,6 +1,7 @@
 package networking.client;
 
-import java.util.concurrent.Executor;
+import networking.packets.OutgoingPacket;
 
 public interface INitroClient {
+    void sendMessage(OutgoingPacket packet);
 }

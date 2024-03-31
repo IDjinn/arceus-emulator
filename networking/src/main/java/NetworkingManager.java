@@ -19,12 +19,21 @@ public class NetworkingManager implements INetworkingManager {
     private static Logger logger = LogManager.getLogger();
     @Inject private IEmulator emulator;
     @Inject private IConfigurationManager configurationManager;
+    @Inject
+    private NetworkChannelInitializer networkChannel;
     private final ServerBootstrap serverBootstrap;
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
     private final String host;
     private final int port;
-    @Inject public NetworkingManager(IConfigurationManager configurationManager) {
+
+    @Inject
+    public NetworkingManager(IEmulator emulator, IConfigurationManager configurationManager, NetworkChannelInitializer networkChannel) {
+        assert configurationManager != null;
+        assert networkChannel != null;
+
+        this.emulator = emulator;
+        this.networkChannel = networkChannel;
         this.configurationManager = configurationManager;
 
         this.bossGroup = new NioEventLoopGroup(
@@ -46,7 +55,7 @@ public class NetworkingManager implements INetworkingManager {
         this.serverBootstrap.childOption(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(4096));
         this.serverBootstrap.childOption(ChannelOption.ALLOCATOR, new UnpooledByteBufAllocator(false));
 
-        this.serverBootstrap.childHandler(new NetworkChannelInitializer());
+        this.serverBootstrap.childHandler(networkChannel);
         ChannelFuture bindResult =this.serverBootstrap.bind(this.host, this.port);
         try {
             bindResult.sync();

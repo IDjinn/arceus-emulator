@@ -1,6 +1,8 @@
 package decoders;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import networking.packets.IPacketManager;
@@ -10,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+@Singleton
+@ChannelHandler.Sharable
 public class IncomingPacketLogger extends MessageToMessageDecoder<IncomingPacket> {
     @Inject private IPacketManager packetManager;
     private static final Logger logger = LogManager.getLogger();

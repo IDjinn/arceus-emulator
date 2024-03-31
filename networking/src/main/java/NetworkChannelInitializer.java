@@ -21,6 +21,8 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     private final WebSocketServerProtocolConfig config;
     
     @Inject private IncomingPacketLogger incomingPacketLogger;
+    @Inject
+    private PacketParser packetParser;
 
     public NetworkChannelInitializer() {
         context = SSLCertificateLoader.getContext();
@@ -34,6 +36,8 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
     @Override
     public void initChannel(SocketChannel ch) {
+        assert incomingPacketLogger != null;
+        assert packetParser != null;
         ch.pipeline().addLast("logger", new LoggingHandler());
 
         if (isSSL) {
@@ -41,7 +45,6 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
         }
         ch.pipeline().addLast("httpCodec", new HttpServerCodec());
         ch.pipeline().addLast("objectAggregator", new HttpObjectAggregator(MAX_FRAME_SIZE));
-//        ch.pipeline().addLast("customHttpHandler", new CustomHTTPHandler());
         ch.pipeline().addLast("protocolHandler", new WebSocketServerProtocolHandler(config));
         ch.pipeline().addLast("websocketCodec", new WebSocketCodec());
 
@@ -51,9 +54,9 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
         ch.pipeline().addLast(incomingPacketLogger);
 
-//        ch.pipeline().addLast("idleEventHandler", new IdleTimeoutHandler(30, 60));
-        ch.pipeline().addLast(new GameMessageRateLimit());
-        ch.pipeline().addLast(new GameMessageHandler());
+//        ch.pipeline().addLast(new IdleTimeoutHandler(30, 60));
+//        ch.pipeline().addLast(new GameMessageRateLimit());
+        ch.pipeline().addLast(packetParser);
 
         ch.pipeline().addLast("messageEncoder", new GameServerMessageEncoder());
         ch.pipeline().addLast(new GameServerMessageLogger());
