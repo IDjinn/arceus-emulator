@@ -7,6 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClientManager;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
+import networking.packets.incoming.IncomingHeaders;
 import networking.util.NoAuth;
 
 @Singleton
@@ -19,7 +20,7 @@ public class SecureLoginEvent extends IncomingEvent {
    
     @Override
     public int getHeaderId() {
-        return 2419;
+        return IncomingHeaders.SecureLoginEvent;
     }
 
     @Override
@@ -27,7 +28,7 @@ public class SecureLoginEvent extends IncomingEvent {
         var sso = packet.readString();
         var integer = packet.readInt();
 
-        if (!userManager.tryLoginWithSSO(sso)) {
+        if (!userManager.tryLoginWithSSO(ctx, sso)) {
             clientManager.disconnectGuest(ctx);
             return;
         }

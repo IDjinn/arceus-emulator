@@ -1,7 +1,8 @@
 package habbohotel.users;
 
+import io.netty.channel.ChannelHandlerContext;
 import org.jetbrains.annotations.NotNull;
 
 public interface IUserManager {
-    public boolean tryLoginWithSSO(@NotNull String sso);
+    public boolean tryLoginWithSSO(@NotNull ChannelHandlerContext ctx, @NotNull String sso);
 }

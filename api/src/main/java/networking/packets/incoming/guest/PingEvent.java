@@ -4,6 +4,7 @@ import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
+import networking.packets.incoming.IncomingHeaders;
 import networking.util.NoAuth;
 
 @Singleton
@@ -11,7 +12,7 @@ import networking.util.NoAuth;
 public class PingEvent extends IncomingEvent {
     @Override
     public int getHeaderId() {
-        return 2596;
+        return IncomingHeaders.PingEvent;
     }
 
     @Override
