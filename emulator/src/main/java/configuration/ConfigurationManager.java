@@ -12,18 +12,20 @@ import java.util.Properties;
 @Singleton
 public class ConfigurationManager  implements IConfigurationManager{
     private final Logger logger = LogManager.getLogger();
-    private Properties properties;
-    public void configureFromFile(@NotNull String fileName) {
+    private final Properties properties;
+    
+    public ConfigurationManager() {
         properties = new Properties();
         var inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
         try {
             if (inputStream != null)
                 properties.load(inputStream);
         } catch (FileNotFoundException ex) {
-            logger.error("Configuration file with name {} was not found", fileName);
+            logger.error("Configuration file config.properties was not found");
         } catch (IOException ex) {
             logger.error("Configuration file exception: {}", ex.getMessage(), ex);
         }
+        
     }
     @Override
     public boolean getBool(@NotNull String key) {

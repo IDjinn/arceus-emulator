@@ -4,8 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="feat: configs and db">
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix logging arguments in config manager">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/IHotel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/IHotelService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/furniture/IFurniture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/core/furniture/IFurnitureManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/Hotel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/INetworkingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IncomingPacket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Initializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/furniture/FurnitureManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/SSLCertificateLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/codec/WebSocketCodec.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameByteDecoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameByteFrameDecoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameMessageHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GameMessageRateLimit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/GamePolicyDecoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/decoders/IncomingPacketLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/util/GameServerAttributes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/configuration/IConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/configuration/IConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/core/IEmulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/core/IEmulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/configuration/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/configuration/ConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/networking/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +99,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/dev/java/orion-emulator/networking/src/main/java/encoders",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,6 +112,13 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java\encoders" />
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java\decoders" />
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn install" />
@@ -114,7 +159,7 @@
       <workItem from="1711817506377" duration="766000" />
       <workItem from="1711818285823" duration="51000" />
       <workItem from="1711818347775" duration="2251000" />
-      <workItem from="1711820667145" duration="10280000" />
+      <workItem from="1711820667145" duration="19704000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -132,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711843030782</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix logging arguments in config manager">
+      <option name="closed" value="true" />
+      <created>1711843238875</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1711843238875</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,17 +206,7 @@
     <option name="RELOAD_CONTEXT" value="false" />
     <MESSAGE value="setup projects" />
     <MESSAGE value="feat: configs and db" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: configs and db" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/storage/src/main/java/database/DatabasePool.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="fix logging arguments in config manager" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix logging arguments in config manager" />
   </component>
 </project>
