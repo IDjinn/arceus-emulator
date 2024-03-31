@@ -9,9 +9,9 @@ import networking.client.INitroClient;
 import networking.client.INitroClientManager;
 import networking.packets.IPacketManager;
 import networking.packets.IncomingPacket;
+import networking.util.GameServerAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import util.GameServerAttributes;
 
 import java.io.IOException;
 

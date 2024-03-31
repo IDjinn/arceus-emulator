@@ -6,7 +6,7 @@ import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.guest.PingEvent;
 import networking.packets.outgoing.PingComposer;
-import util.GameServerAttributes;
+import networking.util.GameServerAttributes;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;

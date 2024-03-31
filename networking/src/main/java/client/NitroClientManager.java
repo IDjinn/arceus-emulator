@@ -1,10 +1,13 @@
 package client;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelId;
 import networking.client.INitroClient;
 import networking.client.INitroClientManager;
-import util.GameServerAttributes;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,6 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NitroClientManager implements INitroClientManager {
     private final ConcurrentHashMap<ChannelId, Channel>  guests = new ConcurrentHashMap<ChannelId, Channel>();
     private final ConcurrentHashMap<ChannelId, INitroClient> clients = new ConcurrentHashMap<ChannelId, INitroClient>();
+
+    @Inject
+    public NitroClientManager() {
+    }
     @Override
     public boolean tryAddClient(ChannelHandlerContext ctx) {
         ctx.channel().closeFuture().addListener((ChannelFutureListener) channelFuture -> disconnectGuest(ctx));

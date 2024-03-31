@@ -1,6 +1,7 @@
 package packets;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
@@ -9,10 +10,12 @@ import networking.packets.IPacketManager;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
 import networking.packets.incoming.guest.SecureLoginEvent;
+import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -26,18 +29,23 @@ public class PacketManager implements IPacketManager {
     private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<Integer, IncomingEvent>();
     private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<Integer, IncomingEvent>();
 
-    public PacketManager() {
-        registerGuestEvents();
-        registerIncomingEvents();
+    @Inject
+    private SecureLoginEvent test;
+
+    @Inject
+    public PacketManager(INitroClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector) {
+        this.clientManager = clientManager;
+
+        for (Class<? extends IncomingEvent> incoming : incomings) {
+            if (incoming.isAnnotationPresent(NoAuth.class)) registerGuestEvent(injector.getProvider(incoming).get());
+            else registerIncomingEvent(injector.getProvider(incoming).get());
+        }
     }
 
-    private void registerIncomingEvents() {
-
+    private void registerIncomingEvent(IncomingEvent incomingEvent) {
+        incomingEvents.put(incomingEvent.getHeaderId(), incomingEvent);
     }
 
-    private void registerGuestEvents() {
-        this.registerGuestEvent(new SecureLoginEvent());
-    }
 
     private void registerGuestEvent(IncomingEvent event) {
         guestEvents.put(event.getHeaderId(), event);
