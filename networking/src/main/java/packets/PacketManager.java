@@ -62,10 +62,6 @@ public class PacketManager implements IPacketManager {
         return "Unknown";
     }
 
-    @Override
-    public String getOutgoingEventName(int headerId) {
-        return null;
-    }
 
     @Override
     public void Parse(IncomingPacket packet, INitroClient client) {
@@ -75,7 +71,8 @@ public class PacketManager implements IPacketManager {
             return;
         }
 
-        packetManagerExecutor.execute(() -> incomingEvent.Parse(packet, client));
+//        packetManagerExecutor.execute(() -> incomingEvent.Parse(packet, client));
+        incomingEvent.Parse(packet, client);
     }
 
     @Override

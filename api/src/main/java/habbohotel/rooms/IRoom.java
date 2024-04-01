@@ -1,8 +1,10 @@
 package habbohotel.rooms;
 
+import habbohotel.users.IHabbo;
+import networking.util.ISerializable;
 import utils.IDisposable;
 
-public interface IRoom extends Comparable<IRoom>, IDisposable {
+public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public int getId();
 
     public String getName();
@@ -31,4 +33,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable {
     public void init();
 
     public void destroy();
+
+    void prepareForHabbo(IHabbo habbo, String password);
 }

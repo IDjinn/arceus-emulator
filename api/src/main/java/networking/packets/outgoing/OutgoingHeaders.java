@@ -393,7 +393,7 @@ public class OutgoingHeaders {
     public final static int FriendFindingRoomComposer = 1210; // PRODUCTION-201611291003-338511768
     public final static int QuestComposer = 230; // PRODUCTION-201611291003-338511768
     public final static int ModToolSanctionDataComposer = 2782; // PRODUCTION-201611291003-338511768
-    public final static int RoomEventMessageComposer = 1840;
+    public final static int RoomPromotionMessageComposer = 1840;
 
 
     public final static int JukeBoxMySongsComposer = 2602; // PRODUCTION-201611291003-338511768

@@ -7,15 +7,16 @@ import configuration.IConfigurationManager;
 import core.IEmulator;
 import core.IHotel;
 import habbohotel.Hotel;
+import habbohotel.navigator.NavigatorModule;
 import habbohotel.rooms.IRoomManager;
 import habbohotel.rooms.RoomModule;
-import habbohotel.users.IUserManager;
-import habbohotel.users.UserManager;
+import habbohotel.users.HabboModule;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import networking.util.AutoBindIncomingEventsModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import repositories.RepositoryModule;
 import storage.IConnection;
 
 
@@ -47,7 +48,10 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new AutoBindIncomingEventsModule(),
                 new NetworkModule(),
                 new RoomModule(),
-                new ConnectionModule()
+                new ConnectionModule(),
+                new NavigatorModule(),
+                new HabboModule(),
+                new RepositoryModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);
@@ -63,7 +67,6 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IEmulator.class).to(Emulator.class);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
-        bind(IUserManager.class).to(UserManager.class);
     }
 
 

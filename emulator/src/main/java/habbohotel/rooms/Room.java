@@ -1,5 +1,12 @@
 package habbohotel.rooms;
 
+import habbohotel.rooms.components.entities.IRoomEntitiesComponent;
+import habbohotel.rooms.components.entities.RoomEntitiesComponent;
+import habbohotel.rooms.components.gamemap.IRoomGameMapComponent;
+import habbohotel.rooms.components.gamemap.RoomGameMapComponent;
+import habbohotel.users.IHabbo;
+import networking.packets.OutgoingPacket;
+import networking.packets.outgoing.rooms.prepare.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Room implements IRoom {
@@ -8,11 +15,16 @@ public class Room implements IRoom {
     private String password;
     private int maxUsers;
 
+    private final IRoomGameMapComponent gameMap;
+    private final IRoomEntitiesComponent entitiesComponent;
     public Room(int roomId, String roomName) {
         this.id = roomId;
         this.name = roomName;
         this.maxUsers = 0;
         this.password = "";
+
+        this.gameMap = new RoomGameMapComponent(this);
+        this.entitiesComponent = new RoomEntitiesComponent(this);
     }
 
 
@@ -68,7 +80,7 @@ public class Room implements IRoom {
 
     @Override
     public RoomAccess getRoomAccess() {
-        return null;
+        return RoomAccess.Open;
     }
 
     @Override
@@ -78,7 +90,8 @@ public class Room implements IRoom {
 
     @Override
     public void init() {
-
+        this.gameMap.init();
+        this.entitiesComponent.init();
     }
 
     @Override
@@ -89,5 +102,101 @@ public class Room implements IRoom {
     @Override
     public int compareTo(@NotNull IRoom o) {
         return o.getId() - id;
+    }
+
+
+    @Override
+    public void serialize(OutgoingPacket packet) {
+        packet.appendInt(this.id);
+        packet.appendString(this.name);
+//        if (this.isPublic()) { TODO
+        packet.appendInt(0);
+        packet.appendString("");
+//        } else {
+//            packet.appendInt(this.ownerId);
+//            packet.appendString(this.ownerName);
+//        }
+        packet.appendInt(this.getRoomAccess().getState());
+        packet.appendInt(0);
+        packet.appendInt(this.getMaxUsers());
+        packet.appendString("this.description");
+        packet.appendInt(0);
+        packet.appendInt(0);//this.score
+        packet.appendInt(0);
+        packet.appendInt(0); // this.category
+
+//        String[] tags = Arrays.stream(this.tags.split(";")).filter(t -> !t.isEmpty()).toArray(String[]::new);
+//        packet.appendInt(tags.length);
+//        for (String s : tags) {
+//            packet.appendString(s);
+//        }
+        packet.appendInt(0);
+
+        int base = 0;
+
+//        if (this.getGuildId() > 0) {
+//            base = base | 2;
+//        }
+//
+//        if (this.isPromoted()) {
+//            base = base | 4;
+//        }
+//
+//        if (!this.isPublicRoom()) {
+//            base = base | 8;
+//        }
+
+
+        packet.appendInt(base);
+
+
+//        if (this.getGuildId() > 0) {
+//            Guild g = Emulator.getGameEnvironment().getGuildManager().getGuild(this.getGuildId());
+//            if (g != null) {
+//                packet.appendInt(g.getId());
+//                packet.appendString(g.getName());
+//                packet.appendString(g.getBadge());
+//            } else {
+//                packet.appendInt(0);
+//                packet.appendString("");
+//                packet.appendString("");
+//            }
+//        }
+//
+//        if (this.promoted) {
+//            packet.appendString(this.promotion.getTitle());
+//            packet.appendString(this.promotion.getDescription());
+//            packet.appendInt((this.promotion.getEndTimestamp() - Emulator.getIntUnixTimestamp()) / 60);
+//        }
+
+    }
+
+    @Override
+    public void prepareForHabbo(IHabbo habbo, String password) {
+        // TODO: IN ROOM CHECKS
+
+        habbo.setRoom(this);
+        habbo.getClient().sendMessages(
+                new HideDoorbellComposer(),
+                new RoomOpenComposer(),
+                new RoomDataComposer(this, habbo, false, true),
+                new RoomModelComposer("model_a", getId()),
+                new RoomPaintComposer("landscape", "0.0"),
+                new RoomRightsComposer(0),
+                new RoomScoreComposer(0, true),
+                new RoomPromotionMessageComposer(),
+                new RoomRelativeMapComposer(getGameMap()),
+                new RoomHeightMapComposer(getGameMap()),
+                new RoomFloorItemsComposer(),
+                new RoomWallItemsComposer()
+        );
+    }
+
+    public IRoomEntitiesComponent getEntitiesComponent() {
+        return entitiesComponent;
+    }
+
+    public IRoomGameMapComponent getGameMap() {
+        return gameMap;
     }
 }

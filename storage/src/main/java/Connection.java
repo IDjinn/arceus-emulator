@@ -12,4 +12,8 @@ public class Connection implements IConnection {
     public java.sql.Connection get() throws Exception {
         return connectionContext.getProvider().getConnection();
     }
+
+    public IConnectionContext getConnectionContext() {
+        return connectionContext;
+    }
 }

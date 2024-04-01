@@ -2,6 +2,7 @@ package habbohotel.rooms;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +39,14 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
+    public @Nullable IRoom tryLoadRoom(int roomId) {
+        return rooms.get(roomId);
+    }
+
+    @Override
     public void init() throws InterruptedException {
         var room = roomFactory.createRoom(1, "first-room");
+        room.init();
         rooms.put(room.getId(), room);
     }
 

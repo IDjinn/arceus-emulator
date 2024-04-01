@@ -20,16 +20,23 @@ import networking.packets.outgoing.session.rooms.FavoriteRoomsCountComposer;
 import networking.packets.outgoing.session.rooms.UserHomeRoomComposer;
 import networking.packets.outgoing.session.wardobe.UserClothesComposer;
 import org.jetbrains.annotations.NotNull;
+import storage.repositories.users.IUserRepository;
 
 import java.util.ArrayList;
 
 
 @Singleton
-public class UserManager implements IUserManager {
+public class HabboManager implements IHabboManager {
+    @Inject
+    private IUserRepository userRepository;
+
     @Inject
     private INitroClientManager clientManager;
+
     @Override
     public boolean tryLoginWithSSO(@NotNull ChannelHandlerContext ctx, @NotNull String sso) {
+        userRepository.getUserByAuthTicket(sso);
+
         ArrayList<OutgoingPacket> messages = new ArrayList<>();
         messages.add(new SecureLoginOkComposer());
         messages.add(new UserEffectsListComposer());
