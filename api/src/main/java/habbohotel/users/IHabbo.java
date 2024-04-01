@@ -1,6 +1,7 @@
 package habbohotel.users;
 
 import habbohotel.rooms.IRoom;
+import habbohotel.rooms.entities.IPlayerEntity;
 import networking.client.INitroClient;
 
 import javax.annotation.Nullable;
@@ -16,10 +17,16 @@ public interface IHabbo {
 
     public void setMotto(String motto);
 
+    public String getLook();
+
+    public void setLook(String look);
+    
     INitroClient getClient();
 
     void setRoom(@Nullable IRoom room);
 
     @Nullable
     IRoom getRoom();
+
+    void setPlayerEntity(@Nullable IPlayerEntity entity);
 }

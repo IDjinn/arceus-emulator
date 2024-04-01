@@ -1,6 +1,9 @@
 package habbohotel.rooms;
 
+import habbohotel.rooms.components.entities.IRoomEntitiesComponent;
+import habbohotel.rooms.components.gamemap.IRoomGameMapComponent;
 import habbohotel.users.IHabbo;
+import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.IDisposable;
 
@@ -37,4 +40,12 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     void prepareForHabbo(IHabbo habbo, String password);
 
     void join(IHabbo habbo);
+
+    void broadcastMessage(OutgoingPacket packet);
+
+    void broadcastMessages(OutgoingPacket... packets);
+
+    public IRoomEntitiesComponent getEntitiesComponent();
+
+    public IRoomGameMapComponent getGameMap();
 }

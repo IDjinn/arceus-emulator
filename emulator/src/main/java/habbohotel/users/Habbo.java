@@ -1,6 +1,7 @@
 package habbohotel.users;
 
 import habbohotel.rooms.IRoom;
+import habbohotel.rooms.entities.IPlayerEntity;
 import networking.client.INitroClient;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,6 +10,8 @@ public class Habbo implements IHabbo {
     private final int id;
     private String name;
     private @Nullable IRoom room;
+    private @Nullable IPlayerEntity entity;
+    private String look = "he-3884-92-93.ch-4004-92.hr-3251-39-49.hd-3100-5.lg-3078-110";
 
     public Habbo(INitroClient client, int id, String name) {
         this.client = client;
@@ -41,6 +44,17 @@ public class Habbo implements IHabbo {
 
     }
 
+    @Override
+    public String getLook() {
+        return this.look;
+    }
+
+    @Override
+    public void setLook(String look) {
+        assert look != null;
+        this.look = look;
+    }
+
     public INitroClient getClient() {
         return client;
     }
@@ -55,4 +69,11 @@ public class Habbo implements IHabbo {
     public IRoom getRoom() {
         return this.room;
     }
+
+    @Override
+    public void setPlayerEntity(@Nullable IPlayerEntity entity) {
+        this.entity = entity;
+    }
 }
+
+

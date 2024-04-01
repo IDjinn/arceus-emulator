@@ -1,14 +1,17 @@
-package networking.packets.outgoing.rooms;
+package networking.packets.incoming.rooms;
 
+import com.google.inject.Singleton;
 import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
 import networking.packets.incoming.IncomingHeaders;
 
+@Singleton
 public class RequestRoomHeightmapEvent extends IncomingEvent {
+
     @Override
     public int getHeaderId() {
-        return IncomingHeaders.RequestRoomHeightmapEvent;
+        return IncomingHeaders.RequestHeightmapEvent;
     }
 
     @Override

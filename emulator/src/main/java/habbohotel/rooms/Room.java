@@ -6,6 +6,8 @@ import habbohotel.rooms.components.gamemap.IRoomGameMapComponent;
 import habbohotel.rooms.components.gamemap.RoomGameMapComponent;
 import habbohotel.users.IHabbo;
 import networking.packets.OutgoingPacket;
+import networking.packets.outgoing.rooms.RoomEntitiesComposer;
+import networking.packets.outgoing.rooms.RoomUserStatusComposer;
 import networking.packets.outgoing.rooms.prepare.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -195,6 +197,38 @@ public class Room implements IRoom {
     @Override
     public void join(IHabbo habbo) {
         var entity = getEntitiesComponent().createHabboEntity(habbo);
+
+        habbo.setPlayerEntity(entity);
+
+        habbo.getClient().sendMessages(
+                new RoomOpenComposer(),
+                new HideDoorbellComposer(),
+                new RoomRelativeMapComposer(getGameMap()),
+                new RoomHeightMapComposer(getGameMap()),
+                new RoomDataComposer(this, habbo, false, true),
+                new RoomFloorItemsComposer(),
+                new RoomWallItemsComposer(),
+                new OutgoingPacket(2402).appendInt(0)
+        );
+
+        broadcastMessages(
+                new RoomEntitiesComposer(getEntitiesComponent().getEntities()),
+                new RoomUserStatusComposer(getEntitiesComponent().getEntities())
+        );
+    }
+
+    @Override
+    public void broadcastMessage(OutgoingPacket packet) {
+        for (var player : getEntitiesComponent().getPlayers()) {
+            player.getClient().sendMessage(packet);
+        }
+    }
+
+    @Override
+    public void broadcastMessages(OutgoingPacket... packets) {
+        for (var player : getEntitiesComponent().getPlayers()) {
+            player.getClient().sendMessages(packets);
+        }
     }
 
     public IRoomEntitiesComponent getEntitiesComponent() {

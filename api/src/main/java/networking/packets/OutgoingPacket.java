@@ -32,18 +32,19 @@ public class OutgoingPacket {
         }
     }
 
-    public void appendRawBytes(byte[] bytes) {
+    public OutgoingPacket appendRawBytes(byte[] bytes) {
         try {
             this.stream.write(bytes);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendString(String obj) {
+    public OutgoingPacket appendString(String obj) {
         if (obj == null) {
             this.appendString("");
-            return;
+            return this;
         }
 
         try {
@@ -53,91 +54,103 @@ public class OutgoingPacket {
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendChar(int obj) {
+    public OutgoingPacket appendChar(int obj) {
         try {
             this.stream.writeChar(obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendChars(Object obj) {
+    public OutgoingPacket appendChars(Object obj) {
         try {
             this.stream.writeChars(obj.toString());
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendInt(Integer obj) {
+    public OutgoingPacket appendInt(Integer obj) {
         try {
             this.stream.writeInt(obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendInt(Short obj) {
+    public OutgoingPacket appendInt(Short obj) {
         this.appendShort(0);
         this.appendShort(obj);
+        return this;
     }
 
-    public void appendInt(Byte obj) {
+    public OutgoingPacket appendInt(Byte obj) {
         try {
             this.stream.writeInt((int) obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendInt(Boolean obj) {
+    public OutgoingPacket appendInt(Boolean obj) {
         try {
             this.stream.writeInt(obj ? 1 : 0);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendShort(int obj) {
+    public OutgoingPacket appendShort(int obj) {
         try {
             this.stream.writeShort((short) obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendByte(Integer b) {
+    public OutgoingPacket appendByte(Integer b) {
         try {
             this.stream.writeByte(b);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendBoolean(Boolean obj) {
+    public OutgoingPacket appendBoolean(Boolean obj) {
         try {
             this.stream.writeBoolean(obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendDouble(double d) {
+    public OutgoingPacket appendDouble(double d) {
         try {
             this.stream.writeDouble(d);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
-    public void appendDouble(Double obj) {
+    public OutgoingPacket appendDouble(Double obj) {
         try {
             this.stream.writeDouble(obj);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
+        return this;
     }
 
     public OutgoingPacket appendResponse(OutgoingPacket obj) {

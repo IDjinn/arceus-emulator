@@ -14,7 +14,7 @@ public class OutgoingHeaders {
     public final static int RoomRemoveRightsListComposer = 1327;
     public final static int RoomRightsListComposer = 1284;
     public final static int RoomUserHandItemComposer = 1474;
-    public final static int RoomUsersComposer = 374;
+    public final static int RoomEntitiesComposer = 374;
     public final static int FriendRequestComposer = 2219;
     public final static int GuildBoughtComposer = 2808;
     public final static int AddUserBadgeComposer = 2493;

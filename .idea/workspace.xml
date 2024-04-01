@@ -4,16 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix gamemap on nitro">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/IPlayerEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/IRoomEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RequestRoomHeightmapEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/RoomEntity.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="adding room entities">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/RoomEntityStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/StatusBucket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RoomEntitiesComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RoomUserStatusComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Position.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/RandomUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/entities/IRoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/entities/IRoomEntitiesComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/IRoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/entities/IRoomEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RequestRoomHeightmapEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/rooms/RequestRoomHeightmapEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/entities/RoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/entities/RoomEntitiesComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/RoomEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712004295759</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="adding room entities">
+      <option name="closed" value="true" />
+      <created>1712005092743</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712005092743</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,7 +300,8 @@
     <MESSAGE value="wip navigator" />
     <MESSAGE value="navigator working" />
     <MESSAGE value="fix gamemap on nitro" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix gamemap on nitro" />
+    <MESSAGE value="adding room entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding room entities" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -308,6 +328,31 @@
           <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/gamemap/RoomGameMapComponent.java</url>
           <line>47</line>
           <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="120" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="126" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
