@@ -19,4 +19,7 @@ public interface IHabbo {
     INitroClient getClient();
 
     void setRoom(@Nullable IRoom room);
+
+    @Nullable
+    IRoom getRoom();
 }

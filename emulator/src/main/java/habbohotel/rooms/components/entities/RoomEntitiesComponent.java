@@ -1,6 +1,9 @@
 package habbohotel.rooms.components.entities;
 
 import habbohotel.rooms.IRoom;
+import habbohotel.rooms.entities.IPlayerEntity;
+import habbohotel.rooms.entities.PlayerEntity;
+import habbohotel.users.IHabbo;
 
 public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     private final IRoom room;
@@ -27,5 +30,10 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     @Override
     public void destroy() {
 
+    }
+
+    @Override
+    public IPlayerEntity createHabboEntity(IHabbo habbo) {
+        return new PlayerEntity(habbo);
     }
 }

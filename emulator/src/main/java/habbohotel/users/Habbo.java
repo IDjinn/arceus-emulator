@@ -49,4 +49,10 @@ public class Habbo implements IHabbo {
     public void setRoom(@Nullable IRoom room) {
         this.room = room;
     }
+
+    @Nullable
+    @Override
+    public IRoom getRoom() {
+        return this.room;
+    }
 }

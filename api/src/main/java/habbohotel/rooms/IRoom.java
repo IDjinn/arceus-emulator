@@ -35,4 +35,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public void destroy();
 
     void prepareForHabbo(IHabbo habbo, String password);
+
+    void join(IHabbo habbo);
 }

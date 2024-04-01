@@ -192,6 +192,11 @@ public class Room implements IRoom {
         );
     }
 
+    @Override
+    public void join(IHabbo habbo) {
+        var entity = getEntitiesComponent().createHabboEntity(habbo);
+    }
+
     public IRoomEntitiesComponent getEntitiesComponent() {
         return entitiesComponent;
     }
