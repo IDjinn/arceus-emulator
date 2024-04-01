@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="handshake finished">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/util/Ctx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="client factory">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/networking/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +29,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -138,7 +139,7 @@
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
       <workItem from="1711885902563" duration="13017000" />
-      <workItem from="1711981949656" duration="1949000" />
+      <workItem from="1711981949656" duration="6279000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -204,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711917511450</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="client factory">
+      <option name="closed" value="true" />
+      <created>1711984086720</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711984086720</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -231,7 +240,8 @@
     <MESSAGE value="feat: incoming auto inject" />
     <MESSAGE value="wip sso handshake" />
     <MESSAGE value="handshake finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="handshake finished" />
+    <MESSAGE value="client factory" />
+    <option name="LAST_COMMIT_MESSAGE" value="client factory" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -258,21 +268,6 @@
           <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
           <line>66</line>
           <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
