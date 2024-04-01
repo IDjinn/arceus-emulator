@@ -27,13 +27,13 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     public void serialize(OutgoingPacket packet) {
         packet
                 .appendInt(getHabbo().getId())
-                .appendString(getName())
+                .appendString(getHabbo().getName())
                 .appendString(getHabbo().getMotto())
-                .appendString(getHabbo().getMotto())
+                .appendString(getHabbo().getLook())
                 .appendInt(getVirtualId())
                 .appendInt(getPosition().getX())
                 .appendInt(getPosition().getY())
-                .appendDouble(getPosition().getZ())
+                .appendString(String.valueOf(getPosition().getZ()))
                 .appendInt(getDirection().ordinal())
                 .appendInt(1) // 1 == habbo type
                 .appendString("M") // TODO HARD-CODED
