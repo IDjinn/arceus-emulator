@@ -3,7 +3,6 @@ package configuration;
 import org.jetbrains.annotations.NotNull;
 
 public interface IConfigurationManager {
-    void configureFromFile(@NotNull String fileName);
     public boolean getBool(@NotNull String key);
     public boolean getBool(@NotNull String key, boolean defaultValue);
     
