@@ -17,10 +17,14 @@ public class GameServerMessageLogger extends MessageToMessageEncoder<OutgoingPac
 
     @Override
     protected void encode(ChannelHandlerContext ctx, OutgoingPacket message, List<Object> out) {
-        logger.debug("[-> outgoing] {} packet {} [{}",
-                message.getHeader(),
-                packetManager.getOutgoingEventName(message.getHeader()),
-                message.getBuffer());
+        try {
+            logger.debug("[-> outgoing] {} packet {} [{}",
+                    message.getHeader(),
+                    message.getClass().getName(),
+                    message.getBuffer());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         out.add(message);
     }
 

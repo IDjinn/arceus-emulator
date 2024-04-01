@@ -5,7 +5,7 @@ import habbohotel.rooms.IRoom;
 import habbohotel.rooms.IRoomManager;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.SequencedCollection;
+import java.util.List;
 
 public class NavigatorManager implements INavigatorManager {
     private final IRoomManager roomManager;
@@ -24,7 +24,7 @@ public class NavigatorManager implements INavigatorManager {
     }
 
     @Override
-    public SequencedCollection<IRoom> getRoomsForView(String viewName, @Nullable String query) {
+    public List<IRoom> getRoomsForView(String viewName, @Nullable String query) {
         return roomManager.getLoadedRooms().values().stream().toList();
     }
 }

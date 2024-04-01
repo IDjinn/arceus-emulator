@@ -4,28 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="improve injection with modules &amp; room stuff">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/navigator/INavigatorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorDataEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorRoomsEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorCollapsedCategoriesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorEventCategoriesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorLiftedRoomsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorMetaDataComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSavedSearchesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSettingsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/util/ISerializable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorModule.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="wip navigator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/navigator/INavigatorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/navigator/INavigatorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +137,7 @@
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
       <workItem from="1711885902563" duration="13017000" />
-      <workItem from="1711981949656" duration="11386000" />
+      <workItem from="1711981949656" duration="12495000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -233,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711989399327</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="wip navigator">
+      <option name="closed" value="true" />
+      <created>1711996194882</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1711996194882</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,7 +257,8 @@
     <MESSAGE value="client factory" />
     <MESSAGE value="improve injection with modules" />
     <MESSAGE value="improve injection with modules &amp; room stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="improve injection with modules &amp; room stuff" />
+    <MESSAGE value="wip navigator" />
+    <option name="LAST_COMMIT_MESSAGE" value="wip navigator" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -277,24 +272,9 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorRoomsEvent.java</url>
-          <line>27</line>
-          <option name="timeStamp" value="88" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorDataEvent.java</url>
-          <line>18</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="90" />
+          <url>file://$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="101" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

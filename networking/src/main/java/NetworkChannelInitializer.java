@@ -58,7 +58,7 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 //        ch.pipeline().addLast(new GameMessageRateLimit());
         ch.pipeline().addLast(packetParser);
 
-        ch.pipeline().addLast("messageEncoder", new GameServerMessageEncoder());
+        ch.pipeline().addLast(new GameServerMessageEncoder());
         ch.pipeline().addLast(new GameServerMessageLogger());
     }
 
