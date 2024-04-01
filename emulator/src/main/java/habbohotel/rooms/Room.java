@@ -1,6 +1,12 @@
 package habbohotel.rooms;
 
+import habbohotel.rooms.components.entities.IRoomEntitiesComponent;
+import habbohotel.rooms.components.entities.RoomEntitiesComponent;
+import habbohotel.rooms.components.gamemap.IRoomGameMapComponent;
+import habbohotel.rooms.components.gamemap.RoomGameMapComponent;
+import habbohotel.users.IHabbo;
 import networking.packets.OutgoingPacket;
+import networking.packets.outgoing.rooms.prepare.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Room implements IRoom {
@@ -9,11 +15,16 @@ public class Room implements IRoom {
     private String password;
     private int maxUsers;
 
+    private final IRoomGameMapComponent gameMap;
+    private final IRoomEntitiesComponent entitiesComponent;
     public Room(int roomId, String roomName) {
         this.id = roomId;
         this.name = roomName;
         this.maxUsers = 0;
         this.password = "";
+
+        this.gameMap = new RoomGameMapComponent(this);
+        this.entitiesComponent = new RoomEntitiesComponent(this);
     }
 
 
@@ -79,7 +90,8 @@ public class Room implements IRoom {
 
     @Override
     public void init() {
-
+        this.gameMap.init();
+        this.entitiesComponent.init();
     }
 
     @Override
@@ -157,5 +169,34 @@ public class Room implements IRoom {
 //            packet.appendInt((this.promotion.getEndTimestamp() - Emulator.getIntUnixTimestamp()) / 60);
 //        }
 
+    }
+
+    @Override
+    public void prepareForHabbo(IHabbo habbo, String password) {
+        // TODO: IN ROOM CHECKS
+
+        habbo.setRoom(this);
+        habbo.getClient().sendMessages(
+                new HideDoorbellComposer(),
+                new RoomOpenComposer(),
+                new RoomDataComposer(this, habbo, false, true),
+                new RoomModelComposer("model_a", getId()),
+                new RoomPaintComposer("landscape", "0.0"),
+                new RoomRightsComposer(0),
+                new RoomScoreComposer(0, true),
+                new RoomPromotionMessageComposer(),
+                new RoomRelativeMapComposer(getGameMap()),
+                new RoomHeightMapComposer(getGameMap()),
+                new RoomFloorItemsComposer(),
+                new RoomWallItemsComposer()
+        );
+    }
+
+    public IRoomEntitiesComponent getEntitiesComponent() {
+        return entitiesComponent;
+    }
+
+    public IRoomGameMapComponent getGameMap() {
+        return gameMap;
     }
 }

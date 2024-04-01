@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 
 @Singleton
-public class UserManager implements IUserManager {
+public class HabboManager implements IHabboManager {
     @Inject
     private INitroClientManager clientManager;
     @Override

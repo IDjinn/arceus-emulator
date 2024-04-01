@@ -1,5 +1,6 @@
 package networking.client;
 
+import habbohotel.users.IHabbo;
 import networking.packets.OutgoingPacket;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface INitroClient {
     void sendMessages(OutgoingPacket... messages);
 
     void flush();
+
+    IHabbo getHabbo();
 }
