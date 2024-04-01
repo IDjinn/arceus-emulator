@@ -7,7 +7,9 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelId;
 import networking.client.INitroClient;
+import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
+import networking.util.GameServerAttributes;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,8 +19,15 @@ public class NitroClientManager implements INitroClientManager {
     private final ConcurrentHashMap<ChannelId, INitroClient> clients = new ConcurrentHashMap<ChannelId, INitroClient>();
 
     @Inject
-    public NitroClientManager() {
+    private INitroClientFactory clientFactory;
+    @Override
+    public INitroClient clientHandshakeFinished(ChannelHandlerContext ctx) {
+        var client = this.clientFactory.create(ctx);
+        this.clients.put(ctx.channel().id(), client);
+        ctx.attr(GameServerAttributes.CLIENT).set(client);
+        return client;
     }
+
     @Override
     public boolean tryAddClient(ChannelHandlerContext ctx) {
         ctx.channel().closeFuture().addListener((ChannelFutureListener) channelFuture -> disconnectGuest(ctx));

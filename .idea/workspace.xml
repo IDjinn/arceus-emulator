@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="wip sso handshake">
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="handshake finished">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/util/Ctx.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/handlers/IdleTimeoutHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/networking/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +79,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propDebugger",
@@ -130,7 +137,8 @@
       <workItem from="1711818285823" duration="51000" />
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
-      <workItem from="1711885902563" duration="11036000" />
+      <workItem from="1711885902563" duration="13017000" />
+      <workItem from="1711981949656" duration="1949000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -188,7 +196,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711916268763</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="handshake finished">
+      <option name="closed" value="true" />
+      <created>1711917511450</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711917511450</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +230,8 @@
     <MESSAGE value="fix network channel reading" />
     <MESSAGE value="feat: incoming auto inject" />
     <MESSAGE value="wip sso handshake" />
-    <option name="LAST_COMMIT_MESSAGE" value="wip sso handshake" />
+    <MESSAGE value="handshake finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="handshake finished" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -244,8 +261,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java</url>
-          <line>86</line>
-          <option name="timeStamp" value="67" />
+          <line>71</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

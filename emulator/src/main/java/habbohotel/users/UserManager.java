@@ -1,7 +1,9 @@
 package habbohotel.users;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
+import networking.client.INitroClientManager;
 import networking.packets.OutgoingPacket;
 import networking.packets.outgoing.PingComposer;
 import networking.packets.outgoing.guest.SecureLoginOkComposer;
@@ -24,9 +26,10 @@ import java.util.ArrayList;
 
 @Singleton
 public class UserManager implements IUserManager {
+    @Inject
+    private INitroClientManager clientManager;
     @Override
     public boolean tryLoginWithSSO(@NotNull ChannelHandlerContext ctx, @NotNull String sso) {
-
         ArrayList<OutgoingPacket> messages = new ArrayList<>();
         messages.add(new SecureLoginOkComposer());
         messages.add(new UserEffectsListComposer());
@@ -52,6 +55,8 @@ public class UserManager implements IUserManager {
             ctx.channel().write(message.getBuffer());
         }
         ctx.channel().flush();
+
+        clientManager.clientHandshakeFinished(ctx);
         return true;
     }
 }

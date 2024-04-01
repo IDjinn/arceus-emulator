@@ -1,3 +1,4 @@
+import client.NitroClientFactory;
 import client.NitroClientManager;
 import com.google.inject.*;
 import configuration.ConfigurationManager;
@@ -12,6 +13,7 @@ import habbohotel.Hotel;
 import habbohotel.users.IUserManager;
 import habbohotel.users.UserManager;
 import networking.INetworkingManager;
+import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
 import networking.packets.IPacketManager;
 import networking.packets.incoming.IncomingEvent;
@@ -61,6 +63,9 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(new TypeLiteral<List<Class<? extends IncomingEvent>>>() {
         })
                 .toProvider(IncomingEventAsListProvider.class);
+
+        bind(INitroClientFactory.class).to(NitroClientFactory.class);
+
     }
 
 
