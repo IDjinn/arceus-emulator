@@ -91,7 +91,7 @@ public class Database implements IDatabase {
             quotedParams.add(Pattern.quote(key));
         }
 
-        String regex = "(" + String.join("|", quotedParams) + ")";
+        String regex = STR."(\{String.join("|", quotedParams)})";
 
         Matcher m = Pattern.compile(regex).matcher(query);
 

@@ -16,6 +16,9 @@
       <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkModule.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/database/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,9 +75,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "djinn",
+    "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/dev/java/orion-emulator/networking/src/main/java/encoders",
+    "last_opened_file_path": "C:/Code/orion-emulator/emulator/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -89,9 +94,13 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Code\orion-emulator\emulator\src\main\resources" />
       <recent name="C:\dev\java\orion-emulator\networking\src\main\java\encoders" />
       <recent name="C:\dev\java\orion-emulator\networking\src\main\java\decoders" />
       <recent name="C:\dev\java\orion-emulator\networking\src\main\java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Code\orion-emulator" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="networking.packets.incoming.guest" />
@@ -118,13 +127,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -139,7 +141,13 @@
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
       <workItem from="1711885902563" duration="13017000" />
+<<<<<<< HEAD
       <workItem from="1711981949656" duration="6279000" />
+=======
+      <workItem from="1711981949656" duration="1949000" />
+      <workItem from="1711985984915" duration="529000" />
+      <workItem from="1711987504454" duration="1587000" />
+>>>>>>> packages
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />

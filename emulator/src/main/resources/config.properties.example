@@ -1,11 +1,9 @@
-
-
 db.hostname=localhost
 db.port=3306
-db.database=arc
+db.database=database
 db.username=root
 db.password=
-db.params=
+db.params=?useTimezone=true&serverTimezone=UTC
 db.pool.minsize=25
 db.pool.maxsize=100
 
