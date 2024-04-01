@@ -28,9 +28,8 @@ public class SecureLoginEvent extends IncomingEvent {
         var sso = packet.readString();
         var integer = packet.readInt();
 
-        if (!userManager.tryLoginWithSSO(ctx, sso)) {
-            clientManager.disconnectGuest(ctx);
-            return;
-        }
+        if (userManager.tryLoginWithSSO(ctx, sso)) return;
+
+        clientManager.disconnectGuest(ctx);
     }
 }

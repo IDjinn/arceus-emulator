@@ -5,20 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="client factory">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/providers/ILoginProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/IConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/IConnectionContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/connectors/IConnector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/providers/IConnectionProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/providers/UserLoginProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/Connection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/ConnectionContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/ConnectionModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/providers/ConnectionProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/database/IDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/database/IDatabasePool.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/database/Database.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/database/DatabasePool.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/connectors/HikariConnector.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +42,9 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -50,6 +57,9 @@
     <enabled-run-configurations>
       <run-configuration type="MavenRunConfiguration" name="parent [compile]" />
     </enabled-run-configurations>
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
@@ -75,7 +85,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "djinn",
+    "git-widget-placeholder": "navigator",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
@@ -88,7 +98,8 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propDebugger",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "actions.on.save",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -141,13 +152,10 @@
       <workItem from="1711818347775" duration="2251000" />
       <workItem from="1711820667145" duration="23102000" />
       <workItem from="1711885902563" duration="13017000" />
-<<<<<<< HEAD
       <workItem from="1711981949656" duration="6279000" />
-=======
       <workItem from="1711981949656" duration="1949000" />
       <workItem from="1711985984915" duration="529000" />
       <workItem from="1711987504454" duration="1587000" />
->>>>>>> packages
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
