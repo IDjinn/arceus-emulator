@@ -75,7 +75,8 @@ public class PacketManager implements IPacketManager {
             return;
         }
 
-        packetManagerExecutor.execute(() -> incomingEvent.Parse(packet, client));
+//        packetManagerExecutor.execute(() -> incomingEvent.Parse(packet, client));
+        incomingEvent.Parse(packet, client);
     }
 
     @Override

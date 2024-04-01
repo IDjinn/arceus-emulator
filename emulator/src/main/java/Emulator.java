@@ -9,6 +9,7 @@ import core.IHotel;
 import database.Database;
 import database.DatabasePool;
 import habbohotel.Hotel;
+import habbohotel.navigator.NavigatorModule;
 import habbohotel.rooms.IRoomManager;
 import habbohotel.rooms.RoomModule;
 import habbohotel.users.IUserManager;
@@ -41,7 +42,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new Emulator(),
                 new AutoBindIncomingEventsModule(),
                 new NetworkModule(),
-                new RoomModule()
+                new RoomModule(),
+                new NavigatorModule()
         );
         var emulator = injector.getInstance(IEmulator.class);
         emulator.start();

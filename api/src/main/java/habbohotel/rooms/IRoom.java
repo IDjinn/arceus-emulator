@@ -1,8 +1,9 @@
 package habbohotel.rooms;
 
+import networking.util.ISerializable;
 import utils.IDisposable;
 
-public interface IRoom extends Comparable<IRoom>, IDisposable {
+public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public int getId();
 
     public String getName();

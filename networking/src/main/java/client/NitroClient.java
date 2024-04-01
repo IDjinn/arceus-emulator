@@ -18,14 +18,28 @@ public class NitroClient implements INitroClient {
 
     @Override
     public void sendMessage(OutgoingPacket packet) {
-        ctx.channel().write(packet.getBuffer());
+        ctx.channel().write(packet);
+        ctx.channel().flush();
     }
 
     @Override
     public void sendMessages(List<OutgoingPacket> messages) {
         for (var message : messages) {
-            ctx.channel().write(message.getBuffer());
+            ctx.channel().write(message);
         }
+        ctx.channel().flush();
+    }
+
+    @Override
+    public void sendMessages(OutgoingPacket... messages) {
+        for (var message : messages) {
+            ctx.channel().write(message);
+        }
+        ctx.channel().flush();
+    }
+
+    @Override
+    public void flush() {
         ctx.channel().flush();
     }
 }

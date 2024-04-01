@@ -1,8 +1,20 @@
 package habbohotel.rooms;
 
 public enum RoomAccess {
-    Open,
-    Doorbell,
-    Locked,
-    Invisible
+    Open(0),
+    Doorbell(1),
+    Locked(2),
+    Invisible(3),
+
+    ;
+
+    private final int state;
+
+    RoomAccess(int state) {
+        this.state = state;
+    }
+
+    public int getState() {
+        return state;
+    }
 }

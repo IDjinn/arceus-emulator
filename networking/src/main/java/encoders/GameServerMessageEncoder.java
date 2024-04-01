@@ -8,6 +8,11 @@ import networking.packets.OutgoingPacket;
 public class GameServerMessageEncoder extends MessageToByteEncoder<OutgoingPacket> {
 
     @Override
+    public boolean acceptOutboundMessage(Object msg) throws Exception {
+        return super.acceptOutboundMessage(msg);
+    }
+
+    @Override
     protected void encode(ChannelHandlerContext ctx, OutgoingPacket message, ByteBuf out) throws Exception {
         var buf = message.getBuffer();
 
