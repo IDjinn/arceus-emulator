@@ -133,7 +133,7 @@ public class RoomGameMapComponent implements IRoomGameMapComponent {
     }
 
     @Override
-    public String getModelMap() {
-        return MODEL_A;
+    public String getModelMap() { // TODO habbo client does use \r instead \n
+        return MODEL_A.replaceAll("\n", "\r");
     }
 }

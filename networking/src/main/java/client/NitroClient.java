@@ -16,7 +16,8 @@ public class NitroClient implements INitroClient {
     @Inject
     public NitroClient(ChannelHandlerContext ctx, IHabboFactory habboFactory) {
         this.ctx = ctx;
-        this.habbo = habboFactory.createHabbo(this, 1, "Djinn");
+        // TODO: HARD-CODED
+        this.habbo = habboFactory.createHabbo(this, 1, "Admin");
     }
 
 
