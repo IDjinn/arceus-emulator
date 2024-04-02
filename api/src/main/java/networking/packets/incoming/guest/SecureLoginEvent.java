@@ -2,7 +2,7 @@ package networking.packets.incoming.guest;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import habbohotel.users.IHabboManager;
+import habbohotel.users.providers.ILoginProvider;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClientManager;
 import networking.packets.IncomingPacket;
@@ -14,9 +14,10 @@ import networking.util.NoAuth;
 @NoAuth
 public class SecureLoginEvent extends IncomingEvent {
     @Inject
-    private IHabboManager userManager;
-    @Inject
     private INitroClientManager clientManager;
+
+    @Inject
+    private ILoginProvider loginProvider;
    
     @Override
     public int getHeaderId() {
@@ -25,11 +26,14 @@ public class SecureLoginEvent extends IncomingEvent {
 
     @Override
     public void ParseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
-        var sso = packet.readString();
+        String sso = packet.readString().replaceAll(" ", "");
         var integer = packet.readInt();
 
-        if (userManager.tryLoginWithSSO(ctx, sso)) return;
+        if(!loginProvider.canLogin(ctx, sso)) {
+            clientManager.disconnectGuest(ctx);
+            return;
+        }
 
-        clientManager.disconnectGuest(ctx);
+        loginProvider.attemptLogin(ctx, sso);
     }
 }

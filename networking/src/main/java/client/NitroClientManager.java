@@ -9,7 +9,6 @@ import io.netty.channel.ChannelId;
 import networking.client.INitroClient;
 import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
-import networking.util.GameServerAttributes;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,18 +19,17 @@ public class NitroClientManager implements INitroClientManager {
 
     @Inject
     private INitroClientFactory clientFactory;
+
     @Override
-    public INitroClient clientHandshakeFinished(ChannelHandlerContext ctx) {
-        var client = this.clientFactory.create(ctx);
-        this.clients.put(ctx.channel().id(), client);
-        ctx.attr(GameServerAttributes.CLIENT).set(client);
-        return client;
+    public void addClient(INitroClient client) {
+        this.clients.put(client.getContext().channel().id(), client);
     }
 
     @Override
     public boolean tryAddClient(ChannelHandlerContext ctx) {
         ctx.channel().closeFuture().addListener((ChannelFutureListener) channelFuture -> disconnectGuest(ctx));
         ctx.fireChannelRegistered();
+
         return this.guests.putIfAbsent(ctx.channel().id(), ctx.channel()) == null;
     }
 
@@ -39,6 +37,11 @@ public class NitroClientManager implements INitroClientManager {
     public void disconnectGuest(ChannelHandlerContext ctx) {
         this.guests.remove(ctx.channel().id());
         ctx.disconnect();
+    }
+
+    @Override
+    public boolean hasLoggedHabboById(int habboId) {
+        return this.clients.values().stream().anyMatch(client -> client.getHabbo().getId() == habboId);
     }
 
     @Override

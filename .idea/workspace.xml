@@ -5,82 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="client factory">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/navigator/INavigatorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/entities/IRoomEntitiesComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/gamemap/IRoomGameMapComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/gamemap/IRoomTile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorDataEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorRoomsEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/rooms/RequestRoomLoadEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorCollapsedCategoriesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorEventCategoriesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorLiftedRoomsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorMetaDataComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSavedSearchesComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSettingsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/HideDoorbellComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomDataComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomFloorItemsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomModelComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomOpenComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomPaintComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomPromotionMessageComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomRightsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomScoreComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomWallItemsComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/util/ISerializable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/IConnectionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/catalog/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/navigator/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/rooms/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/users/IUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/results/IConnectionResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/entities/RoomEntitiesComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/gamemap/RoomGameMapComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/gamemap/RoomTile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/ConnectionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/RepositoryModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/catalog/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/navigator/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/rooms/.gitkeep" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/users/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/results/ConnectionResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/results/ConnectionResultConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/habbo/IHabboRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/providers/HabboLoginProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/queries/catalog/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/queries/navigator/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/queries/rooms/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/habbo/HabboRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IUserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/providers/ILoginProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/providers/ILoginProvider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/IPacketManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClientManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/IConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/storage/IConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/providers/IConnectionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/storage/providers/IConnectionProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkChannelInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/repositories/users/IUserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/factories/HabboFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/providers/UserLoginProvider.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageEncoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/providers/ConnectionProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/providers/ConnectionProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/repositories/RepositoryModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/RepositoryModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/repositories/users/UserRepository.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,10 +44,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
-        <option value="Enum" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="Record" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -137,7 +88,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging merge/features-database",
+    "git-widget-placeholder": "features/database",
+    "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Code/orion-emulator/emulator/src/main/resources",
@@ -190,13 +142,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -212,6 +157,8 @@
       <workItem from="1711820667145" duration="23102000" />
       <workItem from="1711885902563" duration="13017000" />
       <workItem from="1711981949656" duration="6279000" />
+      <workItem from="1712018906206" duration="806000" />
+      <workItem from="1712062911045" duration="5932000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
