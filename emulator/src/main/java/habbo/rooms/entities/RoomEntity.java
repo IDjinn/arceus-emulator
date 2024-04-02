@@ -112,6 +112,18 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     private void handleWalking() {
+        if (walkPath.isEmpty() && getGoal() != null) {
+            walkPath.addAll(this.getRoom().getPathfinder().tracePath(
+                    this.getRoom().getGameMap(),
+                    this.getPosition(),
+                    this.getGoal()
+            ));
+        }
+
+        if (!walkPath.isEmpty()) {
+            this.setPosition(walkPath.removeFirst());
+            this.setNeedUpdateStatus(true);
+        }
     }
 
     private void handleStatus() {

@@ -18,7 +18,7 @@ public class RoomUserWalkEvent extends IncomingEvent {
             return;
 
         var player = client.getHabbo().getPlayerEntity();
-        player.setPosition(new Position(packet.readInt(), packet.readInt()));
-        player.setNeedUpdateStatus(true);
+        player.setGoal(new Position(packet.readInt(), packet.readInt()));
+//        player.setNeedUpdateStatus(true);
     }
 }

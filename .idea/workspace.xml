@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="entity cycle system" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix update always true, send packet when has some update">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/pathfinder/IPathfinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodeQueueAllocator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodesSetAllocator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/PathfinderAllocator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodeQueue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodesSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/PathfinderNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IRoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IGameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,13 +35,17 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Record" />
-        <option value="Class" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -31,10 +57,8 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JavaAutoRunManager">
-    <enabled-run-configurations>
-      <run-configuration type="MavenRunConfiguration" name="parent [compile]" />
-    </enabled-run-configurations>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/schemas/maven-4.0.0.xsd" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
@@ -51,31 +75,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Emulator.executor&quot;: &quot;Debug&quot;,
-    &quot;Attach to process.pid 31872.executor&quot;: &quot;ProcessAttachDebug&quot;,
-    &quot;Maven.parent [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.parent [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.parent [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/dev/java/orion-emulator/api/src/main/java/networking/packets/incoming/rooms/session&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Emulator.executor": "Debug",
+    "Attach to process.pid 31872.executor": "ProcessAttachDebug",
+    "Maven.emulator [clean].executor": "Run",
+    "Maven.emulator [compile].executor": "Run",
+    "Maven.emulator [install].executor": "Run",
+    "Maven.emulator [validate].executor": "Run",
+    "Maven.parent [clean,install].executor": "Run",
+    "Maven.parent [clean].executor": "Run",
+    "Maven.parent [compile,--enable-preview...].executor": "Run",
+    "Maven.parent [compile].executor": "Run",
+    "Maven.parent [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/dev/java/orion-emulator/api/src/main/java/networking/packets/incoming/rooms/session",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="habbo.furniture" />
@@ -98,15 +128,18 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn install" />
-      <command value="mvn clean" />
       <command value="mvn compile" />
+      <command value="mvn compile --enable-preview --source 21" />
+      <command value="mvn clean" />
+      <command value="mvn install" />
+      <command value="mvn clean install" />
     </option>
   </component>
   <component name="RunManager">
     <configuration name="Emulator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Emulator" />
       <module name="emulator" />
+      <option name="VM_PARAMETERS" value="--enable-preview" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -141,6 +174,8 @@
       <workItem from="1711981949656" duration="18386000" />
       <workItem from="1712020813877" duration="1887000" />
       <workItem from="1712023855535" duration="2382000" />
+      <workItem from="1712061539407" duration="1846000" />
+      <workItem from="1712064604437" duration="12085000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -302,7 +337,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712031536732</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix update always true, send packet when has some update">
+      <option name="closed" value="true" />
+      <created>1712031851550</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1712031851550</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -354,7 +397,8 @@
     <MESSAGE value="organize packages" />
     <MESSAGE value="adding furniture data" />
     <MESSAGE value="entity cycle system" />
-    <option name="LAST_COMMIT_MESSAGE" value="entity cycle system" />
+    <MESSAGE value="fix update always true, send packet when has some update" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix update always true, send packet when has some update" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -373,22 +417,41 @@
           <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
           <line>50</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
           <line>47</line>
           <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="165" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="networking.packets.IncomingPacket" memberName="header" />
+        <PinnedItemInfo parentTag="habbo.rooms.components.pathfinder.pool.PathfinderNode" memberName="position" />
+        <PinnedItemInfo parentTag="habbo.rooms.components.pathfinder.pool.PathfinderNode" memberName="hCosts" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="((PathfinderNode)item).position" custom="habbo.rooms.components.pathfinder.pool.PathfinderNode" />
+      </configuration>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" line="102">
+        <watch expression="current.getPosition()" />
+      </inline-watch>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1711855886818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

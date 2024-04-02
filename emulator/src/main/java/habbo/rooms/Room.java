@@ -3,8 +3,10 @@ package habbo.rooms;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntitiesComponent;
 import habbo.rooms.components.entities.RoomEntitiesComponent;
-import habbo.rooms.components.gamemap.IRoomGameMapComponent;
-import habbo.rooms.components.gamemap.RoomGameMapComponent;
+import habbo.rooms.components.gamemap.GameMap;
+import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.pathfinder.Pathfinder;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
@@ -20,20 +22,22 @@ public class Room implements IRoom {
     private String password;
     private int maxUsers;
 
-    private final IRoomGameMapComponent gameMap;
+    private final IGameMap gameMap;
     private final IRoomEntitiesComponent entitiesComponent;
 
     // TODO: this is not the final solution, but we will use it for now. Just components must be able to inject tasks into this executor.
     private final Executor roomRunner = Executors.newVirtualThreadPerTaskExecutor();
-    
+    private IPathfinder pathfinder;
+
     public Room(int roomId, String roomName) {
         this.id = roomId;
         this.name = roomName;
         this.maxUsers = 0;
         this.password = "";
 
-        this.gameMap = new RoomGameMapComponent(this);
+        this.gameMap = new GameMap(this);
         this.entitiesComponent = new RoomEntitiesComponent(this);
+        this.pathfinder = new Pathfinder(this);
     }
 
 
@@ -242,12 +246,17 @@ public class Room implements IRoom {
         return entitiesComponent;
     }
 
-    public IRoomGameMapComponent getGameMap() {
+    public IGameMap getGameMap() {
         return gameMap;
     }
 
     @Override
     public void schedule(Runnable runnable) {
         roomRunner.execute(runnable);
+    }
+
+    @Override
+    public IPathfinder getPathfinder() {
+        return this.pathfinder;
     }
 }

@@ -2,7 +2,7 @@ package habbo.rooms.components.gamemap;
 
 import habbo.rooms.IRoom;
 
-public class RoomGameMapComponent implements IRoomGameMapComponent {
+public class GameMap implements IGameMap {
     private final String MODEL_A = "xxxxxxxxxxxx\n" +
             "xxxx00000000\n" +
             "xxxx00000000\n" +
@@ -23,7 +23,7 @@ public class RoomGameMapComponent implements IRoomGameMapComponent {
     private IRoomTile[][] tiles;
     private int mapSize;
 
-    public RoomGameMapComponent(IRoom room) {
+    public GameMap(IRoom room) {
         this.room = room;
     }
 

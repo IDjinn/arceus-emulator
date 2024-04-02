@@ -1,11 +1,11 @@
 package packets.outgoing.rooms.prepare;
 
-import habbo.rooms.components.gamemap.IRoomGameMapComponent;
+import habbo.rooms.components.gamemap.IGameMap;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
 public class RoomHeightMapComposer extends OutgoingPacket {
-    public RoomHeightMapComposer(IRoomGameMapComponent gameMap) {
+    public RoomHeightMapComposer(IGameMap gameMap) {
         super(OutgoingHeaders.RoomHeightMapComposer);
         appendBoolean(true);
         appendInt(1);
