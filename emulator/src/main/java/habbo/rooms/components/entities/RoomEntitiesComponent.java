@@ -40,10 +40,14 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
                 var entitiesUpdated = new ArrayList<IRoomEntity>(entities.size());
                 for (var entity : entities.values()) {
                     entity.tick();
-                    if (entity.isNeedUpdate())
+                    if (entity.isNeedUpdate()) {
                         entitiesUpdated.add(entity);
+                        entity.setNeedUpdateStatus(false);
+                    }
                 }
-                this.getRoom().broadcastMessage(new RoomUserStatusComposer(entitiesUpdated));
+
+                if (!entitiesUpdated.isEmpty())
+                    this.getRoom().broadcastMessage(new RoomUserStatusComposer(entitiesUpdated));
                 Thread.sleep(GameConstants.CycleInterval);
             } catch (InterruptedException _) {
             }
