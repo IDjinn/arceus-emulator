@@ -48,4 +48,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public IRoomEntitiesComponent getEntitiesComponent();
 
     public IRoomGameMapComponent getGameMap();
+
+    public void schedule(Runnable runnable);
 }

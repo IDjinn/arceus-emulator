@@ -1,9 +1,12 @@
 package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
+import org.jetbrains.annotations.Nullable;
 import utils.Direction;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.SequencedCollection;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class RoomEntity implements IRoomEntity {
@@ -14,6 +17,8 @@ public abstract class RoomEntity implements IRoomEntity {
     private Position position;
     private Direction direction;
     private boolean needUpdateStatus;
+    private @Nullable Position goal;
+    private SequencedCollection<Position> walkPath;
 
     public RoomEntity(IRoom room, int virutalId) {
         this.virutalId = virutalId;
@@ -21,6 +26,7 @@ public abstract class RoomEntity implements IRoomEntity {
         this.position = new Position(4, 5);
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
+        this.walkPath = new ArrayList<>();
     }
 
     @Override
@@ -86,11 +92,51 @@ public abstract class RoomEntity implements IRoomEntity {
 
     @Override
     public void removeStatus(RoomEntityStatus status) {
-        needUpdateStatus = statusBuckets.remove(status) != null;
+        needUpdateStatus |= statusBuckets.remove(status) != null;
     }
 
     @Override
     public void setNeedUpdateStatus(boolean needUpdate) {
         needUpdateStatus = needUpdate;
+    }
+
+    @Override
+    public boolean isNeedUpdate() {
+        return needUpdateStatus;
+    }
+
+    @Override
+    public void tick() {
+        handleStatus();
+        handleWalking();
+    }
+
+    private void handleWalking() {
+    }
+
+    private void handleStatus() {
+        synchronized (statusBuckets) {
+            for (StatusBucket bucket : statusBuckets.values()) {
+                if (bucket.getTicks() <= 0) {
+                    removeStatus(bucket.getStatus());
+                }
+                bucket.decrementTick();
+            }
+        }
+    }
+
+    @Override
+    public @Nullable Position getGoal() {
+        return this.goal;
+    }
+
+    @Override
+    public void setGoal(@Nullable Position goal) {
+        this.goal = goal;
+    }
+
+    @Override
+    public SequencedCollection<Position> getWalkPath() {
+        return this.walkPath;
     }
 }

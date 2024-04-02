@@ -11,6 +11,9 @@ import packets.outgoing.rooms.RoomEntitiesComposer;
 import packets.outgoing.rooms.RoomUserStatusComposer;
 import packets.outgoing.rooms.prepare.*;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 public class Room implements IRoom {
     private int id;
     private String name;
@@ -19,6 +22,10 @@ public class Room implements IRoom {
 
     private final IRoomGameMapComponent gameMap;
     private final IRoomEntitiesComponent entitiesComponent;
+
+    // TODO: this is not the final solution, but we will use it for now. Just components must be able to inject tasks into this executor.
+    private final Executor roomRunner = Executors.newVirtualThreadPerTaskExecutor();
+    
     public Room(int roomId, String roomName) {
         this.id = roomId;
         this.name = roomName;
@@ -237,5 +244,10 @@ public class Room implements IRoom {
 
     public IRoomGameMapComponent getGameMap() {
         return gameMap;
+    }
+
+    @Override
+    public void schedule(Runnable runnable) {
+        roomRunner.execute(runnable);
     }
 }
