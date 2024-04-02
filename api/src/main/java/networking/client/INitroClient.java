@@ -1,6 +1,6 @@
 package networking.client;
 
-import habbohotel.users.IHabbo;
+import habbo.habbos.IHabbo;
 import networking.packets.OutgoingPacket;
 
 import java.util.List;

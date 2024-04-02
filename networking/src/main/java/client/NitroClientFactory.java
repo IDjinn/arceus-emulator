@@ -3,7 +3,7 @@ package client;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import habbohotel.users.IHabboFactory;
+import habbo.habbos.IHabboFactory;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.client.INitroClientFactory;

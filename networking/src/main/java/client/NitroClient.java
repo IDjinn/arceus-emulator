@@ -1,8 +1,8 @@
 package client;
 
 import com.google.inject.Inject;
-import habbohotel.users.IHabbo;
-import habbohotel.users.IHabboFactory;
+import habbo.habbos.IHabbo;
+import habbo.habbos.IHabboFactory;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.packets.OutgoingPacket;
