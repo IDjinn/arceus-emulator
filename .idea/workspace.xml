@@ -4,11 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="room entity composers and room join">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/StringBuilderHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RoomUserStatusComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/RoomUserStatusComposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/entities/PlayerEntity.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix append Z room unit position in outgoings">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/achievements/RequestAchievementsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/friends/RequestInitFriendsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/purse/RequestUserCreditsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/session/RequestUserDataEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/achievements/AchievementListComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/friends/MessengerInitComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/purse/UserCreditsComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/purse/UserCurrencyComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/MeMenuSettingsComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserDataComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserPerksComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +101,7 @@
       <recent name="C:\dev\java\orion-emulator\networking\src\main\java" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="networking.packets.outgoing.purse" />
       <recent name="networking.packets.outgoing.navigator" />
       <recent name="networking.packets.incoming.guest" />
     </key>
@@ -259,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712011182710</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="fix append Z room unit position in outgoings">
+      <option name="closed" value="true" />
+      <created>1712011883085</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1712011883085</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +313,8 @@
     <MESSAGE value="fix gamemap on nitro" />
     <MESSAGE value="adding room entities" />
     <MESSAGE value="room entity composers and room join" />
-    <option name="LAST_COMMIT_MESSAGE" value="room entity composers and room join" />
+    <MESSAGE value="fix append Z room unit position in outgoings" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix append Z room unit position in outgoings" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

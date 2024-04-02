@@ -29,4 +29,11 @@ public interface IHabbo {
     IRoom getRoom();
 
     void setPlayerEntity(@Nullable IPlayerEntity entity);
+
+    @Nullable
+    IPlayerEntity getPlayerEntity();
+
+    String getGender();
+
+    boolean isInRoom();
 }

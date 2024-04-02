@@ -12,6 +12,7 @@ public class Habbo implements IHabbo {
     private @Nullable IRoom room;
     private @Nullable IPlayerEntity entity;
     private String look = "he-3884-92-93.ch-4004-92.hr-3251-39-49.hd-3100-5.lg-3078-110";
+    private String gender = "M";
 
     public Habbo(INitroClient client, int id, String name) {
         this.client = client;
@@ -73,6 +74,22 @@ public class Habbo implements IHabbo {
     @Override
     public void setPlayerEntity(@Nullable IPlayerEntity entity) {
         this.entity = entity;
+    }
+
+    @Nullable
+    @Override
+    public IPlayerEntity getPlayerEntity() {
+        return this.entity;
+    }
+
+    @Override
+    public String getGender() {
+        return this.gender;
+    }
+
+    @Override
+    public boolean isInRoom() {
+        return this.room != null;
     }
 }
 

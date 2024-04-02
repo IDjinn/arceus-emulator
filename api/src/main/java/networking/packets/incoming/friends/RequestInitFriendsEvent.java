@@ -1,23 +1,22 @@
-package networking.packets.incoming.guest;
+package networking.packets.incoming.friends;
 
 import com.google.inject.Singleton;
 import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import networking.packets.incoming.IncomingEvent;
 import networking.packets.incoming.IncomingHeaders;
-import networking.packets.outgoing.PingComposer;
-import networking.util.NoAuth;
+import networking.packets.outgoing.friends.MessengerInitComposer;
 
 @Singleton
-@NoAuth
-public class PingEvent extends IncomingEvent {
+public class RequestInitFriendsEvent extends IncomingEvent {
     @Override
     public int getHeaderId() {
-        return IncomingHeaders.PongEvent;
+        return IncomingHeaders.RequestInitFriendsEvent;
     }
 
     @Override
     public void Parse(IncomingPacket packet, INitroClient client) {
-        client.sendMessage(new PingComposer());
+        // TODO
+        client.sendMessage(new MessengerInitComposer(client.getHabbo()));
     }
 }
