@@ -1,7 +1,7 @@
 package networking.client;
 
-import habbohotel.users.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
+import habbo.habbos.IHabbo;
 import networking.packets.OutgoingPacket;
 
 import java.util.List;

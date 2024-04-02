@@ -1,6 +1,6 @@
 package client;
 
-import habbohotel.users.IHabbo;
+import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.packets.OutgoingPacket;

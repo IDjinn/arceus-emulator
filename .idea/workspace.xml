@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="client factory">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabbo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/entities/IRoomEntitiesComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IPlayerEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IRoomEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/RoomEntityStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/StatusBucket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Direction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/Position.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/RandomUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/utils/StringBuilderHelper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/Habbo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/entities/RoomEntitiesComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/PlayerEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/achievements/RequestAchievementsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/friends/RequestInitFriendsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/PingEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/purse/RequestUserCreditsEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomHeightmapEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/session/RequestUserDataEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/achievements/AchievementListComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/friends/MessengerInitComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCreditsComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCurrencyComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/RoomEntitiesComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/RoomUserStatusComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/MeMenuSettingsComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserDataComposer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserPerksComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/Hotel.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/Hotel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/navigator/INavigatorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/navigator/INavigatorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoomComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoomFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/IRoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoomManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/RoomAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/RoomAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/entities/IRoomEntitiesComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/gamemap/IRoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IRoomGameMapComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/rooms/components/gamemap/IRoomTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IRoomTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabbo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabboFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/IHabboManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabboManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/client/INitroClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/networking/packets/OutgoingPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/IncomingEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/IncomingHeaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/IncomingHeaders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/MachineIdEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/MachineIdEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/PingEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/ReleaseVersionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/ReleaseVersionEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorDataEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/navigator/RequestNewNavigatorDataEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/navigator/RequestNewNavigatorRoomsEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/navigator/RequestNewNavigatorRoomsEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/incoming/rooms/RequestRoomLoadEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomLoadEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/OutgoingHeaders.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/OutgoingHeaders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/PingComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/PingComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/guest/SecureLoginOkComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/guest/SecureLoginOkComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorCollapsedCategoriesComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorCollapsedCategoriesComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorEventCategoriesComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorEventCategoriesComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorLiftedRoomsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorLiftedRoomsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorMetaDataComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorMetaDataComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSavedSearchesComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorSavedSearchesComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/NewNavigatorSettingsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/NewNavigatorSettingsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/navigator/search/NewNavigatorSearchResultsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/HideDoorbellComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/HideDoorbellComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomDataComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomDataComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomFloorItemsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomFloorItemsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomModelComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomModelComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomOpenComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomOpenComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomPaintComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomPaintComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomPromotionMessageComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomPromotionMessageComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomRightsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRightsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomScoreComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomScoreComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/rooms/prepare/RoomWallItemsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomWallItemsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/CfhTopicsMessageComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/CfhTopicsMessageComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/MysteryBoxKeysComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/MysteryBoxKeysComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/buildersclub/BuildersClubExpiredComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/buildersclub/BuildersClubExpiredComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/calendar/AdventCalendarDataComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/calendar/AdventCalendarDataComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/habboclub/UserClubComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/habboclub/UserClubComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/hotel/AvailabilityStatusMessageComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/hotel/AvailabilityStatusMessageComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/inventory/InventoryAchievementsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/inventory/InventoryAchievementsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/inventory/InventoryRefreshComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/inventory/InventoryRefreshComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/EnableNotificationsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/EnableNotificationsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/IsFirstLoginOfDayComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/IsFirstLoginOfDayComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/NewUserIdentityComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/NewUserIdentityComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserAchievementScoreComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserAchievementScoreComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserEffectsListComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserEffectsListComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/logindata/UserPermissionsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserPermissionsComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/rooms/FavoriteRoomsCountComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/rooms/FavoriteRoomsCountComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/rooms/UserHomeRoomComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/rooms/UserHomeRoomComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/packets/outgoing/session/wardobe/UserClothesComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/wardobe/UserClothesComposer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/util/AutoBindIncomingEventsModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/AutoBindIncomingEventsModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/networking/util/IncomingEventAsListProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/IncomingEventAsListProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/HabboManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/HabboManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/navigator/NavigatorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/navigator/NavigatorModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/navigator/NavigatorModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/RoomFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/RoomManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/RoomModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/RoomModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/entities/RoomEntitiesComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/gamemap/RoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/rooms/components/gamemap/RoomTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomTile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/Habbo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/HabboModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/HabboModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/factories/HabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/factories/HabboFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbohotel/users/providers/HabboLoginProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/providers/HabboLoginProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JavaAutoRunManager">
+    <enabled-run-configurations>
+      <run-configuration type="MavenRunConfiguration" name="parent [compile]" />
+    </enabled-run-configurations>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2ePoxuhnZU5uyxdb5mOsFepVLcQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Emulator.executor": "Debug",
+    "Attach to process.pid 31872.executor": "ProcessAttachDebug",
+    "Maven.parent [clean].executor": "Run",
+    "Maven.parent [compile].executor": "Run",
+    "Maven.parent [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging features/database",
+    "jdk.selected.JAVA_MODULE": "openjdk-22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Code/orion-emulator/emulator/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propDebugger",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="habbohotel.rooms.units" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Code\orion-emulator\emulator\src\main\resources" />
+      <recent name="C:\dev\java\orion-emulator\api\src\main\java\networking\packets\incoming\rooms\session" />
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java\encoders" />
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java\decoders" />
+      <recent name="C:\dev\java\orion-emulator\networking\src\main\java" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="packets" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="networking.packets.outgoing.purse" />
+      <recent name="networking.packets.outgoing.navigator" />
+      <recent name="networking.packets.incoming.guest" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn install" />
+      <command value="mvn clean" />
+      <command value="mvn compile" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Emulator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Emulator" />
+      <module name="emulator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Emulator" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="" />
+      <created>1711815824990</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711815824990</updated>
+      <workItem from="1711815826048" duration="1659000" />
+      <workItem from="1711817506377" duration="766000" />
+      <workItem from="1711818285823" duration="51000" />
+      <workItem from="1711818347775" duration="2251000" />
+      <workItem from="1711820667145" duration="23102000" />
+      <workItem from="1711885902563" duration="13017000" />
+      <workItem from="1711981949656" duration="18386000" />
+      <workItem from="1712020813877" duration="1887000" />
+      <workItem from="1712023855535" duration="2382000" />
+    </task>
+    <task id="LOCAL-00001" summary="setup projects">
+      <option name="closed" value="true" />
+      <created>1711818496447</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711818496447</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: configs and db">
+      <option name="closed" value="true" />
+      <created>1711843030782</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711843030782</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix logging arguments in config manager">
+      <option name="closed" value="true" />
+      <created>1711843238875</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1711843238875</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: networking">
+      <option name="closed" value="true" />
+      <created>1711852934469</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711852934469</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix network channel reading">
+      <option name="closed" value="true" />
+      <created>1711856026948</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711856026948</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: incoming auto inject">
+      <option name="closed" value="true" />
+      <created>1711901856882</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711901856882</updated>
+    </task>
+    <task id="LOCAL-00007" summary="wip sso handshake">
+      <option name="closed" value="true" />
+      <created>1711916268763</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711916268763</updated>
+    </task>
+    <task id="LOCAL-00008" summary="handshake finished">
+      <option name="closed" value="true" />
+      <created>1711917511450</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1711917511450</updated>
+    </task>
+    <task id="LOCAL-00009" summary="client factory">
+      <option name="closed" value="true" />
+      <created>1711984086720</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1711984086720</updated>
+    </task>
+    <task id="LOCAL-00010" summary="improve injection with modules &amp; room stuff">
+      <option name="closed" value="true" />
+      <created>1711989399327</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1711989399327</updated>
+    </task>
+    <task id="LOCAL-00011" summary="wip navigator">
+      <option name="closed" value="true" />
+      <created>1711996194882</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1711996194882</updated>
+    </task>
+    <task id="LOCAL-00012" summary="navigator working">
+      <option name="closed" value="true" />
+      <created>1711997383861</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1711997383861</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix gamemap on nitro">
+      <option name="closed" value="true" />
+      <created>1712004295759</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1712004295759</updated>
+    </task>
+    <task id="LOCAL-00014" summary="adding room entities">
+      <option name="closed" value="true" />
+      <created>1712005092743</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712005092743</updated>
+    </task>
+    <task id="LOCAL-00015" summary="room entity composers and room join">
+      <option name="closed" value="true" />
+      <created>1712011182710</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1712011182710</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix append Z room unit position in outgoings">
+      <option name="closed" value="true" />
+      <created>1712011883085</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1712011883085</updated>
+    </task>
+    <task id="LOCAL-00017" summary="added missing packets to login">
+      <option name="closed" value="true" />
+      <created>1712016569564</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1712016569564</updated>
+    </task>
+    <task id="LOCAL-00018" summary="organize packages">
+      <option name="closed" value="true" />
+      <created>1712023753427</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1712023753427</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="RELOAD_CONTEXT" value="false" />
+    <MESSAGE value="setup projects" />
+    <MESSAGE value="feat: configs and db" />
+    <MESSAGE value="fix logging arguments in config manager" />
+    <MESSAGE value="feat: networking" />
+    <MESSAGE value="fix network channel reading" />
+    <MESSAGE value="feat: incoming auto inject" />
+    <MESSAGE value="wip sso handshake" />
+    <MESSAGE value="handshake finished" />
+    <MESSAGE value="improve injection with modules" />
+    <MESSAGE value="improve injection with modules &amp; room stuff" />
+    <MESSAGE value="wip navigator" />
+    <MESSAGE value="navigator working" />
+    <MESSAGE value="fix gamemap on nitro" />
+    <MESSAGE value="adding room entities" />
+    <MESSAGE value="room entity composers and room join" />
+    <MESSAGE value="fix append Z room unit position in outgoings" />
+    <MESSAGE value="added missing packets to login" />
+    <MESSAGE value="organize packages" />
+    <MESSAGE value="client factory" />
+    <option name="LAST_COMMIT_MESSAGE" value="client factory" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/decoders/PacketParser.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/networking/src/main/java/encoders/GameServerMessageLogger.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="networking.packets.IncomingPacket" memberName="header" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1711855886818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

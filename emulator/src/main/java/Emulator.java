@@ -6,18 +6,18 @@ import configuration.ConfigurationManager;
 import configuration.IConfigurationManager;
 import core.IEmulator;
 import core.IHotel;
-import habbohotel.Hotel;
-import habbohotel.navigator.NavigatorModule;
-import habbohotel.rooms.IRoomManager;
-import habbohotel.rooms.RoomModule;
-import habbohotel.users.HabboModule;
+import habbo.Hotel;
+import habbo.habbos.HabboModule;
+import habbo.navigator.NavigatorModule;
+import habbo.rooms.IRoomManager;
+import habbo.rooms.RoomModule;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
-import networking.util.AutoBindIncomingEventsModule;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import repositories.RepositoryModule;
 import storage.IConnection;
+import packets.AutoBindIncomingEventsModule;
 
 
 @Singleton
@@ -45,13 +45,13 @@ public class Emulator extends AbstractModule implements IEmulator {
     public static void main(String[] args) {
         var injector = Guice.createInjector(
                 new Emulator(),
+                new RepositoryModule(),
                 new AutoBindIncomingEventsModule(),
                 new NetworkModule(),
                 new RoomModule(),
                 new ConnectionModule(),
                 new NavigatorModule(),
-                new HabboModule(),
-                new RepositoryModule()
+                new HabboModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);

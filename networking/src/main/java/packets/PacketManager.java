@@ -8,11 +8,11 @@ import networking.client.INitroClient;
 import networking.client.INitroClientManager;
 import networking.packets.IPacketManager;
 import networking.packets.IncomingPacket;
-import networking.packets.incoming.IncomingEvent;
-import networking.packets.incoming.guest.SecureLoginEvent;
 import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.incoming.IncomingEvent;
+import packets.incoming.guest.SecureLoginEvent;
 
 import java.util.HashMap;
 import java.util.List;
