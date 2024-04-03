@@ -15,6 +15,7 @@ import habbo.habbos.HabboModule;
 import habbo.navigator.NavigatorModule;
 import habbo.rooms.IRoomManager;
 import habbo.rooms.RoomModule;
+import habbo.rooms.RoomPrepareJoinPipeline;
 import habbo.rooms.components.objects.ObjectModule;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
@@ -86,6 +87,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IEmulator.class).to(Emulator.class);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
+        bind(RoomPrepareJoinPipeline.class);
     }
 
 
@@ -95,9 +97,10 @@ public class Emulator extends AbstractModule implements IEmulator {
 
         try {
             emulatorSettings.init();
-            networkingManager.init();
+            hotel.init();
             furnitureManager.init();
             roomManager.init();
+            networkingManager.init();
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

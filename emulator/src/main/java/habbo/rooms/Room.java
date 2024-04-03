@@ -33,11 +33,16 @@ public class Room implements IRoom {
     @Inject
     private IPathfinder pathfinder;
 
+    @Inject
+    RoomPrepareJoinPipeline joinPipeline;
+
     public Room(int roomId, String roomName) {
         this.id = roomId;
         this.name = roomName;
         this.maxUsers = 0;
         this.password = "";
+
+        this.joinPipeline.process(new JoinEvent(null, null, null));
     }
 
 
@@ -107,6 +112,7 @@ public class Room implements IRoom {
         this.entitiesComponent.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
+        this.joinPipeline.init();
     }
 
     @Override
