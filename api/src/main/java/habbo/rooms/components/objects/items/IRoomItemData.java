@@ -9,8 +9,6 @@ public interface IRoomItemData {
 
     int getOwnerId();
 
-    void setOwnerId(int userId);
-
     Position getPosition();
 
     void setPosition(Position position);

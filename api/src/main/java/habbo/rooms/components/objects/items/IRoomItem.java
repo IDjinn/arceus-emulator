@@ -7,12 +7,16 @@ import habbo.rooms.components.objects.IRoomObject;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 
+import java.util.Optional;
+
 public interface IRoomItem extends IRoomObject, ISerializable {
     public long getId();
 
     public IRoom getRoom();
 
-    public IHabboData getOwnerData();
+    public Optional<IHabboData> getOwnerData();
+
+    public void setOwnerData(IHabboData ownerData);
 
     public int getGroup();
 

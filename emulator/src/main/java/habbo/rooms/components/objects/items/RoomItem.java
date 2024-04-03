@@ -5,11 +5,14 @@ import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
 import networking.packets.OutgoingPacket;
 
+import java.util.Optional;
+
 public abstract class RoomItem implements IRoomItem {
     private final IRoomItemData itemData;
     private final IRoom room;
     private final int virtualId;
     private final IFurniture furniture;
+    private Optional<IHabboData> ownerData;
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         this.itemData = itemData;
@@ -50,8 +53,13 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public IHabboData getOwnerData() {
-        return null;
+    public Optional<IHabboData> getOwnerData() {
+        return this.ownerData;
+    }
+
+    @Override
+    public void setOwnerData(IHabboData ownerData) {
+        this.ownerData = Optional.of(ownerData);
     }
 
     @Override

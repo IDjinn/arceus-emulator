@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
+import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
@@ -26,11 +27,13 @@ public class RoomItemFactory implements IRoomItemFactory {
     public final Map<String, Class<? extends IRoomItem>> itemDefinitionMap;
     public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
     private final IFurnitureManager furnitureManager;
+    private final IHabboManager habboManager;
     private Logger logger = LogManager.getLogger();
 
     @Inject
-    public RoomItemFactory(IFurnitureManager furnitureManager) {
+    public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager) {
         this.furnitureManager = furnitureManager;
+        this.habboManager = habboManager;
         this.itemDefinitionMap = new HashMap<>();
         this.itemConstructorCache = new HashMap<>();
     }
@@ -51,12 +54,16 @@ public class RoomItemFactory implements IRoomItemFactory {
         if (furnitureData == null)
             throw new IllegalArgumentException(STR."Furniture data  not found for id \{itemData.getFurnitureId()}");
 
-        return switch (furnitureData.getType()) {
+        var item = switch (furnitureData.getType()) {
             case FLOOR -> createFloorObject(itemData, room, furnitureData);
             case WALL -> createWallObject(itemData, room, furnitureData);
             case null, default ->
                     throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getType().toString()} is not valid object");
         };
+
+        var ownerData = habboManager.getHabboData(itemData.getOwnerId());
+        ownerData.ifPresent(item::setOwnerData);
+        return item;
     }
 
     private IFloorObject createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {

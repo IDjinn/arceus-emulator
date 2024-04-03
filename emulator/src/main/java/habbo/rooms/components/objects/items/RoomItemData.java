@@ -38,13 +38,7 @@ public class RoomItemData implements IRoomItemData {
     public int getOwnerId() {
         return ownerId;
     }
-
-    @Override
-    public void setOwnerId(int userId) {
-        this.ownerId = userId;
-    }
-
-
+    
     @Override
     public Position getPosition() {
         return this.floorPosition;
