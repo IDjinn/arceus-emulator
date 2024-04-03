@@ -67,7 +67,7 @@ public class PacketManager implements IPacketManager {
     public void Parse(IncomingPacket packet, INitroClient client) {
         var incomingEvent = incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
-            logger.debug("[-> incoming] {} was not found", packet.getHeader());
+            logger.warn("[-> incoming] {} was not found", packet.getHeader());
             return;
         }
 

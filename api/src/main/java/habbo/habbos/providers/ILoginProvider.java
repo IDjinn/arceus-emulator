@@ -1,4 +1,4 @@
-package habbohotel.users.providers;
+package habbo.habbos.providers;
 
 import io.netty.channel.ChannelHandlerContext;
 

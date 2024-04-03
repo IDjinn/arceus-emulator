@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import results.ConnectionResult;
-import results.ConnectionResultConsumer;
 import storage.IConnection;
 import storage.repositories.IConnectionRepository;
 import storage.results.IConnectionResult;
+import storage.results.IConnectionResultConsumer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class ConnectionRepository implements IConnectionRepository {
 
     protected Logger logger = LogManager.getLogger();
 
-    public void select(String query, ConnectionResultConsumer resultConsumer, Object... parameters) {
+    public void select(String query, IConnectionResultConsumer resultConsumer, Object... parameters) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet selectResult = null;
@@ -40,9 +40,9 @@ public class ConnectionRepository implements IConnectionRepository {
         } catch (Exception e) {
             this.logger.error(STR."Error while executing select query: \{query}", e);
         } finally {
-            this.connection.getConnectionContext().getProvider().closeConnection(connection);
-            this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
             this.connection.getConnectionContext().getProvider().closeResultSet(selectResult);
+            this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
+            this.connection.getConnectionContext().getProvider().closeConnection(connection);
         }
     }
 

@@ -41,8 +41,8 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     }
 
     @Override
-    public IPlayerEntity createHabboEntity(IHabbo habbo) {
-        var entity = new PlayerEntity(habbo);
+    public IPlayerEntity createHabboEntity(IHabbo habbo, IRoom room) {
+        var entity = new PlayerEntity(habbo, room);
         entities.put(entity.getVirtualId(), entity);
         players.put(entity.getVirtualId(), entity);
         return entity;

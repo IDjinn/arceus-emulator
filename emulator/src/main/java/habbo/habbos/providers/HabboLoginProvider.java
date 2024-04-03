@@ -2,8 +2,7 @@ package habbo.habbos.providers;
 
 import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
-import habbo.habbos.IHabboFactory;
-import habbohotel.users.providers.ILoginProvider;
+import habbo.habbos.factories.IHabboFactory;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.client.INitroClientFactory;
@@ -25,9 +24,9 @@ import packets.outgoing.session.rooms.FavoriteRoomsCountComposer;
 import packets.outgoing.session.rooms.UserHomeRoomComposer;
 import packets.outgoing.session.wardobe.UserClothesComposer;
 import storage.repositories.habbo.IHabboRepository;
-import storage.results.IConnectionResult;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HabboLoginProvider implements ILoginProvider {
     @Inject
@@ -48,32 +47,38 @@ public class HabboLoginProvider implements ILoginProvider {
             return false;
         }
 
-        int habboId = habboRepository.getHabboIdByAuthTicket(authTicket);
+        final AtomicInteger habboId = new AtomicInteger(-1);
 
-        if(habboId <= 0) {
+        habboRepository.getHabboIdByAuthTicket(authTicket, consumer -> {
+            if(consumer == null) return;
+
+            habboId.set(consumer.getInt("id"));
+        });
+
+        if(habboId.get() <= 0) {
             return false;
         }
 
-        return !clientManager.hasLoggedHabboById(habboId);
+        return !clientManager.hasLoggedHabboById(habboId.get());
     }
 
     public void attemptLogin(ChannelHandlerContext ctx, String authTicket) {
-        final IConnectionResult habboData = habboRepository.getHabboDataByAuthTicket(authTicket);
+        habboRepository.getHabboDataByAuthTicket(authTicket, result -> {
+            if(result == null) {
+                clientManager.disconnectGuest(ctx);
+                return;
+            }
 
-        if(habboData == null) {
-            clientManager.disconnectGuest(ctx);
-            return;
-        }
+            INitroClient client = clientFactory.create(ctx);
+            ctx.attr(GameServerAttributes.CLIENT).set(client);
 
-        INitroClient client = clientFactory.create(ctx);
-        ctx.attr(GameServerAttributes.CLIENT).set(client);
+            final IHabbo habbo = habboFactory.create(client, result);
 
-        final IHabbo habbo = habboFactory.create(client, habboData);
+            client.setHabbo(habbo);
+            clientManager.addClient(client);
 
-        client.setHabbo(habbo);
-        clientManager.addClient(client);
-
-        this.sendLoginPackets(client);
+            this.sendLoginPackets(client);
+        });
     }
 
     private void sendLoginPackets(INitroClient client) {

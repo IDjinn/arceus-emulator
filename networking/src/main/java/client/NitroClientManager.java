@@ -41,7 +41,7 @@ public class NitroClientManager implements INitroClientManager {
 
     @Override
     public boolean hasLoggedHabboById(int habboId) {
-        return this.clients.values().stream().anyMatch(client -> client.getHabbo().getId() == habboId);
+        return this.clients.values().stream().anyMatch(client -> client.getHabbo().getData().getId() == habboId);
     }
 
     @Override

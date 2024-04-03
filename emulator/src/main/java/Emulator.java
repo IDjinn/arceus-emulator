@@ -3,7 +3,9 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import configuration.ConfigurationManager;
+import configuration.ConfigurationModule;
 import configuration.IConfigurationManager;
+import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
 import habbo.Hotel;
@@ -24,8 +26,17 @@ import packets.AutoBindIncomingEventsModule;
 public class Emulator extends AbstractModule implements IEmulator {
     private final Logger logger = LogManager.getLogger();
 
+    /**
+     * The configuration manager (based in config.properties local file).
+     */
     @Inject
     private IConfigurationManager configurationManager;
+
+    /**
+     * The emulator settings (based in the emulator_settings table).
+     */
+    @Inject
+    private IEmulatorSettings emulatorSettings;
 
     @Inject
     private IConnection connection;
@@ -51,7 +62,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new RoomModule(),
                 new ConnectionModule(),
                 new NavigatorModule(),
-                new HabboModule()
+                new HabboModule(),
+                new ConfigurationModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);
@@ -75,6 +87,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         logger.info("Orion has been started!");
 
         try {
+            emulatorSettings.init();
             networkingManager.init();
             roomManager.init();
         } catch (Exception e) {

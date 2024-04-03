@@ -8,6 +8,7 @@ import networking.packets.IncomingPacket;
 import org.jetbrains.annotations.Nullable;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
+import packets.outgoing.rooms.prepare.HotelViewComposer;
 
 @Singleton
 public class RequestRoomLoadEvent extends IncomingEvent {
@@ -29,8 +30,9 @@ public class RequestRoomLoadEvent extends IncomingEvent {
         @Nullable var password = packet.readString();
 
         var room = roomManager.tryLoadRoom(id);
+
         if (room == null) {
-//   TODO:         client.sendMessage(new OutgoingPacket(OutgoingHeaders.RoomLoadFailed));
+            client.sendMessage(new HotelViewComposer());
             return;
         }
 

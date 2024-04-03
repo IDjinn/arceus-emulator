@@ -15,11 +15,11 @@ public class RoomUserWalkEvent extends IncomingEvent {
 
     @Override
     public void Parse(IncomingPacket packet, INitroClient client) {
-        if (!client.getHabbo().isInRoom())
-            return;
+        if (client.getHabbo().getPlayerEntity() == null) return;
 
-        var player = client.getHabbo().getPlayerEntity();
-        player.setPosition(new Position(packet.readInt(), packet.readInt()));
-        player.getClient().sendMessage(new RoomUserStatusComposer(player.getRoom().getEntitiesComponent().getEntities()));
+        var entity = client.getHabbo().getPlayerEntity();
+
+        entity.setPosition(new Position(packet.readInt(), packet.readInt()));
+        entity.getClient().sendMessage(new RoomUserStatusComposer(entity.getRoom().getEntitiesComponent().getEntities()));
     }
 }
