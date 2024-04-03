@@ -102,6 +102,7 @@ public class Pathfinder implements IPathfinder {
                 return PathUtil.getInstance().EmptyPath;
 
             var current = openSet.poll();
+            assert current != null;
             closedSet.add(current.getPosition());
             openSet.remove(current);
 
@@ -118,18 +119,11 @@ public class Pathfinder implements IPathfinder {
             }
 
             for (var neighbor : getNeighbors(gameMap, current.getPosition(), closedSet)) {
-//                if (!CanWalk(current.Position, neighbor, goal))
-//                {
-//                    closedSet.Add(neighbor.Position);
-//                    continue;
-//                }
-
-                var walkHeight = 0d;//GetWalkHeightOfMovement(current.Position, neighbor);
                 neighbor.setParentNode(current);
                 if (!openSet.contains(neighbor)) {
-                    openSet.add(neighbor);
                     neighbor.setGCosts(calculateGCost(current.getPosition(), neighbor.getPosition(), true));
                     neighbor.setHCosts(calculateHCost(neighbor.getPosition(), goal));
+                    openSet.add(neighbor);
                     size++;
                 } else if (BasicCost + neighbor.getGCosts() < neighbor.getFCosts()) {
                     neighbor.setGCosts(BasicCost);
