@@ -8,11 +8,7 @@ import utils.Position;
 import java.util.*;
 
 public class Pathfinder implements IPathfinder {
-    private final IRoom room;
-
-    public Pathfinder(IRoom room) {
-        this.room = room;
-    }
+    private IRoom room;
 
     private static final int VerticalCostFactor = 22;
     private static final int DiagonalCost = 14;
@@ -58,8 +54,8 @@ public class Pathfinder implements IPathfinder {
     }
 
     @Override
-    public void init() {
-
+    public void init(IRoom room) {
+        this.room = room;
     }
 
     @Override

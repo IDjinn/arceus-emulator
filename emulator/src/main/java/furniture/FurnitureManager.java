@@ -1,6 +1,7 @@
 package furniture;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureFactory;
 import habbo.furniture.IFurnitureManager;
@@ -11,6 +12,7 @@ import storage.repositories.furniture.IFurnitureRepository;
 
 import java.util.HashMap;
 
+@Singleton
 public class FurnitureManager implements IFurnitureManager {
     private final IFurnitureRepository furnitureRepository;
     private final HashMap<Integer, IFurniture> furnitures;

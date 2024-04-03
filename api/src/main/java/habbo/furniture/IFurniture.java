@@ -23,4 +23,10 @@ public interface IFurniture extends IDisposable {
     public String getInteractionType();
 
     public int getInteractionModesCount();
+
+    boolean canSit();
+
+    boolean canWalk();
+
+    boolean canLay();
 }

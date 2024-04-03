@@ -36,13 +36,10 @@ public class PathfinderFucked implements IPathfinder {
         diagonalDirections.putAll(adjacentDirections);
     }
 
-    private final IRoom room;
+    private IRoom room;
     private Logger logger = LogManager.getLogger();
 
 
-    public PathfinderFucked(IRoom room) {
-        this.room = room;
-    }
 
     private static float calculateHCost(Position a, Position b) {
         var dx = Math.abs(b.getX() - a.getX());
@@ -202,8 +199,8 @@ public class PathfinderFucked implements IPathfinder {
     }
 
     @Override
-    public void init() {
-
+    public void init(IRoom room) {
+        this.room = room;
     }
 
     @Override

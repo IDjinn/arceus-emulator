@@ -13,12 +13,11 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class RoomEntitiesComponent implements IRoomEntitiesComponent {
-    private final IRoom room;
+    private IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
     private final ConcurrentHashMap<Integer, IHabboEntity> players;
 
-    public RoomEntitiesComponent(IRoom room) {
-        this.room = room;
+    public RoomEntitiesComponent() {
         entities = new ConcurrentHashMap<>();
         players = new ConcurrentHashMap<>();
     }
@@ -29,8 +28,9 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     }
 
     @Override
-    public void init() {
-        room.schedule(this::cycle);
+    public void init(IRoom room) {
+        this.room = room;
+        this.room.schedule(this::cycle);
     }
 
     @SuppressWarnings({"BusyWait", "InfiniteLoopStatement"})

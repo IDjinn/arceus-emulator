@@ -3,7 +3,7 @@ package habbo.rooms;
 public interface IRoomComponent {
     public IRoom getRoom();
 
-    public void init();
+    public void init(IRoom room);
 
     public void onRoomLoaded();
 

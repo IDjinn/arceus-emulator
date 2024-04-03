@@ -1,12 +1,11 @@
 package habbo.rooms;
 
+import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntitiesComponent;
-import habbo.rooms.components.entities.RoomEntitiesComponent;
-import habbo.rooms.components.gamemap.GameMap;
 import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.objects.IObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
-import habbo.rooms.components.pathfinder.Pathfinder;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
@@ -22,11 +21,16 @@ public class Room implements IRoom {
     private String password;
     private int maxUsers;
 
-    private final IGameMap gameMap;
-    private final IRoomEntitiesComponent entitiesComponent;
+    @Inject
+    private IObjectManager objectManager;
+    @Inject
+    private IGameMap gameMap;
+    @Inject
+    private IRoomEntitiesComponent entitiesComponent;
 
     // TODO: this is not the final solution, but we will use it for now. Just components must be able to inject tasks into this executor.
     private final Executor roomRunner = Executors.newVirtualThreadPerTaskExecutor();
+    @Inject
     private IPathfinder pathfinder;
 
     public Room(int roomId, String roomName) {
@@ -34,10 +38,6 @@ public class Room implements IRoom {
         this.name = roomName;
         this.maxUsers = 0;
         this.password = "";
-
-        this.gameMap = new GameMap(this);
-        this.entitiesComponent = new RoomEntitiesComponent(this);
-        this.pathfinder = new Pathfinder(this);
     }
 
 
@@ -103,13 +103,26 @@ public class Room implements IRoom {
 
     @Override
     public void init() {
-        this.gameMap.init();
-        this.entitiesComponent.init();
+        this.gameMap.init(this);
+        this.entitiesComponent.init(this);
+        this.pathfinder.init(this);
+        this.objectManager.init(this);
     }
 
     @Override
     public void destroy() {
+        this.gameMap.destroy();
+        this.entitiesComponent.destroy();
+        this.pathfinder.destroy();
+        this.objectManager.destroy();
+    }
 
+    @Override
+    public void onLoaded() {
+        this.gameMap.onRoomLoaded();
+        this.entitiesComponent.onRoomLoaded();
+        this.pathfinder.onRoomLoaded();
+        this.objectManager.onRoomLoaded();
     }
 
     @Override
@@ -257,5 +270,10 @@ public class Room implements IRoom {
     @Override
     public IPathfinder getPathfinder() {
         return this.pathfinder;
+    }
+
+    @Override
+    public IObjectManager getObjectManager() {
+        return this.objectManager;
     }
 }

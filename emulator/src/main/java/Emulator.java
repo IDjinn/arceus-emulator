@@ -15,6 +15,7 @@ import habbo.habbos.HabboModule;
 import habbo.navigator.NavigatorModule;
 import habbo.rooms.IRoomManager;
 import habbo.rooms.RoomModule;
+import habbo.rooms.components.objects.ObjectModule;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
@@ -68,7 +69,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new NavigatorModule(),
                 new HabboModule(),
                 new ConfigurationModule(),
-                new FurnitureModule()
+                new FurnitureModule(),
+                new ObjectModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);

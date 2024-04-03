@@ -20,13 +20,10 @@ public class GameMap implements IGameMap {
             "xxxx00000000\n" +
             "xxxxxxxxxxxx\n" +
             "xxxxxxxxxxxx".replaceAll("\r", "");
-    private final IRoom room;
+    private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
 
-    public GameMap(IRoom room) {
-        this.room = room;
-    }
 
     private static int map_height_lookup(char tile) {
         return switch (tile) {
@@ -75,7 +72,8 @@ public class GameMap implements IGameMap {
     }
 
     @Override
-    public void init() {
+    public void init(IRoom room) {
+        this.room = room;
         try {
             var map = MODEL_A.split("\n");
             var modelWidth = map.length;

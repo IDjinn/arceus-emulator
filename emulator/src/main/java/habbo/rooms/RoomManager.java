@@ -46,6 +46,7 @@ public class RoomManager implements IRoomManager {
     public void init() {
         var room = roomFactory.createRoom(1, "first-room");
         room.init();
+        room.onLoaded();
         rooms.put(room.getId(), room);
     }
 

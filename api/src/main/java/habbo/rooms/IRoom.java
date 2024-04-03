@@ -3,6 +3,7 @@ package habbo.rooms;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntitiesComponent;
 import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.objects.IObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
@@ -38,6 +39,8 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
 
     public void destroy();
 
+    public void onLoaded();
+
     void prepareForHabbo(IHabbo habbo, String password);
 
     void join(IHabbo habbo);
@@ -53,4 +56,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public void schedule(Runnable runnable);
 
     public IPathfinder getPathfinder();
+
+    IObjectManager getObjectManager();
 }

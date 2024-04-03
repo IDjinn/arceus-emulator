@@ -85,4 +85,19 @@ public class Furniture implements IFurniture {
     public int getInteractionModesCount() {
         return interactionModesCount;
     }
+
+    @Override
+    public boolean canSit() {
+        return false;
+    }
+
+    @Override
+    public boolean canWalk() {
+        return false;
+    }
+
+    @Override
+    public boolean canLay() {
+        return false;
+    }
 }
