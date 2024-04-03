@@ -77,8 +77,11 @@ public class ObjectManager implements IObjectManager {
 
     @Override
     public long getVirtualIdForItemId(long itemId) {
+        var item = this.items.get(itemId);
+        assert item != null;
+        
         var newId = this.virtualIdCounter.getAndIncrement();
-        this.itemsByVirtualId.put(newId, this.items.get(itemId));
+        this.itemsByVirtualId.put(newId, item);
         return newId;
     }
 
