@@ -1,10 +1,9 @@
 package habbo.habbos;
 
-import habbo.rooms.IRoom;
-import habbo.rooms.entities.IHabboEntity;
 import habbo.habbos.data.IHabboData;
 import habbo.habbos.data.IHabboSettings;
-import habbo.rooms.entities.IPlayerEntity;
+import habbo.rooms.IRoom;
+import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
 
 import javax.annotation.Nullable;

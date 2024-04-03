@@ -187,7 +187,8 @@ public class Room implements IRoom {
     @Override
     public void prepareForHabbo(IHabbo habbo, String password) {
         // TODO: IN ROOM CHECKS
-        var entity = getEntitiesComponent().createHabboEntity(habbo, this);
+        habbo.setRoom(this);
+        var entity = getEntitiesComponent().createHabboEntity(habbo);
 
         habbo.setPlayerEntity(entity);
 

@@ -4,57 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="organize packages">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/configuration/IEmulatorSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/data/IHabboData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/data/IHabboSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/factories/IHabboDataFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/fillers/IFillable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/emulator/IEmulatorRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/storage/results/IConnectionResultConsumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/configuration/ConfigurationModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/configuration/EmulatorSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/data/HabboData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/data/HabboSettings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/factories/HabboDataFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/HotelViewComposer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/queries/emulator/EmulatorQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/emulator/EmulatorRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabbo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/factories/IHabboFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/entities/IRoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/entities/IRoomEntitiesComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbohotel/users/providers/ILoginProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/providers/ILoginProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/storage/repositories/habbo/IHabboRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/storage/repositories/habbo/IHabboRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/Emulator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/Habbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/Habbo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/HabboModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/HabboModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/factories/HabboFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/factories/HabboFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/providers/HabboLoginProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/providers/HabboLoginProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/RoomManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/RoomManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/entities/RoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/entities/RoomEntitiesComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/PlayerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/NetworkingManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/client/NitroClientManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/IncomingEventAsListProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/IncomingEventAsListProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomHeightmapEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomHeightmapEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomLoadEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/RequestRoomLoadEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCreditsComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCreditsComposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCurrencyComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/purse/UserCurrencyComposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserDataComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/session/logindata/UserDataComposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/repositories/ConnectionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/ConnectionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/repositories/RepositoryModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/RepositoryModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/repositories/habbo/HabboRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/repositories/habbo/HabboRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/src/main/java/results/ConnectionResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/results/ConnectionResult.java" afterDir="false" />
-    </list>
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="organize packages" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,33 +58,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Emulator.executor": "Debug",
-    "Attach to process.pid 31872.executor": "ProcessAttachDebug",
-    "Maven.parent [clean].executor": "Run",
-    "Maven.parent [compile].executor": "Run",
-    "Maven.parent [install].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Code/orion-emulator/emulator/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.propDebugger",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Emulator.executor&quot;: &quot;Debug&quot;,
+    &quot;Attach to process.pid 31872.executor&quot;: &quot;ProcessAttachDebug&quot;,
+    &quot;Maven.parent [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Code/orion-emulator/emulator/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="habbohotel.rooms.units" />
@@ -176,6 +126,13 @@
         <item itemvalue="Application.Emulator" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -376,9 +333,9 @@
     <MESSAGE value="room entity composers and room join" />
     <MESSAGE value="fix append Z room unit position in outgoings" />
     <MESSAGE value="added missing packets to login" />
-    <MESSAGE value="organize packages" />
     <MESSAGE value="client factory" />
-    <option name="LAST_COMMIT_MESSAGE" value="client factory" />
+    <MESSAGE value="organize packages" />
+    <option name="LAST_COMMIT_MESSAGE" value="organize packages" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />

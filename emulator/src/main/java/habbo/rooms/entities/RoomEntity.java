@@ -13,7 +13,7 @@ public abstract class RoomEntity implements IRoomEntity {
     private final ConcurrentHashMap<RoomEntityStatus, StatusBucket> statusBuckets;
     private final int virtualId;
     private String name;
-    private IRoom room;
+    private final IRoom room;
     private Position position;
     private Direction direction;
     private boolean needUpdateStatus;

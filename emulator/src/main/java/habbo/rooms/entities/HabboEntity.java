@@ -1,7 +1,6 @@
 package habbo.rooms.entities;
 
 import habbo.habbos.IHabbo;
-import habbo.rooms.IRoom;
 import networking.client.INitroClient;
 import networking.packets.OutgoingPacket;
 
@@ -10,7 +9,7 @@ public class HabboEntity extends RoomEntity implements IHabboEntity {
     private final IHabbo habbo;
 
     public HabboEntity(IHabbo habbo) { // TODO: VIRTUAL ID
-        super(habbo.getRoom(), habbo.getId());
+        super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
     }
 
