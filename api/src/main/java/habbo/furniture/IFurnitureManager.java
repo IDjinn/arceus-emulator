@@ -1,6 +1,5 @@
-package core.furniture;
+package habbo.furniture;
 
-import com.google.common.collect.ImmutableCollection;
 import core.IHotelService;
 import org.jetbrains.annotations.Nullable;
 

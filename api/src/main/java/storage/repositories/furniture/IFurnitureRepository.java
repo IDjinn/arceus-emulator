@@ -1,10 +1,7 @@
 package storage.repositories.furniture;
 
-import core.furniture.IFurniture;
-
-import java.util.List;
-import java.util.SequencedCollection;
+import storage.results.IConnectionResultConsumer;
 
 public interface IFurnitureRepository {
-    public SequencedCollection<IFurniture> getAllFurniture();
+    public void getAllFurniture(IConnectionResultConsumer consumer);
 }

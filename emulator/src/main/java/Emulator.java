@@ -8,7 +8,9 @@ import configuration.IConfigurationManager;
 import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
+import furniture.FurnitureModule;
 import habbo.Hotel;
+import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
 import habbo.navigator.NavigatorModule;
 import habbo.rooms.IRoomManager;
@@ -17,9 +19,9 @@ import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.AutoBindIncomingEventsModule;
 import repositories.RepositoryModule;
 import storage.IConnection;
-import packets.AutoBindIncomingEventsModule;
 
 
 @Singleton
@@ -52,6 +54,8 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Inject
     private IPacketManager packetManager;
+    @Inject
+    private IFurnitureManager furnitureManager;
 
     public static void main(String[] args) {
         var injector = Guice.createInjector(
@@ -63,7 +67,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new ConnectionModule(),
                 new NavigatorModule(),
                 new HabboModule(),
-                new ConfigurationModule()
+                new ConfigurationModule(),
+                new FurnitureModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);
@@ -89,6 +94,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         try {
             emulatorSettings.init();
             networkingManager.init();
+            furnitureManager.init();
             roomManager.init();
         } catch (Exception e) {
             logger.error(e.getMessage());
