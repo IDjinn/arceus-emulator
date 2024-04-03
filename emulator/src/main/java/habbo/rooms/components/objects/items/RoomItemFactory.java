@@ -88,12 +88,12 @@ public class RoomItemFactory implements IRoomItemFactory {
                 if (itemConstructorCache.containsKey(furniture.getInteractionType())) {
                     constructor = itemConstructorCache.get(furniture.getInteractionType());
                 } else {
-                    constructor = itemDefinitionMap.get(furniture.getInteractionType()).getConstructor();
+                    constructor = itemDefinitionMap.get(furniture.getInteractionType()).getConstructor(IRoomItemData.class, IRoom.class, IFurniture.class);
                     itemConstructorCache.put(furniture.getInteractionType(), constructor);
                 }
 
                 if (constructor != null)
-                    return constructor.newInstance(data, room);
+                    return constructor.newInstance(data, room, furniture);
             } catch (Exception e) {
                 logger.warn(STR."Failed to create instance for item: \{furniture.getId()}, type: \{furniture.getInteractionType()}", e);
             }
@@ -102,7 +102,7 @@ public class RoomItemFactory implements IRoomItemFactory {
 //        if (furniture.getType().equals(FurnitureType.WALL))
 //            return new WallItem(data, room);
         if (furniture.getType().equals(FurnitureType.FLOOR))
-            return new DefaultFloorItem(data, room);
+            return new DefaultFloorItem(data, room, furniture);
 
         return null;
     }

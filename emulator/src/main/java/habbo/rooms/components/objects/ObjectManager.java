@@ -1,24 +1,25 @@
 package habbo.rooms.components.objects;
 
 import com.google.inject.Inject;
+import habbo.furniture.FurnitureType;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
+import habbo.rooms.components.objects.items.floor.IFloorObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import storage.repositories.rooms.IRoomItemsRepository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.SequencedCollection;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 public class ObjectManager implements IObjectManager {
     private final HashMap<Long, IRoomItem> items;
-    private final AtomicLong virtualIdCounter;
-    private final HashMap<Long, IRoomItem> itemsByVirtualId;
+    private final HashMap<Long, IFloorObject> floorItems;
+    private final AtomicInteger virtualIdCounter;
+    private final HashMap<Integer, IRoomItem> itemsByVirtualId;
     private Logger logger = LogManager.getLogger();
     private IRoom room;
     @Inject
@@ -26,11 +27,15 @@ public class ObjectManager implements IObjectManager {
     @Inject
     private IRoomItemFactory roomItemFactory;
 
+    private final HashSet<String> furnitureOwners;
+
 
     public ObjectManager() {
         items = new HashMap<>();
         itemsByVirtualId = new HashMap<>();
-        virtualIdCounter = new AtomicLong(1);
+        virtualIdCounter = new AtomicInteger(1);
+        furnitureOwners = new HashSet<>(1);
+        floorItems = new HashMap<>();
     }
 
     @Override
@@ -47,7 +52,7 @@ public class ObjectManager implements IObjectManager {
 
             try {
                 var item = this.roomItemFactory.create(result, this.getRoom());
-                this.items.put(item.getId(), item);
+                this.addRoomItem(item);
             } catch (Exception e) {
                 logger.error(e);
             }
@@ -66,8 +71,22 @@ public class ObjectManager implements IObjectManager {
     }
 
     @Override
+    public void addRoomItem(IRoomItem roomItem) {
+        synchronized (this.items) {
+            this.items.put(roomItem.getId(), roomItem);
+            if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
+                this.floorItems.put(roomItem.getId(), (IFloorObject) roomItem);
+        }
+    }
+
+    @Override
     public Collection<IRoomItem> getAllItems() {
         return this.items.values();
+    }
+
+    @Override
+    public Collection<IFloorObject> getAllFloorItems() {
+        return this.floorItems.values();
     }
 
     @Override
@@ -76,7 +95,7 @@ public class ObjectManager implements IObjectManager {
     }
 
     @Override
-    public long getVirtualIdForItemId(long itemId) {
+    public int getVirtualIdForItemId(long itemId) {
         var item = this.items.get(itemId);
         assert item != null;
         
@@ -86,7 +105,11 @@ public class ObjectManager implements IObjectManager {
     }
 
     @Override
-    public @Nullable IRoomItem getItemByVirtualId(long virtualId) {
+    public @Nullable IRoomItem getItemByVirtualId(int virtualId) {
         return this.itemsByVirtualId.get(virtualId);
+    }
+
+    public List<String> getFurnitureOwners() {
+        return furnitureOwners.stream().toList();
     }
 }

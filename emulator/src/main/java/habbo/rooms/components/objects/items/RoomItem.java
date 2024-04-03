@@ -1,22 +1,26 @@
 package habbo.rooms.components.objects.items;
 
+import habbo.furniture.IFurniture;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
+import networking.packets.OutgoingPacket;
 
-public class RoomItem implements IRoomItem {
+public abstract class RoomItem implements IRoomItem {
     private final IRoomItemData itemData;
     private final IRoom room;
-    private final long virtualId;
+    private final int virtualId;
+    private final IFurniture furniture;
 
-    public RoomItem(IRoomItemData itemData, IRoom room) {
+    public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         this.itemData = itemData;
         this.room = room;
+        this.furniture = furniture;
 
         this.virtualId = this.getRoom().getObjectManager().getVirtualIdForItemId(this.getId());
     }
 
     @Override
-    public long getVirtualId() {
+    public int getVirtualId() {
         return virtualId;
     }
 
@@ -58,5 +62,27 @@ public class RoomItem implements IRoomItem {
     @Override
     public IRoomItemData getItemData() {
         return this.itemData;
+    }
+
+    @Override
+    public IFurniture getFurniture() {
+        return this.furniture;
+    }
+
+    @Override
+    public ILimitedData getLimitedData() {
+        return this.getItemData().getLimitedEdition();
+    }
+
+    @Override
+    public boolean isLimited() {
+        return this.getLimitedData().getLimitedRareTotal() > 0;
+    }
+
+    @Override
+    public void serialize(OutgoingPacket packet) {
+        packet
+                .appendInt(this.getVirtualId())
+                .appendInt(this.getFurniture().getSpriteId());
     }
 }

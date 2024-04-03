@@ -3,7 +3,7 @@ package habbo.rooms.components.objects;
 import habbo.rooms.IRoom;
 
 public interface IRoomObject {
-    public long getVirtualId();
+    public int getVirtualId();
 
     public IRoom getRoom();
 

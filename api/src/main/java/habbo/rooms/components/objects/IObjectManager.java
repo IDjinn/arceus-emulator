@@ -2,18 +2,25 @@ package habbo.rooms.components.objects;
 
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
+import habbo.rooms.components.objects.items.floor.IFloorObject;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.List;
 import java.util.SequencedCollection;
 import java.util.function.Predicate;
 
 public interface IObjectManager extends IRoomComponent {
+    public void addRoomItem(IRoomItem roomItem);
     public Collection<IRoomItem> getAllItems();
+
+    public Collection<IFloorObject> getAllFloorItems();
 
     public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate);
 
-    public long getVirtualIdForItemId(long itemId);
+    public int getVirtualIdForItemId(long itemId);
 
-    public @Nullable IRoomItem getItemByVirtualId(long virtualId);
+    public @Nullable IRoomItem getItemByVirtualId(int virtualId);
+
+    List<String> getFurnitureOwners();
 }
