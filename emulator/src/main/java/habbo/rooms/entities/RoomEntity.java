@@ -113,6 +113,9 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     private void handleWalking() {
+        if (this.getNextPosition() == null && this.getGoal() == null && this.getWalkPath().isEmpty())
+            return;
+        
         if (this.getNextPosition() != null) {
             this.setPosition(this.getNextPosition());
 
