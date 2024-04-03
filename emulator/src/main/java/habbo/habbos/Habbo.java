@@ -1,59 +1,30 @@
 package habbo.habbos;
 
-import habbo.rooms.IRoom;
+import habbo.habbos.data.HabboData;
+import habbo.habbos.data.HabboSettings;
+import habbo.habbos.data.IHabboData;
+import habbo.habbos.data.IHabboSettings;
 import habbo.rooms.entities.IHabboEntity;
+import habbo.rooms.entities.IPlayerEntity;
 import networking.client.INitroClient;
 import org.jetbrains.annotations.Nullable;
+import storage.results.IConnectionResult;
 
 public class Habbo implements IHabbo {
     private final INitroClient client;
-    private final int id;
-    private String name;
+
     private @Nullable IRoom room;
     private @Nullable IHabboEntity entity;
-    private String look = "he-3884-92-93.ch-4004-92.hr-3251-39-49.hd-3100-5.lg-3078-110";
-    private String gender = "M";
 
-    public Habbo(INitroClient client, int id, String name) {
+    private final IHabboData data;
+
+    private final IHabboSettings settings;
+
+    public Habbo(INitroClient client, IConnectionResult result) {
         this.client = client;
-        this.id = id;
-        this.name = name;
-    }
 
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getMotto() {
-        return null;
-    }
-
-    @Override
-    public void setMotto(String motto) {
-
-    }
-
-    @Override
-    public String getLook() {
-        return this.look;
-    }
-
-    @Override
-    public void setLook(String look) {
-        assert look != null;
-        this.look = look;
+        this.data = new HabboData(result);
+        this.settings = new HabboSettings(result);
     }
 
     public INitroClient getClient() {
@@ -83,13 +54,13 @@ public class Habbo implements IHabbo {
     }
 
     @Override
-    public String getGender() {
-        return this.gender;
+    public IHabboData getData() {
+        return this.data;
     }
 
     @Override
-    public boolean isInRoom() {
-        return this.room != null;
+    public IHabboSettings getSettings() {
+        return this.settings;
     }
 }
 

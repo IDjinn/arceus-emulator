@@ -2,7 +2,7 @@ package packets.incoming.guest;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import habbohotel.users.providers.ILoginProvider;
+import habbo.habbos.providers.ILoginProvider;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClientManager;
 import networking.packets.IncomingPacket;

@@ -12,7 +12,6 @@ import java.util.Set;
 public class IncomingEventAsListProvider implements Provider<List<Class<? extends IncomingEvent>>> {
     private final Reflections reflections = new Reflections(IncomingEvent.class.getPackage().getName());
 
-
     @Override
     public List<Class<? extends IncomingEvent>> get() {
         List<Class<? extends IncomingEvent>> eventClasses = new ArrayList<>();

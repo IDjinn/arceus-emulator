@@ -187,8 +187,10 @@ public class Room implements IRoom {
     @Override
     public void prepareForHabbo(IHabbo habbo, String password) {
         // TODO: IN ROOM CHECKS
+        var entity = getEntitiesComponent().createHabboEntity(habbo, this);
 
-        habbo.setRoom(this);
+        habbo.setPlayerEntity(entity);
+
         habbo.getClient().sendMessages(
                 new HideDoorbellComposer(),
                 new RoomOpenComposer(),
@@ -207,10 +209,6 @@ public class Room implements IRoom {
 
     @Override
     public void join(IHabbo habbo) {
-        var entity = getEntitiesComponent().createHabboEntity(habbo);
-
-        habbo.setPlayerEntity(entity);
-
         habbo.getClient().sendMessages(
                 new RoomOpenComposer(),
                 new HideDoorbellComposer(),

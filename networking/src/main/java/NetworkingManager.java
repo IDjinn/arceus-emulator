@@ -71,7 +71,7 @@ public class NetworkingManager implements INetworkingManager {
     }
 
     @Override
-    public void init() throws InterruptedException {
+    public void init() {
         
     }
 

@@ -6,7 +6,9 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Logger name="org.apache.logging.log4j.xml" level="info"/>
+
+        <Root level="trace">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
