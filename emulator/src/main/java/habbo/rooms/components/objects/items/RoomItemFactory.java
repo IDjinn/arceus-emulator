@@ -8,6 +8,7 @@ import habbo.furniture.IFurnitureManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.wall.DefaultWallItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import io.netty.util.internal.StringUtil;
 import org.apache.logging.log4j.LogManager;
@@ -37,6 +38,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     @Override
     public void init() {
         this.itemDefinitionMap.put(DefaultFloorItem.INTERACTION_NAME, DefaultFloorItem.class);
+        this.itemDefinitionMap.put(DefaultWallItem.INTERACTION_NAME, DefaultWallItem.class);
 
         logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
     }
@@ -103,6 +105,8 @@ public class RoomItemFactory implements IRoomItemFactory {
 //            return new WallItem(data, room);
         if (furniture.getType().equals(FurnitureType.FLOOR))
             return new DefaultFloorItem(data, room, furniture);
+        if (furniture.getType().equals(FurnitureType.WALL))
+            return new DefaultWallItem(data, room, furniture);
 
         return null;
     }

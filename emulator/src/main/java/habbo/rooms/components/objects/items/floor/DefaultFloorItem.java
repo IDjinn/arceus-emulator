@@ -47,25 +47,4 @@ public class DefaultFloorItem extends RoomItem implements IFloorObject {
         return this.getItemData().getRotation();
     }
 
-    @Override
-    public String getExtraData() {
-        return this.getItemData().getData();
-    }
-
-    @Override
-    public void setExtraData(String extraData) {
-        this.getItemData().setData(extraData);
-    }
-
-    @Override
-    public OutgoingPacket serializeExtraData(OutgoingPacket packet) {
-        return packet.appendString(this.getExtraData());
-    }
-
-    @Override
-    public OutgoingPacket serializeLimitedData(OutgoingPacket packet) {
-        return packet
-                .appendInt(this.getLimitedData().getLimitedRare())
-                .appendInt(this.getLimitedData().getLimitedRareTotal());
-    }
 }

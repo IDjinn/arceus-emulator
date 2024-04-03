@@ -20,7 +20,13 @@ public interface IRoomItem extends IRoomObject, ISerializable {
 
     public IFurniture getFurniture();
 
+
     public ILimitedData getLimitedData();
+
+
+    public String getExtraData();
+
+    public void setExtraData(String extraData);
 
     public boolean isLimited();
 
@@ -29,5 +35,6 @@ public interface IRoomItem extends IRoomObject, ISerializable {
     public OutgoingPacket serializeExtraData(OutgoingPacket packet);
 
     public OutgoingPacket serializeLimitedData(OutgoingPacket packet);
-    
+
+    boolean canUse();
 }

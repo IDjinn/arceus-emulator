@@ -85,4 +85,32 @@ public abstract class RoomItem implements IRoomItem {
                 .appendInt(this.getVirtualId())
                 .appendInt(this.getFurniture().getSpriteId());
     }
+
+    @Override
+    public String getExtraData() {
+        return this.getItemData().getData();
+    }
+
+    @Override
+    public void setExtraData(String extraData) {
+        this.getItemData().setData(extraData);
+    }
+
+    @Override
+    public OutgoingPacket serializeExtraData(OutgoingPacket packet) {
+        return packet.appendString(this.getExtraData());
+    }
+
+    @Override
+    public OutgoingPacket serializeLimitedData(OutgoingPacket packet) {
+        return packet
+                .appendInt(this.getLimitedData().getLimitedRare())
+                .appendInt(this.getLimitedData().getLimitedRareTotal());
+    }
+
+
+    @Override
+    public boolean canUse() {
+        return this.getFurniture().getInteractionModesCount() > 0;
+    }
 }

@@ -217,7 +217,7 @@ public class Room implements IRoom {
                 new RoomRelativeMapComposer(getGameMap()),
                 new RoomHeightMapComposer(getGameMap()),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
-                new RoomWallItemsComposer()
+                new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems())
         );
     }
 
@@ -230,7 +230,7 @@ public class Room implements IRoom {
                 new RoomHeightMapComposer(getGameMap()),
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
-                new RoomWallItemsComposer(),
+                new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
                 new OutgoingPacket(2402).appendInt(0)
         );
 
