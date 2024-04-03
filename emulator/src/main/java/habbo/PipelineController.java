@@ -1,14 +1,15 @@
 package habbo;
 
-import core.IPipeline;
-import core.IPipelineController;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
-public abstract class PipelineController<TIn, TOut> implements IPipelineController<TIn, TOut> {
-    private final List<IPipeline<TIn, TOut>> pipelines;
+public abstract class PipelineController<TIn, TOut> {
+    private final List<Map.Entry<String, Function<TIn, TOut>>> pipelines;
 
     public PipelineController() {
         this.pipelines = new LinkedList<>();
@@ -16,62 +17,63 @@ public abstract class PipelineController<TIn, TOut> implements IPipelineControll
 
     public abstract void init();
 
-    @Override
-    public boolean addLast(IPipeline<TIn, TOut> pipeline) {
-        return pipelines.add(pipeline);
+    public boolean add(String key, Function<TIn, TOut> pipeline) {
+        return pipelines.add(new AbstractMap.SimpleEntry<>(key, pipeline));
     }
 
-    @Override
-    public boolean addFirst(IPipeline<TIn, TOut> pipeline) {
-        pipelines.addFirst(pipeline);
+    public boolean addFirst(String key, Function<TIn, TOut> pipeline) {
+        pipelines.addFirst(new AbstractMap.SimpleEntry<>(key, pipeline));
         return true;
     }
 
-    @Override
-    public boolean remove(IPipeline<TIn, TOut> pipeline) {
-        return pipelines.remove(pipeline);
+    public boolean remove(String key) {
+        var index = -1;
+        for (int i = 0; i < pipelines.size(); i++) {
+            if (pipelines.get(i).getKey().equals(key)) {
+                index = i;
+                break;
+            }
+        }
+        return pipelines.remove(index) != null;
     }
 
-    @Override
-    public boolean addAfter(String name, IPipeline<TIn, TOut> pipeline) {
+    public boolean addAfter(String name, Function<TIn, TOut> pipeline) {
         int afterIndex = -1;
 
         for (int i = 0; i < pipelines.size(); i++) {
-            if (pipelines.get(i).getName().equals(name)) {
+            if (pipelines.get(i).getKey().equals(name)) {
                 afterIndex = i;
                 break;
             }
         }
 
         if (afterIndex == -1) return false;
-        pipelines.add(afterIndex + 1, pipeline);
+        pipelines.add(afterIndex + 1, new AbstractMap.SimpleEntry<>(key, pipeline));
         return true;
     }
 
-    @Override
-    public boolean addBefore(String name, IPipeline<TIn, TOut> pipeline) {
+    public boolean addBefore(String key, Function<TIn, TOut> pipeline) {
         int beforeIndex = -1;
         for (int i = 0; i < pipelines.size(); i++) {
-            if (pipelines.get(i).getName().equals(name)) {
+            if (pipelines.get(i).getKey().equals(key)) {
                 beforeIndex = i;
                 break;
             }
         }
 
-        if (beforeIndex == 0) return addFirst(pipeline);
+        if (beforeIndex == 0) return addFirst(key, pipeline);
         if (beforeIndex > 0) {
-            pipelines.add(beforeIndex - 1, pipeline);
+            pipelines.add(beforeIndex - 1, new AbstractMap.SimpleEntry<>(key, pipeline));
             return true;
         }
 
         return false;
     }
 
-    @Override
     public @Nullable TOut process(TIn in) {
         TOut output = null;
-        for (IPipeline<TIn, TOut> pipeline : pipelines) {
-            output = pipeline.process(in);
+        for (Map.Entry<String, Function<TIn, TOut>> pipeline : pipelines) {
+            output = pipeline.getValue().apply(in);
             if (output == null) break;
         }
 

@@ -42,7 +42,10 @@ public class Room implements IRoom {
         this.maxUsers = 0;
         this.password = "";
 
-        this.joinPipeline.process(new JoinEvent(null, null, null));
+        IHabbo habbo = null;
+        String password = null;
+        var join = new JoinEvent(this, habbo, password);
+        this.joinPipeline.process(join);
     }
 
 
@@ -112,7 +115,6 @@ public class Room implements IRoom {
         this.entitiesComponent.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
-        this.joinPipeline.init();
     }
 
     @Override
