@@ -8,6 +8,10 @@ public class StatusBucket {
     private String value;
     private int ticks;
 
+    public StatusBucket(RoomEntityStatus status) {
+        this.status = status;
+        this.value = null;
+    }
     public StatusBucket(RoomEntityStatus status, @Nullable String value) {
         this.status = status;
         this.value = value;

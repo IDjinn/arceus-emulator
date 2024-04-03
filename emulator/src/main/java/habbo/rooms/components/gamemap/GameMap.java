@@ -1,8 +1,9 @@
 package habbo.rooms.components.gamemap;
 
 import habbo.rooms.IRoom;
+import utils.Position;
 
-public class RoomGameMapComponent implements IRoomGameMapComponent {
+public class GameMap implements IGameMap {
     private final String MODEL_A = "xxxxxxxxxxxx\n" +
             "xxxx00000000\n" +
             "xxxx00000000\n" +
@@ -23,7 +24,7 @@ public class RoomGameMapComponent implements IRoomGameMapComponent {
     private IRoomTile[][] tiles;
     private int mapSize;
 
-    public RoomGameMapComponent(IRoom room) {
+    public GameMap(IRoom room) {
         this.room = room;
     }
 
@@ -135,5 +136,12 @@ public class RoomGameMapComponent implements IRoomGameMapComponent {
     @Override
     public String getModelMap() { // TODO habbo client does use \r instead \n
         return MODEL_A.replaceAll("\n", "\r");
+    }
+
+    @Override
+    public boolean isValidCoordinate(Position neighborPosition) {
+        return
+                neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
+                        neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
     }
 }

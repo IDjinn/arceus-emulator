@@ -2,7 +2,8 @@ package habbo.rooms;
 
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntitiesComponent;
-import habbo.rooms.components.gamemap.IRoomGameMapComponent;
+import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.pathfinder.IPathfinder;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.IDisposable;
@@ -47,5 +48,9 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
 
     public IRoomEntitiesComponent getEntitiesComponent();
 
-    public IRoomGameMapComponent getGameMap();
+    public IGameMap getGameMap();
+
+    public void schedule(Runnable runnable);
+
+    public IPathfinder getPathfinder();
 }

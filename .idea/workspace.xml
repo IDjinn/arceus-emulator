@@ -123,6 +123,8 @@
       <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/PacketManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/guest/SecureLoginEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/storage/src/main/java/queries/habbo/HabboQuery.java" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix: send status update just when need to move entity">
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +133,10 @@
   </component>
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -145,15 +151,13 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="feat/furniture" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JavaAutoRunManager">
-    <enabled-run-configurations>
-      <run-configuration type="MavenRunConfiguration" name="parent [compile]" />
-    </enabled-run-configurations>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$APPLICATION_HOME_DIR$/plugins/maven/lib/maven.jar!/schemas/maven-4.0.0.xsd" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
@@ -194,10 +198,40 @@
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propDebugger",
     "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Emulator.executor&quot;: &quot;Debug&quot;,
+    &quot;Attach to process.pid 31872.executor&quot;: &quot;ProcessAttachDebug&quot;,
+    &quot;Maven.emulator [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.emulator [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.emulator [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.emulator [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [compile,--enable-preview...].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.parent [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-22&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/dev/java/orion-emulator/api/src/main/java/networking/packets/incoming/rooms/session&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="habbo.furniture" />
       <recent name="habbohotel.rooms.units" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -218,15 +252,18 @@
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
-      <command value="mvn install" />
-      <command value="mvn clean" />
       <command value="mvn compile" />
+      <command value="mvn compile --enable-preview --source 21" />
+      <command value="mvn clean" />
+      <command value="mvn install" />
+      <command value="mvn clean install" />
     </option>
   </component>
   <component name="RunManager">
     <configuration name="Emulator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Emulator" />
       <module name="emulator" />
+      <option name="VM_PARAMETERS" value="--enable-preview" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -261,6 +298,9 @@
       <workItem from="1711981949656" duration="18386000" />
       <workItem from="1712020813877" duration="1887000" />
       <workItem from="1712023855535" duration="2382000" />
+      <workItem from="1712061539407" duration="1846000" />
+      <workItem from="1712064604437" duration="21384000" />
+      <workItem from="1712107006104" duration="3661000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -406,7 +446,63 @@
       <option name="project" value="LOCAL" />
       <updated>1712023753427</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="adding furniture data">
+      <option name="closed" value="true" />
+      <created>1712030602054</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1712030602054</updated>
+    </task>
+    <task id="LOCAL-00020" summary="entity cycle system">
+      <option name="closed" value="true" />
+      <created>1712031536732</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1712031536732</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix update always true, send packet when has some update">
+      <option name="closed" value="true" />
+      <created>1712031851550</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1712031851550</updated>
+    </task>
+    <task id="LOCAL-00022" summary="get started implementation of pathfinder">
+      <option name="closed" value="true" />
+      <created>1712089799388</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1712089799388</updated>
+    </task>
+    <task id="LOCAL-00023" summary="remaking pathfinder">
+      <option name="closed" value="true" />
+      <created>1712106972382</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1712106972382</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fix pathfinder">
+      <option name="closed" value="true" />
+      <created>1712110868026</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1712110868026</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fix: send status update just when need to move entity">
+      <option name="closed" value="true" />
+      <created>1712111603474</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1712111603474</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,7 +513,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -425,7 +533,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="RELOAD_CONTEXT" value="false" />
-    <MESSAGE value="setup projects" />
     <MESSAGE value="feat: configs and db" />
     <MESSAGE value="fix logging arguments in config manager" />
     <MESSAGE value="feat: networking" />
@@ -443,8 +550,14 @@
     <MESSAGE value="fix append Z room unit position in outgoings" />
     <MESSAGE value="added missing packets to login" />
     <MESSAGE value="organize packages" />
-    <MESSAGE value="client factory" />
-    <option name="LAST_COMMIT_MESSAGE" value="client factory" />
+    <MESSAGE value="adding furniture data" />
+    <MESSAGE value="entity cycle system" />
+    <MESSAGE value="fix update always true, send packet when has some update" />
+    <MESSAGE value="get started implementation of pathfinder" />
+    <MESSAGE value="remaking pathfinder" />
+    <MESSAGE value="fix pathfinder" />
+    <MESSAGE value="fix: send status update just when need to move entity" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: send status update just when need to move entity" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -463,24 +576,71 @@
           <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
-          <line>50</line>
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
+          <line>51</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java</url>
-          <line>47</line>
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
+          <line>48</line>
           <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="current.getPosition() == null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="222" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="networking.packets.IncomingPacket" memberName="header" />
+        <PinnedItemInfo parentTag="habbo.rooms.components.pathfinder.pool.PathfinderNode" memberName="position" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="neighbor.hCosts" />
+        <watch expression="openSet.queue[0]" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1711855886818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1712092217419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

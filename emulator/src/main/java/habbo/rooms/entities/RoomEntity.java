@@ -1,9 +1,12 @@
 package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
+import org.jetbrains.annotations.Nullable;
 import utils.Direction;
 import utils.Position;
 
+import java.util.ArrayList;
+import java.util.SequencedCollection;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class RoomEntity implements IRoomEntity {
@@ -14,6 +17,9 @@ public abstract class RoomEntity implements IRoomEntity {
     private Position position;
     private Direction direction;
     private boolean needUpdateStatus;
+    private @Nullable Position goal;
+    private SequencedCollection<Position> walkPath;
+    private @Nullable Position nextPostion;
 
     public RoomEntity(IRoom room, int virutalId) {
         this.virutalId = virutalId;
@@ -21,6 +27,7 @@ public abstract class RoomEntity implements IRoomEntity {
         this.position = new Position(4, 5);
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
+        this.walkPath = new ArrayList<>();
     }
 
     @Override
@@ -86,11 +93,96 @@ public abstract class RoomEntity implements IRoomEntity {
 
     @Override
     public void removeStatus(RoomEntityStatus status) {
-        needUpdateStatus = statusBuckets.remove(status) != null;
+        needUpdateStatus |= statusBuckets.remove(status) != null;
     }
 
     @Override
     public void setNeedUpdateStatus(boolean needUpdate) {
         needUpdateStatus = needUpdate;
+    }
+
+    @Override
+    public boolean isNeedUpdate() {
+        return needUpdateStatus;
+    }
+
+    @Override
+    public void tick() {
+        handleStatus();
+        handleWalking();
+    }
+
+    private void handleWalking() {
+        if (this.getNextPosition() == null && this.getGoal() == null && this.getWalkPath().isEmpty())
+            return;
+        
+        if (this.getNextPosition() != null) {
+            this.setPosition(this.getNextPosition());
+
+            if (this.getPosition().equals(this.getGoal())) {
+                this.setGoal(null);
+                this.removeStatus(RoomEntityStatus.MOVE);
+            }
+            this.setNeedUpdateStatus(true);
+        }
+
+        if (walkPath.isEmpty() && this.getNextPosition() != null)
+            this.setNextPosition(null);
+        
+        if (walkPath.isEmpty() && getGoal() != null) {
+            walkPath.addAll(this.getRoom().getPathfinder().tracePath(
+                    this.getRoom().getGameMap(),
+                    this.getPosition(),
+                    this.getGoal()
+            ));
+        }
+
+        if (!walkPath.isEmpty()) {
+            this.setNextPosition(walkPath.removeFirst());
+            this.setDirection(Direction.calculate(
+                    this.getPosition().getX(),
+                    this.getPosition().getY(),
+                    this.getNextPosition().getX(),
+                    this.getNextPosition().getY()
+            ));
+            this.setStatus(new StatusBucket(RoomEntityStatus.MOVE, STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
+            this.setNeedUpdateStatus(true);
+        }
+    }
+
+    private void handleStatus() {
+        synchronized (statusBuckets) {
+            for (StatusBucket bucket : statusBuckets.values()) {
+                if (bucket.getTicks() <= 0) {
+                    removeStatus(bucket.getStatus());
+                }
+                bucket.decrementTick();
+            }
+        }
+    }
+
+    @Override
+    public @Nullable Position getGoal() {
+        return this.goal;
+    }
+
+    @Override
+    public void setGoal(@Nullable Position goal) {
+        this.goal = goal;
+    }
+
+    @Override
+    public SequencedCollection<Position> getWalkPath() {
+        return this.walkPath;
+    }
+
+    @Override
+    public @Nullable Position getNextPosition() {
+        return this.nextPostion;
+    }
+
+    @Override
+    public void setNextPosition(@Nullable Position position) {
+        this.nextPostion = position;
     }
 }

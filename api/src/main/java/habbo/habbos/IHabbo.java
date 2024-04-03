@@ -1,7 +1,7 @@
 package habbo.habbos;
 
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.IPlayerEntity;
+import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
 
 import javax.annotation.Nullable;
@@ -28,10 +28,10 @@ public interface IHabbo {
     @Nullable
     IRoom getRoom();
 
-    void setPlayerEntity(@Nullable IPlayerEntity entity);
-
     @Nullable
-    IPlayerEntity getPlayerEntity();
+    IHabboEntity getPlayerEntity();
+
+    void setPlayerEntity(@Nullable IHabboEntity entity);
 
     String getGender();
 

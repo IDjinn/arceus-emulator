@@ -4,7 +4,6 @@ import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
-import packets.outgoing.rooms.RoomUserStatusComposer;
 import utils.Position;
  
 public class RoomUserWalkEvent extends IncomingEvent {
@@ -19,7 +18,7 @@ public class RoomUserWalkEvent extends IncomingEvent {
             return;
 
         var player = client.getHabbo().getPlayerEntity();
-        player.setPosition(new Position(packet.readInt(), packet.readInt()));
-        player.getClient().sendMessage(new RoomUserStatusComposer(player.getRoom().getEntitiesComponent().getEntities()));
+        player.setGoal(new Position(packet.readInt(), packet.readInt()));
+//        player.setNeedUpdateStatus(true);
     }
 }
