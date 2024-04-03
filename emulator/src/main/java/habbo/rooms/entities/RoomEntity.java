@@ -19,6 +19,7 @@ public abstract class RoomEntity implements IRoomEntity {
     private boolean needUpdateStatus;
     private @Nullable Position goal;
     private SequencedCollection<Position> walkPath;
+    private @Nullable Position nextPostion;
 
     public RoomEntity(IRoom room, int virutalId) {
         this.virutalId = virutalId;
@@ -112,11 +113,18 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     private void handleWalking() {
-        if (this.getPosition().equals(this.getGoal())) {
-            this.setGoal(null);
-            this.removeStatus(RoomEntityStatus.MOVE);
+        if (this.getNextPosition() != null) {
+            this.setPosition(this.getNextPosition());
+
+            if (this.getPosition().equals(this.getGoal())) {
+                this.setGoal(null);
+                this.removeStatus(RoomEntityStatus.MOVE);
+            }
             this.setNeedUpdateStatus(true);
         }
+
+        if (walkPath.isEmpty() && this.getNextPosition() != null)
+            this.setNextPosition(null);
         
         if (walkPath.isEmpty() && getGoal() != null) {
             walkPath.addAll(this.getRoom().getPathfinder().tracePath(
@@ -127,10 +135,16 @@ public abstract class RoomEntity implements IRoomEntity {
         }
 
         if (!walkPath.isEmpty()) {
-            this.setPosition(walkPath.removeFirst());
+            this.setNextPosition(walkPath.removeFirst());
+            this.setDirection(Direction.calculate(
+                    this.getPosition().getX(),
+                    this.getPosition().getY(),
+                    this.getNextPosition().getX(),
+                    this.getNextPosition().getY()
+            ));
+            this.setStatus(new StatusBucket(RoomEntityStatus.MOVE, STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
             this.setNeedUpdateStatus(true);
         }
-
     }
 
     private void handleStatus() {
@@ -157,5 +171,15 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public SequencedCollection<Position> getWalkPath() {
         return this.walkPath;
+    }
+
+    @Override
+    public @Nullable Position getNextPosition() {
+        return this.nextPostion;
+    }
+
+    @Override
+    public void setNextPosition(@Nullable Position position) {
+        this.nextPostion = position;
     }
 }

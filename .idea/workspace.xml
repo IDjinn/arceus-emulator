@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="remaking pathfinder">
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix pathfinder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IRoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IRoomEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/StatusBucket.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/StatusBucket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +159,7 @@
       <workItem from="1712023855535" duration="2382000" />
       <workItem from="1712061539407" duration="1846000" />
       <workItem from="1712064604437" duration="21384000" />
-      <workItem from="1712107006104" duration="2536000" />
+      <workItem from="1712107006104" duration="3148000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -343,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712106972382</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix pathfinder">
+      <option name="closed" value="true" />
+      <created>1712110868026</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1712110868026</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +408,8 @@
     <MESSAGE value="fix update always true, send packet when has some update" />
     <MESSAGE value="get started implementation of pathfinder" />
     <MESSAGE value="remaking pathfinder" />
-    <option name="LAST_COMMIT_MESSAGE" value="remaking pathfinder" />
+    <MESSAGE value="fix pathfinder" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix pathfinder" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -456,23 +467,6 @@
           <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
           <line>98</line>
           <option name="timeStamp" value="196" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="205" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <condition expression="neighbor.getPosition().equals(goal)" language="JAVA" />
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="206" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <condition expression="((PathfinderNode) openSet.queue[0]).position.equals(new Position(4,4))" language="JAVA" />
-          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="209" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

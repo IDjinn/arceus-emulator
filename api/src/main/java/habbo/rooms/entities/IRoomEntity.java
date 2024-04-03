@@ -26,6 +26,11 @@ public interface IRoomEntity extends ISerializable, ICycle {
 
     public void setPosition(Position position);
 
+
+    public @Nullable Position getNextPosition();
+
+    public void setNextPosition(@Nullable Position position);
+
     public Direction getDirection();
 
     public void setDirection(Direction direction);
