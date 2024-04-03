@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 public class ConnectionResult implements IConnectionResult {
     private final ResultSet result;
 
-    public ConnectionResult(ResultSet result) {
+    public ConnectionResult(final ResultSet result) {
         this.result = result;
     }
 

@@ -43,7 +43,7 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
-    public void init() throws InterruptedException {
+    public void init() {
         var room = roomFactory.createRoom(1, "first-room");
         room.init();
         rooms.put(room.getId(), room);

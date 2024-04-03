@@ -7,6 +7,7 @@ import packets.outgoing.OutgoingHeaders;
 public class UserCreditsComposer extends OutgoingPacket {
     public UserCreditsComposer(IHabbo habbo) {
         super(OutgoingHeaders.UserCreditsComposer);
-        appendString(9999 + ".0");
+
+        appendString(STR."\{habbo.getData().getCredits()}");
     }
 }
