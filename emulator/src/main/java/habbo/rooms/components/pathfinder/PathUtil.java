@@ -5,7 +5,7 @@ import habbo.rooms.components.pathfinder.allocators.NodesSetAllocator;
 import habbo.rooms.components.pathfinder.allocators.PathfinderAllocator;
 import habbo.rooms.components.pathfinder.pool.NodeQueue;
 import habbo.rooms.components.pathfinder.pool.NodesSet;
-import habbo.rooms.components.pathfinder.pool.PathfinderNode;
+import habbo.rooms.components.pathfinder.pool.PathfinderNodeFucked;
 import stormpot.Expiration;
 import stormpot.Pool;
 import utils.Position;
@@ -17,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 public class PathUtil {
     private static PathUtil instance;
     public final SequencedCollection<Position> EmptyPath = new ArrayList<>();
-    public final Pool<NodesSet<PathfinderNode>> Setpool;
-    public final Pool<NodeQueue<PathfinderNode>> QueuePool;
-    public final Pool<PathfinderNode> NodesPool;
+    public final Pool<NodesSet<PathfinderNodeFucked>> Setpool;
+    public final Pool<NodeQueue<PathfinderNodeFucked>> QueuePool;
+    public final Pool<PathfinderNodeFucked> NodesPool;
     public PathUtil() {
         Setpool = Pool
                 .from(new NodesSetAllocator())

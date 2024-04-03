@@ -1,18 +1,18 @@
 package habbo.rooms.components.pathfinder.allocators;
 
-import habbo.rooms.components.pathfinder.pool.PathfinderNode;
+import habbo.rooms.components.pathfinder.pool.PathfinderNodeFucked;
 import stormpot.Allocator;
 import stormpot.Slot;
 
-public class PathfinderAllocator implements Allocator<PathfinderNode> {
+public class PathfinderAllocator implements Allocator<PathfinderNodeFucked> {
 
     @Override
-    public PathfinderNode allocate(Slot slot) throws Exception {
-        return new PathfinderNode(slot);
+    public PathfinderNodeFucked allocate(Slot slot) throws Exception {
+        return new PathfinderNodeFucked(slot);
     }
 
     @Override
-    public void deallocate(PathfinderNode pathfinderNode) throws Exception {
+    public void deallocate(PathfinderNodeFucked pathfinderNode) throws Exception {
     }
 
 }

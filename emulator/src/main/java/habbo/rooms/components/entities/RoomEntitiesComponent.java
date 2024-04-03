@@ -3,9 +3,9 @@ package habbo.rooms.components.entities;
 import habbo.GameConstants;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.IPlayerEntity;
+import habbo.rooms.entities.HabboEntity;
+import habbo.rooms.entities.IHabboEntity;
 import habbo.rooms.entities.IRoomEntity;
-import habbo.rooms.entities.PlayerEntity;
 import packets.outgoing.rooms.RoomUserStatusComposer;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     private final IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
-    private final ConcurrentHashMap<Integer, IPlayerEntity> players;
+    private final ConcurrentHashMap<Integer, IHabboEntity> players;
 
     public RoomEntitiesComponent(IRoom room) {
         this.room = room;
@@ -65,8 +65,8 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     }
 
     @Override
-    public IPlayerEntity createHabboEntity(IHabbo habbo) {
-        var entity = new PlayerEntity(habbo);
+    public IHabboEntity createHabboEntity(IHabbo habbo) {
+        var entity = new HabboEntity(habbo);
         entities.put(entity.getVirtualId(), entity);
         players.put(entity.getVirtualId(), entity);
         return entity;
@@ -78,7 +78,7 @@ public class RoomEntitiesComponent implements IRoomEntitiesComponent {
     }
 
     @Override
-    public List<IPlayerEntity> getPlayers() {
+    public List<IHabboEntity> getPlayers() {
         return players.values().stream().toList();
     }
 }

@@ -4,28 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="fix update always true, send packet when has some update">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/pathfinder/IPathfinder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodeQueueAllocator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodesSetAllocator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/PathfinderAllocator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodeQueue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodesSet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/PathfinderNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f1129228-6e4f-421e-95e8-55edb4f517bf" name="Changes" comment="remaking pathfinder">
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/IRoom.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IRoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IGameMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/RoomGameMapComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/habbos/IHabbo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/entities/IRoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/entities/IRoomEntitiesComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IGameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/components/gamemap/IGameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IPlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/habbo/rooms/entities/IHabboEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/Habbo.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/habbos/Habbo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/entities/RoomEntitiesComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/entities/RoomEntitiesComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodeQueueAllocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodeQueueAllocator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodesSetAllocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/NodesSetAllocator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/PathfinderAllocator.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/allocators/PathfinderAllocator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodeQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodeQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodesSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/NodesSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/PathfinderNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/pool/PathfinderNodeFucked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/HabboEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/incoming/rooms/entities/RoomUserWalkEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomHeightMapComposer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" beforeDir="false" afterPath="$PROJECT_DIR$/networking/src/main/java/packets/outgoing/rooms/prepare/RoomRelativeMapComposer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +174,7 @@
       <workItem from="1712020813877" duration="1887000" />
       <workItem from="1712023855535" duration="2382000" />
       <workItem from="1712061539407" duration="1846000" />
-      <workItem from="1712064604437" duration="12085000" />
+      <workItem from="1712064604437" duration="21308000" />
     </task>
     <task id="LOCAL-00001" summary="setup projects">
       <option name="closed" value="true" />
@@ -345,7 +344,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712031851550</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="get started implementation of pathfinder">
+      <option name="closed" value="true" />
+      <created>1712089799388</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1712089799388</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,7 +405,9 @@
     <MESSAGE value="adding furniture data" />
     <MESSAGE value="entity cycle system" />
     <MESSAGE value="fix update always true, send packet when has some update" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix update always true, send packet when has some update" />
+    <MESSAGE value="get started implementation of pathfinder" />
+    <MESSAGE value="remaking pathfinder" />
+    <option name="LAST_COMMIT_MESSAGE" value="remaking pathfinder" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -418,18 +427,54 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
-          <line>50</line>
+          <line>51</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/gamemap/GameMap.java</url>
-          <line>47</line>
+          <line>48</line>
           <option name="timeStamp" value="114" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <condition expression="current.getPosition() == null" language="JAVA" />
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>127</line>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
-          <line>148</line>
-          <option name="timeStamp" value="165" />
+          <line>98</line>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/entities/RoomEntity.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="202" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -437,14 +482,16 @@
       <pinned-members>
         <PinnedItemInfo parentTag="networking.packets.IncomingPacket" memberName="header" />
         <PinnedItemInfo parentTag="habbo.rooms.components.pathfinder.pool.PathfinderNode" memberName="position" />
-        <PinnedItemInfo parentTag="habbo.rooms.components.pathfinder.pool.PathfinderNode" memberName="hCosts" />
       </pinned-members>
     </pin-to-top-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="((PathfinderNode)item).position" custom="habbo.rooms.components.pathfinder.pool.PathfinderNode" />
+        <watch expression="neighbor.hCosts" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/Pathfinder.java" line="102">
+      <inline-watch fileUrl="file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java" line="156">
+        <watch expression="neighbor.getPosition()" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/emulator/src/main/java/habbo/rooms/components/pathfinder/PathfinderFucked.java" line="160">
         <watch expression="current.getPosition()" />
       </inline-watch>
     </watches-manager>
@@ -454,6 +501,6 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1711855886818" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/orion_emulator$Emulator.ic" NAME="Emulator Coverage Results" MODIFIED="1712092217419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -1,7 +1,7 @@
 package habbo.habbos;
 
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.IPlayerEntity;
+import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,7 +10,7 @@ public class Habbo implements IHabbo {
     private final int id;
     private String name;
     private @Nullable IRoom room;
-    private @Nullable IPlayerEntity entity;
+    private @Nullable IHabboEntity entity;
     private String look = "he-3884-92-93.ch-4004-92.hr-3251-39-49.hd-3100-5.lg-3078-110";
     private String gender = "M";
 
@@ -71,15 +71,15 @@ public class Habbo implements IHabbo {
         return this.room;
     }
 
-    @Override
-    public void setPlayerEntity(@Nullable IPlayerEntity entity) {
-        this.entity = entity;
-    }
-
     @Nullable
     @Override
-    public IPlayerEntity getPlayerEntity() {
+    public IHabboEntity getPlayerEntity() {
         return this.entity;
+    }
+
+    @Override
+    public void setPlayerEntity(@Nullable IHabboEntity entity) {
+        this.entity = entity;
     }
 
     @Override

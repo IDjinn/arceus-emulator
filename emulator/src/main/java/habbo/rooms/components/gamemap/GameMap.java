@@ -1,6 +1,7 @@
 package habbo.rooms.components.gamemap;
 
 import habbo.rooms.IRoom;
+import utils.Position;
 
 public class GameMap implements IGameMap {
     private final String MODEL_A = "xxxxxxxxxxxx\n" +
@@ -135,5 +136,12 @@ public class GameMap implements IGameMap {
     @Override
     public String getModelMap() { // TODO habbo client does use \r instead \n
         return MODEL_A.replaceAll("\n", "\r");
+    }
+
+    @Override
+    public boolean isValidCoordinate(Position neighborPosition) {
+        return
+                neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
+                        neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
     }
 }

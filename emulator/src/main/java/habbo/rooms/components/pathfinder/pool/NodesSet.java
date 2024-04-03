@@ -21,7 +21,7 @@ public class NodesSet<T extends Poolable> extends HashSet<T> implements Poolable
 
     public void fullRelease() {
         for (var item : this) {
-            var node = (PathfinderNode) item;
+            var node = (PathfinderNodeFucked) item;
             if (node.isFree())
                 continue;
             node.release();

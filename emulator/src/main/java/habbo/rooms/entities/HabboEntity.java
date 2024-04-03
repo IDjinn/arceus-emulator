@@ -4,11 +4,11 @@ import habbo.habbos.IHabbo;
 import networking.client.INitroClient;
 import networking.packets.OutgoingPacket;
 
-public class PlayerEntity extends RoomEntity implements IPlayerEntity {
+public class HabboEntity extends RoomEntity implements IHabboEntity {
 
     private final IHabbo habbo;
 
-    public PlayerEntity(IHabbo habbo) { // TODO: VIRTUAL ID
+    public HabboEntity(IHabbo habbo) { // TODO: VIRTUAL ID
         super(habbo.getRoom(), habbo.getId());
         this.habbo = habbo;
     }

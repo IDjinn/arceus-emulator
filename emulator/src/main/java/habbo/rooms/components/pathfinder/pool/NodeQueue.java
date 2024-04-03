@@ -19,7 +19,7 @@ public class NodeQueue<T extends Poolable> extends PriorityQueue<T> implements P
 
     public void fullRelease() {
         for (var item : this) {
-            var node = (PathfinderNode) item;
+            var node = (PathfinderNodeFucked) item;
             if (node.isFree())
                 continue;
             node.release();

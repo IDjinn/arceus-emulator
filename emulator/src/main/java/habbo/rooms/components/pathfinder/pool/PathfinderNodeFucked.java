@@ -6,16 +6,15 @@ import stormpot.Poolable;
 import stormpot.Slot;
 import utils.Position;
 
-public class PathfinderNode implements Poolable, Comparable<PathfinderNode> {
+public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNodeFucked> {
     private final Slot slot;
     public Position position;
-    public @Nullable PathfinderNode parentNode;
-    public float fCosts;
+    public @Nullable PathfinderNodeFucked parentNode;
     public float gCosts;
     public float hCosts;
     private boolean free = true;
 
-    public PathfinderNode(Slot slot) {
+    public PathfinderNodeFucked(Slot slot) {
         this.slot = slot;
     }
 
@@ -23,14 +22,13 @@ public class PathfinderNode implements Poolable, Comparable<PathfinderNode> {
     public void release() {
         this.position = null;
         this.parentNode = null;
-        this.fCosts = 0;
         this.gCosts = 0;
         this.hCosts = 0;
         this.free = true;
         this.slot.release(this);
     }
 
-    public Position getPosition() {
+    public @Nullable Position getPosition() {
         return position;
     }
 
@@ -39,11 +37,11 @@ public class PathfinderNode implements Poolable, Comparable<PathfinderNode> {
         this.setFree(false);
     }
 
-    public @Nullable PathfinderNode getParentNode() {
+    public @Nullable PathfinderNodeFucked getParentNode() {
         return parentNode;
     }
 
-    public void setParentNode(@Nullable PathfinderNode parentNode) {
+    public void setParentNode(@Nullable PathfinderNodeFucked parentNode) {
         this.parentNode = parentNode;
     }
 
@@ -76,10 +74,10 @@ public class PathfinderNode implements Poolable, Comparable<PathfinderNode> {
     }
 
     @Override
-    public int compareTo(@NotNull PathfinderNode o) {
-        if (this.fCosts < o.fCosts) {
+    public int compareTo(@NotNull PathfinderNodeFucked otherNode) {
+        if (this.getFCosts() < otherNode.getFCosts()) {
             return -1;
-        } else if (this.fCosts > o.fCosts) {
+        } else if (this.getFCosts() > otherNode.getFCosts()) {
             return 1;
         } else {
             return 0;
