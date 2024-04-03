@@ -34,9 +34,13 @@ public class RoomFloorItemsComposer extends OutgoingPacket {
 
             appendInt(-1);
             appendInt(2); // TODO:FURNITURE USAGE
-            appendInt(item.getItemData().getOwnerId());
 
-//            appendString("ownername");  // TODO
+            if (item.getOwnerData().isPresent()) {
+                var owner = item.getOwnerData().get();
+                appendInt(owner.getId());
+            } else {
+                appendInt(0);
+            }
         }
     }
 }
