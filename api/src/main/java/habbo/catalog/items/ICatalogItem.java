@@ -1,10 +1,9 @@
 package habbo.catalog.items;
 
+import habbo.furniture.IFurniture;
 import habbo.habbos.fillers.IFillable;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
-
-import java.util.List;
 
 public interface ICatalogItem extends IFillable, ISerializable {
     void compose(OutgoingPacket packet);
@@ -15,9 +14,7 @@ public interface ICatalogItem extends IFillable, ISerializable {
 
     int getId();
 
-    String getItemId();
-
-    List<ICatalogItem> getItems();
+    IFurniture getFurniture();
 
     String getDisplayName();
 

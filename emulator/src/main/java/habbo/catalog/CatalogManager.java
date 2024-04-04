@@ -1,6 +1,7 @@
 package habbo.catalog;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import habbo.catalog.items.ICatalogFactory;
 import habbo.catalog.items.ICatalogItem;
@@ -24,15 +25,17 @@ public class CatalogManager implements ICatalogManager {
     private Logger logger = LogManager.getLogger();
     private HashMap<Integer, ICatalogItem> catalogItems;
     private HashMap<Integer, ICatalogPage> catalogPages;
+
+
     private static final String DEFAULT_PURCHASE_HANDLER = "default_purchase_handler";
-    private HashMap<String, ICatalogPurchaseHandler> purchaseHandlers;
+    private final HashMap<String, ICatalogPurchaseHandler> purchaseHandlers;
 
     @Inject
     public CatalogManager(
             IFurnitureManager furnitureManager
             , ICatalogRepository catalogRepository
             , ICatalogFactory catalogFactory,
-            DefaultCatalogPurchaseHandler defaultCatalogPurchaseHandler) {
+            Injector injector) {
         this.furnitureManager = furnitureManager;
         this.catalogRepository = catalogRepository;
         this.catalogFactory = catalogFactory;
@@ -41,7 +44,9 @@ public class CatalogManager implements ICatalogManager {
         this.catalogPages = new HashMap<>();
         this.purchaseHandlers = new HashMap<>();
 
-        this.purchaseHandlers.put(DEFAULT_PURCHASE_HANDLER, defaultCatalogPurchaseHandler);
+        this.purchaseHandlers.put(DEFAULT_PURCHASE_HANDLER, new DefaultCatalogPurchaseHandler());
+        for (var handler : this.purchaseHandlers.values())
+            injector.injectMembers(handler);
     }
 
     @Override
@@ -124,11 +129,8 @@ public class CatalogManager implements ICatalogManager {
 
     @Override
     public ICatalogPurchaseHandler getPurchaseHandlerForItem(ICatalogItem item) {
-        var furniture = this.furnitureManager.get(Integer.parseInt(item.getItemId()));
-        if (furniture == null) throw new IllegalArgumentException();
-
-        if (this.purchaseHandlers.containsKey(furniture.getInteractionType()))
-            return this.purchaseHandlers.get(furniture.getInteractionType());
+        if (this.purchaseHandlers.containsKey(item.getFurniture().getInteractionType()))
+            return this.purchaseHandlers.get(item.getFurniture().getInteractionType());
 
         return this.purchaseHandlers.get(DEFAULT_PURCHASE_HANDLER);
     }

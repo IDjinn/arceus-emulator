@@ -17,8 +17,7 @@ public class DefaultCatalogPurchaseHandler implements ICatalogPurchaseHandler {
 
     @Override
     public boolean purchase(IHabbo habbo, ICatalogItem item, String extraData, int amount) {
-        var furniture = furnitureManager.get(Integer.parseInt(item.getItemId())); // TODO: IT AS PROPERTY INSTEAD MULTIPLE CALLS
-        habbo.getClient().sendMessage(new PurchaseOkComposer(item, furniture));
+        habbo.getClient().sendMessage(new PurchaseOkComposer(item));
         return false;
     }
 }

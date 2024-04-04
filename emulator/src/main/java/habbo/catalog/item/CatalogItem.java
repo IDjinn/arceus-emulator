@@ -2,13 +2,11 @@ package habbo.catalog.item;
 
 import com.google.inject.Inject;
 import habbo.catalog.items.ICatalogItem;
+import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import io.netty.util.internal.StringUtil;
 import networking.packets.OutgoingPacket;
 import storage.results.IConnectionResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CatalogItem implements ICatalogItem {
 
@@ -17,7 +15,7 @@ public class CatalogItem implements ICatalogItem {
 
     private int id;
 
-    private String itemId;
+    private IFurniture furniture;
 
 
     private String displayName;
@@ -83,14 +81,10 @@ public class CatalogItem implements ICatalogItem {
     }
 
     @Override
-    public String getItemId() {
-        return itemId;
+    public IFurniture getFurniture() {
+        return furniture;
     }
 
-    @Override
-    public List<ICatalogItem> getItems() {
-        return new ArrayList<>();
-    }
 
     @Override
     public String getDisplayName() {
@@ -186,7 +180,9 @@ public class CatalogItem implements ICatalogItem {
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
-        this.itemId = result.getString("item_ids");
+        if (this.id == -1) throw new IllegalArgumentException("Catalog bundles is not supported.");
+
+        this.furniture = furnitureManager.get(Integer.parseInt(result.getString("item_ids")));
         this.displayName = result.getString("catalog_name");
         this.costCredits = result.getInt("cost_credits");
         this.costActivityPoints = result.getInt("cost_points");
@@ -215,29 +211,20 @@ public class CatalogItem implements ICatalogItem {
                 .appendInt(0)
                 .appendBoolean(false);// TODO GIFT
 
-        if (!this.getItemId().equals("-1")) {
-            var furniture = furnitureManager.get(Integer.parseInt(this.getItemId()));
-            if (furniture == null) throw new IllegalArgumentException("not found");
-
-            packet.appendInt(1)
-                    .appendString(furniture.getType().toString())
-                    .appendInt(furniture.getSpriteId())
-                    .appendString(getPresetData())
-                    .appendBoolean(getLimitedTotal() > 0);
-            if (getLimitedTotal() > 0) {
-                packet.appendInt(this.getLimitedTotal());
-                packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
-            } else {// TODO: NOT SUPPORTED BUNDLES
-//            packet.appendInt(1) // ITEMS SIZE
-//                    .appendString(this.)
-                packet.appendInt(0);
-            }
-
-
-            packet.appendInt(false)// TODO clubOnly
-                    .appendBoolean(this.allowOffer()) // TODO
-                    .appendBoolean(false)
-                    .appendString(STR."\{this.getDisplayName()}.png");
+        packet.appendInt(1)
+                .appendString(this.getFurniture().getType().toString())
+                .appendInt(this.getFurniture().getSpriteId())
+                .appendString(getPresetData())
+                .appendBoolean(getLimitedTotal() > 0);
+        if (getLimitedTotal() > 0) {
+            packet.appendInt(this.getLimitedTotal());
+            packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
         }
+
+
+        packet.appendInt(false)// TODO clubOnly
+                .appendBoolean(this.allowOffer()) // TODO
+                .appendBoolean(false)
+                .appendString(STR."\{this.getDisplayName()}.png");
     }
 }

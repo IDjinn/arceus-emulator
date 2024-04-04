@@ -1,16 +1,15 @@
 package packets.outgoing.catalog;
 
 import habbo.catalog.items.ICatalogItem;
-import habbo.furniture.IFurniture;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
 public class PurchaseOkComposer extends OutgoingPacket {
 
-    public PurchaseOkComposer(ICatalogItem item, IFurniture furniture) { // TODO NON ITEM PURCHASE
+    public PurchaseOkComposer(ICatalogItem item) { // TODO NON ITEM PURCHASE
         super(OutgoingHeaders.PurchaseOKComposer);
         appendInt(item.getId());
-        appendString(furniture.getItemName());
+        appendString(item.getFurniture().getItemName());
         appendBoolean(false);// rent
         appendInt(item.getCostCredits());
         appendInt(item.getCostActivityPoints());
@@ -19,8 +18,8 @@ public class PurchaseOkComposer extends OutgoingPacket {
 
         appendInt(1); // total items
         {
-            appendString(furniture.getType().toString());
-            appendInt(furniture.getSpriteId());
+            appendString(item.getFurniture().getType().toString());
+            appendInt(item.getFurniture().getSpriteId());
             appendString(""); // extradata
             appendInt(1); // count
             appendString("");
