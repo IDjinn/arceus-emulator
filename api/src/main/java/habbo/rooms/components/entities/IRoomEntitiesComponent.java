@@ -4,10 +4,11 @@ import habbo.habbos.IHabbo;
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.entities.IHabboEntity;
 import habbo.rooms.entities.IRoomEntity;
+import utils.cycle.ICycle;
 
 import java.util.List;
 
-public interface IRoomEntitiesComponent extends IRoomComponent {
+public interface IRoomEntitiesComponent extends IRoomComponent, ICycle {
     IHabboEntity createHabboEntity(IHabbo habbo);
 
     List<IRoomEntity> getEntities();
