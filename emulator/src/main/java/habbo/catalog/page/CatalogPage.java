@@ -6,6 +6,7 @@ import habbo.catalog.pages.CatalogPageType;
 import habbo.catalog.pages.ICatalogPage;
 import habbo.habbos.IHabbo;
 import networking.packets.OutgoingPacket;
+import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
 import java.util.ArrayList;
@@ -79,6 +80,11 @@ public abstract class CatalogPage implements ICatalogPage {
     @Override
     public Map<Integer, ICatalogItem> getItems() {
         return items;
+    }
+
+    @Override
+    public @Nullable ICatalogItem getOffer(int id) {
+        return this.items.get(id);
     }
 
     @Override

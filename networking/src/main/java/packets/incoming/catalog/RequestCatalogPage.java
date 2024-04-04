@@ -24,9 +24,9 @@ public class RequestCatalogPage extends IncomingEvent {
         var mode = packet.readString();
 
         var page = catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
-        if (page.isEmpty())
+        if (page == null)
             return;
 
-        client.sendMessage(new CatalogPageComposer(page.get(), client.getHabbo(), offerId, mode));
+        client.sendMessage(new CatalogPageComposer(page, client.getHabbo(), offerId, mode));
     }
 }

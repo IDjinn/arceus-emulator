@@ -5,6 +5,7 @@ import habbo.habbos.IHabbo;
 import habbo.habbos.fillers.IFillable;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,10 @@ public interface ICatalogPage extends ISerializable, IFillable {
     boolean isEnabled();
 
     Map<Integer, ICatalogItem> getItems();
+
+    @Nullable
+    ICatalogItem
+    getOffer(int id);
 
     List<String> getImages();
 

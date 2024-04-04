@@ -2,12 +2,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import configuration.ConfigurationManager;
-import configuration.ConfigurationModule;
-import configuration.IConfigurationManager;
-import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
+import core.configuration.ConfigurationManager;
+import core.configuration.ConfigurationModule;
+import core.configuration.IConfigurationManager;
+import core.configuration.IEmulatorSettings;
+import core.locking.ConcurrentLock;
+import core.locking.IConcurrentLock;
 import furniture.FurnitureModule;
 import habbo.Hotel;
 import habbo.catalog.CatalogModule;
@@ -91,6 +93,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IEmulator.class).to(Emulator.class);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
+        bind(IConcurrentLock.class).to(ConcurrentLock.class);
     }
 
 

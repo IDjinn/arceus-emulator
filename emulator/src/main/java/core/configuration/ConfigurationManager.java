@@ -1,4 +1,4 @@
-package configuration;
+package core.configuration;
 
 import com.google.inject.Singleton;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Singleton
-public class ConfigurationManager  implements IConfigurationManager{
+public class ConfigurationManager implements IConfigurationManager {
     private final Logger logger = LogManager.getLogger();
     private final Properties properties;
     

@@ -9,12 +9,12 @@ import habbo.furniture.IFurnitureManager;
 import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 import storage.repositories.catalog.ICatalogRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class CatalogManager implements ICatalogManager {
@@ -24,15 +24,24 @@ public class CatalogManager implements ICatalogManager {
     private Logger logger = LogManager.getLogger();
     private HashMap<Integer, ICatalogItem> catalogItems;
     private HashMap<Integer, ICatalogPage> catalogPages;
+    private static final String DEFAULT_PURCHASE_HANDLER = "default_purchase_handler";
+    private HashMap<String, ICatalogPurchaseHandler> purchaseHandlers;
 
     @Inject
-    public CatalogManager(IFurnitureManager furnitureManager, ICatalogRepository catalogRepository, ICatalogFactory catalogFactory) {
+    public CatalogManager(
+            IFurnitureManager furnitureManager
+            , ICatalogRepository catalogRepository
+            , ICatalogFactory catalogFactory,
+            DefaultCatalogPurchaseHandler defaultCatalogPurchaseHandler) {
         this.furnitureManager = furnitureManager;
         this.catalogRepository = catalogRepository;
         this.catalogFactory = catalogFactory;
 
         this.catalogItems = new HashMap<>();
         this.catalogPages = new HashMap<>();
+        this.purchaseHandlers = new HashMap<>();
+
+        this.purchaseHandlers.put(DEFAULT_PURCHASE_HANDLER, defaultCatalogPurchaseHandler);
     }
 
     @Override
@@ -104,12 +113,23 @@ public class CatalogManager implements ICatalogManager {
     }
 
     @Override
-    public Optional<ICatalogPage> getCatalogPageForHabbo(int pageId, IHabbo habbo) {
+    public @Nullable ICatalogPage getCatalogPageForHabbo(int pageId, IHabbo habbo) {
         var page = this.catalogPages.get(pageId);
-        if (page == null) return Optional.empty();
+        if (page == null) return null;
         if (!page.isEnabled() || page.getMinRank() > habbo.getData().getRank())
-            return Optional.empty();
+            return null;
 
-        return Optional.of(page);
+        return page;
+    }
+
+    @Override
+    public ICatalogPurchaseHandler getPurchaseHandlerForItem(ICatalogItem item) {
+        var furniture = this.furnitureManager.get(Integer.parseInt(item.getItemId()));
+        if (furniture == null) throw new IllegalArgumentException();
+
+        if (this.purchaseHandlers.containsKey(furniture.getInteractionType()))
+            return this.purchaseHandlers.get(furniture.getInteractionType());
+
+        return this.purchaseHandlers.get(DEFAULT_PURCHASE_HANDLER);
     }
 }

@@ -1,4 +1,4 @@
-package configuration;
+package core.configuration;
 
 import org.jetbrains.annotations.NotNull;
 
