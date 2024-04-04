@@ -3,6 +3,7 @@ package habbo.catalog;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.mysql.cj.util.StringUtils;
 import habbo.catalog.items.ICatalogFactory;
 import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.ICatalogPage;
@@ -54,25 +55,39 @@ public class CatalogManager implements ICatalogManager {
         this.logger.info("Initializing catalog from database...");
         this.catalogRepository.getAllCatalogItems(result -> {
             if (result == null) return;
+            try {
 
-            var catalogItem = catalogFactory.createCatalogItem(result);
-            catalogItems.put(catalogItem.getId(), catalogItem);
+                var id = result.getInt("id");
+                if (id == -1) throw new IllegalArgumentException("Catalog bundles is not supported.");
+                var itemsId = result.getString("item_ids");
+                if (!StringUtils.isStrictlyNumeric(itemsId))
+                    throw new IllegalArgumentException("Catalog multi-item is not supported.");
+
+                var catalogItem = catalogFactory.createCatalogItem(result);
+                catalogItems.put(catalogItem.getId(), catalogItem);
+            } catch (Exception e) {
+                logger.error("Error while trying to fetch catalog item {}", result.getInt("id"), e);
+            }
         });
         this.logger.info(STR."Loaded \{this.catalogItems.size()} catalog items from database.");
 
 
         this.catalogRepository.getAllCatalogPages(result -> {
             if (result == null) return;
+            
+            try {
+                var pageId = result.getInt("id");
+                var items = new ArrayList<ICatalogItem>();
+                for (var item : catalogItems.values()) {
+                    if (item.getPageId() == pageId)
+                        items.add(item);
+                }
 
-            var pageId = result.getInt("id");
-            var items = new ArrayList<ICatalogItem>();
-            for (var item : catalogItems.values()) {
-                if (item.getPageId() == pageId)
-                    items.add(item);
+                var catalogPage = catalogFactory.createCatalogPage(result, items);
+                catalogPages.put(catalogPage.getId(), catalogPage);
+            } catch (Exception e) {
+                logger.error("Error while trying to fetch catalog page{}", result.getInt("id"), e);
             }
-
-            var catalogPage = catalogFactory.createCatalogPage(result, items);
-            catalogPages.put(catalogPage.getId(), catalogPage);
         });
         this.logger.info(STR."Loaded \{this.catalogPages.size()} catalog pages from database.");
 

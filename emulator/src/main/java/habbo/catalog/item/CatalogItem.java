@@ -180,8 +180,6 @@ public class CatalogItem implements ICatalogItem {
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
-        if (this.id == -1) throw new IllegalArgumentException("Catalog bundles is not supported.");
-
         this.furniture = furnitureManager.get(Integer.parseInt(result.getString("item_ids")));
         this.displayName = result.getString("catalog_name");
         this.costCredits = result.getInt("cost_credits");
