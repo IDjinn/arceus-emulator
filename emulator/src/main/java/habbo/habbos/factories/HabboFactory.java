@@ -17,6 +17,7 @@ public class HabboFactory implements IHabboFactory {
     public IHabbo create(INitroClient client, IConnectionResult result) {
         var habbo = new Habbo(client, result);
         injector.injectMembers(habbo);
+        habbo.init();
         return habbo;
     }
 

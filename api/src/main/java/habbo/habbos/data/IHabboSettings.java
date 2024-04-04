@@ -1,8 +1,9 @@
 package habbo.habbos.data;
 
+import habbo.habbos.IHabboComponent;
 import org.apache.logging.log4j.Logger;
 
-public interface IHabboSettings {
+public interface IHabboSettings extends IHabboComponent {
     Logger getLogger();
 
     int getRespectPointsReceived();
