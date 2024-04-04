@@ -1,10 +1,7 @@
-package furniture;
+package habbo.furniture;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import habbo.furniture.IFurniture;
-import habbo.furniture.IFurnitureFactory;
-import habbo.furniture.IFurnitureManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;

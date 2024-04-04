@@ -1,7 +1,5 @@
-package furniture;
+package habbo.furniture;
 
-import habbo.furniture.FurnitureType;
-import habbo.furniture.IFurniture;
 import storage.results.IConnectionResult;
 
 public class Furniture implements IFurniture {

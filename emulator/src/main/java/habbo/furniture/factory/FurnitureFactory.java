@@ -1,6 +1,6 @@
-package furniture.factory;
+package habbo.furniture.factory;
 
-import furniture.Furniture;
+import habbo.furniture.Furniture;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureFactory;
 import storage.results.IConnectionResult;
