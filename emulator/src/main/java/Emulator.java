@@ -10,6 +10,8 @@ import core.configuration.IConfigurationManager;
 import core.configuration.IEmulatorSettings;
 import core.locking.ConcurrentLock;
 import core.locking.IConcurrentLock;
+import core.IThreadManager;
+import core.ThreadManager;
 import furniture.FurnitureModule;
 import habbo.Hotel;
 import habbo.catalog.CatalogModule;
@@ -94,6 +96,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
         bind(IConcurrentLock.class).to(ConcurrentLock.class);
+        bind(IThreadManager.class).to(ThreadManager.class);
     }
 
 

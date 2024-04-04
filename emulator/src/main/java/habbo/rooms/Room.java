@@ -1,6 +1,7 @@
 package habbo.rooms;
 
 import com.google.inject.Inject;
+import core.IThreadManager;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntitiesComponent;
 import habbo.rooms.components.gamemap.IGameMap;
@@ -11,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
 import packets.outgoing.rooms.RoomUserStatusComposer;
 import packets.outgoing.rooms.prepare.*;
+import utils.cycle.ICycle;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Room implements IRoom {
     private int id;
@@ -27,9 +28,9 @@ public class Room implements IRoom {
     private IGameMap gameMap;
     @Inject
     private IRoomEntitiesComponent entitiesComponent;
+    @Inject
+    private IThreadManager threadManager;
 
-    // TODO: this is not the final solution, but we will use it for now. Just components must be able to inject tasks into this executor.
-    private final Executor roomRunner = Executors.newVirtualThreadPerTaskExecutor();
     @Inject
     private IPathfinder pathfinder;
 
@@ -107,6 +108,8 @@ public class Room implements IRoom {
         this.entitiesComponent.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
+
+        threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entitiesComponent::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -260,11 +263,6 @@ public class Room implements IRoom {
 
     public IGameMap getGameMap() {
         return gameMap;
-    }
-
-    @Override
-    public void schedule(Runnable runnable) {
-        roomRunner.execute(runnable);
     }
 
     @Override
