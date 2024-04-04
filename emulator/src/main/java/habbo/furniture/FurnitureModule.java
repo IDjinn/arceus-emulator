@@ -1,9 +1,7 @@
-package furniture;
+package habbo.furniture;
 
 import com.google.inject.AbstractModule;
-import furniture.factory.FurnitureFactory;
-import habbo.furniture.IFurnitureFactory;
-import habbo.furniture.IFurnitureManager;
+import habbo.furniture.factory.FurnitureFactory;
 
 public class FurnitureModule extends AbstractModule {
     @Override

@@ -36,10 +36,11 @@ public class RoomItemFactory implements IRoomItemFactory {
         this.habboManager = habboManager;
         this.itemDefinitionMap = new HashMap<>();
         this.itemConstructorCache = new HashMap<>();
+
+        this.initInteractions();
     }
 
-    @Override
-    public void init() {
+    private void initInteractions() {
         this.itemDefinitionMap.put(DefaultFloorItem.INTERACTION_NAME, DefaultFloorItem.class);
         this.itemDefinitionMap.put(DefaultWallItem.INTERACTION_NAME, DefaultWallItem.class);
 

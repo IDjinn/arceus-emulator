@@ -5,6 +5,4 @@ import storage.results.IConnectionResult;
 
 public interface IRoomItemFactory {
     IRoomItem create(IConnectionResult result, IRoom room) throws Exception;
-
-    public void init();
 }

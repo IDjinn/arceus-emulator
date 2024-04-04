@@ -1,4 +1,4 @@
-package furniture;
+package habbo.furniture;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

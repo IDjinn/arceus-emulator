@@ -8,7 +8,7 @@ import configuration.IConfigurationManager;
 import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
-import furniture.FurnitureModule;
+import habbo.furniture.FurnitureModule;
 import habbo.Hotel;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;

@@ -10,35 +10,35 @@ import networking.util.ISerializable;
 import java.util.Optional;
 
 public interface IRoomItem extends IRoomObject, ISerializable {
-    public long getId();
+    long getId();
 
-    public IRoom getRoom();
+    IRoom getRoom();
 
-    public Optional<IHabboData> getOwnerData();
+    Optional<IHabboData> getOwnerData();
 
-    public void setOwnerData(IHabboData ownerData);
+    void setOwnerData(IHabboData ownerData);
 
-    public int getGroup();
+    int getGroup();
 
-    public IRoomItemData getItemData();
+    IRoomItemData getItemData();
 
-    public IFurniture getFurniture();
-
-
-    public ILimitedData getLimitedData();
+    IFurniture getFurniture();
 
 
-    public String getExtraData();
+    ILimitedData getLimitedData();
 
-    public void setExtraData(String extraData);
 
-    public boolean isLimited();
+    String getExtraData();
 
-    public OutgoingPacket serializePosition(OutgoingPacket packet);
+    void setExtraData(String extraData);
 
-    public OutgoingPacket serializeExtraData(OutgoingPacket packet);
+    boolean isLimited();
 
-    public OutgoingPacket serializeLimitedData(OutgoingPacket packet);
+    OutgoingPacket serializePosition(OutgoingPacket packet);
+
+    OutgoingPacket serializeExtraData(OutgoingPacket packet);
+
+    OutgoingPacket serializeLimitedData(OutgoingPacket packet);
 
     boolean canUse();
 }

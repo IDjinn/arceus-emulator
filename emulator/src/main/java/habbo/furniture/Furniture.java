@@ -1,4 +1,4 @@
-package furniture;
+package habbo.furniture;
 
 import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
