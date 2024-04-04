@@ -1,7 +1,7 @@
 package core;
 
 import com.google.inject.Inject;
-import configuration.IConfigurationManager;
+import core.configuration.IConfigurationManager;
 import org.apache.logging.log4j.LogManager;
 
 import java.util.concurrent.Executors;
