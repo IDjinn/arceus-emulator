@@ -1,9 +1,9 @@
 package habbo.habbos.data;
 
-import habbo.habbos.fillers.IFillable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
+import utils.IFillable;
 
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();

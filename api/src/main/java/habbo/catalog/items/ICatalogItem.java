@@ -1,9 +1,9 @@
 package habbo.catalog.items;
 
 import habbo.furniture.IFurniture;
-import habbo.habbos.fillers.IFillable;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
+import utils.IFillable;
 
 public interface ICatalogItem extends IFillable, ISerializable {
     void compose(OutgoingPacket packet);

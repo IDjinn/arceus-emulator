@@ -2,10 +2,10 @@ package habbo.catalog.pages;
 
 import habbo.catalog.items.ICatalogItem;
 import habbo.habbos.IHabbo;
-import habbo.habbos.fillers.IFillable;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
+import utils.IFillable;
 
 import java.util.List;
 import java.util.Map;
