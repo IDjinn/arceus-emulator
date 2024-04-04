@@ -10,6 +10,8 @@ import core.IEmulator;
 import core.IHotel;
 import furniture.FurnitureModule;
 import habbo.Hotel;
+import habbo.catalog.CatalogModule;
+import habbo.catalog.ICatalogManager;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
 import habbo.navigator.NavigatorModule;
@@ -57,6 +59,8 @@ public class Emulator extends AbstractModule implements IEmulator {
     private IPacketManager packetManager;
     @Inject
     private IFurnitureManager furnitureManager;
+    @Inject
+    private ICatalogManager catalogManager;
 
     public static void main(String[] args) {
         var injector = Guice.createInjector(
@@ -70,7 +74,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new HabboModule(),
                 new ConfigurationModule(),
                 new FurnitureModule(),
-                new ObjectModule()
+                new ObjectModule(),
+                new CatalogModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);
@@ -97,6 +102,7 @@ public class Emulator extends AbstractModule implements IEmulator {
             emulatorSettings.init();
             networkingManager.init();
             furnitureManager.init();
+            catalogManager.init();
             roomManager.init();
         } catch (Exception e) {
             logger.error(e.getMessage());
