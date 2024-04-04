@@ -123,8 +123,7 @@ public class RoomItemFactory implements IRoomItemFactory {
 
         var limitedData = result.getString("limited_data");
         if (StringUtil.isNullOrEmpty(limitedData) || !limitedData.equals("0:0")) {
-            limitedEditionItemData = new LimitedData(result.getLong("id"),
-                    Integer.parseInt(limitedData.split(":")[0]), Integer.parseInt(limitedData.split(":")[1]));
+            limitedEditionItemData = LimitedData.fromString(limitedData);
         }
 
         final long id = result.getLong("id");

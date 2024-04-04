@@ -1,14 +1,12 @@
 package habbo.habbos.inventory;
 
-import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.rooms.components.objects.items.ILimitedData;
 import org.jetbrains.annotations.Nullable;
+import utils.IFillable;
 
-public interface IHabboInventoryItem {
+public interface IHabboInventoryItem extends IFillable {
     public int getId();
-
-    public FurnitureType getType();
 
     public IFurniture getFurniture();
 

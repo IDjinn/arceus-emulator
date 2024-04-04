@@ -1,11 +1,8 @@
 package habbo.habbos;
 
-import habbo.habbos.data.HabboData;
-import habbo.habbos.data.HabboSettings;
-import habbo.habbos.data.IHabboData;
-import habbo.habbos.data.IHabboSettings;
-import habbo.habbos.inventory.HabboInventoryComponent;
-import habbo.habbos.inventory.IHabboInventoryComponent;
+import com.google.inject.Injector;
+import habbo.habbos.data.*;
+import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
@@ -21,21 +18,22 @@ public class Habbo implements IHabbo {
     private final IHabboData data;
 
     private final IHabboSettings settings;
-    private final IHabboInventoryComponent inventoryComponent;
+    private final IHabboInventory inventory;
 
-    public Habbo(INitroClient client, IConnectionResult result) {
+    public Habbo(Injector injector, INitroClient client, IConnectionResult result) {
         this.client = client;
 
         this.data = new HabboData(this, result);
         this.settings = new HabboSettings(this, result);
-        this.inventoryComponent = new HabboInventoryComponent(this, result);
+        this.inventory = new HabboInventory(this);
+        injector.injectMembers(this.inventory);
     }
 
     @Override
     public void init() {
         this.data.init();
         this.settings.init();
-        this.inventoryComponent.init();
+        this.inventory.init();
     }
 
     @Override
@@ -47,14 +45,14 @@ public class Habbo implements IHabbo {
     public void destroy() {
         this.data.destory();
         this.settings.destory();
-        this.inventoryComponent.destory();
+        this.inventory.destory();
     }
 
     @Override
     public void update() {
         this.data.update();
         this.settings.update();
-        this.inventoryComponent.update();
+        this.inventory.update();
     }
     
 
@@ -95,8 +93,8 @@ public class Habbo implements IHabbo {
     }
 
     @Override
-    public IHabboInventoryComponent getInventoryComponent() {
-        return this.inventoryComponent;
+    public IHabboInventory getInventory() {
+        return this.inventory;
     }
 }
 

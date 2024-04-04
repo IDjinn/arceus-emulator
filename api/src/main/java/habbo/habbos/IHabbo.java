@@ -2,7 +2,7 @@ package habbo.habbos;
 
 import habbo.habbos.data.IHabboData;
 import habbo.habbos.data.IHabboSettings;
-import habbo.habbos.inventory.IHabboInventoryComponent;
+import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
@@ -36,5 +36,5 @@ public interface IHabbo {
 
     IHabboSettings getSettings();
 
-    IHabboInventoryComponent getInventoryComponent();
+    IHabboInventory getInventory();
 }
