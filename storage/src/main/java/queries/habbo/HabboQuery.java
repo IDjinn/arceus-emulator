@@ -18,7 +18,7 @@ public enum HabboQuery {
             us.max_friends, us.max_rooms, us.last_hc_payday, us.hc_gifts_claimed
             FROM users u
             JOIN users_settings us ON us.user_id = u.id
-            WHERE auth_ticket = ?
+            WHERE auth_ticket = ?;
             """),
 
     GET_ALL_ITEMS_BY_OWNER_ID("""
