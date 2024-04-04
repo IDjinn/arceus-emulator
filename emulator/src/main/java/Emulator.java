@@ -9,6 +9,8 @@ import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
 import habbo.furniture.FurnitureModule;
+import core.IThreadManager;
+import core.ThreadManager;
 import habbo.Hotel;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
@@ -86,6 +88,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IEmulator.class).to(Emulator.class);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
+        bind(IThreadManager.class).to(ThreadManager.class);
     }
 
 

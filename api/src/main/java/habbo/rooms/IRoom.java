@@ -53,8 +53,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
 
     public IGameMap getGameMap();
 
-    public void schedule(Runnable runnable);
-
     public IPathfinder getPathfinder();
 
     IObjectManager getObjectManager();
