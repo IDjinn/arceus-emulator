@@ -2,16 +2,20 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import configuration.ConfigurationManager;
-import configuration.ConfigurationModule;
-import configuration.IConfigurationManager;
-import configuration.IEmulatorSettings;
 import core.IEmulator;
 import core.IHotel;
-import habbo.furniture.FurnitureModule;
 import core.IThreadManager;
 import core.ThreadManager;
+import core.configuration.ConfigurationManager;
+import core.configuration.ConfigurationModule;
+import core.configuration.IConfigurationManager;
+import core.configuration.IEmulatorSettings;
+import core.locking.ConcurrentLock;
+import core.locking.IConcurrentLock;
 import habbo.Hotel;
+import habbo.catalog.CatalogModule;
+import habbo.catalog.ICatalogManager;
+import habbo.furniture.FurnitureModule;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
 import habbo.navigator.NavigatorModule;
@@ -59,6 +63,8 @@ public class Emulator extends AbstractModule implements IEmulator {
     private IPacketManager packetManager;
     @Inject
     private IFurnitureManager furnitureManager;
+    @Inject
+    private ICatalogManager catalogManager;
 
     public static void main(String[] args) {
         var injector = Guice.createInjector(
@@ -72,7 +78,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new HabboModule(),
                 new ConfigurationModule(),
                 new FurnitureModule(),
-                new ObjectModule()
+                new ObjectModule(),
+                new CatalogModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);
@@ -88,6 +95,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         bind(IEmulator.class).to(Emulator.class);
         bind(IConfigurationManager.class).to(ConfigurationManager.class);
         bind(IHotel.class).to(Hotel.class);
+        bind(IConcurrentLock.class).to(ConcurrentLock.class);
         bind(IThreadManager.class).to(ThreadManager.class);
     }
 
@@ -100,6 +108,7 @@ public class Emulator extends AbstractModule implements IEmulator {
             emulatorSettings.init();
             networkingManager.init();
             furnitureManager.init();
+            catalogManager.init();
             roomManager.init();
         } catch (Exception e) {
             logger.error(e.getMessage());

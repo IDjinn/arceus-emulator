@@ -1,6 +1,8 @@
 package habbo.habbos.data;
 
-public interface IHabboData {
+import habbo.habbos.IHabboComponent;
+
+public interface IHabboData extends IHabboComponent {
     int getId();
     int getRank();
 

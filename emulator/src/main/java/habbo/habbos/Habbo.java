@@ -1,9 +1,8 @@
 package habbo.habbos;
 
-import habbo.habbos.data.HabboData;
-import habbo.habbos.data.HabboSettings;
-import habbo.habbos.data.IHabboData;
-import habbo.habbos.data.IHabboSettings;
+import com.google.inject.Injector;
+import habbo.habbos.data.*;
+import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
 import networking.client.INitroClient;
@@ -19,13 +18,43 @@ public class Habbo implements IHabbo {
     private final IHabboData data;
 
     private final IHabboSettings settings;
+    private final IHabboInventory inventory;
 
-    public Habbo(INitroClient client, IConnectionResult result) {
+    public Habbo(Injector injector, INitroClient client, IConnectionResult result) {
         this.client = client;
 
-        this.data = new HabboData(result);
-        this.settings = new HabboSettings(result);
+        this.data = new HabboData(this, result);
+        this.settings = new HabboSettings(this, result);
+        this.inventory = new HabboInventory(this);
+        injector.injectMembers(this.inventory);
     }
+
+    @Override
+    public void init() {
+        this.data.init();
+        this.settings.init();
+        this.inventory.init();
+    }
+
+    @Override
+    public void onLoaded() {
+
+    }
+
+    @Override
+    public void destroy() {
+        this.data.destory();
+        this.settings.destory();
+        this.inventory.destory();
+    }
+
+    @Override
+    public void update() {
+        this.data.update();
+        this.settings.update();
+        this.inventory.update();
+    }
+    
 
     public INitroClient getClient() {
         return client;
@@ -61,6 +90,11 @@ public class Habbo implements IHabbo {
     @Override
     public IHabboSettings getSettings() {
         return this.settings;
+    }
+
+    @Override
+    public IHabboInventory getInventory() {
+        return this.inventory;
     }
 }
 

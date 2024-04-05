@@ -1,12 +1,14 @@
 package habbo.habbos.data;
 
-import habbo.habbos.fillers.IFillable;
+import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
+import utils.IFillable;
 
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();
+    private final IHabbo habbo;
 
     private int id;
     private String username;
@@ -29,7 +31,8 @@ public class HabboData implements IHabboData, IFillable {
     private String machineId;
     private int homeRoom;
 
-    public HabboData(IConnectionResult data) {
+    public HabboData(IHabbo habbo, IConnectionResult data) {
+        this.habbo = habbo;
         try {
             this.fill(data);
         } catch (Exception e) {
@@ -145,5 +148,25 @@ public class HabboData implements IHabboData, IFillable {
         this.pixels = 0;
         this.diamonds = 0;
         this.seasonalPoints = 0;
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void destory() {
+
+    }
+
+    @Override
+    public IHabbo getHabbo() {
+        return habbo;
     }
 }

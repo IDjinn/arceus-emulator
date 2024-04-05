@@ -1,12 +1,14 @@
 package habbo.habbos.data;
 
-import habbo.habbos.fillers.IFillable;
+import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
+import utils.IFillable;
 
 public class HabboSettings implements IHabboSettings, IFillable {
     private static final Logger logger = LogManager.getLogger();
+    private final IHabbo habbo;
 
     private int respectPointsReceived;
     private int achievementScore;
@@ -47,7 +49,8 @@ public class HabboSettings implements IHabboSettings, IFillable {
     private int lastHCPayday;
     private int hcGiftsClaimed;
 
-    public HabboSettings(IConnectionResult result) {
+    public HabboSettings(IHabbo habbo, IConnectionResult result) {
+        this.habbo = habbo;
         try {
             this.fill(result);
         } catch (Exception e) {
@@ -251,5 +254,25 @@ public class HabboSettings implements IHabboSettings, IFillable {
         this.maxRooms = result.getInt("max_rooms");
         this.lastHCPayday = result.getInt("last_hc_payday");
         this.hcGiftsClaimed = result.getInt("hc_gifts_claimed");
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void destory() {
+
+    }
+
+    @Override
+    public IHabbo getHabbo() {
+        return habbo;
     }
 }

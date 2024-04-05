@@ -1,6 +1,6 @@
 import com.google.inject.Inject;
-import configuration.IConfigurationManager;
 import core.IEmulator;
+import core.configuration.IConfigurationManager;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;

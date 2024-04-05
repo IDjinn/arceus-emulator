@@ -1,4 +1,4 @@
-package habbo.habbos.fillers;
+package utils;
 
 import storage.results.IConnectionResult;
 

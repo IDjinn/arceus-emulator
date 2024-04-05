@@ -23,8 +23,8 @@ public class RoomWallItemsComposer extends OutgoingPacket {
             item.serializeExtraData(this);
             appendInt(-1);
 
-            appendInt(item.canUse());
-            if (item.getOwnerData() != null && item.getOwnerData().isPresent()) {
+            appendInt(item.canUse() ? 1 : 0);
+            if (item.getOwnerData().isPresent()) {
                 var owner = item.getOwnerData().get();
                 appendInt(owner.getId());
 //                appendString(owner.getUsername());

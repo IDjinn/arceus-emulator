@@ -1,8 +1,9 @@
 package habbo.furniture;
 
 import utils.IDisposable;
+import utils.IFillable;
 
-public interface IFurniture extends IDisposable {
+public interface IFurniture extends IDisposable, IFillable {
 
     public int getId();
 
@@ -24,9 +25,21 @@ public interface IFurniture extends IDisposable {
 
     public int getInteractionModesCount();
 
-    boolean canSit();
+    public boolean isCanSit();
 
-    boolean canWalk();
+    public boolean isCanWalk();
 
-    boolean canLay();
+    public boolean isCanLay();
+
+    public boolean isCanStack();
+
+    public boolean isCanGift();
+
+    public boolean isCanTrade();
+
+    public boolean isCanRecycle();
+
+    public boolean isCanSellOnMarketplace();
+
+    public boolean isCanStackOnInventory();
 }
