@@ -7,6 +7,7 @@ import habbo.furniture.IFurnitureManager;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
+import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
@@ -58,6 +59,13 @@ public class HabboInventoryItem implements IHabboInventoryItem {
         return this.group;
     }
 
+    private final int category = 0;
+
+    @Override
+    public boolean isLimited() {
+        return this.getLimitedData().getLimitedRare() > 0;
+    }
+
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
@@ -68,6 +76,32 @@ public class HabboInventoryItem implements IHabboInventoryItem {
         this.extraData = result.getString("extra_data");
         this.limitedData = LimitedData.fromString(result.getString("limited_data"));
         this.wiredData = result.getString("wired_data");
-        this.group = result.getInt("group");
+        this.group = result.getInt("guild_id");
+    }
+
+    @Override
+    public void serialize(OutgoingPacket packet) {
+        packet.appendInt(this.id)
+                .appendString(this.furniture.getType().toString())
+                .appendInt(this.id, "_ref")
+                .appendInt(this.furniture.getSpriteId())
+
+                .appendInt(0, "extraData type") // TODO: EXTRA DATA TYPE HANDLER
+                .appendInt(0, "(0) size of strings?")
+                .appendString("")
+
+                .appendBoolean(false, "_isRecyclable") // TODO 
+                .appendBoolean(true, "_tradable")
+                .appendBoolean(!this.isLimited(), "_isGroupable (inventory stack?)")
+                .appendBoolean(false, "_sellable")
+
+                .appendInt(-1, "_secondsToExpiration")
+                .appendBoolean(false, "_hasRentPeriodStarted")
+                .appendInt(-1, "_flatId");
+
+        if (this.furniture.getType().equals(FurnitureType.FLOOR)) {
+            packet.appendString("", "_slotId");
+            packet.appendInt(-1, "_extra");
+        }
     }
 }

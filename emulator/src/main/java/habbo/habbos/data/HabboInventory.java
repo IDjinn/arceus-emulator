@@ -48,7 +48,7 @@ public class HabboInventory implements IHabboInventory {
 
     @Override
     public void init() {
-        inventoryRepository.getInventoryByOwnerId(1, result -> {
+        inventoryRepository.getInventoryByOwnerId(this.getHabbo().getData().getId(), result -> {
             if (result == null) return;
             try {
                 var item = inventoryItemFactory.create(result);

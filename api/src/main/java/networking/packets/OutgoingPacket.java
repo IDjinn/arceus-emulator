@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class OutgoingPacket {
-
+    private static final String StringEmpty = "";
     private static final Logger logger = LogManager.getLogger();
     private boolean initialized;
 
@@ -33,6 +33,10 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendRawBytes(byte[] bytes) {
+        return appendRawBytes(bytes, StringEmpty);
+    }
+
+    public OutgoingPacket appendRawBytes(byte[] bytes, String debugContext) {
         try {
             this.stream.write(bytes);
         } catch (IOException e) {
@@ -41,14 +45,18 @@ public class OutgoingPacket {
         return this;
     }
 
-    public OutgoingPacket appendString(String obj) {
-        if (obj == null) {
-            this.appendString("");
+    public OutgoingPacket appendString(String string) {
+        return appendString(string, StringEmpty);
+    }
+
+    public OutgoingPacket appendString(String string, String debugContext) {
+        if (string == null) {
+            this.appendString(StringEmpty);
             return this;
         }
 
         try {
-            byte[] data = obj.getBytes();
+            byte[] data = string.getBytes();
             this.stream.writeShort(data.length);
             this.stream.write(data);
         } catch (IOException e) {
@@ -57,7 +65,11 @@ public class OutgoingPacket {
         return this;
     }
 
-    public OutgoingPacket appendChar(int obj) {
+    public OutgoingPacket appendChar(int charValue) {
+        return appendChar(charValue, StringEmpty);
+    }
+
+    public OutgoingPacket appendChar(int obj, String debugContext) {
         try {
             this.stream.writeChar(obj);
         } catch (IOException e) {
@@ -66,69 +78,27 @@ public class OutgoingPacket {
         return this;
     }
 
-    public OutgoingPacket appendChars(Object obj) {
+    public OutgoingPacket appendInt(Integer integer) {
+        return appendInt(integer, StringEmpty);
+    }
+
+    public OutgoingPacket appendInt(Integer integer, String debugContext) {
         try {
-            this.stream.writeChars(obj.toString());
+            this.stream.writeInt(integer);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
         return this;
     }
 
-    public OutgoingPacket appendInt(Integer obj) {
-        try {
-            this.stream.writeInt(obj);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
+
+    public OutgoingPacket appendBoolean(boolean bool) {
+        return appendBoolean(bool, StringEmpty);
     }
 
-    public OutgoingPacket appendInt(Short obj) {
-        this.appendShort(0);
-        this.appendShort(obj);
-        return this;
-    }
-
-    public OutgoingPacket appendInt(Byte obj) {
+    public OutgoingPacket appendBoolean(boolean bool, String debugContext) {
         try {
-            this.stream.writeInt((int) obj);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
-    }
-
-    public OutgoingPacket appendInt(Boolean obj) {
-        try {
-            this.stream.writeInt(obj ? 1 : 0);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
-    }
-
-    public OutgoingPacket appendShort(int obj) {
-        try {
-            this.stream.writeShort((short) obj);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
-    }
-
-    public OutgoingPacket appendByte(Integer b) {
-        try {
-            this.stream.writeByte(b);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
-    }
-
-    public OutgoingPacket appendBoolean(Boolean obj) {
-        try {
-            this.stream.writeBoolean(obj);
+            this.stream.writeBoolean(bool);
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
@@ -136,6 +106,10 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendDouble(double d) {
+        return appendDouble(d, StringEmpty);
+    }
+
+    public OutgoingPacket appendDouble(double d, String debugContext) {
         try {
             this.stream.writeDouble(d);
         } catch (IOException e) {
@@ -143,26 +117,6 @@ public class OutgoingPacket {
         }
         return this;
     }
-
-    public OutgoingPacket appendDouble(Double obj) {
-        try {
-            this.stream.writeDouble(obj);
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-        return this;
-    }
-
-    public OutgoingPacket appendResponse(OutgoingPacket obj) {
-        try {
-            this.stream.write(obj.getBuffer().array());
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-
-        return this;
-    }
-
 
     public int getHeader() {
         return this.header;

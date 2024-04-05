@@ -220,7 +220,7 @@ public class CatalogItem implements ICatalogItem {
         }
 
 
-        packet.appendInt(false)// TODO clubOnly
+        packet.appendBoolean(false)// TODO clubOnly
                 .appendBoolean(this.allowOffer()) // TODO
                 .appendBoolean(false)
                 .appendString(STR."\{this.getDisplayName()}.png");
