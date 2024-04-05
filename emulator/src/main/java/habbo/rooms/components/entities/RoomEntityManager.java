@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class RoomEntitiesComponent implements IRoomEntitiesComponent {
+public class RoomEntityManager implements IRoomEntityManager {
     private Logger logger = LogManager.getLogger();
     private IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
     private final ConcurrentHashMap<Integer, IHabboEntity> players;
 
-    public RoomEntitiesComponent() {
+    public RoomEntityManager() {
         entities = new ConcurrentHashMap<>();
         players = new ConcurrentHashMap<>();
     }

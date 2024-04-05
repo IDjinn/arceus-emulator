@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
-public class ObjectManager implements IObjectManager {
+public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Long, IRoomItem> items;
     private final HashMap<Long, IFloorObject> floorItems;
     private final HashMap<Long, IWallItem> wallItems;
@@ -32,7 +32,7 @@ public class ObjectManager implements IObjectManager {
     private final HashSet<String> furnitureOwners;
 
 
-    public ObjectManager() {
+    public RoomObjectManager() {
         items = new HashMap<>();
         itemsByVirtualId = new HashMap<>();
         virtualIdCounter = new AtomicInteger(1);

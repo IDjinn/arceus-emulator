@@ -1,7 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
 import habbo.rooms.IRoom;
-import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.gamemap.IRoomGameMap;
 import utils.Direction;
 import utils.Position;
 
@@ -79,7 +79,7 @@ public class Pathfinder implements IPathfinder {
     }
 
     @Override
-    public SequencedCollection<Position> tracePath(IGameMap gameMap, Position start, Position goal) {
+    public SequencedCollection<Position> tracePath(IRoomGameMap gameMap, Position start, Position goal) {
         assert start != goal : "start != goal; should be checked before call this method";
         if (start.equals(goal))
             return PathUtil.getInstance().EmptyPath;
@@ -132,7 +132,7 @@ public class Pathfinder implements IPathfinder {
         return PathUtil.getInstance().EmptyPath;
     }
 
-    private ArrayList<PathfinderNode> getNeighbors(IGameMap gameMap, Position position, HashSet<Position> closedSet) {
+    private ArrayList<PathfinderNode> getNeighbors(IRoomGameMap gameMap, Position position, HashSet<Position> closedSet) {
         assert position != null;
         var neighborSet = new ArrayList<PathfinderNode>(diagonalDirections.size());
         for (var direction : diagonalDirections.values()) {

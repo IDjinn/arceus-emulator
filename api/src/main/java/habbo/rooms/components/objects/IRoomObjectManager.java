@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.SequencedCollection;
 import java.util.function.Predicate;
 
-public interface IObjectManager extends IRoomComponent {
+public interface IRoomObjectManager extends IRoomComponent {
     public void addRoomItem(IRoomItem roomItem);
     public Collection<IRoomItem> getAllItems();
 
