@@ -25,7 +25,7 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
     @Override
     public OutgoingPacket serialize(OutgoingPacket packet) {
         return packet
-                .appendInt(this.getExtraDataType().getType())
+                .appendInt(this.getExtraDataType().getType()) // | LTD_FLAG
                 .appendString(data);
     }
 

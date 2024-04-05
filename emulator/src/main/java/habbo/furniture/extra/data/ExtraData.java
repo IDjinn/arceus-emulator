@@ -1,6 +1,9 @@
 package habbo.furniture.extra.data;
 
 public abstract class ExtraData implements IExtraData {
+    protected transient final int LTD_FLAG = 0xFF00;
+    protected transient final int DATA_MASK = 0xFF;
+    
     private final transient ExtraDataType dataType;
     private final int type;
     public ExtraData(ExtraDataType type) {

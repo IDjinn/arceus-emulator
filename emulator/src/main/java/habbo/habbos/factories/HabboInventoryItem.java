@@ -120,7 +120,7 @@ public class HabboInventoryItem implements IHabboInventoryItem {
 
                 .appendInt(-1, "_secondsToExpiration")
                 .appendBoolean(false, "_hasRentPeriodStarted")
-                .appendInt(-1, "_flatId");
+                .appendInt(-1, "_flatId"); // TODO
 
         if (this.furniture.getType().equals(FurnitureType.FLOOR)) {
             packet.appendString("", "_slotId");

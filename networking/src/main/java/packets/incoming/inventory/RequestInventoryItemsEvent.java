@@ -19,10 +19,10 @@ public class RequestInventoryItemsEvent extends IncomingEvent {
     @Override
     public void Parse(IncomingPacket packet, INitroClient client) { // TODO INCOMING RATE LIMIT
         var allItems = client.getHabbo().getInventory().getItems().values().stream().toList();
-        final var pageCount = (int) Math.ceil(allItems.size() / InventoryPageSize);
-        for (int i = 1; i <= pageCount; i++) {
+        final var totalFragments = Math.max((int) Math.ceil(allItems.size() / InventoryPageSize), 1);
+        for (int i = 1; i <= totalFragments; i++) {
             var pageItems = allItems.subList(i * InventoryPageSize, Math.min(i * InventoryPageSize + InventoryPageSize, allItems.size()));
-            client.sendMessages(new InventoryItemsComposer(pageCount, i, pageItems));
+            client.sendMessages(new InventoryItemsComposer(totalFragments, i, pageItems));
         }
     }
 }
