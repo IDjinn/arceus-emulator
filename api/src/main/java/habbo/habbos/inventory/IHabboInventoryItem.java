@@ -1,6 +1,7 @@
 package habbo.habbos.inventory;
 
 import habbo.furniture.IFurniture;
+import habbo.furniture.extra.data.IExtraData;
 import habbo.rooms.components.objects.items.ILimitedData;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
@@ -11,9 +12,7 @@ public interface IHabboInventoryItem extends IFillable, ISerializable {
 
     public IFurniture getFurniture();
 
-    public @Nullable String getExtraData();
-
-    public void setExtraData(@Nullable String extraData);
+    public IExtraData getExtraData();
 
     public ILimitedData getLimitedData();
 

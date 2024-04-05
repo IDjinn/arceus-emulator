@@ -1,8 +1,9 @@
 package habbo.furniture;
 
 import utils.IDisposable;
+import utils.IFillable;
 
-public interface IFurniture extends IDisposable {
+public interface IFurniture extends IDisposable, IFillable {
 
     public int getId();
 

@@ -1,0 +1,23 @@
+package habbo.furniture.extra.data;
+
+public abstract class ExtraData implements IExtraData {
+    private final transient ExtraDataType dataType;
+    private final int type;
+    public ExtraData(ExtraDataType type) {
+        this.dataType = type;
+        this.type = type.getType();
+    }
+
+    @Override
+    public ExtraDataType getExtraDataType() {
+        return dataType;
+    }
+
+    public class ExtraDataReader {
+        public final int type;
+
+        public ExtraDataReader(int type) {
+            this.type = type;
+        }
+    }
+}

@@ -3,18 +3,19 @@ package habbo.furniture;
 import storage.results.IConnectionResult;
 
 public class Furniture implements IFurniture {
-    private final int id;
-    private final int spriteId;
-    private final String publicName;
-    private final String itemName;
-    private final FurnitureType type;
-    private final int width;
-    private final int length;
-    private final double stackHeight;
-    private final String interactionType;
-    private final int interactionModesCount;
+    private int id;
+    private int spriteId;
+    private String publicName;
+    private String itemName;
+    private FurnitureType type;
+    private int width;
+    private int length;
+    private double stackHeight;
+    private String interactionType;
+    private int interactionModesCount;
 
-    public Furniture(IConnectionResult result) throws Exception {
+    @Override
+    public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
         this.spriteId = result.getInt("sprite_id");
         this.publicName = result.getString("public_name");
@@ -23,7 +24,6 @@ public class Furniture implements IFurniture {
         this.width = result.getInt("width");
         this.length = result.getInt("length");
         this.stackHeight = result.getDouble("stack_height");
-
 
         this.interactionType = result.getString("interaction_type");
         this.interactionModesCount = result.getInt("interaction_modes_count");
