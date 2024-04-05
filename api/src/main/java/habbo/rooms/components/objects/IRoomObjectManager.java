@@ -2,7 +2,7 @@ package habbo.rooms.components.objects;
 
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 
 import javax.annotation.Nullable;
@@ -15,7 +15,7 @@ public interface IRoomObjectManager extends IRoomComponent {
     public void addRoomItem(IRoomItem roomItem);
     public Collection<IRoomItem> getAllItems();
 
-    public Collection<IFloorObject> getAllFloorItems();
+    public Collection<IFloorItem> getAllFloorItems();
 
     public Collection<IWallItem> getAllWallItems();
 

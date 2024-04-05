@@ -5,7 +5,7 @@ import habbo.furniture.FurnitureType;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Long, IRoomItem> items;
-    private final HashMap<Long, IFloorObject> floorItems;
+    private final HashMap<Long, IFloorItem> floorItems;
     private final HashMap<Long, IWallItem> wallItems;
     private final AtomicInteger virtualIdCounter;
     private final HashMap<Integer, IRoomItem> itemsByVirtualId;
@@ -78,7 +78,7 @@ public class RoomObjectManager implements IRoomObjectManager {
         synchronized (this.items) {
             this.items.put(roomItem.getId(), roomItem);
             if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
-                this.floorItems.put(roomItem.getId(), (IFloorObject) roomItem);
+                this.floorItems.put(roomItem.getId(), (IFloorItem) roomItem);
             else if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
                 this.wallItems.put(roomItem.getId(), (IWallItem) roomItem);
         }
@@ -90,7 +90,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public Collection<IFloorObject> getAllFloorItems() {
+    public Collection<IFloorItem> getAllFloorItems() {
         return this.floorItems.values();
     }
 

@@ -1,6 +1,7 @@
 package habbo.rooms.components.objects.items;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
@@ -8,7 +9,7 @@ import habbo.furniture.IFurnitureManager;
 import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.DefaultWallItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import io.netty.util.internal.StringUtil;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 @Singleton
 public class RoomItemFactory implements IRoomItemFactory {
+    private final Injector injector;
     public final Map<String, Class<? extends IRoomItem>> itemDefinitionMap;
     public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
     private final IFurnitureManager furnitureManager;
@@ -31,9 +33,10 @@ public class RoomItemFactory implements IRoomItemFactory {
     private Logger logger = LogManager.getLogger();
 
     @Inject
-    public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager) {
+    public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager, Injector injector) {
         this.furnitureManager = furnitureManager;
         this.habboManager = habboManager;
+        this.injector = injector;
         this.itemDefinitionMap = new HashMap<>();
         this.itemConstructorCache = new HashMap<>();
 
@@ -61,18 +64,19 @@ public class RoomItemFactory implements IRoomItemFactory {
             case null, default ->
                     throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getType().toString()} is not valid object");
         };
+        this.injector.injectMembers(item);
 
         var ownerData = habboManager.getHabboData(itemData.getOwnerId());
         ownerData.ifPresent(item::setOwnerData);
         return item;
     }
 
-    private IFloorObject createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
+    private IFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         var object = createRoomObject(data, room, furnitureData);
         if (object == null)
             throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
 
-        return (IFloorObject) object;
+        return (IFloorItem) object;
     }
 
     private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {

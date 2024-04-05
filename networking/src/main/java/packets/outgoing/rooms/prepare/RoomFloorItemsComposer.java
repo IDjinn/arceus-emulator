@@ -1,6 +1,6 @@
 package packets.outgoing.rooms.prepare;
 
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class RoomFloorItemsComposer extends OutgoingPacket {
-    public RoomFloorItemsComposer(List<String> owners, Collection<IFloorObject> allItems) {
+    public RoomFloorItemsComposer(List<String> owners, Collection<IFloorItem> allItems) {
         super(OutgoingHeaders.RoomFloorItemsComposer);
         appendInt(owners.size());
         for (var i = 0; i < owners.size(); i++) {
