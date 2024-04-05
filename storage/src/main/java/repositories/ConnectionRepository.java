@@ -7,6 +7,7 @@ import results.ConnectionResult;
 import storage.IConnection;
 import storage.data.IConnectionStatementConsumer;
 import storage.repositories.IConnectionRepository;
+import storage.results.IConnectionBooleanResultConsumer;
 import storage.results.IConnectionResult;
 import storage.results.IConnectionResultConsumer;
 
@@ -77,7 +78,7 @@ public class ConnectionRepository implements IConnectionRepository {
         }
     }
 
-    public void update(String query, IConnectionResultConsumer consumer, Object... parameters) {
+    public void update(String query, IConnectionBooleanResultConsumer consumer, Object... parameters) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         boolean isUpdated;
@@ -157,7 +158,7 @@ public class ConnectionRepository implements IConnectionRepository {
         }
     }
 
-    public void delete(String query, IConnectionResultConsumer consumer, Object... parameters) {
+    public void delete(String query, IConnectionBooleanResultConsumer consumer, Object... parameters) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         boolean isDeleted;
