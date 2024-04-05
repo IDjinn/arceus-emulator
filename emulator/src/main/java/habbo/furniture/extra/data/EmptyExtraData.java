@@ -11,13 +11,12 @@ public class EmptyExtraData extends ExtraData implements IExtraData {
 
 
     @Override
-    public OutgoingPacket serialize(OutgoingPacket packet) {
-        return packet
-                .appendInt(this.getExtraDataType().getType());
+    public String toJson() {
+        return GsonHelper.getGson().toJson(this);
     }
 
     @Override
-    public String toJson() {
-        return GsonHelper.getGson().toJson(this);
+    public void serializeData(OutgoingPacket packet) {
+        
     }
 }

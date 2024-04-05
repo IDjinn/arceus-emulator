@@ -5,6 +5,7 @@ import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import habbo.furniture.extra.data.IExtraData;
+import habbo.furniture.extra.data.LegacyExtraData;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
@@ -68,8 +69,11 @@ public class HabboInventoryItem implements IHabboInventoryItem {
         if (this.furniture == null)
             throw new IllegalArgumentException(STR."Invalid furniture base id for item id \{this.id}");
 
-        this.extraData = furnitureManager.parseExtraData(result.getString("extra_data"));
         this.limitedData = LimitedData.fromString(result.getString("limited_data"));
+        this.extraData = furnitureManager.parseExtraData(result.getString("extra_data"));
+        if (this.extraData instanceof LegacyExtraData legacyExtraData) { // TODO
+            legacyExtraData.setLimitedData(this.limitedData);
+        }
         this.wiredData = result.getString("wired_data");
         this.group = result.getInt("guild_id");
     }

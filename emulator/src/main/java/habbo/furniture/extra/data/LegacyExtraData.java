@@ -6,11 +6,9 @@ import utils.gson.GsonHelper;
 
 
 public class LegacyExtraData extends ExtraData implements IExtraData {
-    private @Nullable String data;
 
     public LegacyExtraData() {
         super(ExtraDataType.Legacy);
-        this.data = "";
     }
 
     public static LegacyExtraData fromLegacyString(String value) {
@@ -23,10 +21,8 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public OutgoingPacket serialize(OutgoingPacket packet) {
-        return packet
-                .appendInt(this.getExtraDataType().getType()) // | LTD_FLAG
-                .appendString(data);
+    public void serializeData(OutgoingPacket packet) {
+        packet.appendString(data);
     }
 
     @Override

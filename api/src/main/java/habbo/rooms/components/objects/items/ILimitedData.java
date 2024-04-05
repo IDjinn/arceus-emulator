@@ -4,4 +4,6 @@ public interface ILimitedData {
     int getLimitedRare();
 
     int getLimitedRareTotal();
+
+    public boolean isLimited();
 }

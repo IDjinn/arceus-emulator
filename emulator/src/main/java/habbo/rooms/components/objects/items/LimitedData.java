@@ -11,6 +11,14 @@ public class LimitedData implements ILimitedData {
         this.limitedRareTotal = limitedRareTotal;
     }
 
+    public static LimitedData fromString(String limitedData) {
+        try {
+            String[] split = limitedData.split(":");
+            return new LimitedData(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+        } catch (Exception e) {
+            return NONE;
+        }
+    }
 
     public int getLimitedRare() {
         return limitedRare;
@@ -20,12 +28,8 @@ public class LimitedData implements ILimitedData {
         return limitedRareTotal;
     }
 
-    public static LimitedData fromString(String limitedData) {
-        try {
-            String[] split = limitedData.split(":");
-            return new LimitedData(Integer.parseInt(split[1]), Integer.parseInt(split[2]));
-        } catch (Exception e) {
-            return NONE;
-        }
+    @Override
+    public boolean isLimited() {
+        return limitedRare > 0 && limitedRareTotal > 0;
     }
 }
