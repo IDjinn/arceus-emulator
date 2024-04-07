@@ -1,6 +1,8 @@
 package packets.incoming.navigator;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import habbo.navigator.INavigatorManager;
 import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import packets.incoming.IncomingEvent;
@@ -14,15 +16,18 @@ public class RequestNewNavigatorDataEvent extends IncomingEvent {
         return IncomingHeaders.RequestNewNavigatorDataEvent;
     }
 
+    @Inject
+    private INavigatorManager navigatorManager;
+
     @Override
     public void Parse(IncomingPacket packet, INitroClient client) {
         client.sendMessages(
-                new NewNavigatorSettingsComposer(),
+                new NewNavigatorSettingsComposer(client.getHabbo().getNavigator().getNavigatorWindowSettings()),
                 new NewNavigatorMetaDataComposer(),
                 new NewNavigatorLiftedRoomsComposer(),
                 new NewNavigatorCollapsedCategoriesComposer(),
-                new NewNavigatorSavedSearchesComposer(),
-                new NewNavigatorEventCategoriesComposer()
+                new NewNavigatorSavedSearchesComposer(client.getHabbo().getNavigator().getNavigatorSearches()),
+                new NewNavigatorEventCategoriesComposer(this.navigatorManager)
         );
     }
 }

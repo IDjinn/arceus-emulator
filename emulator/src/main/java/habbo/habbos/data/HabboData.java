@@ -127,6 +127,26 @@ public class HabboData implements IHabboData, IFillable {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public void destory() {
+
+    }
+
+    @Override
+    public IHabbo getHabbo() {
+        return habbo;
+    }
+
+    @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
         this.username = result.getString("username");
@@ -148,25 +168,5 @@ public class HabboData implements IHabboData, IFillable {
         this.pixels = 0;
         this.diamonds = 0;
         this.seasonalPoints = 0;
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void destory() {
-
-    }
-
-    @Override
-    public IHabbo getHabbo() {
-        return habbo;
     }
 }

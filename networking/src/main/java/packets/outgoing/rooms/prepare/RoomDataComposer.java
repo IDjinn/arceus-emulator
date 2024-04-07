@@ -2,6 +2,7 @@ package packets.outgoing.rooms.prepare;
 
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
+import habbo.rooms.writers.RoomWriter;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
@@ -9,89 +10,23 @@ public class RoomDataComposer extends OutgoingPacket {
     public RoomDataComposer(IRoom room, IHabbo habbo, boolean roomForward, boolean enterRoom) {
         super(OutgoingHeaders.RoomDataComposer);
 
-        appendBoolean(enterRoom);
-        appendInt(room.getId());
-        appendString(room.getName());
-        // if (room.isPublicRoom()) {
-        appendInt(0);
-        appendString("");
-        // } else {
-        //     appendInt(room.getOwnerId());
-        //     appendString(room.getOwnerName());
-        // }
-        appendInt(room.getRoomAccess().getState());
-        appendInt(0);
-        appendInt(100);
-        appendString("room.Data.Description");
-        appendInt(2); // trade mode
-        appendInt(0);
-        appendInt(2); //Top rated room rank
-        appendInt(1); //category
-
-        // if (!room.getTags().isEmpty()) {
-        //     String[] tags = room.getTags().split(";");
-        //     appendInt(tags.length);
-        //     for (String s : tags) {
-        //         appendString(s);
-        //     }
-        // } else {
-        appendInt(0);
-        // }
-
-        var bitflags = 0;
-
-        // if (room.getGuildId() > 0) {
-        //     base = base | 2;
-        // }
-        //
-        // if (!room.isPublicRoom()) {
-        //     base = base | 8;
-        // }
-        //
-        // if (room.isPromoted()) {
-        //     base = base | 4;
-        // }
-        //
-        // if (room.isAllowPets()) {
-        //     base = base | 16;
-        // }
-
-        appendInt(bitflags);
-
-        // if (room.getGuildId() > 0) {
-        //     Guild g = Emulator.getGameEnvironment().getGuildManager().getGuild(room.getGuildId());
-        //     if (g != null) {
-        //         appendInt(g.getId());
-        //         appendString(g.getName());
-        //         appendString(g.getBadge());
-        //     } else {
-        //         appendInt(0);
-        //         appendString("");
-        //         appendString("");
-        //     }
-        // }
-        //
-        // if (room.isPromoted()) {
-        //     appendString(room.getPromotion().getTitle());
-        //     appendString(room.getPromotion().getDescription());
-        //     appendInt((room.getPromotion().getEndTimestamp() - Emulator.getIntUnixTimestamp()) / 60);
-        // }
+        RoomWriter.write(room, this);
 
         appendBoolean(roomForward);
-        appendBoolean(false); // staffpicked
-        appendBoolean(false); // is group member
-        appendBoolean(false); // isroommuted
+        appendBoolean(room.getData().isStaffPicked());
+        appendBoolean(false); // TODO: Check if habbo is member of room guild
+        appendBoolean(false); // TODO: is muted
 
-        appendInt(0);
-        appendInt(0);
-        appendInt(0);
+        appendInt(room.getData().getWhoCanMute());
+        appendInt(room.getData().getWhoCanKick());
+        appendInt(room.getData().getWhoCanBan());
 
-        appendBoolean(false); //mute all button
+        appendBoolean(false); // TODO: Permissions: mute all button
 
-        appendInt(0);
-        appendInt(1);
-        appendInt(1);
-        appendInt(50);
-        appendInt(2);
+        appendInt(room.getData().getChatMode());
+        appendInt(room.getData().getChatWeight());
+        appendInt(room.getData().getChatSpeed());
+        appendInt(room.getData().getChatDistance());
+        appendInt(room.getData().getChatProtection());
     }
 }

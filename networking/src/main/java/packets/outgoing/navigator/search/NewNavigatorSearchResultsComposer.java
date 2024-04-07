@@ -1,7 +1,7 @@
 package packets.outgoing.navigator.search;
 
 import habbo.rooms.IRoom;
-import habbo.rooms.RoomAccess;
+import habbo.rooms.enums.RoomAccessState;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import packets.outgoing.OutgoingHeaders;
@@ -116,7 +116,7 @@ public class NewNavigatorSearchResultsComposer extends OutgoingPacket {
                 if (!this.showInvisible) {
                     var toRemove = new ArrayList<IRoom>();
                     for (var room : this.rooms) {
-                        if (room.getRoomAccess().equals(RoomAccess.Invisible))
+                        if (room.getData().getAccessState().equals(RoomAccessState.INVISIBLE))
                             toRemove.add(room);
                     }
 

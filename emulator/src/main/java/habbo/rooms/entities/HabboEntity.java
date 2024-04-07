@@ -5,7 +5,6 @@ import networking.client.INitroClient;
 import networking.packets.OutgoingPacket;
 
 public class HabboEntity extends RoomEntity implements IHabboEntity {
-    static int VIRTUAL_ID = 0;
     private final IHabbo habbo;
 
     public HabboEntity(IHabbo habbo) { // TODO: VIRTUAL ID
@@ -41,7 +40,7 @@ public class HabboEntity extends RoomEntity implements IHabboEntity {
                 .appendInt(-1)
                 .appendString("") // guild name
                 .appendString("")
-                .appendInt(10000) //achievement score
+                .appendInt(this.getHabbo().getSettings().getAchievementScore())
                 .appendBoolean(true);
     }
 

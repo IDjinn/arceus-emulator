@@ -9,5 +9,5 @@ public interface IEmulatorSettings {
 
     HashMap<String, String> getSettings();
 
-    String get(String key);
+    String getOrDefault(String key, String defaultValue);
 }

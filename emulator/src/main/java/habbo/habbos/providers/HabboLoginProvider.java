@@ -49,11 +49,11 @@ public class HabboLoginProvider implements ILoginProvider {
 
         final AtomicInteger habboId = new AtomicInteger(-1);
 
-        habboRepository.getHabboIdByAuthTicket(authTicket, consumer -> {
+        habboRepository.getHabboIdByAuthTicket(consumer -> {
             if(consumer == null) return;
 
             habboId.set(consumer.getInt("id"));
-        });
+        }, authTicket);
 
         if(habboId.get() <= 0) {
             return false;
@@ -63,7 +63,7 @@ public class HabboLoginProvider implements ILoginProvider {
     }
 
     public void attemptLogin(ChannelHandlerContext ctx, String authTicket) {
-        habboRepository.getHabboDataByAuthTicket(authTicket, result -> {
+        habboRepository.getHabboDataByAuthTicket(result -> {
             if(result == null) {
                 clientManager.disconnectGuest(ctx);
                 return;
@@ -78,7 +78,7 @@ public class HabboLoginProvider implements ILoginProvider {
             clientManager.addClient(client);
 
             this.sendLoginPackets(client);
-        });
+        }, authTicket);
     }
 
     private void sendLoginPackets(INitroClient client) {

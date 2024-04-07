@@ -81,6 +81,7 @@ public class ConnectionRepository implements IConnectionRepository {
     public void update(String query, IConnectionBooleanResultConsumer consumer, Object... parameters) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+
         boolean isUpdated;
 
         try {

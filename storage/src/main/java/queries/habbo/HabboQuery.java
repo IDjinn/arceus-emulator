@@ -15,15 +15,17 @@ public enum HabboQuery {
             us.chat_color, us.hof_points, us.block_alerts, us.talent_track_citizenship_level, us.talent_track_helpers_level,
             us.ignore_bots, us.ignore_pets, us.nux, us.mute_end_timestamp, us.allow_name_change,
             us.perk_trade, us.forums_post_count, us.ui_flags, us.has_gotten_default_saved_searches,
-            us.max_friends, us.max_rooms, us.last_hc_payday, us.hc_gifts_claimed
+            us.max_friends, us.max_rooms, us.last_hc_payday, us.hc_gifts_claimed,
+            uws.x, uws.y, uws.width, uws.height, uws.open_searches
             FROM users u
             JOIN users_settings us ON us.user_id = u.id
+            JOIN user_window_settings uws ON uws.user_id = u.id
             WHERE auth_ticket = ?;
-            """),
+    """),
 
-    GET_ALL_ITEMS_BY_OWNER_ID("""
-            SELECT * FROM `items` WHERE `user_id` = ? AND room_id = 0;
-            """);
+    GET_ALL_ITEMS_BY_OWNER_ID("SELECT * FROM `items` WHERE `user_id` = ? AND room_id = 0;"),
+
+    ;
 
     private final String query;
 

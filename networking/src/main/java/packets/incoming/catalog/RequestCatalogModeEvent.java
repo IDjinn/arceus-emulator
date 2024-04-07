@@ -13,6 +13,7 @@ import packets.outgoing.catalog.CatalogIndexComposer;
 @Singleton
 public class RequestCatalogModeEvent extends IncomingEvent {
     private final int RootPageId = -1;
+
     @Inject
     private ICatalogManager catalogManager;
 

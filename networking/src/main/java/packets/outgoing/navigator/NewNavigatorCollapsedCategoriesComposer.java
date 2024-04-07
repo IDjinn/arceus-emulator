@@ -6,7 +6,9 @@ import packets.outgoing.OutgoingHeaders;
 public class NewNavigatorCollapsedCategoriesComposer extends OutgoingPacket {
     public NewNavigatorCollapsedCategoriesComposer() {
         super(OutgoingHeaders.NewNavigatorCollapsedCategoriesComposer);
+
         appendInt(46);
+
         appendString("new_ads");
         appendString("friend_finding");
         appendString("staffpicks");

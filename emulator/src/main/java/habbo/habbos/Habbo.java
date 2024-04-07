@@ -18,15 +18,28 @@ public class Habbo implements IHabbo {
     private final IHabboData data;
 
     private final IHabboSettings settings;
+
     private final IHabboInventory inventory;
 
-    public Habbo(Injector injector, INitroClient client, IConnectionResult result) {
+    private final IHabboNavigator navigator;
+
+    private final IHabboRooms rooms;
+
+    public Habbo(final Injector injector, INitroClient client, IConnectionResult result) {
         this.client = client;
 
         this.data = new HabboData(this, result);
         this.settings = new HabboSettings(this, result);
         this.inventory = new HabboInventory(this);
+        this.navigator = new HabboNavigator(this, result);
+        this.rooms = new HabboRooms(this);
+
+        this.injectDependenciesOnComponents(injector);
+    }
+
+    private void injectDependenciesOnComponents(final Injector injector) {
         injector.injectMembers(this.inventory);
+        injector.injectMembers(this.navigator);
     }
 
     @Override
@@ -34,6 +47,8 @@ public class Habbo implements IHabbo {
         this.data.init();
         this.settings.init();
         this.inventory.init();
+        this.navigator.init();
+        this.rooms.init();
     }
 
     @Override
@@ -95,6 +110,16 @@ public class Habbo implements IHabbo {
     @Override
     public IHabboInventory getInventory() {
         return this.inventory;
+    }
+
+    @Override
+    public IHabboNavigator getNavigator() {
+        return this.navigator;
+    }
+
+    @Override
+    public IHabboRooms getRooms() {
+        return this.rooms;
     }
 }
 

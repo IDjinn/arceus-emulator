@@ -35,4 +35,12 @@ public class ConnectionResult implements IConnectionResult {
     public double getDouble(String name) throws Exception {
         return this.result.getDouble(name);
     }
+
+    public boolean hasColumn(String name) throws Exception {
+        return this.result.findColumn(name) > 0;
+    }
+
+    public boolean isNull(String name) throws Exception {
+        return this.result.getObject(name) == null;
+    }
 }
