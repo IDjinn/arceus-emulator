@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
 import habbo.navigator.INavigatorManager;
 import habbo.navigator.INavigatorRoomsProvider;
+import habbo.navigator.data.INavigatorFilterType;
 import habbo.navigator.data.INavigatorPublicCategory;
 import habbo.navigator.data.INavigatorResultCategory;
 import habbo.navigator.data.NavigatorResultCategory;
@@ -11,6 +12,7 @@ import habbo.navigator.enums.NavigatorDisplayMode;
 import habbo.navigator.enums.NavigatorDisplayOrder;
 import habbo.navigator.enums.NavigatorLayoutDisplay;
 import habbo.navigator.enums.NavigatorListAction;
+import habbo.rooms.data.IRoomCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +63,15 @@ public class NavigatorOfficialTab implements INavigatorTab {
         }
 
         return categories;
+    }
+
+    @Override
+    public List<INavigatorResultCategory> getSearchedResultForHabbo(
+            IHabbo habbo,
+            INavigatorFilterType filterType,
+            String search,
+            IRoomCategory category
+    ) {
+        return null;
     }
 }

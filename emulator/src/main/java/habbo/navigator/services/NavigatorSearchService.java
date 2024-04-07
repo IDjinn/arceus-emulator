@@ -15,6 +15,8 @@ import habbo.navigator.enums.NavigatorLayoutDisplay;
 import habbo.navigator.enums.NavigatorListAction;
 import habbo.navigator.tabs.INavigatorTab;
 import habbo.rooms.IRoom;
+import habbo.rooms.IRoomManager;
+import habbo.rooms.data.IRoomCategory;
 import packets.outgoing.navigator.search.NewNavigatorSearchResultsComposer;
 
 import java.util.ArrayList;
@@ -28,14 +30,18 @@ public class NavigatorSearchService implements INavigatorSearchService {
 
     private final INavigatorManager navigatorManager;
 
+    private final IRoomManager roomManager;
+
     private final INavigatorRoomsProvider navigatorRoomsProvider;
 
     @Inject
     public NavigatorSearchService(
             IConfigurationManager configurationManager,
             INavigatorManager navigatorManager,
-            INavigatorRoomsProvider navigatorRoomsProvider
+            INavigatorRoomsProvider navigatorRoomsProvider,
+            IRoomManager roomManager
     ) {
+        this.roomManager = roomManager;
         this.navigatorManager = navigatorManager;
         this.navigatorRoomsProvider = navigatorRoomsProvider;
 
@@ -58,16 +64,35 @@ public class NavigatorSearchService implements INavigatorSearchService {
                 return;
             }
 
-            final INavigatorFilterType filterType = this.navigatorManager.getFilterTypeByKey("anything");
+            INavigatorFilterType filterType = this.navigatorManager.getFilterTypeByKey("anything");
 
             if(filterType == null) return;
 
-            final List<INavigatorResultCategory> categories = tab.getResultForHabbo(habbo);
-
             if(query.isBlank()) {
-                habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(tabName, query, categories));
+                habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(
+                        tabName, query, tab.getResultForHabbo(habbo)
+                ));
                 return;
             }
+
+            String[] parsedQuery = query.split(":");
+            final IRoomCategory category = this.roomManager.getCategoryFromTab(tabName);
+
+            if(parsedQuery.length <= 1) {
+
+                habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(
+                        tabName, query, tab.getSearchedResultForHabbo(habbo, filterType, parsedQuery[0], category)
+                ));
+                return;
+            }
+
+            filterType = this.navigatorManager.getFilterTypeByKey(parsedQuery[0].replace(":", ""));
+
+            if(filterType == null) return;
+
+            habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(
+                    tabName, query, tab.getSearchedResultForHabbo(habbo, filterType, parsedQuery[1], category)
+            ));
         });
     }
 

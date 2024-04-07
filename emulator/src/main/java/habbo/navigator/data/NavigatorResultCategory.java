@@ -34,19 +34,22 @@ public record NavigatorResultCategory(
 
         synchronized (this.rooms) {
             if (!this.showInvisible) {
-                var toRemove = new ArrayList<IRoom>();
-                for (var room : this.rooms) {
-                    if (room.getData().getAccessState().equals(RoomAccessState.INVISIBLE))
-                        toRemove.add(room);
+                final List<IRoom> invisibleRooms = new ArrayList<>();
+
+                for (final IRoom room : this.rooms) {
+                    if (!room.getData().getAccessState().equals(RoomAccessState.INVISIBLE)) continue;
+
+                    invisibleRooms.add(room);
                 }
 
-                this.rooms.removeAll(toRemove);
+                this.rooms.removeAll(invisibleRooms);
             }
 
             packet.appendInt(this.rooms.size());
 //                Collections.sort(this.rooms);
-            for (var room : this.rooms)
+            for (final IRoom room : this.rooms) {
                 room.serialize(packet);
+            }
         }
     }
 

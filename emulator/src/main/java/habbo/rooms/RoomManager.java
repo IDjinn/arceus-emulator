@@ -53,34 +53,6 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
-    public ConcurrentHashMap<Integer, IRoom> getLoadedRooms() {
-        return this.rooms;
-    }
-
-    @Override
-    public HashMap<Integer, IRoomCategory> getRoomCategories() {
-        return this.roomCategories;
-    }
-
-    @Override
-    public HashMap<String, IRoomModel> getRoomModels() {
-        return this.roomModels;
-    }
-
-    @Override
-    public List<IRoom> getLoadedRoomsBy(Predicate<IRoom> predicate) {
-        var result = new ArrayList<IRoom>();
-
-        for (var room : this.rooms.values()) {
-            if (predicate.test(room))
-                result.add(room);
-        }
-
-        Collections.sort(result);
-        return result;
-    }
-
-    @Override
     public @Nullable IRoom tryLoadRoom(int roomId) {
         return this.rooms.get(roomId);
     }
@@ -161,6 +133,41 @@ public class RoomManager implements IRoomManager {
         });
 
         logger.info("Loaded {} room models", this.roomModels.size());
+    }
+
+    @Override
+    public ConcurrentHashMap<Integer, IRoom> getLoadedRooms() {
+        return this.rooms;
+    }
+
+    @Override
+    public HashMap<Integer, IRoomCategory> getRoomCategories() {
+        return this.roomCategories;
+    }
+
+    public IRoomCategory getCategoryFromTab(String tabName) {
+        return this.roomCategories.values().stream()
+                .filter(category -> category.getCaptionSave().equalsIgnoreCase(tabName))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public HashMap<String, IRoomModel> getRoomModels() {
+        return this.roomModels;
+    }
+
+    @Override
+    public List<IRoom> getLoadedRoomsBy(Predicate<IRoom> predicate) {
+        var result = new ArrayList<IRoom>();
+
+        for (var room : this.rooms.values()) {
+            if (predicate.test(room))
+                result.add(room);
+        }
+
+        Collections.sort(result);
+        return result;
     }
 
     public IRoom getRoomById(int roomId) {

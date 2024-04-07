@@ -19,6 +19,8 @@ public interface IRoomManager extends IHotelService {
 
     HashMap<Integer, IRoomCategory> getRoomCategories();
 
+    IRoomCategory getCategoryFromTab(String tabName);
+
     HashMap<String, IRoomModel> getRoomModels();
 
     IRoom getRoomById(int roomId);
