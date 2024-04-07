@@ -62,11 +62,9 @@ public class NavigatorSearchService implements INavigatorSearchService {
 
             if(filterType == null) return;
 
-                System.out.println("Vou entrar no método agora");
             final List<INavigatorResultCategory> categories = tab.getResultForHabbo(habbo);
 
             if(query.isBlank()) {
-                System.out.println("isBlank");
                 habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(tabName, query, categories));
                 return;
             }

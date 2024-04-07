@@ -23,7 +23,7 @@ public class NavigatorRoomsProvider implements INavigatorRoomsProvider {
 
     public List<IRoom> getRoomFromCategory(String category, IHabbo habbo) {
         return switch (category) {
-            case NavigatorOfficialTab.FILTER_NAME -> this.getPublicRooms();
+            case "official-root" -> this.getPublicRooms();
             case "my" -> habbo.getRooms().getOwnRooms();
             case "favorites" -> habbo.getRooms().getFavoriteRooms();
             case "history_freq" -> habbo.getRooms().getRoomHistory();
