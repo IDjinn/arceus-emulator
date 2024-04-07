@@ -5,7 +5,11 @@ public interface IConnectionResult {
 
     int getInt(String name) throws Exception;
 
+    int getInt(int columnIndex) throws Exception;
+
     long getLong(String name) throws Exception;
+
+    long getLong(int columnIndex) throws Exception;
 
     boolean getBoolean(String name) throws Exception;
 

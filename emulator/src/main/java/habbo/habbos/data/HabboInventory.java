@@ -33,7 +33,7 @@ public class HabboInventory implements IHabboInventory {
 
     @Override
     public void addItem(IHabboInventoryItem item) {
-
+        this.items.put(item.getId(), item);
     }
 
     @Override
@@ -72,5 +72,10 @@ public class HabboInventory implements IHabboInventory {
     @Override
     public IHabbo getHabbo() {
         return this.habbo;
+    }
+
+    @Override
+    public boolean canPurchaseItems(int count) {
+        return count > 0;
     }
 }

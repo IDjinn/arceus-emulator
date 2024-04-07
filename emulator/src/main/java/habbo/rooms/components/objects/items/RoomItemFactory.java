@@ -10,6 +10,8 @@ import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.interactions.LayFloorItem;
+import habbo.rooms.components.objects.items.floor.interactions.SitFloorItem;
 import habbo.rooms.components.objects.items.wall.DefaultWallItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import io.netty.util.internal.StringUtil;
@@ -46,6 +48,8 @@ public class RoomItemFactory implements IRoomItemFactory {
     private void initInteractions() {
         this.itemDefinitionMap.put(DefaultFloorItem.INTERACTION_NAME, DefaultFloorItem.class);
         this.itemDefinitionMap.put(DefaultWallItem.INTERACTION_NAME, DefaultWallItem.class);
+        this.itemDefinitionMap.put(SitFloorItem.INTERACTION_NAME, SitFloorItem.class);
+        this.itemDefinitionMap.put(LayFloorItem.INTERACTION_NAME, LayFloorItem.class);
 
         logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
     }

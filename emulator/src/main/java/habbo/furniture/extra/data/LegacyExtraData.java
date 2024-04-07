@@ -11,6 +11,11 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
         super(ExtraDataType.Legacy);
     }
 
+    public LegacyExtraData(String data) {
+        super(ExtraDataType.Legacy);
+        this.data = data;
+    }
+
     public static LegacyExtraData fromLegacyString(String value) {
         return new LegacyExtraData().setData(value);
     }

@@ -22,8 +22,18 @@ public class ConnectionResult implements IConnectionResult {
     }
 
     @Override
+    public int getInt(int columnIndex) throws Exception {
+        return result.getInt(columnIndex);
+    }
+
+    @Override
     public long getLong(String name) throws Exception {
         return this.result.getLong(name);
+    }
+
+    @Override
+    public long getLong(int columnIndex) throws Exception {
+        return result.getLong(columnIndex);
     }
 
     @Override

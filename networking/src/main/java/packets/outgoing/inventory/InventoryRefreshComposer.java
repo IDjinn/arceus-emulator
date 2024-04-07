@@ -1,4 +1,4 @@
-package packets.outgoing.session.inventory;
+package packets.outgoing.inventory;
 
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;

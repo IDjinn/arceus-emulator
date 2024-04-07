@@ -15,12 +15,28 @@ import storage.results.IConnectionResult;
 
 public class HabboInventoryItem implements IHabboInventoryItem {
     private int id;
-    private FurnitureType type;
     private IFurniture furniture;
     private IExtraData extraData;
     private ILimitedData limitedData;
     private @Nullable String wiredData;
     private int group;
+
+    public HabboInventoryItem() {
+    }
+
+    public HabboInventoryItem(int id,
+                              IFurniture furniture,
+                              IExtraData extraData,
+                              ILimitedData limitedData,
+                              @Nullable String wiredData,
+                              int group) {
+        this.id = id;
+        this.furniture = furniture;
+        this.extraData = extraData;
+        this.limitedData = limitedData;
+        this.wiredData = wiredData;
+        this.group = group;
+    }
 
     @Inject
     private IFurnitureManager furnitureManager;
