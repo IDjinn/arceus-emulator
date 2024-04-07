@@ -165,11 +165,7 @@ public class RoomManager implements IRoomManager {
     }
 
     public IRoom getRoomById(int roomId) {
-        if (this.rooms.containsKey(roomId)) {
-            return this.rooms.get(roomId);
-        }
-
-        return null;
+        return this.rooms.get(roomId);
     }
 
     @Override
