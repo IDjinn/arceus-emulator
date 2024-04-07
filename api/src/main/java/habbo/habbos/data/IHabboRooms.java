@@ -10,4 +10,8 @@ public interface IHabboRooms {
     List<IRoom> getOwnRooms();
 
     List<IRoom> getFavoriteRooms();
+
+    List<IRoom> getRoomHistory();
+
+    List<IRoom> getRoomsWithRights();
 }

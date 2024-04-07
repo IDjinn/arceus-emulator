@@ -19,7 +19,7 @@ public enum NavigatorDisplayMode {
         };
     }
 
-    public int getValue() {
+    public int get() {
         return this.value;
     }
 }

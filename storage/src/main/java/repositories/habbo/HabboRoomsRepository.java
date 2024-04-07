@@ -15,4 +15,12 @@ public class HabboRoomsRepository extends ConnectionRepository implements IHabbo
     public void loadFavoriteRoomsForHabbo(IConnectionResultConsumer consumer, int habboId) {
         this.select(HabboRoomQuery.SELECT_ALL_FAVORITE_ROOMS.get(), consumer, habboId);
     }
+
+    public void loadRoomHistoryForHabbo(IConnectionResultConsumer consumer, int habboId, long timestamp) {
+        this.select(HabboRoomQuery.SELECT_ALL_ROOM_HISTORY.get(), consumer, habboId, timestamp, habboId);
+    }
+
+    public void loadRoomsWithRightsForHabbo(IConnectionResultConsumer consumer, int habboId) {
+        this.select(HabboRoomQuery.SELECT_ALL_ROOMS_WITH_RIGHTS.get(), consumer, habboId);
+    }
 }

@@ -9,4 +9,8 @@ public interface INavigatorRoomsProvider {
     List<IRoom> getRoomFromCategory(String category, IHabbo habbo);
 
     List<IRoom> getPublicRooms();
+
+    List<IRoom> getPopularRooms();
+
+    List<IRoom> getPromotedRooms();
 }

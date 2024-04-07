@@ -6,8 +6,19 @@ import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
 import habbo.navigator.INavigatorManager;
 import habbo.navigator.INavigatorRoomsProvider;
+import habbo.navigator.data.INavigatorFilterType;
+import habbo.navigator.data.INavigatorResultCategory;
+import habbo.navigator.data.NavigatorResultCategory;
+import habbo.navigator.enums.NavigatorDisplayMode;
+import habbo.navigator.enums.NavigatorDisplayOrder;
+import habbo.navigator.enums.NavigatorLayoutDisplay;
+import habbo.navigator.enums.NavigatorListAction;
 import habbo.navigator.tabs.INavigatorTab;
+import habbo.rooms.IRoom;
+import packets.outgoing.navigator.search.NewNavigatorSearchResultsComposer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -46,11 +57,32 @@ public class NavigatorSearchService implements INavigatorSearchService {
                 this.sendRoomsFromCategory(habbo, tabName, query);
                 return;
             }
+
+            final INavigatorFilterType filterType = this.navigatorManager.getFilterTypeByKey("anything");
+
+            if(filterType == null) return;
+
+                System.out.println("Vou entrar no método agora");
+            final List<INavigatorResultCategory> categories = tab.getResultForHabbo(habbo);
+
+            if(query.isBlank()) {
+                System.out.println("isBlank");
+                habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(tabName, query, categories));
+                return;
+            }
         });
     }
 
     private void sendRoomsFromCategory(IHabbo habbo, String tabName, String query) {
-        // Send rooms from category
+        final List<IRoom> rooms = this.navigatorRoomsProvider.getRoomFromCategory(tabName, habbo);
+
+        final List<INavigatorResultCategory> categories = new ArrayList<>(){
+            {
+                add(new NavigatorResultCategory(0, tabName, query, NavigatorListAction.NONE, NavigatorDisplayMode.LIST, NavigatorLayoutDisplay.DEFAULT, rooms, false, false, NavigatorDisplayOrder.ACTIVITY, -1));
+            }
+        };
+
+        habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(tabName, query, categories));
     }
 
     private void search(IHabbo habbo, String view, String query) {

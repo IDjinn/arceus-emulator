@@ -50,6 +50,10 @@ public class NavigatorPublicCategory implements INavigatorPublicCategory, IFilla
         this.rooms.remove(room);
     }
 
+    public void setRooms(List<IRoom> rooms) {
+        this.rooms = rooms;
+    }
+
     @Override
     public NavigatorDisplayMode getDisplayMode() {
         return this.displayMode;

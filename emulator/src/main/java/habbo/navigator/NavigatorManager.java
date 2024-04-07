@@ -1,6 +1,7 @@
 package habbo.navigator;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import core.configuration.IEmulatorSettings;
 import habbo.navigator.data.INavigatorEventCategory;
@@ -17,6 +18,8 @@ import java.util.HashMap;
 public class NavigatorManager implements INavigatorManager {
     private final Logger logger = LogManager.getLogger();
 
+    private Injector injector;
+
     private final HashMap<Integer, INavigatorPublicCategory> publicCategories;
 
     private final INavigatorRepository repository;
@@ -30,7 +33,8 @@ public class NavigatorManager implements INavigatorManager {
     private final HashMap<String, INavigatorTab> tabs;
 
     @Inject
-    public NavigatorManager(INavigatorRepository repository, IEmulatorSettings emulatorSettings) {
+    public NavigatorManager(Injector injector, INavigatorRepository repository, IEmulatorSettings emulatorSettings) {
+        this.injector = injector;
         this.repository = repository;
         this.emulatorSettings = emulatorSettings;
 
@@ -90,6 +94,8 @@ public class NavigatorManager implements INavigatorManager {
         this.tabs.putIfAbsent(NavigatorRecommendedTab.FILTER_NAME, new NavigatorRecommendedTab());
         this.tabs.putIfAbsent(NavigatorEventsTab.FILTER_NAME, new NavigatorEventsTab());
         this.tabs.putIfAbsent(NavigatorHabboTab.FILTER_NAME, new NavigatorHabboTab());
+
+        this.tabs.forEach((_, tab) -> this.injector.injectMembers(tab));
     }
 
     @Override
@@ -98,8 +104,31 @@ public class NavigatorManager implements INavigatorManager {
     }
 
     @Override
+    public HashMap<Integer, INavigatorPublicCategory> getPublicCategories() {
+        return this.publicCategories;
+    }
+
+    @Override
     public INavigatorPublicCategory getPublicCategoryById(int id) {
         return this.publicCategories.get(id);
+    }
+
+    @Override
+    public INavigatorFilterType getFilterTypeByKey(String key) {
+        return this.filterTypes.get(key);
+    }
+
+    @Override
+    public INavigatorFilterType getReplaceableFilterTypeByKey(String key, String fallbackKey) {
+        if(key == null || key.isBlank()) {
+            key = fallbackKey;
+        }
+
+        if(this.filterTypes.containsKey(key)) {
+            return this.filterTypes.get(key);
+        }
+
+        return this.filterTypes.get(fallbackKey);
     }
 
     @Override

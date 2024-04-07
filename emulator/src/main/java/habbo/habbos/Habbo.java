@@ -40,6 +40,7 @@ public class Habbo implements IHabbo {
     private void injectDependenciesOnComponents(final Injector injector) {
         injector.injectMembers(this.inventory);
         injector.injectMembers(this.navigator);
+        injector.injectMembers(this.rooms);
     }
 
     @Override
