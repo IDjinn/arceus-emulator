@@ -7,6 +7,8 @@ import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.gamemap.RoomRoomGameMap;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.pathfinder.Pathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
+import habbo.rooms.components.rights.RoomRightsManager;
 
 public class RoomModule extends AbstractModule {
     @Override
@@ -16,5 +18,6 @@ public class RoomModule extends AbstractModule {
         bind(IPathfinder.class).to(Pathfinder.class);
         bind(IRoomGameMap.class).to(RoomRoomGameMap.class);
         bind(IRoomEntityManager.class).to(RoomEntityManager.class);
+        bind(IRoomRightsManager.class).to(RoomRightsManager.class);
     }
 }

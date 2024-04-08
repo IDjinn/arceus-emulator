@@ -7,6 +7,7 @@ import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
@@ -35,6 +36,8 @@ public class Room implements IRoom {
 
     @Inject
     private IPathfinder pathfinder;
+    @Inject
+    private IRoomRightsManager rightsManager;
 
     public Room(int roomId, String roomName) {
         this.id = roomId;
@@ -110,6 +113,7 @@ public class Room implements IRoom {
         this.entityManager.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
+        this.objectManager.init(this);
 
         threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entityManager::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
@@ -120,6 +124,7 @@ public class Room implements IRoom {
         this.entityManager.destroy();
         this.pathfinder.destroy();
         this.objectManager.destroy();
+        this.rightsManager.destroy();
     }
 
     @Override
@@ -128,6 +133,7 @@ public class Room implements IRoom {
         this.entityManager.onRoomLoaded();
         this.pathfinder.onRoomLoaded();
         this.objectManager.onRoomLoaded();
+        this.rightsManager.onRoomLoaded();
     }
 
     @Override
@@ -216,7 +222,7 @@ public class Room implements IRoom {
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomModelComposer("model_a", getId()),
                 new RoomPaintComposer("landscape", "0.0"),
-                new RoomRightsComposer(0),
+                new RoomRightsComposer(this.getRightsManager().getRightLevelFor(habbo)),
                 new RoomScoreComposer(0, true),
                 new RoomPromotionMessageComposer(),
                 new RoomRelativeMapComposer(getGameMap()),
@@ -275,5 +281,10 @@ public class Room implements IRoom {
     @Override
     public IRoomObjectManager getObjectManager() {
         return this.objectManager;
+    }
+
+    @Override
+    public IRoomRightsManager getRightsManager() {
+        return this.rightsManager;
     }
 }

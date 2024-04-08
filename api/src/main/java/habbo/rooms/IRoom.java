@@ -5,6 +5,7 @@ import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.IDisposable;
@@ -56,4 +57,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
     public IPathfinder getPathfinder();
 
     IRoomObjectManager getObjectManager();
+
+    IRoomRightsManager getRightsManager();
 }
