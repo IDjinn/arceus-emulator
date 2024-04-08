@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 @Singleton
@@ -67,22 +68,26 @@ public class RoomManager implements IRoomManager {
     }
 
     private void loadPublicRooms() {
+        final AtomicInteger publics = new AtomicInteger(0);
         this.roomRepository.loadPublicRooms(result -> {
             if(result == null) return;
 
             try {
                 final IRoom room = roomFactory.createRoom(result);
+                room.init();
 
                 this.rooms.put(room.getData().getId(), room);
+                publics.incrementAndGet();
             } catch (Exception e) {
                 logger.error("Failed to load public room: {}", result.getInt("id"));
             }
         }, "1", "1");
 
-        logger.info("Loaded all public rooms");
+        logger.info("Loaded all {} public rooms", publics.get());
     }
 
     private void loadStaffPickedRooms() {
+        final AtomicInteger picked = new AtomicInteger(0);
         this.roomRepository.loadStaffPickedRooms(result -> {
             if(result == null) return;
 
@@ -101,14 +106,16 @@ public class RoomManager implements IRoomManager {
                 }
 
                 room = roomFactory.createRoom(result);
+                room.init();
 
                 this.rooms.put(room.getData().getId(), room);
+                picked.incrementAndGet();
             } catch (Exception e) {
                 logger.error("Failed to load staff picked room: {}", result.getInt("id"));
             }
         }, "1");
 
-        logger.info("Loaded all staff picked rooms");
+        logger.info("Loaded all {} staff picked rooms", picked.get());
     }
 
     private void loadRoomCategories() {
