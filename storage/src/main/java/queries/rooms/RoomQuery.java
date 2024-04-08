@@ -4,6 +4,23 @@ public enum RoomQuery {
 
     SELECT_ALL_ITEMS("SELECT * FROM `items` WHERE `room_id` = ?"),
 
+    PLACE_FLOOR_ITEM(
+            """
+                    UPDATE `items`
+                        SET `room_id` = ?,
+                        `x` = ?,
+                        `y` = ?,
+                        `z` = ?,
+                        `rot` = ?
+                    WHERE `id` = ?;
+                    """),
+    PLACE_WALL_ITEM(
+            """
+                    UPDATE `items`
+                        SET `room_id` = ?,
+                        `wall_pos` = ?
+                    WHERE `id` = ?;
+                    """),
     SELECT_ALL_PUBLIC_ROOMS("SELECT * FROM rooms WHERE is_public = ? OR is_staff_picked = ? ORDER BY id DESC"),
 
     SELECT_ALL_STAFF_PICKED_ROOMS("SELECT * FROM navigator_publics JOIN rooms ON rooms.id = navigator_publics.room_id WHERE visible = ?"),

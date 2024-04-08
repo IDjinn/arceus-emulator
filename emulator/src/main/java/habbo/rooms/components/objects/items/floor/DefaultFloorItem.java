@@ -7,7 +7,7 @@ import habbo.rooms.components.objects.items.RoomItem;
 import networking.packets.OutgoingPacket;
 import utils.Position;
 
-public class DefaultFloorItem extends RoomItem implements IFloorObject {
+public class DefaultFloorItem extends RoomItem implements IFloorItem {
     public static final String INTERACTION_NAME = "default_floor";
 
     public DefaultFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {

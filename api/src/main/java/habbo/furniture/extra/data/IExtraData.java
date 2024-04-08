@@ -12,6 +12,7 @@ public interface IExtraData {
 
     public void setLimitedData(ILimitedData data);
 
+    public void serializeState(OutgoingPacket packet);
 
     public String toJson();
 }

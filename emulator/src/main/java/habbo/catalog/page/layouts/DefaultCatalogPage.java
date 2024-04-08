@@ -8,14 +8,14 @@ public class DefaultCatalogPage extends CatalogPage {
     @Override
     public void serialize(OutgoingPacket packet) {
         packet.appendString("default_3x3");
-        packet.appendInt(0); // images size
-//        packet.appendString("getHeaderImage()");
-//        packet.appendString("getTeaserImage()");
-//        packet.appendString("getSpecialImage()");
-        packet.appendInt(0); // texts
-//        packet.appendString("getTextOne()");
-//        packet.appendString("getTextDetails()");
-//        packet.appendString("getTextTeaser()");
+
+        packet.appendInt(this.getImages().size());
+        for (var image : this.getImages())
+            packet.appendString(image);
+
+        packet.appendInt(this.getTexts().size());
+        for (var text : this.getTexts())
+            packet.appendString(text);
     }
 
 }

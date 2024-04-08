@@ -203,26 +203,28 @@ public class CatalogItem implements ICatalogItem {
     public void serialize(OutgoingPacket packet) {
         packet.appendInt(this.getId())
                 .appendString(this.getDisplayName())
-                .appendBoolean(false) //rent
+                .appendBoolean(false, "rent") //rent
                 .appendInt(this.getCostCredits())
-                .appendInt(0) // TODO OTHER CURRENCY TYPE
-                .appendInt(0)
-                .appendBoolean(false);// TODO GIFT
+                .appendInt(0, "_priceActivityPoints") // TODO OTHER CURRENCY TYPE
+                .appendInt(0, "_priceActivityPointsType")
+                .appendBoolean(false, "_giftable");// TODO GIFT
 
-        packet.appendInt(1)
-                .appendString(this.getFurniture().getType().toString())
-                .appendInt(this.getFurniture().getSpriteId())
-                .appendString(getPresetData())
-                .appendBoolean(getLimitedTotal() > 0);
-        if (getLimitedTotal() > 0) {
-            packet.appendInt(this.getLimitedTotal());
-            packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
+        packet.appendInt(1, "bundle items?");
+        {
+            packet.appendString(this.getFurniture().getType().toString())
+                    .appendInt(this.getFurniture().getSpriteId())
+                    .appendString(getPresetData(), "extraData")
+                    .appendInt(this.getAmount(), "itemAmount")
+                    .appendBoolean(getLimitedTotal() > 0, "isLimited");
+            if (getLimitedTotal() > 0) {
+                packet.appendInt(this.getLimitedTotal());
+                packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
+            }
         }
 
-
-        packet.appendBoolean(false)// TODO clubOnly
-                .appendBoolean(this.allowOffer()) // TODO
-                .appendBoolean(false)
+        packet.appendInt(0)// TODO clubOnly
+                .appendBoolean(this.allowOffer(), "_bundlePurchaseAllowed") // TODO
+                .appendBoolean(false, "_isPet")
                 .appendString(STR."\{this.getDisplayName()}.png");
     }
 }

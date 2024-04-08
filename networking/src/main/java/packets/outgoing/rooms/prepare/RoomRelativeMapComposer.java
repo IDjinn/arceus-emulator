@@ -1,11 +1,11 @@
 package packets.outgoing.rooms.prepare;
 
-import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.gamemap.IRoomGameMap;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
 public class RoomRelativeMapComposer extends OutgoingPacket {
-    public RoomRelativeMapComposer(IGameMap gameMap) {
+    public RoomRelativeMapComposer(IRoomGameMap gameMap) {
         super(OutgoingHeaders.RoomRelativeMapComposer);
         appendInt(gameMap.getMapSize() / gameMap.getMaxY());
         appendInt(gameMap.getMapSize());

@@ -1,7 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
 import habbo.rooms.IRoom;
-import habbo.rooms.components.gamemap.IGameMap;
+import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.pathfinder.pool.NodeQueue;
 import habbo.rooms.components.pathfinder.pool.NodesSet;
 import habbo.rooms.components.pathfinder.pool.PathfinderNodeFucked;
@@ -86,7 +86,7 @@ public class PathfinderFucked implements IPathfinder {
     }
 
     @Override
-    public SequencedCollection<Position> tracePath(IGameMap gameMap, Position from, Position goal) {
+    public SequencedCollection<Position> tracePath(IRoomGameMap gameMap, Position from, Position goal) {
         assert from != goal : "from != goal; should be checked before call this method";
         if (from.equals(goal))
             return PathUtil.getInstance().EmptyPath;

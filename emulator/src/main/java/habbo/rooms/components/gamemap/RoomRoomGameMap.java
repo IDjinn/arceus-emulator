@@ -3,7 +3,7 @@ package habbo.rooms.components.gamemap;
 import habbo.rooms.IRoom;
 import utils.Position;
 
-public class GameMap implements IGameMap {
+public class RoomRoomGameMap implements IRoomGameMap {
     private final String MODEL_A = "xxxxxxxxxxxx\n" +
             "xxxx00000000\n" +
             "xxxx00000000\n" +

@@ -1,18 +1,19 @@
 package habbo.rooms.components.objects.items;
 
+import habbo.furniture.extra.data.IExtraData;
+import habbo.furniture.extra.data.LegacyExtraData;
 import utils.Position;
 
 public class RoomItemData implements IRoomItemData {
     private final long id;
     private final int itemId;
-    private final ILimitedData limitedEdition;
     private int ownerId;
-    private String data;
+    private IExtraData data;
     private int rotation;
     private Position floorPosition;
     private String wallPosition;
 
-    public RoomItemData(long id, int itemId, int ownerId, Position position, int rotation, String data, String wallPosition, ILimitedData limitedEditionItem) {
+    public RoomItemData(long id, int itemId, int ownerId, Position position, int rotation, IExtraData data, String wallPosition) {
         this.id = id;
         this.itemId = itemId;
         this.ownerId = ownerId;
@@ -23,7 +24,6 @@ public class RoomItemData implements IRoomItemData {
 
         this.wallPosition = wallPosition;
 
-        this.limitedEdition = limitedEditionItem;
     }
 
     public long getId() {
@@ -69,35 +69,20 @@ public class RoomItemData implements IRoomItemData {
         this.rotation = rotation;
     }
 
-    public String getData() {
+    @Override
+    public IExtraData getData() {
         return data;
     }
 
-    public void setData(String data) {
+    @Override
+    public void setData(IExtraData data) {
         this.data = data;
     }
 
     @Override
-    public void setData(int data) {
-        this.data = String.valueOf(data);
-    }
-
-    @Override
     public int getIntData() {
-        try {
-            return Integer.parseInt(this.data);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    @Override
-    public void decrementData(int i) {
-        this.data = String.valueOf(Integer.parseInt(this.data) - 1);
-    }
-
-    @Override
-    public ILimitedData getLimitedEdition() {
-        return limitedEdition;
+        if (this.data instanceof LegacyExtraData legacyExtraData)
+            legacyExtraData.getStateValue();
+        return 0;
     }
 }

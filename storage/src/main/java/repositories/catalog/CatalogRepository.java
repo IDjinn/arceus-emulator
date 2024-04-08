@@ -18,4 +18,5 @@ public class CatalogRepository extends ConnectionRepository implements ICatalogR
     public void getAllCatalogItems(IConnectionResultConsumer result) {
         this.select(CatalogQuery.SELECT_ALL_ITEMS.get(), result);
     }
+
 }

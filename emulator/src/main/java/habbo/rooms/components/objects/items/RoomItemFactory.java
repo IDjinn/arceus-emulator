@@ -1,17 +1,21 @@
 package habbo.rooms.components.objects.items;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
+import habbo.furniture.extra.data.IExtraData;
+import habbo.furniture.extra.data.LegacyExtraData;
 import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.interactions.LayFloorItem;
+import habbo.rooms.components.objects.items.floor.interactions.SitFloorItem;
 import habbo.rooms.components.objects.items.wall.DefaultWallItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
-import io.netty.util.internal.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +28,7 @@ import java.util.Map;
 
 @Singleton
 public class RoomItemFactory implements IRoomItemFactory {
+    private final Injector injector;
     public final Map<String, Class<? extends IRoomItem>> itemDefinitionMap;
     public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
     private final IFurnitureManager furnitureManager;
@@ -31,9 +36,10 @@ public class RoomItemFactory implements IRoomItemFactory {
     private Logger logger = LogManager.getLogger();
 
     @Inject
-    public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager) {
+    public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager, Injector injector) {
         this.furnitureManager = furnitureManager;
         this.habboManager = habboManager;
+        this.injector = injector;
         this.itemDefinitionMap = new HashMap<>();
         this.itemConstructorCache = new HashMap<>();
 
@@ -43,14 +49,14 @@ public class RoomItemFactory implements IRoomItemFactory {
     private void initInteractions() {
         this.itemDefinitionMap.put(DefaultFloorItem.INTERACTION_NAME, DefaultFloorItem.class);
         this.itemDefinitionMap.put(DefaultWallItem.INTERACTION_NAME, DefaultWallItem.class);
+        this.itemDefinitionMap.put(SitFloorItem.INTERACTION_NAME, SitFloorItem.class);
+        this.itemDefinitionMap.put(LayFloorItem.INTERACTION_NAME, LayFloorItem.class);
 
         logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
     }
 
-
     @Override
-    public IRoomItem create(IConnectionResult result, IRoom room) throws Exception {
-        var itemData = createItemDataFromResult(result);
+    public IRoomItem create(IRoomItemData itemData, IRoom room) {
         var furnitureData = furnitureManager.get(itemData.getFurnitureId());
         if (furnitureData == null)
             throw new IllegalArgumentException(STR."Furniture data  not found for id \{itemData.getFurnitureId()}");
@@ -61,18 +67,25 @@ public class RoomItemFactory implements IRoomItemFactory {
             case null, default ->
                     throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getType().toString()} is not valid object");
         };
+        this.injector.injectMembers(item);
 
         var ownerData = habboManager.getHabboData(itemData.getOwnerId());
         ownerData.ifPresent(item::setOwnerData);
         return item;
     }
 
-    private IFloorObject createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
+    @Override
+    public IRoomItem create(IConnectionResult result, IRoom room) throws Exception {
+        var itemData = createItemDataFromResult(result);
+        return create(itemData, room);
+    }
+
+    private IFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         var object = createRoomObject(data, room, furnitureData);
         if (object == null)
             throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
 
-        return (IFloorObject) object;
+        return (IFloorItem) object;
     }
 
     private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
@@ -120,24 +133,44 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IRoomItemData createItemDataFromResult(IConnectionResult result) throws Exception {
-        var limitedEditionItemData = LimitedData.NONE;
+        var id = result.getLong("id");
+        var itemId = result.getInt("item_id");
+        var ownerId = result.getInt("user_id");
+        var x = result.getInt("x");
+        var y = result.getInt("y");
+        var z = result.getDouble("z");
+        var rotation = result.getInt("rot");
+        var wallPosition = result.getString("wall_pos");
 
-        var limitedData = result.getString("limited_data");
-        if (StringUtil.isNullOrEmpty(limitedData) || !limitedData.equals("0:0")) {
-            limitedEditionItemData = LimitedData.fromString(limitedData);
-        }
+        var extraData = LegacyExtraData.fromLegacyString(result.getString("extra_data"));
+        extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
 
-        final long id = result.getLong("id");
-        final int itemId = result.getInt("item_id");
-        final int ownerId = result.getInt("user_id");
-        final int x = result.getInt("x");
-        final int y = result.getInt("y");
-        final double z = result.getDouble("z");
-        final int rotation = result.getInt("rot");
-        final String extraData = result.getString("extra_data");
-        final String wallPosition = result.getString("wall_pos");
+        return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition);
+    }
 
-        return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition, limitedEditionItemData);
+    @Override
+    public IRoomItemData createItemData(int id, int furnitureId, int ownerId, Position position, int rotation, IExtraData extraData) {
+        return new RoomItemData(
+                id,
+                furnitureId,
+                ownerId,
+                position,
+                rotation,
+                extraData,
+                ""
+        );
+    }
 
+    @Override
+    public IRoomItemData createItemData(int id, int furnitureId, int ownerId, String wallPosition, IExtraData extraData) {
+        return new RoomItemData(
+                id,
+                furnitureId,
+                ownerId,
+                new Position(-1, -1, 0d),
+                0,
+                extraData,
+                wallPosition
+        );
     }
 }

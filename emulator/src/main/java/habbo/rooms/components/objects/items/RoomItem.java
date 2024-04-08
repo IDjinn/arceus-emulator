@@ -1,9 +1,11 @@
 package habbo.rooms.components.objects.items;
 
 import habbo.furniture.IFurniture;
+import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
 import networking.packets.OutgoingPacket;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -12,7 +14,7 @@ public abstract class RoomItem implements IRoomItem {
     private final IRoom room;
     private final int virtualId;
     private final IFurniture furniture;
-    private Optional<IHabboData> ownerData;
+    private @Nullable IHabboData ownerData;
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         this.itemData = itemData;
@@ -54,12 +56,12 @@ public abstract class RoomItem implements IRoomItem {
 
     @Override
     public Optional<IHabboData> getOwnerData() {
-        return this.ownerData;
+        return Optional.ofNullable(this.ownerData);
     }
 
     @Override
     public void setOwnerData(IHabboData ownerData) {
-        this.ownerData = Optional.of(ownerData);
+        this.ownerData = ownerData;
     }
 
     @Override
@@ -77,48 +79,26 @@ public abstract class RoomItem implements IRoomItem {
         return this.furniture;
     }
 
-    @Override
-    public ILimitedData getLimitedData() {
-        return this.getItemData().getLimitedEdition();
-    }
 
     @Override
-    public boolean isLimited() {
-        return this.getLimitedData().getLimitedRareTotal() > 0;
-    }
-
-    @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serializeItemIdentity(OutgoingPacket packet) {
         packet
                 .appendInt(this.getVirtualId())
                 .appendInt(this.getFurniture().getSpriteId());
     }
 
     @Override
-    public String getExtraData() {
+    public IExtraData getExtraData() {
         return this.getItemData().getData();
     }
 
     @Override
-    public void setExtraData(String extraData) {
+    public void setExtraData(IExtraData extraData) {
         this.getItemData().setData(extraData);
     }
 
     @Override
-    public OutgoingPacket serializeExtraData(OutgoingPacket packet) {
-        return packet.appendString(this.getExtraData());
-    }
-
-    @Override
-    public OutgoingPacket serializeLimitedData(OutgoingPacket packet) {
-        return packet
-                .appendInt(this.getLimitedData().getLimitedRare())
-                .appendInt(this.getLimitedData().getLimitedRareTotal());
-    }
-
-
-    @Override
     public boolean canUse() {
         return this.getFurniture().getInteractionModesCount() > 0;
-    }
+    } // TODO USAGE POLICY!
 }

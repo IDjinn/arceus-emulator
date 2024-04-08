@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects.items;
 
+import habbo.furniture.extra.data.IExtraData;
 import utils.Position;
 
 public interface IRoomItemData {
@@ -21,15 +22,9 @@ public interface IRoomItemData {
 
     void setRotation(int rotation);
 
-    String getData();
+    IExtraData getData();
 
-    void setData(String data);
-
-    void setData(int data);
-
-    ILimitedData getLimitedEdition();
-
-    void decrementData(int i);
+    void setData(IExtraData data);
 
     int getIntData();
 }

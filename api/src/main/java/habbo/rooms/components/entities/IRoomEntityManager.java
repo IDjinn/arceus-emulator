@@ -8,7 +8,7 @@ import utils.cycle.ICycle;
 
 import java.util.List;
 
-public interface IRoomEntitiesComponent extends IRoomComponent, ICycle {
+public interface IRoomEntityManager extends IRoomComponent, ICycle {
     IHabboEntity createHabboEntity(IHabbo habbo);
 
     List<IRoomEntity> getEntities();

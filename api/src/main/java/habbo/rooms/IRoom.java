@@ -1,13 +1,13 @@
 package habbo.rooms;
 
 import habbo.habbos.IHabbo;
-import habbo.rooms.components.entities.IRoomEntitiesComponent;
-import habbo.rooms.components.gamemap.IGameMap;
-import habbo.rooms.components.objects.IObjectManager;
+import habbo.rooms.components.entities.IRoomEntityManager;
+import habbo.rooms.components.gamemap.IRoomGameMap;
+import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
 import networking.packets.OutgoingPacket;
-import networking.util.ISerializable;
 import utils.IDisposable;
 import utils.IWriteable;
 
@@ -28,14 +28,16 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
 
     void broadcastMessages(OutgoingPacket... packets);
 
-    IRoomEntitiesComponent getEntitiesComponent();
+    IRoomEntityManager getEntityManager();
 
-    IGameMap getGameMap();
+    IRoomGameMap getGameMap();
 
     IPathfinder getPathfinder();
 
-    IObjectManager getObjectManager();
+    IRoomObjectManager getObjectManager();
 
+    IRoomRightsManager getRightsManager();
+    
     boolean isFullyLoaded();
 
     void setFullyLoaded(boolean isFullyLoaded);

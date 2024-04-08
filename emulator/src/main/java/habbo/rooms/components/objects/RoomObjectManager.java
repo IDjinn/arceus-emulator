@@ -2,23 +2,27 @@ package habbo.rooms.components.objects;
 
 import com.google.inject.Inject;
 import habbo.furniture.FurnitureType;
+import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.rooms.objects.AddFloorItemComposer;
+import packets.outgoing.rooms.objects.AddWallItemComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
+import utils.Position;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
-public class ObjectManager implements IObjectManager {
+public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Long, IRoomItem> items;
-    private final HashMap<Long, IFloorObject> floorItems;
+    private final HashMap<Long, IFloorItem> floorItems;
     private final HashMap<Long, IWallItem> wallItems;
     private final AtomicInteger virtualIdCounter;
     private final HashMap<Integer, IRoomItem> itemsByVirtualId;
@@ -32,7 +36,7 @@ public class ObjectManager implements IObjectManager {
     private final HashSet<String> furnitureOwners;
 
 
-    public ObjectManager() {
+    public RoomObjectManager() {
         items = new HashMap<>();
         itemsByVirtualId = new HashMap<>();
         virtualIdCounter = new AtomicInteger(1);
@@ -78,8 +82,8 @@ public class ObjectManager implements IObjectManager {
         synchronized (this.items) {
             this.items.put(roomItem.getId(), roomItem);
             if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
-                this.floorItems.put(roomItem.getId(), (IFloorObject) roomItem);
-            else if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
+                this.floorItems.put(roomItem.getId(), (IFloorItem) roomItem);
+            else if (roomItem.getFurniture().getType().equals(FurnitureType.WALL))
                 this.wallItems.put(roomItem.getId(), (IWallItem) roomItem);
         }
     }
@@ -90,7 +94,7 @@ public class ObjectManager implements IObjectManager {
     }
 
     @Override
-    public Collection<IFloorObject> getAllFloorItems() {
+    public Collection<IFloorItem> getAllFloorItems() {
         return this.floorItems.values();
     }
 
@@ -121,5 +125,48 @@ public class ObjectManager implements IObjectManager {
 
     public List<String> getFurnitureOwners() {
         return furnitureOwners.stream().toList();
+    }
+
+    @Override
+    public void placeWallItem(IHabboInventoryItem item, String wallPosition) {
+        try {
+            itemsRepository.placeWallItemFromInventory(result -> {
+                var itemData = roomItemFactory.createItemData(
+                        item.getId(),
+                        item.getFurniture().getId(),
+                        item.getHabbo().getData().getId(),
+                        wallPosition, // TODO VALIDATION
+                        item.getExtraData()
+                );
+                var wallItem = (IWallItem) this.roomItemFactory.create(itemData, this.getRoom());
+                this.addRoomItem(wallItem);
+
+                this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
+            }, this.getRoom().getData().getId(), item.getId(), wallPosition);
+        } catch (Exception e) {
+            logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        }
+    }
+
+    @Override
+    public void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation) {
+        try {
+            itemsRepository.placeFloorItemFromInventory(result -> {
+                var itemData = roomItemFactory.createItemData(
+                        item.getId(),
+                        item.getFurniture().getId(),
+                        item.getHabbo().getData().getId(),
+                        new Position(x, y, z),
+                        rotation,
+                        item.getExtraData()
+                );
+                var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
+                this.addRoomItem(floorItem);
+
+                this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
+            }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
+        } catch (Exception e) {
+            logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        }
     }
 }

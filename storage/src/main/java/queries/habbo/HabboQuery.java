@@ -23,9 +23,9 @@ public enum HabboQuery {
             WHERE auth_ticket = ?;
     """),
 
-    GET_ALL_ITEMS_BY_OWNER_ID("SELECT * FROM `items` WHERE `user_id` = ? AND room_id = 0;"),
-
-    ;
+    GET_ALL_ITEMS_BY_OWNER_ID("""
+            SELECT * FROM `items` WHERE `user_id` = ? AND room_id = 0;
+            """);
 
     private final String query;
 

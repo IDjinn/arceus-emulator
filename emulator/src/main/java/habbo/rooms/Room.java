@@ -3,10 +3,11 @@ package habbo.rooms;
 import com.google.inject.Inject;
 import core.IThreadManager;
 import habbo.habbos.IHabbo;
-import habbo.rooms.components.entities.IRoomEntitiesComponent;
-import habbo.rooms.components.gamemap.IGameMap;
-import habbo.rooms.components.objects.IObjectManager;
+import habbo.rooms.components.entities.IRoomEntityManager;
+import habbo.rooms.components.gamemap.IRoomGameMap;
+import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
@@ -14,6 +15,8 @@ import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
 import packets.outgoing.rooms.RoomUserStatusComposer;
+import packets.outgoing.rooms.objects.RoomFloorItemsComposer;
+import packets.outgoing.rooms.objects.RoomWallItemsComposer;
 import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
 import utils.cycle.ICycle;
@@ -22,19 +25,20 @@ import java.util.concurrent.TimeUnit;
 
 public class Room implements IRoom {
     @Inject
-    private IObjectManager objectManager;
+    private IRoomObjectManager objectManager;
 
     @Inject
-    private IGameMap gameMap;
+    private IRoomGameMap gameMap;
 
     @Inject
-    private IRoomEntitiesComponent entitiesComponent;
-
+    private IRoomEntityManager entityManager;
     @Inject
     private IThreadManager threadManager;
 
     @Inject
     private IPathfinder pathfinder;
+    @Inject
+    private IRoomRightsManager rightsManager;
 
     private final IRoomData data;
 
@@ -51,27 +55,30 @@ public class Room implements IRoom {
     @Override
     public void init() {
         this.gameMap.init(this);
-        this.entitiesComponent.init(this);
+        this.entityManager.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
 
-        threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entitiesComponent::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
+        threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entityManager::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void destroy() {
         this.gameMap.destroy();
-        this.entitiesComponent.destroy();
+        this.entityManager.destroy();
         this.pathfinder.destroy();
         this.objectManager.destroy();
+        this.rightsManager.destroy();
     }
 
     @Override
     public void onLoaded() {
         this.gameMap.onRoomLoaded();
-        this.entitiesComponent.onRoomLoaded();
+        this.entityManager.onRoomLoaded();
         this.pathfinder.onRoomLoaded();
         this.objectManager.onRoomLoaded();
+        this.rightsManager.onRoomLoaded();
+        this.setFullyLoaded(true);
     }
 
     @Override
@@ -89,7 +96,7 @@ public class Room implements IRoom {
     public void prepareForHabbo(IHabbo habbo, String password) {
         // TODO: IN ROOM CHECKS
         habbo.setRoom(this);
-        var entity = getEntitiesComponent().createHabboEntity(habbo);
+        var entity = getEntityManager().createHabboEntity(habbo);
 
         habbo.setPlayerEntity(entity);
 
@@ -97,9 +104,9 @@ public class Room implements IRoom {
                 new HideDoorbellComposer(),
                 new RoomOpenComposer(),
                 new RoomDataComposer(this, habbo, false, true),
-                new RoomModelComposer("model_a", this.getData().getId()),
+                new RoomModelComposer(this.getData().getModel(), this.getData().getId()),
                 new RoomPaintComposer("landscape", "0.0"),
-                new RoomRightsComposer(0),
+                new RoomRightsComposer(this.getRightsManager().getRightLevelFor(habbo)),
                 new RoomScoreComposer(0, true),
                 new RoomPromotionMessageComposer(),
                 new RoomRelativeMapComposer(getGameMap()),
@@ -123,30 +130,32 @@ public class Room implements IRoom {
         );
 
         broadcastMessages(
-                new RoomEntitiesComposer(getEntitiesComponent().getEntities()),
-                new RoomUserStatusComposer(getEntitiesComponent().getEntities())
+                new RoomEntitiesComposer(getEntityManager().getEntities()),
+                new RoomUserStatusComposer(getEntityManager().getEntities())
         );
     }
 
     @Override
     public void broadcastMessage(OutgoingPacket packet) {
-        for (var player : getEntitiesComponent().getPlayers()) {
+        for (var player : getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
     public void broadcastMessages(OutgoingPacket... packets) {
-        for (var player : getEntitiesComponent().getPlayers()) {
+        for (var player : getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }
     }
 
-    public IRoomEntitiesComponent getEntitiesComponent() {
-        return entitiesComponent;
+    @Override
+    public IRoomEntityManager getEntityManager() {
+        return entityManager;
     }
 
-    public IGameMap getGameMap() {
+    @Override
+    public IRoomGameMap getGameMap() {
         return gameMap;
     }
 
@@ -156,8 +165,13 @@ public class Room implements IRoom {
     }
 
     @Override
-    public IObjectManager getObjectManager() {
+    public IRoomObjectManager getObjectManager() {
         return this.objectManager;
+    }
+
+    @Override
+    public IRoomRightsManager getRightsManager() {
+        return this.rightsManager;
     }
 
     @Override

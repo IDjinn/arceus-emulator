@@ -35,7 +35,7 @@ public class HabboInventory implements IHabboInventory {
 
     @Override
     public void addItem(IHabboInventoryItem item) {
-
+        this.items.put(item.getId(), item);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class HabboInventory implements IHabboInventory {
         inventoryRepository.getInventoryByOwnerId(this.getHabbo().getData().getId(), result -> {
             if (result == null) return;
             try {
-                var item = inventoryItemFactory.create(result);
+                var item = inventoryItemFactory.create(result, this.getHabbo());
                 this.items.put(item.getId(), item);
             } catch (Exception e) {
                 logger.error("Error while creating inventory item {} for habbo {}", result.getInt("id"), e);
@@ -74,5 +74,10 @@ public class HabboInventory implements IHabboInventory {
     @Override
     public IHabbo getHabbo() {
         return this.habbo;
+    }
+
+    @Override
+    public boolean canPurchaseItems(int count) {
+        return count > 0;
     }
 }

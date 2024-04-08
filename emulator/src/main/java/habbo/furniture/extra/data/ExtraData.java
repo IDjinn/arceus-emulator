@@ -21,14 +21,14 @@ public abstract class ExtraData implements IExtraData {
     @Override
     public void serialize(OutgoingPacket packet) {
         packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? LTD_FLAG : 0));
-        this.serializeData(packet);
+        this.serializeState(packet);
         if (this.getLimitedData().isLimited()) {
             packet.appendInt(this.getLimitedData().getLimitedRare())
                     .appendInt(this.getLimitedData().getLimitedRareTotal());
         }
     }
 
-    public abstract void serializeData(OutgoingPacket packet);
+    public abstract void serializeState(OutgoingPacket packet);
     
     @Override
     public ILimitedData getLimitedData() {
