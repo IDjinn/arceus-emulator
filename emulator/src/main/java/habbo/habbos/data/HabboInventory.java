@@ -16,8 +16,10 @@ public class HabboInventory implements IHabboInventory {
     private final HashMap<Integer, IHabboInventoryItem> items;
     private final IHabbo habbo;
     private Logger logger = LogManager.getLogger();
+
     @Inject
     private IHabboInventoryRepository inventoryRepository;
+
     @Inject
     private IHabboInventoryItemFactory inventoryItemFactory;
 

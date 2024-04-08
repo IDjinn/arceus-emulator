@@ -1,10 +1,12 @@
 package repositories.catalog;
 
+import com.google.inject.Singleton;
 import queries.catalog.CatalogQuery;
 import repositories.ConnectionRepository;
 import storage.repositories.catalog.ICatalogRepository;
 import storage.results.IConnectionResultConsumer;
 
+@Singleton
 public class CatalogRepository extends ConnectionRepository implements ICatalogRepository {
 
     @Override

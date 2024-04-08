@@ -18,6 +18,7 @@ import habbo.catalog.ICatalogManager;
 import habbo.furniture.FurnitureModule;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
+import habbo.navigator.INavigatorManager;
 import habbo.navigator.NavigatorModule;
 import habbo.rooms.IRoomManager;
 import habbo.rooms.RoomModule;
@@ -61,10 +62,15 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Inject
     private IPacketManager packetManager;
+
     @Inject
     private IFurnitureManager furnitureManager;
+
     @Inject
     private ICatalogManager catalogManager;
+
+    @Inject
+    private INavigatorManager navigatorManager;
 
     public static void main(String[] args) {
         var injector = Guice.createInjector(
@@ -107,9 +113,12 @@ public class Emulator extends AbstractModule implements IEmulator {
         try {
             emulatorSettings.init();
             networkingManager.init();
+
             furnitureManager.init();
             catalogManager.init();
+
             roomManager.init();
+            navigatorManager.init();
         } catch (Exception e) {
             logger.error(e.getMessage());
         }

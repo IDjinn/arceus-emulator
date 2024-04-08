@@ -53,8 +53,8 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Override
     public void init(IRoom room) {
         this.room = room;
-        this.logger.info("initializing room items for room = {}", this.getRoom().getId());
-        this.itemsRepository.getAllRoomItems(this.getRoom().getId(), result -> {
+        this.logger.info("initializing room items for room = {}", this.getRoom().getData().getId());
+        this.itemsRepository.getAllRoomItems(this.getRoom().getData().getId(), result -> {
             if (result == null) return;
 
             try {
@@ -64,7 +64,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 logger.error(e);
             }
         });
-        this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getId());
+        this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
     }
 
     @Override

@@ -47,7 +47,7 @@ public class EmulatorSettings implements IEmulatorSettings {
         return this.settings;
     }
 
-    public String get(String key) {
-        return this.settings.get(key);
+    public String getOrDefault(String key, String defaultValue) {
+        return this.settings.getOrDefault(key, defaultValue);
     }
 }

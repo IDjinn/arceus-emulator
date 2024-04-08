@@ -6,41 +6,20 @@ import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.rights.IRoomRightsManager;
+import habbo.rooms.data.IRoomData;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.IDisposable;
+import utils.IWriteable;
 
-public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
-    public int getId();
+public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
+    IRoomData getData();
 
-    public String getName();
+    void init();
 
-    public String getPassword();
+    void destroy();
 
-    public void setPassword(String password);
-
-    public int getMaxUsers();
-
-    public void setMaxUsers(int maxUsers);
-
-    public int getMinUsers();
-
-    public void setMinUsers(int minUsers);
-
-    public boolean isPublic();
-
-    public void setPublic(boolean isPublic);
-
-    public RoomAccess getRoomAccess();
-
-    public void setRoomAccess(RoomAccess roomAccess);
-
-
-    public void init();
-
-    public void destroy();
-
-    public void onLoaded();
+    void onLoaded();
 
     void prepareForHabbo(IHabbo habbo, String password);
 
@@ -50,13 +29,17 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
 
     void broadcastMessages(OutgoingPacket... packets);
 
-    public IRoomEntityManager getEntityManager();
+    IRoomEntitiesComponent getEntitiesComponent();
 
-    public IRoomGameMap getGameMap();
+    IGameMap getGameMap();
 
-    public IPathfinder getPathfinder();
+    IPathfinder getPathfinder();
 
     IRoomObjectManager getObjectManager();
 
     IRoomRightsManager getRightsManager();
+    
+    boolean isFullyLoaded();
+
+    void setFullyLoaded(boolean isFullyLoaded);
 }

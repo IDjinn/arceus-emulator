@@ -1,10 +1,12 @@
 package repositories.furniture;
 
+import com.google.inject.Singleton;
 import queries.furniture.FunitureQuery;
 import repositories.ConnectionRepository;
 import storage.repositories.furniture.IFurnitureRepository;
 import storage.results.IConnectionResultConsumer;
 
+@Singleton
 public class FurnitureRepository extends ConnectionRepository implements IFurnitureRepository {
     @Override
     public void getAllFurniture(IConnectionResultConsumer consumer) {

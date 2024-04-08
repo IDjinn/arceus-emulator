@@ -15,4 +15,7 @@ public interface IConnectionResult {
 
     double getDouble(String name) throws Exception;
 
+    boolean hasColumn(String name) throws Exception;
+
+    boolean isNull(String name) throws Exception;
 }

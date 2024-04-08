@@ -10,10 +10,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ThreadManager implements IThreadManager {
     private final IConfigurationManager configurationManager;
+
     private final ScheduledExecutorService hardwareThreadExecutor;
     private final ScheduledExecutorService softwareThreadExecutor;
-    private AtomicLong hardwareThreadCounter;
-    private AtomicLong softwareThreadCounter;
+
+    private final AtomicLong hardwareThreadCounter;
+    private final AtomicLong softwareThreadCounter;
 
     @Inject
     public ThreadManager(IConfigurationManager configurationManager) {
@@ -23,6 +25,7 @@ public class ThreadManager implements IThreadManager {
 
         var hardwareThreadCount = this.configurationManager.getInt("orion.hardware.threads", Runtime.getRuntime().availableProcessors());
         var softwareThreadCount = this.configurationManager.getInt("orion.software.threads", Runtime.getRuntime().availableProcessors());
+
         this.hardwareThreadExecutor = Executors.newScheduledThreadPool(hardwareThreadCount, runnable -> {
             var currentId = hardwareThreadCounter.incrementAndGet();
 
@@ -34,6 +37,7 @@ public class ThreadManager implements IThreadManager {
 
             return hardwareThread;
         });
+
         this.softwareThreadExecutor = Executors.newScheduledThreadPool(softwareThreadCount, runnable -> {
             var currentId = softwareThreadCounter.incrementAndGet();
 

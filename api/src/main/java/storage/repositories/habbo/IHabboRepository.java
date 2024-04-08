@@ -3,7 +3,7 @@ package storage.repositories.habbo;
 import storage.results.IConnectionResultConsumer;
 
 public interface IHabboRepository {
-    void getHabboIdByAuthTicket(String authTicket, IConnectionResultConsumer consumer);
+    void getHabboIdByAuthTicket(IConnectionResultConsumer consumer, String authTicket);
 
-    void getHabboDataByAuthTicket(String authTicket, IConnectionResultConsumer consumer);
+    void getHabboDataByAuthTicket(IConnectionResultConsumer consumer, String authTicket);
 }

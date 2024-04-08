@@ -1,26 +1,18 @@
 package packets.outgoing.navigator;
 
+import habbo.habbos.data.navigator.IHabboNavigatorWindowSettings;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
 public class NewNavigatorSettingsComposer extends OutgoingPacket {
-    public NewNavigatorSettingsComposer() {
+    public NewNavigatorSettingsComposer(final IHabboNavigatorWindowSettings settings) {
         super(OutgoingHeaders.NewNavigatorSettingsComposer);
-        var windowSettings = new HabboNavigatorWindowSettings();
-        appendInt(windowSettings.x);
-        appendInt(windowSettings.y);
-        appendInt(windowSettings.width);
-        appendInt(windowSettings.height);
-        appendBoolean(windowSettings.openSearches);
-        appendInt(0);
-    }
 
-    public class HabboNavigatorWindowSettings {
-        public int x = 100;
-        public int y = 100;
-        public int width = 425;
-        public int height = 535;
-        public boolean openSearches = false;
-        public int unknown = 0;
+        appendInt(settings.getWindowX());
+        appendInt(settings.getWindowY());
+        appendInt(settings.getWindowWidth());
+        appendInt(settings.getWindowHeight());
+        appendBoolean(settings.isLeftPanelCollapsed());
+        appendInt(settings.getResultsMode());
     }
 }

@@ -2,20 +2,29 @@ package habbo.rooms;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import storage.results.IConnectionResult;
+import storage.results.IConnectionResultConsumer;
 
 public class RoomFactory implements IRoomFactory {
 
     private final Injector injector;
 
+    private final IRoomManager roomManager;
+
     @Inject
-    public RoomFactory(Injector injector) {
+    public RoomFactory(Injector injector, IRoomManager roomManager) {
         this.injector = injector;
+        this.roomManager = roomManager;
     }
 
     @Override
-    public IRoom createRoom(int roomId, String roomName) {
-        var room = new Room(roomId, roomName);
+    public IRoom createRoom(IConnectionResult data) {
+        var room = new Room(data);
+
         injector.injectMembers(room);
+
+        this.roomManager.addRoom(room);
+
         return room;
     }
 }

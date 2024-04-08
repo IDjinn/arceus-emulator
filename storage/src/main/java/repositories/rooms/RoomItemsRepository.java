@@ -2,12 +2,14 @@ package repositories.rooms;
 
 import com.google.inject.Inject;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
+import com.google.inject.Singleton;
 import queries.rooms.RoomQuery;
 import repositories.ConnectionRepository;
 import storage.repositories.rooms.IRoomItemsRepository;
 import storage.results.IConnectionBooleanResultConsumer;
 import storage.results.IConnectionResultConsumer;
 
+@Singleton
 public class RoomItemsRepository extends ConnectionRepository implements IRoomItemsRepository {
     @Inject
     IRoomItemFactory roomItemFactory;
