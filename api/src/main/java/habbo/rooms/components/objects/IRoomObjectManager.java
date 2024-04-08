@@ -29,4 +29,6 @@ public interface IRoomObjectManager extends IRoomComponent {
     List<String> getFurnitureOwners();
 
     void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation);
+
+    void placeWallItem(IHabboInventoryItem item, String wallPosition);
 }

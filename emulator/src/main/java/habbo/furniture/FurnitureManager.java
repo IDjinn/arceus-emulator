@@ -4,6 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.furniture.extra.data.*;
+import io.netty.util.internal.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -62,6 +63,9 @@ public class FurnitureManager implements IFurnitureManager {
 
     @Override
     public IExtraData parseExtraData(String json) {
+        if (StringUtil.isNullOrEmpty(json))
+            return new LegacyExtraData("");
+        
         try {
             var extraDataType = GsonHelper.getGson().fromJson(json, ExtraData.ExtraDataReader.class).type;
             if (extraDataParsers.containsKey(extraDataType))

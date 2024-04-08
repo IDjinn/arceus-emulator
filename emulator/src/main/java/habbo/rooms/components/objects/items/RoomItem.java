@@ -81,7 +81,7 @@ public abstract class RoomItem implements IRoomItem {
 
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serializeItemIdentity(OutgoingPacket packet) {
         packet
                 .appendInt(this.getVirtualId())
                 .appendInt(this.getFurniture().getSpriteId());
@@ -100,5 +100,5 @@ public abstract class RoomItem implements IRoomItem {
     @Override
     public boolean canUse() {
         return this.getFurniture().getInteractionModesCount() > 0;
-    }
+    } // TODO USAGE POLICY!
 }

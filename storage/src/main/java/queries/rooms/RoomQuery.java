@@ -13,8 +13,14 @@ public enum RoomQuery {
                         `z` = ?,
                         `rot` = ?
                     WHERE `id` = ?;
-                    """)
-    ;
+                    """),
+    PLACE_WALL_ITEM(
+            """
+                    UPDATE `items`
+                        SET `room_id` = ?,
+                        `wall_pos` = ?
+                    WHERE `id` = ?;
+                    """);
 
     private final String query;
 

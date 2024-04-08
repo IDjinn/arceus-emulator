@@ -1,5 +1,6 @@
-package packets.outgoing.rooms.prepare;
+package packets.outgoing.rooms.objects;
 
+import habbo.furniture.FurnitureUsagePolicy;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
@@ -16,22 +17,20 @@ public class RoomWallItemsComposer extends OutgoingPacket {
             appendString(owners.get(i));
         }
 
-        appendInt(allItems.size()); // TODO WALLITEM LIMITED DATA?
+        appendInt(allItems.size());
         for (var item : allItems) {
-            item.serialize(this);
+            item.serializeItemIdentity(this);
             item.serializePosition(this);
-            item.getExtraData().serialize(this);
-            appendInt(-1);
+            item.getExtraData().serializeState(this);
+            appendInt(-1, "expiration timeout");
+            appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
 
-            appendInt(item.canUse() ? 1 : 0);
-            if (item.getOwnerData().isPresent()) {
+            if (item.getOwnerData() != null && item.getOwnerData().isPresent()) {
                 var owner = item.getOwnerData().get();
                 appendInt(owner.getId());
-//                appendString(owner.getUsername());
+            } else {
+                appendInt(0);
             }
-
-            appendInt(-1);
-//            appendString("");
         }
     }
 }

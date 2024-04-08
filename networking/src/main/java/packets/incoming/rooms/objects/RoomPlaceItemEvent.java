@@ -6,6 +6,9 @@ import networking.packets.IncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 @Singleton
 public class RoomPlaceItemEvent extends IncomingEvent {
     @Override
@@ -32,7 +35,7 @@ public class RoomPlaceItemEvent extends IncomingEvent {
                 client.getHabbo().getRoom().getObjectManager().placeFloorItem(item, x, y, 0d, rotation);
             }
             case WALL -> {
-
+                client.getHabbo().getRoom().getObjectManager().placeWallItem(item, Arrays.stream(data).skip(1).collect(Collectors.joining(" ")));
             }
             default -> throw new IllegalArgumentException("Item type is not valid");
         }

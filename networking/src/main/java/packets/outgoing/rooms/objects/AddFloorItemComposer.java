@@ -9,7 +9,7 @@ public class AddFloorItemComposer extends OutgoingPacket {
     public AddFloorItemComposer(IFloorItem floorItem) {
         super(OutgoingHeaders.AddFloorItemComposer);
 
-        floorItem.serialize(this);
+        floorItem.serializeItemIdentity(this);
         floorItem.serializePosition(this);
         appendInt(1, "gift stuff (extra data as int?)");
         floorItem.getExtraData().serialize(this);

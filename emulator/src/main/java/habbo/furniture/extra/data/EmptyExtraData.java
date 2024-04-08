@@ -16,7 +16,7 @@ public class EmptyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeData(OutgoingPacket packet) {
+    public void serializeState(OutgoingPacket packet) {
         
     }
 }

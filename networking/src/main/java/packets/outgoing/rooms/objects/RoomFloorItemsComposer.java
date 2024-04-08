@@ -19,21 +19,12 @@ public class RoomFloorItemsComposer extends OutgoingPacket {
 
         appendInt(allItems.size());
         for (var item : allItems) {
-            item.serialize(this);
+            item.serializeItemIdentity(this);
             item.serializePosition(this);
 
             appendInt(1, "gift, song or something. It seems to be the extraData state (integer) of legacy data"); // TODO
 
             item.getExtraData().serialize(this);
-//            if (item.isLimited()) {
-//                appendInt(256);
-//                item.serializeExtraData(this);
-//                item.serializeLimitedData(this);
-//            } else {
-//                appendInt(0);
-//                item.serializeExtraData(this);
-//            }
-
             appendInt(-1, "expiration timeout");
             appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
 

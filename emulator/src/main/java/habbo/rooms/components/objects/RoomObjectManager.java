@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.objects.AddFloorItemComposer;
+import packets.outgoing.rooms.objects.AddWallItemComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.Position;
 
@@ -82,7 +83,7 @@ public class RoomObjectManager implements IRoomObjectManager {
             this.items.put(roomItem.getId(), roomItem);
             if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
                 this.floorItems.put(roomItem.getId(), (IFloorItem) roomItem);
-            else if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
+            else if (roomItem.getFurniture().getType().equals(FurnitureType.WALL))
                 this.wallItems.put(roomItem.getId(), (IWallItem) roomItem);
         }
     }
@@ -127,6 +128,27 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
+    public void placeWallItem(IHabboInventoryItem item, String wallPosition) {
+        try {
+            itemsRepository.placeWallItemFromInventory(result -> {
+                var itemData = roomItemFactory.createItemData(
+                        item.getId(),
+                        item.getFurniture().getId(),
+                        item.getHabbo().getData().getId(),
+                        wallPosition, // TODO VALIDATION
+                        item.getExtraData()
+                );
+                var wallItem = (IWallItem) this.roomItemFactory.create(itemData, this.getRoom());
+                this.addRoomItem(wallItem);
+
+                this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
+            }, this.getRoom().getId(), item.getId(), wallPosition);
+        } catch (Exception e) {
+            logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        }
+    }
+
+    @Override
     public void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation) {
         try {
             itemsRepository.placeFloorItemFromInventory(result -> {
@@ -146,6 +168,5 @@ public class RoomObjectManager implements IRoomObjectManager {
         } catch (Exception e) {
             logger.error("failed to place item {} from inventory to floor", item.getId(), e);
         }
-
     }
 }
