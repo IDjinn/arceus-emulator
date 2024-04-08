@@ -14,7 +14,7 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
     private int windowY = 100;
     private int windowWidth = 425;
     private int windowHeight = 535;
-    private boolean leftPaneCollapsed = false;
+    private boolean leftPanelCollapsed = false;
     public int resultsMode = 0;
 
     @Inject
@@ -46,8 +46,8 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
         return windowHeight;
     }
 
-    public boolean isLeftPaneCollapsed() {
-        return leftPaneCollapsed;
+    public boolean isLeftPanelCollapsed() {
+        return leftPanelCollapsed;
     }
 
     public int getResultsMode() {
@@ -68,6 +68,6 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
         this.windowY = result.getInt("y");
         this.windowWidth = result.getInt("width");
         this.windowHeight = result.getInt("height");
-        this.leftPaneCollapsed = result.getBoolean("open_searches");
+        this.leftPanelCollapsed = result.getBoolean("open_searches");
     }
 }

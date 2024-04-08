@@ -3,13 +3,13 @@ package habbo.navigator;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.habbos.IHabbo;
-import habbo.navigator.tabs.NavigatorHabboTab;
-import habbo.navigator.tabs.NavigatorOfficialTab;
 import habbo.rooms.IRoom;
 import habbo.rooms.IRoomManager;
+import habbo.rooms.data.IRoomCategory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,6 +84,21 @@ public class NavigatorRoomsProvider implements INavigatorRoomsProvider {
                 .sorted(Comparator.comparing(room -> room.getData().getScore()))
                 .limit(20)
                 .collect(Collectors.toList());
+    }
+
+    public HashMap<IRoomCategory, List<IRoom>> getRoomsFromCategories(IHabbo habbo) {
+        final HashMap<IRoomCategory, List<IRoom>> roomsByCategory = new HashMap<>();
+
+        for (final IRoomCategory category : this.roomManager.getRoomCategories().values()) {
+            final List<IRoom> rooms = this.roomManager.getLoadedRoomsBy(room -> room.getData().getCategoryId() == category.getId());
+
+            // TODO: Should I skip the category or just display it empty? Currently skipping
+            if (rooms.isEmpty()) continue;
+
+            roomsByCategory.put(category, rooms);
+        }
+
+        return roomsByCategory;
     }
 
 }

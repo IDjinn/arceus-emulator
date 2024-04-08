@@ -10,7 +10,6 @@ import habbo.navigator.data.INavigatorResultCategory;
 import habbo.navigator.data.NavigatorResultCategory;
 import habbo.navigator.enums.NavigatorDisplayMode;
 import habbo.navigator.enums.NavigatorDisplayOrder;
-import habbo.navigator.enums.NavigatorLayoutDisplay;
 import habbo.navigator.enums.NavigatorListAction;
 import habbo.rooms.data.IRoomCategory;
 
@@ -19,6 +18,8 @@ import java.util.List;
 
 public class NavigatorOfficialTab implements INavigatorTab {
     public final static String FILTER_NAME = "official_view";
+
+    private final String category = "official-root";
 
     @Inject
     private INavigatorRoomsProvider navigatorRoomsProvider;
@@ -29,17 +30,17 @@ public class NavigatorOfficialTab implements INavigatorTab {
     public List<INavigatorResultCategory> getResultForHabbo(IHabbo habbo) {
         boolean showInvisible = false; // TODO: Implement permissions
 
-        final List<INavigatorResultCategory> categories = new ArrayList<>();
         int order = 0;
+        final List<INavigatorResultCategory> categories = new ArrayList<>();
 
         categories.add(new NavigatorResultCategory(
             order,
-            "official-root",
+            this.category,
             "",
             NavigatorListAction.NONE,
-            NavigatorDisplayMode.THUMBNAILS,
-            NavigatorLayoutDisplay.DEFAULT,
-            this.navigatorRoomsProvider.getRoomFromCategory("official-root", habbo),
+            habbo.getNavigator().getDisplayModeForCategory(this.category, NavigatorDisplayMode.THUMBNAILS),
+            habbo.getNavigator().getLayoutDisplayForCategory(this.category),
+            this.navigatorRoomsProvider.getRoomFromCategory(this.category, habbo),
             false,
             showInvisible,
             NavigatorDisplayOrder.ORDER_NUMERICAL,
@@ -52,8 +53,8 @@ public class NavigatorOfficialTab implements INavigatorTab {
                     "",
                     publicCategory.getName(),
                     NavigatorListAction.NONE,
-                    NavigatorDisplayMode.LIST, // TODO: Implement habbo display mode's
-                    NavigatorLayoutDisplay.DEFAULT, // TODO: Implement habbo layout display's
+                    habbo.getNavigator().getDisplayModeForCategory(publicCategory.getName(), publicCategory.getDisplayMode()),
+                    habbo.getNavigator().getLayoutDisplayForCategory(publicCategory.getName()),
                     publicCategory.getRooms(),
                     true,
                     showInvisible,

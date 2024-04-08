@@ -19,6 +19,14 @@ public enum NavigatorDisplayMode {
         };
     }
 
+    public static NavigatorDisplayMode fromString(String type) {
+        return switch (type.toUpperCase()) {
+            case "THUMBNAILS" -> THUMBNAILS;
+            case "FORCED_THUMBNAILS" -> FORCED_THUMBNAILS;
+            default -> LIST;
+        };
+    }
+
     public int get() {
         return this.value;
     }

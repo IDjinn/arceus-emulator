@@ -9,7 +9,7 @@ public interface IHabboNavigatorWindowSettings {
 
     int getWindowHeight();
 
-    boolean isLeftPaneCollapsed();
+    boolean isLeftPanelCollapsed();
 
     int getResultsMode();
 }

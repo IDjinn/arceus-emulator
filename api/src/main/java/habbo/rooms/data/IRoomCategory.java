@@ -21,4 +21,6 @@ public interface IRoomCategory {
     Logger getLogger();
 
     NavigatorDisplayMode getDisplayMode();
+
+    int getOrder();
 }

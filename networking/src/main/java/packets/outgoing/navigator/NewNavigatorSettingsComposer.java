@@ -12,7 +12,7 @@ public class NewNavigatorSettingsComposer extends OutgoingPacket {
         appendInt(settings.getWindowY());
         appendInt(settings.getWindowWidth());
         appendInt(settings.getWindowHeight());
-        appendBoolean(settings.isLeftPaneCollapsed());
+        appendBoolean(settings.isLeftPanelCollapsed());
         appendInt(settings.getResultsMode());
     }
 }
