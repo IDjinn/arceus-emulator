@@ -97,7 +97,7 @@ public class NavigatorSearchService implements INavigatorSearchService {
     }
 
     private void sendRoomsFromCategory(IHabbo habbo, String tabName, String query) {
-        final List<IRoom> rooms = this.navigatorRoomsProvider.getRoomFromCategory(tabName, habbo);
+        final List<IRoom> rooms = this.navigatorRoomsProvider.getRoomsForCategory(tabName, habbo);
 
         final List<INavigatorResultCategory> categories = new ArrayList<>(){
             {

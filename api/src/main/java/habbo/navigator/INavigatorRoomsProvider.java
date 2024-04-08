@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface INavigatorRoomsProvider {
-    List<IRoom> getRoomFromCategory(String category, IHabbo habbo);
+    List<IRoom> getRoomsForCategory(String category, IHabbo habbo);
 
     List<IRoom> getPublicRooms();
 

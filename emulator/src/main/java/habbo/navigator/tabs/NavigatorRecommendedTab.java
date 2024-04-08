@@ -6,7 +6,6 @@ import habbo.habbos.IHabbo;
 import habbo.navigator.INavigatorManager;
 import habbo.navigator.INavigatorRoomsProvider;
 import habbo.navigator.data.INavigatorFilterType;
-import habbo.navigator.data.INavigatorPublicCategory;
 import habbo.navigator.data.INavigatorResultCategory;
 import habbo.navigator.data.NavigatorResultCategory;
 import habbo.navigator.enums.NavigatorDisplayMode;
@@ -47,7 +46,7 @@ public class NavigatorRecommendedTab implements INavigatorTab {
                 NavigatorListAction.NONE,
                 habbo.getNavigator().getDisplayModeForCategory(this.category, this.getDefaultDisplayMode()),
                 habbo.getNavigator().getLayoutDisplayForCategory(this.category),
-                this.navigatorRoomsProvider.getRoomFromCategory(this.category, habbo),
+                this.navigatorRoomsProvider.getRoomsForCategory(this.category, habbo),
                 false,
                 showInvisible,
                 NavigatorDisplayOrder.ORDER_NUMERICAL,

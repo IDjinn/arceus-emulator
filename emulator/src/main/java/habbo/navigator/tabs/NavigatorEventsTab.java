@@ -5,13 +5,15 @@ import habbo.navigator.data.INavigatorFilterType;
 import habbo.navigator.data.INavigatorResultCategory;
 import habbo.rooms.data.IRoomCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NavigatorEventsTab implements INavigatorTab {
     public final static String FILTER_NAME = "roomads_view";
 
     public List<INavigatorResultCategory> getResultForHabbo(IHabbo habbo) {
-        return null;
+        // TODO: To make this class work, you need to implement the room promotion system
+        return new ArrayList<>();
     }
 
     @Override

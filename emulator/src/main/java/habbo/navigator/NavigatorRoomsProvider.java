@@ -21,7 +21,7 @@ public class NavigatorRoomsProvider implements INavigatorRoomsProvider {
     @Inject
     private IRoomManager roomManager;
 
-    public List<IRoom> getRoomFromCategory(String category, IHabbo habbo) {
+    public List<IRoom> getRoomsForCategory(String category, IHabbo habbo) {
         return switch (category) {
             case "official-root" -> this.getPublicRooms();
             case "my" -> habbo.getRooms().getOwnRooms();

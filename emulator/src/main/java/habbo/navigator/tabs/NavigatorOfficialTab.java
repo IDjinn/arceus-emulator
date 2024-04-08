@@ -40,7 +40,7 @@ public class NavigatorOfficialTab implements INavigatorTab {
             NavigatorListAction.NONE,
             habbo.getNavigator().getDisplayModeForCategory(this.category, NavigatorDisplayMode.THUMBNAILS),
             habbo.getNavigator().getLayoutDisplayForCategory(this.category),
-            this.navigatorRoomsProvider.getRoomFromCategory(this.category, habbo),
+            this.navigatorRoomsProvider.getRoomsForCategory(this.category, habbo),
             false,
             showInvisible,
             NavigatorDisplayOrder.ORDER_NUMERICAL,
