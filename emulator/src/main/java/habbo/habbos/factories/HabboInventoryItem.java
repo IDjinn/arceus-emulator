@@ -5,9 +5,8 @@ import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import habbo.furniture.extra.data.IExtraData;
-import habbo.furniture.extra.data.LegacyExtraData;
+import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
-import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.Nullable;
@@ -17,23 +16,24 @@ public class HabboInventoryItem implements IHabboInventoryItem {
     private int id;
     private IFurniture furniture;
     private IExtraData extraData;
-    private ILimitedData limitedData;
     private @Nullable String wiredData;
     private int group;
+    private final IHabbo habbo;
 
-    public HabboInventoryItem() {
+    public HabboInventoryItem(IHabbo habbo) {
+        this.habbo = habbo;
     }
 
-    public HabboInventoryItem(int id,
+    public HabboInventoryItem(IHabbo habbo,
+                              int id,
                               IFurniture furniture,
                               IExtraData extraData,
-                              ILimitedData limitedData,
                               @Nullable String wiredData,
                               int group) {
+        this.habbo = habbo;
         this.id = id;
         this.furniture = furniture;
         this.extraData = extraData;
-        this.limitedData = limitedData;
         this.wiredData = wiredData;
         this.group = group;
     }
@@ -44,6 +44,11 @@ public class HabboInventoryItem implements IHabboInventoryItem {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public IHabbo getHabbo() {
+        return this.habbo;
     }
 
 
@@ -59,11 +64,6 @@ public class HabboInventoryItem implements IHabboInventoryItem {
 
 
     @Override
-    public ILimitedData getLimitedData() {
-        return this.limitedData;
-    }
-
-    @Override
     public @Nullable String getWiredData() {
         return this.wiredData;
     }
@@ -74,22 +74,14 @@ public class HabboInventoryItem implements IHabboInventoryItem {
     }
 
     @Override
-    public boolean isLimited() {
-        return this.getLimitedData().getLimitedRare() > 0;
-    }
-
-    @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
         this.furniture = furnitureManager.get(result.getInt("item_id"));
         if (this.furniture == null)
             throw new IllegalArgumentException(STR."Invalid furniture base id for item id \{this.id}");
 
-        this.limitedData = LimitedData.fromString(result.getString("limited_data"));
         this.extraData = furnitureManager.parseExtraData(result.getString("extra_data"));
-        if (this.extraData instanceof LegacyExtraData legacyExtraData) { // TODO
-            legacyExtraData.setLimitedData(this.limitedData);
-        }
+        this.extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
         this.wiredData = result.getString("wired_data");
         this.group = result.getInt("guild_id");
     }
@@ -129,13 +121,13 @@ public class HabboInventoryItem implements IHabboInventoryItem {
                 .appendString(this.furniture.getType().toString())
                 .appendInt(this.id, "_ref")
                 .appendInt(this.furniture.getSpriteId())
-                .appendInt(3, "category"); // TODO THIS, USED TO SELECTOR WIREDS
+                .appendInt(1, "category"); // TODO THIS, USED TO SELECTOR WIREDS
 
         this.getExtraData().serialize(packet);
 
         packet.appendBoolean(false, "_isRecyclable") // TODO 
                 .appendBoolean(true, "_tradable")
-                .appendBoolean(!this.isLimited(), "_isGroupable (inventory stack?)")
+                .appendBoolean(!this.getExtraData().getLimitedData().isLimited(), "_isGroupable (inventory stack?)")
                 .appendBoolean(false, "_sellable")
 
                 .appendInt(-1, "_secondsToExpiration")

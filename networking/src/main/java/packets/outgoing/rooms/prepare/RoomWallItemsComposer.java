@@ -20,7 +20,7 @@ public class RoomWallItemsComposer extends OutgoingPacket {
         for (var item : allItems) {
             item.serialize(this);
             item.serializePosition(this);
-            item.serializeExtraData(this);
+            item.getExtraData().serialize(this);
             appendInt(-1);
 
             appendInt(item.canUse() ? 1 : 0);

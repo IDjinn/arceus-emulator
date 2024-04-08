@@ -34,4 +34,12 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
     public String toJson() {
         return GsonHelper.getGson().toJson(this);
     }
+
+    public int getStateValue() {
+        try {
+            return Integer.parseInt(data);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
 }

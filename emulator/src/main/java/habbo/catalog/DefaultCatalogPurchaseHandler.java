@@ -40,7 +40,10 @@ public class DefaultCatalogPurchaseHandler implements ICatalogPurchaseHandler {
             }
         }, result -> {
             var itemId = result.getInt(1);
-            var inventoryItem = inventoryItemFactory.create(itemId, item.getFurniture(), new LegacyExtraData(extraData), LimitedData.fromString("0:0"));
+            var itemExtraData = new LegacyExtraData(extraData);
+            itemExtraData.setLimitedData(LimitedData.fromString("0:0"));
+
+            var inventoryItem = inventoryItemFactory.create(habbo, itemId, item.getFurniture(), itemExtraData);
             habbo.getInventory().addItem(inventoryItem);
             unseen.add(itemId);
         });

@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects;
 
+import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
@@ -26,4 +27,6 @@ public interface IRoomObjectManager extends IRoomComponent {
     public @Nullable IRoomItem getItemByVirtualId(int virtualId);
 
     List<String> getFurnitureOwners();
+
+    void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation);
 }

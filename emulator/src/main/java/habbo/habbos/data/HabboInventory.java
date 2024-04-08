@@ -51,7 +51,7 @@ public class HabboInventory implements IHabboInventory {
         inventoryRepository.getInventoryByOwnerId(this.getHabbo().getData().getId(), result -> {
             if (result == null) return;
             try {
-                var item = inventoryItemFactory.create(result);
+                var item = inventoryItemFactory.create(result, this.getHabbo());
                 this.items.put(item.getId(), item);
             } catch (Exception e) {
                 logger.error("Error while creating inventory item {} for habbo {}", result.getInt("id"), e);

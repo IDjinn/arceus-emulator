@@ -1,5 +1,6 @@
-package packets.outgoing.rooms.prepare;
+package packets.outgoing.rooms.objects;
 
+import habbo.furniture.FurnitureUsagePolicy;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
@@ -21,19 +22,20 @@ public class RoomFloorItemsComposer extends OutgoingPacket {
             item.serialize(this);
             item.serializePosition(this);
 
-            appendInt(1); // TODO
+            appendInt(1, "gift, song or something. It seems to be the extraData state (integer) of legacy data"); // TODO
 
-            if (item.isLimited()) {
-                appendInt(256);
-                item.serializeExtraData(this);
-                item.serializeLimitedData(this);
-            } else {
-                appendInt(0);
-                item.serializeExtraData(this);
-            }
+            item.getExtraData().serialize(this);
+//            if (item.isLimited()) {
+//                appendInt(256);
+//                item.serializeExtraData(this);
+//                item.serializeLimitedData(this);
+//            } else {
+//                appendInt(0);
+//                item.serializeExtraData(this);
+//            }
 
-            appendInt(-1);
-            appendInt(2); // TODO:FURNITURE USAGE
+            appendInt(-1, "expiration timeout");
+            appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
 
             if (item.getOwnerData() != null && item.getOwnerData().isPresent()) {
                 var owner = item.getOwnerData().get();

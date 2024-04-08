@@ -11,6 +11,7 @@ import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
 import packets.outgoing.rooms.RoomUserStatusComposer;
+import packets.outgoing.rooms.objects.RoomFloorItemsComposer;
 import packets.outgoing.rooms.prepare.*;
 import utils.cycle.ICycle;
 

@@ -9,10 +9,6 @@ public interface IFloorItem extends IRoomItem, IPositionable {
 
     public int getRotation();
 
-    public String getExtraData();
-
-    public void setExtraData(String extraData);
-
     public default boolean canSit(IRoomEntity entity) {
         return this.getFurniture().isCanSit();
     }
