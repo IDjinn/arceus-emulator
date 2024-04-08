@@ -142,7 +142,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.addRoomItem(wallItem);
 
                 this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
-            }, this.getRoom().getId(), item.getId(), wallPosition);
+            }, this.getRoom().getData().getId(), item.getId(), wallPosition);
         } catch (Exception e) {
             logger.error("failed to place item {} from inventory to floor", item.getId(), e);
         }
@@ -164,7 +164,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.addRoomItem(floorItem);
 
                 this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
-            }, this.getRoom().getId(), item.getId(), x, y, z, rotation);
+            }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
         } catch (Exception e) {
             logger.error("failed to place item {} from inventory to floor", item.getId(), e);
         }

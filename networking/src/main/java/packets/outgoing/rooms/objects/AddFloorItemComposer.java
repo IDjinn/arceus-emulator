@@ -16,6 +16,6 @@ public class AddFloorItemComposer extends OutgoingPacket {
         appendInt(-1, "expires at");
         appendInt(FurnitureUsagePolicy.Everyone.ordinal());
         appendInt(floorItem.getOwnerData().isPresent() ? floorItem.getOwnerData().get().getId() : 0);
-        appendString(floorItem.getRoom().isPublic() || floorItem.getOwnerData().isEmpty() ? "admin" : floorItem.getOwnerData().get().getUsername());
+        appendString(floorItem.getRoom().getData().isPublic() || floorItem.getOwnerData().isEmpty() ? "admin" : floorItem.getOwnerData().get().getUsername());
     }
 }

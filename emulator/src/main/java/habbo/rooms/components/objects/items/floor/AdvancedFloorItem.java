@@ -30,7 +30,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
         try {
             return this.pool.borrow();
         } catch (Exception e) {
-            logger.error("failed to create event for item {} in room {}: {}", this.getId(), this.getRoom().getId(), e.getMessage(), e);
+            logger.error("failed to create event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
             return null;
         }
     }
@@ -39,7 +39,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
         try {
             events.add(event);
         } catch (Exception e) {
-            logger.error("failed to enqueue event for item {} in room {}: {}", this.getId(), this.getRoom().getId(), e.getMessage(), e);
+            logger.error("failed to enqueue event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
         }
     }
 
@@ -62,7 +62,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
                 }
             }
         } catch (Exception e) {
-            logger.error("failed while processing item {} events in room {}: {}", this.getId(), this.getRoom().getId(), e.getMessage(), e);
+            logger.error("failed while processing item {} events in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
         }
     }
 }

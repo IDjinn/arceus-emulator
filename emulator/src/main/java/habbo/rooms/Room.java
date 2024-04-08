@@ -7,10 +7,10 @@ import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
+import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
-import habbo.rooms.components.rights.IRoomRightsManager;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.RoomEntitiesComposer;
@@ -25,16 +25,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Room implements IRoom {
     @Inject
-    private IObjectManager objectManager;
-
     private IRoomObjectManager objectManager;
-    @Inject
-    private IGameMap gameMap;
 
+    @Inject
     private IRoomGameMap gameMap;
-    @Inject
-    private IRoomEntitiesComponent entitiesComponent;
 
+    @Inject
     private IRoomEntityManager entityManager;
     @Inject
     private IThreadManager threadManager;
@@ -59,7 +55,7 @@ public class Room implements IRoom {
     @Override
     public void init() {
         this.gameMap.init(this);
-        this.entitiesComponent.init(this);
+        this.entityManager.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
 
@@ -69,7 +65,7 @@ public class Room implements IRoom {
     @Override
     public void destroy() {
         this.gameMap.destroy();
-        this.entitiesComponent.destroy();
+        this.entityManager.destroy();
         this.pathfinder.destroy();
         this.objectManager.destroy();
         this.rightsManager.destroy();
@@ -78,10 +74,11 @@ public class Room implements IRoom {
     @Override
     public void onLoaded() {
         this.gameMap.onRoomLoaded();
-        this.entitiesComponent.onRoomLoaded();
+        this.entityManager.onRoomLoaded();
         this.pathfinder.onRoomLoaded();
         this.objectManager.onRoomLoaded();
         this.rightsManager.onRoomLoaded();
+        this.setFullyLoaded(true);
     }
 
     @Override
@@ -152,10 +149,12 @@ public class Room implements IRoom {
         }
     }
 
+    @Override
     public IRoomEntityManager getEntityManager() {
         return entityManager;
     }
 
+    @Override
     public IRoomGameMap getGameMap() {
         return gameMap;
     }
