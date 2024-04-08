@@ -174,6 +174,10 @@ public class RoomManager implements IRoomManager {
         return this.rooms.get(roomId);
     }
 
+    public void addRoom(IRoom room) {
+        this.rooms.putIfAbsent(room.getData().getId(), room);
+    }
+
     @Override
     public void destroy() {
         this.rooms.values().forEach(IRoom::destroy);

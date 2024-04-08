@@ -1,6 +1,9 @@
 package habbo.habbos.data.navigator;
 
-public interface IHabboNavigatorSearch {
+import utils.IFillable;
+import utils.IWriteable;
+
+public interface IHabboNavigatorSearch extends IWriteable, IFillable {
     String getSearchCode();
 
     String getFilter();

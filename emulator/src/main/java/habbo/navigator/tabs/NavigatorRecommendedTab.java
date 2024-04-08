@@ -91,6 +91,8 @@ public class NavigatorRecommendedTab implements INavigatorTab {
             String search,
             IRoomCategory category
     ) {
-        return null;
+        return this.getResultForHabbo(habbo).stream()
+                .filter(result -> result.filterRooms(filterType, search))
+                .toList();
     }
 }

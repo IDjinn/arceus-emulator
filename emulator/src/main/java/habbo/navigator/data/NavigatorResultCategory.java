@@ -9,7 +9,6 @@ import habbo.rooms.enums.RoomAccessState;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public record NavigatorResultCategory(
@@ -34,23 +33,31 @@ public record NavigatorResultCategory(
 
         synchronized (this.rooms) {
             if (!this.showInvisible) {
-                final List<IRoom> invisibleRooms = new ArrayList<>();
-
-                for (final IRoom room : this.rooms) {
-                    if (!room.getData().getAccessState().equals(RoomAccessState.INVISIBLE)) continue;
-
-                    invisibleRooms.add(room);
-                }
-
-                this.rooms.removeAll(invisibleRooms);
+                this.rooms.removeIf(room -> room.getData().getAccessState().equals(RoomAccessState.INVISIBLE));
             }
 
             packet.appendInt(this.rooms.size());
 //                Collections.sort(this.rooms);
             for (final IRoom room : this.rooms) {
-                room.serialize(packet);
+                room.write(packet);
             }
         }
+    }
+
+    public boolean filterRooms(INavigatorFilterType type, String search) {
+        if(search.isEmpty()) return true;
+
+        this.rooms.removeIf(room -> switch (type.getKey()) {
+            case "anything" -> false;
+            case "roomname" -> !room.getData().getName().toLowerCase().contains(search.toLowerCase());
+            case "tag" -> !room.getData().getTags().contains(search);
+            case "owner" -> !room.getData().getOwnerName().equalsIgnoreCase(search);
+            case "desc" -> !room.getData().getDescription().toLowerCase().contains(search.toLowerCase());
+            // TODO: "promo" and "group" cases
+            default -> false;
+        });
+
+        return !this.rooms.isEmpty();
     }
 
     @Override

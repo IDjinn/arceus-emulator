@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class NavigatorManager implements INavigatorManager {
     private final Logger logger = LogManager.getLogger();
 
-    private Injector injector;
+    private final Injector injector;
 
     private final HashMap<Integer, INavigatorPublicCategory> publicCategories;
 

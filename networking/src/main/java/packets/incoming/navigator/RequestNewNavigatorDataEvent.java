@@ -23,10 +23,9 @@ public class RequestNewNavigatorDataEvent extends IncomingEvent {
     public void Parse(IncomingPacket packet, INitroClient client) {
         client.sendMessages(
                 new NewNavigatorSettingsComposer(client.getHabbo().getNavigator().getNavigatorWindowSettings()),
-                new NewNavigatorMetaDataComposer(),
+                new NewNavigatorMetaDataComposer(client.getHabbo().getNavigator()),
                 new NewNavigatorLiftedRoomsComposer(),
                 new NewNavigatorCollapsedCategoriesComposer(),
-                new NewNavigatorSavedSearchesComposer(client.getHabbo().getNavigator().getNavigatorSearches()),
                 new NewNavigatorEventCategoriesComposer(this.navigatorManager)
         );
     }

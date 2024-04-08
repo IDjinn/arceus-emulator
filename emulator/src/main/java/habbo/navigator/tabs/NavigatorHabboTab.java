@@ -20,7 +20,7 @@ public class NavigatorHabboTab implements INavigatorTab {
     @Inject
     private INavigatorRoomsProvider navigatorRoomsProvider;
 
-    private final String[] categories = new String[] {
+    private final String[] categories = {
             "my",
             "favorites",
             "history_freq",
@@ -63,6 +63,8 @@ public class NavigatorHabboTab implements INavigatorTab {
             String search,
             IRoomCategory category
     ) {
-        return null;
+        return this.getResultForHabbo(habbo).stream()
+                .filter(result -> result.filterRooms(filterType, search))
+                .toList();
     }
 }

@@ -1,24 +1,35 @@
 package packets.outgoing.navigator;
 
+import habbo.habbos.data.IHabboNavigator;
+import habbo.habbos.data.navigator.IHabboNavigatorSearch;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
+import java.util.List;
+
 public class NewNavigatorMetaDataComposer extends OutgoingPacket {
-    public NewNavigatorMetaDataComposer() {
+    private final String[] tabs = {
+            "official_view",
+            "hotel_view",
+            "roomads_view",
+            "myworld_view"
+    };
+
+    public NewNavigatorMetaDataComposer(final IHabboNavigator navigator) {
         super(OutgoingHeaders.NewNavigatorMetaDataComposer);
 
-        appendInt(4);
+        appendInt(this.tabs.length);
 
-        appendString("official_view");
-        appendInt(0);
+        for (String tabName : this.tabs) {
+            appendString(tabName);
 
-        appendString("hotel_view");
-        appendInt(0);
+            final List<IHabboNavigatorSearch> savedSearches = navigator.getNavigatorSearchForTab(tabName);
 
-        appendString("roomads_view");
-        appendInt(0);
+            appendInt(savedSearches.size());
 
-        appendString("myworld_view");
-        appendInt(0);
+            for (final IHabboNavigatorSearch search : savedSearches) {
+                search.write(this);
+            }
+        }
     }
 }

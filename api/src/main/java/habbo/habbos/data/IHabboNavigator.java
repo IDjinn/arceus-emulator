@@ -23,5 +23,7 @@ public interface IHabboNavigator {
 
     NavigatorLayoutDisplay getLayoutDisplayForCategory(String name, NavigatorLayoutDisplay defaultLayout);
 
+    List<IHabboNavigatorSearch> getNavigatorSearchForTab(String tabName);
+
     void init();
 }

@@ -9,8 +9,9 @@ import habbo.rooms.data.IRoomData;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.IDisposable;
+import utils.IWriteable;
 
-public interface IRoom extends Comparable<IRoom>, IDisposable, ISerializable {
+public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     IRoomData getData();
 
     void init();

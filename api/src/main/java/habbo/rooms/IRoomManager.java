@@ -24,4 +24,6 @@ public interface IRoomManager extends IHotelService {
     HashMap<String, IRoomModel> getRoomModels();
 
     IRoom getRoomById(int roomId);
+
+    void addRoom(IRoom room);
 }

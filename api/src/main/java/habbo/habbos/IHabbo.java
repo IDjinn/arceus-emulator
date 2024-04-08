@@ -20,8 +20,7 @@ public interface IHabbo {
 
     public void update(); // TODO
 
-    public void destroy(); 
-
+    public void destroy();
 
     INitroClient getClient();
 

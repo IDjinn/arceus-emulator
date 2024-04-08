@@ -104,4 +104,16 @@ public class HabboNavigator implements IHabboNavigator {
 
         return defaultLayout;
     }
+
+    public List<IHabboNavigatorSearch> getNavigatorSearchForTab(String tabName) {
+        final List<IHabboNavigatorSearch> searches = new ArrayList<>();
+
+        for (final IHabboNavigatorSearch search : this.navigatorSearches) {
+            if(search.getSearchCode().equals(tabName)) {
+                searches.add(search);
+            }
+        }
+
+        return searches;
+    }
 }

@@ -81,7 +81,7 @@ public class Room implements IRoom {
 
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void write(OutgoingPacket packet) {
         RoomWriter.write(this, packet);
     }
 

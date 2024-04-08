@@ -52,21 +52,12 @@ public class NavigatorSearchService implements INavigatorSearchService {
 
     public void commit(IHabbo habbo, String tabName, String query) {
         this.executor.execute(() -> {
-            if (!query.isBlank()) {
-                this.search(habbo, tabName, query);
-                return;
-            }
-
             final INavigatorTab tab = this.navigatorManager.getTab(tabName);
 
             if(tab == null) {
                 this.sendRoomsFromCategory(habbo, tabName, query);
                 return;
             }
-
-            INavigatorFilterType filterType = this.navigatorManager.getFilterTypeByKey("anything");
-
-            if(filterType == null) return;
 
             if(query.isBlank()) {
                 habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(
@@ -75,11 +66,14 @@ public class NavigatorSearchService implements INavigatorSearchService {
                 return;
             }
 
-            String[] parsedQuery = query.split(":");
+            INavigatorFilterType filterType = this.navigatorManager.getFilterTypeByKey("anything");
+
+            if(filterType == null) return;
+
+            final String[] parsedQuery = query.split(":");
             final IRoomCategory category = this.roomManager.getCategoryFromTab(tabName);
 
             if(parsedQuery.length <= 1) {
-
                 habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(
                         tabName, query, tab.getSearchedResultForHabbo(habbo, filterType, parsedQuery[0], category)
                 ));
@@ -99,16 +93,12 @@ public class NavigatorSearchService implements INavigatorSearchService {
     private void sendRoomsFromCategory(IHabbo habbo, String tabName, String query) {
         final List<IRoom> rooms = this.navigatorRoomsProvider.getRoomsForCategory(tabName, habbo);
 
-        final List<INavigatorResultCategory> categories = new ArrayList<>(){
+        final List<INavigatorResultCategory> categories = new ArrayList<>() {
             {
                 add(new NavigatorResultCategory(0, tabName, query, NavigatorListAction.NONE, NavigatorDisplayMode.LIST, NavigatorLayoutDisplay.DEFAULT, rooms, false, false, NavigatorDisplayOrder.ACTIVITY, -1));
             }
         };
 
         habbo.getClient().sendMessage(new NewNavigatorSearchResultsComposer(tabName, query, categories));
-    }
-
-    private void search(IHabbo habbo, String view, String query) {
-        // Search for rooms
     }
 }

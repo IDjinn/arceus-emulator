@@ -1,11 +1,14 @@
 package habbo.habbos.data.navigator;
 
+import habbo.habbos.writers.HabboNavigatorSearchWriter;
+import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
 import utils.IFillable;
+import utils.IWriteable;
 
-public class HabboNavigatorSearch implements IHabboNavigatorSearch, IFillable {
+public class HabboNavigatorSearch implements IHabboNavigatorSearch {
     private final Logger logger = LogManager.getLogger();
 
     private String searchCode;
@@ -33,6 +36,10 @@ public class HabboNavigatorSearch implements IHabboNavigatorSearch, IFillable {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    public void write(OutgoingPacket packet) {
+        HabboNavigatorSearchWriter.write(this, packet);
     }
 
     @Override

@@ -22,19 +22,23 @@ public class NavigatorRoomsProvider implements INavigatorRoomsProvider {
     private IRoomManager roomManager;
 
     public List<IRoom> getRoomsForCategory(String category, IHabbo habbo) {
-        return switch (category) {
-            case "official-root" -> this.getPublicRooms();
-            case "my" -> habbo.getRooms().getOwnRooms();
-            case "favorites" -> habbo.getRooms().getFavoriteRooms();
-            case "history_freq" -> habbo.getRooms().getRoomHistory();
+        final List<IRoom> rooms = new ArrayList<>();
+
+        switch (category) {
+            case "official-root" -> rooms.addAll(this.getPublicRooms());
+            case "my" -> rooms.addAll(habbo.getRooms().getOwnRooms());
+            case "favorites" -> rooms.addAll(habbo.getRooms().getFavoriteRooms());
+            case "history_freq" -> rooms.addAll(habbo.getRooms().getRoomHistory());
             case "my_groups" -> new ArrayList<>(); // TODO: Implement guild rooms
-            case "with_rights" -> habbo.getRooms().getRoomsWithRights();
-            case "popular" -> this.getPopularRooms();
-            case "categories" -> this.getPromotedRooms();
+            case "with_rights" -> rooms.addAll(habbo.getRooms().getRoomsWithRights());
+            case "popular" -> rooms.addAll(this.getPopularRooms());
+            case "categories" -> rooms.addAll(this.getPromotedRooms());
             case "with_friends" -> new ArrayList<>(); // TODO: Implement friends
-            case "highest_score" -> this.getTopRatedRooms();
+            case "highest_score" -> rooms.addAll(this.getTopRatedRooms());
             default -> new ArrayList<>();
         };
+
+        return rooms;
     }
 
     public List<IRoom> getPublicRooms() {

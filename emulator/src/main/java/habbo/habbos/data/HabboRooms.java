@@ -65,7 +65,7 @@ public class HabboRooms implements IHabboRooms {
         this.repository.loadFavoriteRoomsForHabbo(result -> {
             if(result == null) return;
 
-            IRoom room = this.roomManager.getRoomById(result.getInt("room_id"));
+            IRoom room = this.roomManager.getRoomById(result.getInt("id"));
 
             if(room == null) {
                 room = this.roomFactory.createRoom(result);
@@ -79,7 +79,7 @@ public class HabboRooms implements IHabboRooms {
         this.repository.loadRoomHistoryForHabbo(result -> {
             if(result == null) return;
 
-            IRoom room = this.roomManager.getRoomById(result.getInt("room_id"));
+            IRoom room = this.roomManager.getRoomById(result.getInt("id"));
 
             if(room == null) {
                 room = this.roomFactory.createRoom(result);
@@ -94,7 +94,7 @@ public class HabboRooms implements IHabboRooms {
         this.repository.loadRoomsWithRightsForHabbo(result -> {
             if(result == null) return;
 
-            IRoom room = this.roomManager.getRoomById(result.getInt("room_id"));
+            IRoom room = this.roomManager.getRoomById(result.getInt("id"));
 
             if(room == null) {
                 room = this.roomFactory.createRoom(result);
