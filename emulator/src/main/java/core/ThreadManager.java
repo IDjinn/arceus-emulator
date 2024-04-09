@@ -1,18 +1,25 @@
 package core;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import core.configuration.IConfigurationManager;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
+@Singleton
 public class ThreadManager implements IThreadManager {
+    private final AtomicReference<ScheduledThreadPoolExecutor> hardwareThreadExecutor;
     private final IConfigurationManager configurationManager;
-
-    private final ScheduledExecutorService hardwareThreadExecutor;
-    private final ScheduledExecutorService softwareThreadExecutor;
+    private final AtomicReference<ScheduledThreadPoolExecutor> softwareThreadExecutor;
+    private final AtomicReference<Executor> threadMonitor;
+    private Logger logger = LogManager.getLogger();
 
     private final AtomicLong hardwareThreadCounter;
     private final AtomicLong softwareThreadCounter;
@@ -23,10 +30,11 @@ public class ThreadManager implements IThreadManager {
         this.hardwareThreadCounter = new AtomicLong(0);
         this.softwareThreadCounter = new AtomicLong(0);
 
-        var hardwareThreadCount = this.configurationManager.getInt("orion.hardware.threads", Runtime.getRuntime().availableProcessors());
-        var softwareThreadCount = this.configurationManager.getInt("orion.software.threads", Runtime.getRuntime().availableProcessors());
 
-        this.hardwareThreadExecutor = Executors.newScheduledThreadPool(hardwareThreadCount, runnable -> {
+        var hardwareThreadCount = this.configurationManager.getInt("orion.hardware.threads", Runtime.getRuntime().availableProcessors());
+        var softwareThreadCount = this.configurationManager.getInt("orion.software.threads", Runtime.getRuntime().availableProcessors() * 200);
+
+        this.hardwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(hardwareThreadCount, runnable -> {
             var currentId = hardwareThreadCounter.incrementAndGet();
 
             var hardwareThread = new Thread(runnable);
@@ -36,28 +44,37 @@ public class ThreadManager implements IThreadManager {
             hardwareThread.setUncaughtExceptionHandler((t, e) -> log.error("Exception in hardware thread: {}", e.getMessage(), e));
 
             return hardwareThread;
-        });
+        }));
 
-        this.softwareThreadExecutor = Executors.newScheduledThreadPool(softwareThreadCount, runnable -> {
-            var currentId = softwareThreadCounter.incrementAndGet();
+        this.softwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(softwareThreadCount, Thread.ofVirtual().factory()));
 
-            var softwareThread = Thread.ofVirtual().factory().newThread(runnable);
-            softwareThread.setName(STR."Software-Thread-\{currentId}");
+        this.threadMonitor = new AtomicReference<>(Executors.newSingleThreadExecutor());
+        this.threadMonitor.get().execute(this::monitor);
+    }
 
-            var log = LogManager.getLogger(STR."Software-Thread-\{currentId}");
-            softwareThread.setUncaughtExceptionHandler((t, e) -> log.error("Exception in software thread {}", e.getMessage(), e));
+    @SuppressWarnings({"InfiniteLoopStatement", "BusyWait"})
+    private void monitor() {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                logger.error("Thread monitor interrupted", e);
+            }
 
-            return softwareThread;
-        });
+            var hardwareThreads = this.hardwareThreadExecutor.get().getQueue().size();
+            var softwareThreads = this.softwareThreadExecutor.get().getQueue().size();
+
+            logger.debug("Hardware thread count: {}, Software thread count: {}", hardwareThreads, softwareThreads);
+        }
     }
 
     @Override
     public ScheduledExecutorService getHardwareThreadExecutor() {
-        return this.hardwareThreadExecutor;
+        return this.hardwareThreadExecutor.get();
     }
 
     @Override
     public ScheduledExecutorService getSoftwareThreadExecutor() {
-        return this.softwareThreadExecutor;
+        return this.softwareThreadExecutor.get();
     }
 }

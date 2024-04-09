@@ -9,7 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.RoomUserStatusComposer;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -62,10 +63,12 @@ public class RoomEntityManager implements IRoomEntityManager {
         return players.values().stream().toList();
     }
 
+    private final Collection<IRoomEntity> entitiesUpdated = new HashSet<>();
+    
     @Override
-    public void tick() {
+    public synchronized void tick() {
         try {
-            var entitiesUpdated = new ArrayList<IRoomEntity>(entities.size());
+            entitiesUpdated.clear();
             for (var entity : entities.values()) {
                 entity.tick();
                 if (entity.isNeedUpdate()) {

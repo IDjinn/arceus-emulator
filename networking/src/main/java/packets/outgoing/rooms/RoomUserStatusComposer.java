@@ -5,7 +5,7 @@ import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 import utils.StringBuilderHelper;
 
-import java.util.List;
+import java.util.Collection;
 
 public class RoomUserStatusComposer extends OutgoingPacket {
     public RoomUserStatusComposer(IRoomEntity entity) {
@@ -14,7 +14,7 @@ public class RoomUserStatusComposer extends OutgoingPacket {
         serializeEntity(entity);
     }
 
-    public RoomUserStatusComposer(List<IRoomEntity> entities) {
+    public RoomUserStatusComposer(Collection<IRoomEntity> entities) {
         super(OutgoingHeaders.RoomUserStatusComposer);
         appendInt(entities.size());
         for (var entity : entities)

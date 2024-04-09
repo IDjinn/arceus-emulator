@@ -41,6 +41,8 @@ public class Emulator extends AbstractModule implements IEmulator {
      */
     @Inject
     private IConfigurationManager configurationManager;
+    @Inject
+    IThreadManager threadManager;
 
     /**
      * The emulator settings (based in the emulator_settings table).

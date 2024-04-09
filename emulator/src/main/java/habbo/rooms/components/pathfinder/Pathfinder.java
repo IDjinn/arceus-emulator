@@ -91,7 +91,7 @@ public class Pathfinder implements IPathfinder {
 
         var size = 0;
         while (!openSet.isEmpty()) {
-            if (closedSet.size() > gameMap.getMapSize()) // something went wrong with pathfinder logic. prevent overflow
+            if (closedSet.size() > gameMap.getMapSize() || openSet.size() > gameMap.getMapSize()) // something went wrong with pathfinder logic. prevent overflow
                 return PathUtil.getInstance().EmptyPath;
 
             if (closedSet.contains(goal))

@@ -21,6 +21,7 @@ import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
 import utils.cycle.ICycle;
 
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Room implements IRoom {
@@ -43,6 +44,7 @@ public class Room implements IRoom {
     private final IRoomData data;
 
     private boolean isFullyLoaded = false;
+    public ScheduledFuture<?> process;
 
     public Room(IConnectionResult data) {
         this.data = new RoomData(data);
@@ -59,7 +61,7 @@ public class Room implements IRoom {
         this.pathfinder.init(this);
         this.objectManager.init(this);
 
-        threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entityManager::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
+        this.process = threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(this.entityManager::tick, 0, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override

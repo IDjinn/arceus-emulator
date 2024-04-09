@@ -113,9 +113,9 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     private void handleWalking() {
-        if (this.getNextPosition() == null && this.getGoal() == null && this.getWalkPath().isEmpty())
+        if (this.getNextPosition() == null && this.getGoal() == null && this.getWalkPath().isEmpty()) 
             return;
-        
+
         if (this.getNextPosition() != null) {
             this.setPosition(this.getNextPosition());
 
@@ -126,9 +126,6 @@ public abstract class RoomEntity implements IRoomEntity {
             this.setNeedUpdateStatus(true);
         }
 
-        if (walkPath.isEmpty() && this.getNextPosition() != null)
-            this.setNextPosition(null);
-        
         if (walkPath.isEmpty() && getGoal() != null) {
             walkPath.addAll(this.getRoom().getPathfinder().tracePath(
                     this.getRoom().getGameMap(),
@@ -137,17 +134,23 @@ public abstract class RoomEntity implements IRoomEntity {
             ));
         }
 
-        if (!walkPath.isEmpty()) {
-            this.setNextPosition(walkPath.removeFirst());
-            this.setDirection(Direction.calculate(
-                    this.getPosition().getX(),
-                    this.getPosition().getY(),
-                    this.getNextPosition().getX(),
-                    this.getNextPosition().getY()
-            ));
-            this.setStatus(new StatusBucket(RoomEntityStatus.MOVE, STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
+        if (walkPath.isEmpty()) {
+            this.setNextPosition(null);
+            this.setGoal(null);
+            this.removeStatus(RoomEntityStatus.MOVE);
             this.setNeedUpdateStatus(true);
+            return;
         }
+
+        this.setNextPosition(walkPath.removeFirst());
+        this.setDirection(Direction.calculate(
+                this.getPosition().getX(),
+                this.getPosition().getY(),
+                this.getNextPosition().getX(),
+                this.getNextPosition().getY()
+        ));
+        this.setStatus(new StatusBucket(RoomEntityStatus.MOVE, STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
+        this.setNeedUpdateStatus(true);
     }
 
     private void handleStatus() {
