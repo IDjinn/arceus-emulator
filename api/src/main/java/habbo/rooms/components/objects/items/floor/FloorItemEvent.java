@@ -13,6 +13,7 @@ public class FloorItemEvent implements Poolable {
     private @Nullable
     final Slot slot;
     private long totalTicks;
+    private IEventListener onCompleted;
 
     public FloorItemEvent(Slot slot) {
         this.slot = slot;
@@ -46,9 +47,6 @@ public class FloorItemEvent implements Poolable {
         return ticks.get() >= totalTicks;
     }
 
-    public void onCompleted(IFloorItem floorItem) {
-
-    }
 
     @Override
     public void release() {
@@ -56,5 +54,17 @@ public class FloorItemEvent implements Poolable {
         this.totalTicks = 0;
         if (this.slot != null)
             this.slot.release(this);
+    }
+
+    public IEventListener getOnCompleted() {
+        return onCompleted;
+    }
+
+    public void subscribeListener(IEventListener listener) {
+        this.onCompleted = listener;
+    }
+
+    public interface IEventListener {
+        void onEventComplete(FloorItemEvent event);
     }
 }

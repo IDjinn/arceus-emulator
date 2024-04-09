@@ -2,6 +2,7 @@ package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IPositionable;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
@@ -14,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface IRoomEntity extends ISerializable, ICycle, IPositionable {
     public int getVirtualId();
+
+    public @Nullable IFloorItem getOnItem();
 
     public String getName();
 

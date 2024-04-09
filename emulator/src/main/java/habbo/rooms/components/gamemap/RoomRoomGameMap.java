@@ -20,10 +20,10 @@ public class RoomRoomGameMap implements IRoomGameMap {
             "xxxx00000000\n" +
             "xxxxxxxxxxxx\n" +
             "xxxxxxxxxxxx".replaceAll("\r", "");
+
     private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
-
 
     private static int map_height_lookup(char tile) {
         return switch (tile) {
@@ -141,5 +141,13 @@ public class RoomRoomGameMap implements IRoomGameMap {
         return
                 neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
                         neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
+    }
+
+    @Override
+    public boolean isValidMovement(final Position from, final Position to, final Position goal) {
+        final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(to, -1);
+        if (topItem.isEmpty()) return true;
+
+        return topItem.get().canWalk();
     }
 }

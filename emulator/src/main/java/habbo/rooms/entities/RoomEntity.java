@@ -1,6 +1,7 @@
 package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.jetbrains.annotations.Nullable;
 import utils.Direction;
 import utils.Position;
@@ -20,6 +21,7 @@ public abstract class RoomEntity implements IRoomEntity {
     private @Nullable Position goal;
     private SequencedCollection<Position> walkPath;
     private @Nullable Position nextPostion;
+    private @Nullable IFloorItem onItem;
 
     public RoomEntity(IRoom room, int virtualId) {
         this.virtualId = virtualId;
@@ -28,6 +30,7 @@ public abstract class RoomEntity implements IRoomEntity {
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
         this.walkPath = new ArrayList<>();
+        onItem = null;
     }
 
     @Override
@@ -79,16 +82,8 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     @Override
-    public void setStatus(StatusBucket bucket) {
-        if (statusBuckets.containsKey(bucket.getStatus())) {
-            var currentBucket = statusBuckets.get(bucket.getStatus());
-            currentBucket.setTicks(bucket.getTicks());
-            currentBucket.setValue(bucket.getValue());
-        } else {
-            statusBuckets.put(bucket.getStatus(), bucket);
-        }
-
-        setNeedUpdateStatus(true);
+    public @Nullable IFloorItem getOnItem() {
+        return this.onItem;
     }
 
     @Override
@@ -107,9 +102,22 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     @Override
+    public void setStatus(StatusBucket bucket) {
+        if (statusBuckets.containsKey(bucket.getStatus())) {
+            var currentBucket = statusBuckets.get(bucket.getStatus());
+            currentBucket.setTicks(bucket.getTicks());
+            currentBucket.setValue(bucket.getValue());
+        } else {
+            statusBuckets.put(bucket.getStatus(), bucket);
+        }
+
+        this.setNeedUpdateStatus(true);
+    }
+
+    @Override
     public void tick() {
-        handleStatus();
-        handleWalking();
+        this.handleStatus();
+        this.handleWalking();
     }
 
     private void handleWalking() {
@@ -117,7 +125,18 @@ public abstract class RoomEntity implements IRoomEntity {
             return;
 
         if (this.getNextPosition() != null) {
+            if (this.onItem != null) {
+                this.onItem.onStepOut(this);
+                this.onItem = null;
+            }
+            
             this.setPosition(this.getNextPosition());
+            final var topItem =
+                    this.getRoom().getObjectManager().getTopFloorItemAt(this.getPosition(), -1);
+            if (topItem.isPresent()) {
+                this.onItem = topItem.get();
+                this.onItem.onStepIn(this);
+            }
 
             if (this.getPosition().equals(this.getGoal())) {
                 this.setGoal(null);
@@ -126,8 +145,8 @@ public abstract class RoomEntity implements IRoomEntity {
             this.setNeedUpdateStatus(true);
         }
 
-        if (walkPath.isEmpty() && getGoal() != null) {
-            walkPath.addAll(this.getRoom().getPathfinder().tracePath(
+        if (this.walkPath.isEmpty() && this.getGoal() != null) {
+            this.walkPath.addAll(this.getRoom().getPathfinder().tracePath(
                     this.getRoom().getGameMap(),
                     this.getPosition(),
                     this.getGoal()
@@ -157,7 +176,7 @@ public abstract class RoomEntity implements IRoomEntity {
         synchronized (statusBuckets) {
             for (StatusBucket bucket : statusBuckets.values()) {
                 if (bucket.getTicks() <= 0) {
-                    removeStatus(bucket.getStatus());
+                    this.removeStatus(bucket.getStatus());
                 }
                 bucket.decrementTick();
             }

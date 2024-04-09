@@ -99,6 +99,29 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
+    public Collection<IFloorItem> getAllFloorItemsAt(final Position position) {
+        return this.getAllFloorItemsAt(position, -1);
+    }
+
+    @Override
+    public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId) { // TODO POOLING
+        final var itemsAt = new HashSet<IFloorItem>();
+        for (var item : this.floorItems.values()) {
+            if (item.getId() == ignoreId) continue;
+            if (!item.getPosition().equals(position)) continue;
+
+            itemsAt.add(item);
+        }
+
+        return itemsAt;
+    }
+
+    @Override
+    public Optional<IFloorItem> getTopFloorItemAt(final Position position, final int ignoreId) {
+        return this.floorItems.values().stream().filter(i -> i.getPosition().equals(position)).filter(i -> i.getId() != ignoreId).findFirst();
+    }
+
+    @Override
     public Collection<IWallItem> getAllWallItems() {
         return this.wallItems.values();
     }

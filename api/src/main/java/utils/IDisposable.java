@@ -2,5 +2,7 @@ package utils;
 
 
 public interface IDisposable {
-    public void destroy();
+    public default void destroy() {
+
+    }
 }
