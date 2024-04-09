@@ -9,11 +9,13 @@ import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.RoomUserStatusComposer;
+import utils.cycle.ICycle;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
@@ -50,6 +52,8 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public void init(IRoom room) {
         this.room = room;
+        this.getRoom().registerProcess(RoomEntityManager.class.getName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
     
     @Override

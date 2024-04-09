@@ -22,7 +22,6 @@ import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
 import packets.outgoing.rooms.objects.wall.RoomWallItemsComposer;
 import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
-import utils.cycle.ICycle;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
@@ -71,7 +70,6 @@ public class Room implements IRoom {
         this.pathfinder.init(this);
         this.objectManager.init(this);
 
-        this.registerProcess(this.entityManager.getClass().getName(), this.entityManager::tick, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
