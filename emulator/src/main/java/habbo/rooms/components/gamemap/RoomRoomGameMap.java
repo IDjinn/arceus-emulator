@@ -3,7 +3,6 @@ package habbo.rooms.components.gamemap;
 import com.google.inject.Inject;
 import habbo.rooms.IRoom;
 import habbo.rooms.IRoomManager;
-import habbo.rooms.data.models.IRoomModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.Position;
@@ -15,7 +14,6 @@ public class RoomRoomGameMap implements IRoomGameMap {
     private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
-    private IRoomModel model;
 
     private static int map_height_lookup(char tile) {
         return switch (tile) {
@@ -66,12 +64,11 @@ public class RoomRoomGameMap implements IRoomGameMap {
     @Override
     public void init(IRoom room) {
         this.room = room;
-        this.model = this.roomManager.getRoomModels().get(this.getRoom().getData().getModelName());
-        if (this.model == null)
+        if (this.getRoom().getModel() == null)
             throw new IllegalArgumentException(STR."invalid room model \{this.getRoom().getData().getModelName()}");
         
         try {
-            var map = this.model.getData().getHeightMap().split("\n");
+            var map = this.getRoom().getModel().getHeightMap().split("\n");
             var modelWidth = map.length;
             var modelHeight = map[0].length();
             this.tiles = new IRoomTile[modelWidth][modelHeight];
@@ -129,7 +126,7 @@ public class RoomRoomGameMap implements IRoomGameMap {
 
     @Override
     public String getModelMap() { // TODO habbo client does use \r instead \n
-        return this.model.getData().getHeightMap().replaceAll("\n", "\r");
+        return this.getRoom().getModel().getHeightMap().replaceAll("\n", "\r");
     }
 
     @Override

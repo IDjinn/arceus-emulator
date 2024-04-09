@@ -6,8 +6,8 @@ import habbo.navigator.INavigatorManager;
 import habbo.navigator.data.INavigatorPublicCategory;
 import habbo.rooms.data.IRoomCategory;
 import habbo.rooms.data.RoomCategory;
-import habbo.rooms.data.models.IRoomModel;
-import habbo.rooms.data.models.RoomModel;
+import habbo.rooms.data.models.IRoomModelData;
+import habbo.rooms.data.models.RoomModelData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +35,7 @@ public class RoomManager implements IRoomManager {
 
     private final HashMap<Integer, IRoomCategory> roomCategories;
 
-    private final HashMap<String, IRoomModel> roomModels;
+    private final HashMap<String, IRoomModelData> roomModels;
 
     @Inject
     public RoomManager(
@@ -134,9 +134,9 @@ public class RoomManager implements IRoomManager {
         this.roomRepository.loadRoomModels(result -> {
             if(result == null) return;
 
-            final IRoomModel roomModel = new RoomModel(result);
+            final var roomModel = new RoomModelData(result);
 
-            this.roomModels.put(roomModel.getData().getName(), roomModel);
+            this.roomModels.put(roomModel.getName(), roomModel);
         });
 
         logger.info("Loaded {} room models", this.roomModels.size());
@@ -160,7 +160,7 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
-    public HashMap<String, IRoomModel> getRoomModels() {
+    public HashMap<String, IRoomModelData> getRoomModels() {
         return this.roomModels;
     }
 

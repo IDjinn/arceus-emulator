@@ -10,6 +10,7 @@ import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.RoomData;
+import habbo.rooms.data.models.IRoomModelData;
 import habbo.rooms.writers.RoomWriter;
 import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
@@ -44,8 +45,11 @@ public class Room implements IRoom {
     private IPathfinder pathfinder;
     @Inject
     private IRoomRightsManager rightsManager;
+    @Inject
+    private IRoomManager roomManager;
 
     private final IRoomData data;
+    private IRoomModelData model;
 
     private boolean isFullyLoaded = false;
     private Logger logger = LogManager.getLogger();
@@ -60,6 +64,8 @@ public class Room implements IRoom {
 
     @Override
     public void init() {
+        this.model = this.roomManager.getRoomModels().get(this.getData().getModelName());
+        
         this.gameMap.init(this);
         this.entityManager.init(this);
         this.pathfinder.init(this);
@@ -179,6 +185,11 @@ public class Room implements IRoom {
     @Override
     public IRoomRightsManager getRightsManager() {
         return this.rightsManager;
+    }
+
+    @Override
+    public IRoomModelData getModel() {
+        return this.model;
     }
 
     @Override

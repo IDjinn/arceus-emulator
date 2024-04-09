@@ -29,7 +29,7 @@ public abstract class RoomEntity implements IRoomEntity {
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
         this.walkPath = new ArrayList<>();
-        onItem = null;
+        this.onItem = null;
     }
 
     @Override
