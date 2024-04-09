@@ -17,7 +17,7 @@ public class RoomPlaceItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
         var data = packet.readString().split(" ");

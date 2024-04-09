@@ -18,7 +18,7 @@ public class ReleaseVersionEvent extends IncomingEvent {
     }
 
     @Override
-    public void ParseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
         var production = packet.readString();
         var type = packet.readString();
         var platform = packet.readInt();

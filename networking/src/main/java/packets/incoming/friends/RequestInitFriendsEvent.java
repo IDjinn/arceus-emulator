@@ -15,7 +15,7 @@ public class RequestInitFriendsEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         // TODO
         client.sendMessage(new MessengerInitComposer(client.getHabbo()));
     }

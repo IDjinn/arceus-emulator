@@ -18,7 +18,7 @@ public class RequestCatalogPage extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         var pageId = packet.readInt();
         var offerId = packet.readInt();
         var mode = packet.readString();

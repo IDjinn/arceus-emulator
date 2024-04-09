@@ -3,6 +3,8 @@ package packets;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import core.IThreadManager;
+import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.client.INitroClientManager;
@@ -12,7 +14,6 @@ import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.incoming.IncomingEvent;
-import packets.incoming.guest.SecureLoginEvent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,18 +24,18 @@ import java.util.concurrent.Executors;
 public class PacketManager implements IPacketManager {
     private Logger logger = LogManager.getLogger();
     private final Executor sharedGuestExecutor = Executors.newSingleThreadExecutor();
-    private final Executor packetManagerExecutor = Executors.newVirtualThreadPerTaskExecutor();
-    @Inject private INitroClientManager clientManager;
-
+    private final INitroClientManager clientManager;
+    private final IConfigurationManager configuration;
+    private final IThreadManager threadManager;
+    
     private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<Integer, IncomingEvent>();
     private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<Integer, IncomingEvent>();
 
     @Inject
-    private SecureLoginEvent test;
-
-    @Inject
-    public PacketManager(INitroClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector) {
+    public PacketManager(INitroClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
         this.clientManager = clientManager;
+        this.configuration = configuration;
+        this.threadManager = threadManager;
 
         for (Class<? extends IncomingEvent> incoming : incomings) {
             if (incoming.isAnnotationPresent(NoAuth.class)) registerGuestEvent(injector.getProvider(incoming).get());
@@ -50,7 +51,17 @@ public class PacketManager implements IPacketManager {
     private void registerGuestEvent(IncomingEvent event) {
         guestEvents.put(event.getHeaderId(), event);
     }
-    
+
+    @Override
+    public boolean isParallelParsingEnabled() {
+        return this.configuration.getBool("io.parallel.packet.enabled", false);
+    }
+
+    @Override
+    public boolean isLoggingEnabled() {
+        return this.configuration.getBool("io.logging.enabled", false);
+    }
+
     @Override
     public String getIncomingEventName(int headerId) {
         if (incomingEvents.containsKey(headerId))
@@ -64,19 +75,22 @@ public class PacketManager implements IPacketManager {
 
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         var incomingEvent = incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
             logger.warn("[-> incoming] {} was not found", packet.getHeader());
             return;
         }
 
-//        packetManagerExecutor.execute(() -> incomingEvent.Parse(packet, client));
-        incomingEvent.Parse(packet, client);
+        if (this.isParallelParsingEnabled()) {
+            this.threadManager.getSoftwareThreadExecutor().execute(() -> incomingEvent.parse(packet, client));
+        } else {
+            incomingEvent.parse(packet, client);
+        }
     }
 
     @Override
-    public void ParseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
         try {
             var incomingEvent = guestEvents.get(packet.getHeader());
             if (incomingEvent == null) {
@@ -85,7 +99,7 @@ public class PacketManager implements IPacketManager {
                 return;
             }
 
-            sharedGuestExecutor.execute(() -> incomingEvent.ParseForGuest(packet, ctx));
+            sharedGuestExecutor.execute(() -> incomingEvent.parseForGuest(packet, ctx));
         }
         catch (Exception e) {
             clientManager.disconnectGuest(ctx);

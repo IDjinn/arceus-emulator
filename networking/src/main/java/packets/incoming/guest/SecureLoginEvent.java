@@ -25,7 +25,7 @@ public class SecureLoginEvent extends IncomingEvent {
     }
 
     @Override
-    public void ParseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
         String sso = packet.readString().replaceAll(" ", "");
         int integer = packet.readInt();
 

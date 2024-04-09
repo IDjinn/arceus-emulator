@@ -16,7 +16,7 @@ public class RequestUserCreditsEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         // TODO
         client.sendMessages(
                 new UserCreditsComposer(client.getHabbo()),

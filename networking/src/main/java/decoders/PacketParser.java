@@ -42,11 +42,11 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         try {
             var client = (INitroClient) ctx.attr(GameServerAttributes.CLIENT).get();
             if (client == null) {
-                packetManager.ParseForGuest(message, ctx);
+                packetManager.parseForGuest(message, ctx);
                 return;
             }
 
-            packetManager.Parse(message, client);
+            packetManager.parse(message, client);
         } catch (Exception e) {
             logger.error("Caught exception", e);
         }

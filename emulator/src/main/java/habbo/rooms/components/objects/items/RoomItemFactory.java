@@ -122,8 +122,7 @@ public class RoomItemFactory implements IRoomItemFactory {
             }
         }
 
-//        if (furniture.getType().equals(FurnitureType.WALL))
-//            return new WallItem(data, room);
+        logger.warn("interaction type {} was not found to create instance for item {}", furniture.getInteractionType(), data.getId());
         if (furniture.getType().equals(FurnitureType.FLOOR))
             return new DefaultFloorItem(data, room, furniture);
         if (furniture.getType().equals(FurnitureType.WALL))

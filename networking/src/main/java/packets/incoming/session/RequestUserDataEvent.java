@@ -17,7 +17,7 @@ public class RequestUserDataEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         client.sendMessages(
                 new UserDataComposer(client.getHabbo()),
                 new UserPerksComposer(client.getHabbo()),

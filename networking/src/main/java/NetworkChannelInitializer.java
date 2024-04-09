@@ -1,8 +1,8 @@
 import codec.WebSocketCodec;
 import com.google.inject.Inject;
 import decoders.*;
-import encoders.GameServerMessageEncoder;
-import encoders.GameServerMessageLogger;
+import encoders.OutgoingPacketEncoder;
+import encoders.OutgoingPacketLogger;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -11,6 +11,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
+import networking.packets.IPacketManager;
 
 
 public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel> {
@@ -19,10 +20,14 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     private final SslContext context;
     private final boolean isSSL;
     private final WebSocketServerProtocolConfig config;
-    
+
     @Inject private IncomingPacketLogger incomingPacketLogger;
     @Inject
+    private OutgoingPacketLogger outgoingPacketLogger;
+    @Inject
     private PacketParser packetParser;
+    @Inject
+    private IPacketManager packetManager;
 
     public NetworkChannelInitializer() {
         context = SSLCertificateLoader.getContext();
@@ -52,14 +57,16 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
         ch.pipeline().addLast(new GameByteFrameDecoder());
         ch.pipeline().addLast(new GameByteDecoder());
 
-        ch.pipeline().addLast(incomingPacketLogger);
+        if (packetManager.isParallelParsingEnabled()) {
+            ch.pipeline().addLast(incomingPacketLogger);
+        }
 
-//        ch.pipeline().addLast(new IdleTimeoutHandler(30, 60));
-//        ch.pipeline().addLast(new GameMessageRateLimit());
         ch.pipeline().addLast(packetParser);
-
-        ch.pipeline().addLast(new GameServerMessageEncoder());
-        ch.pipeline().addLast(new GameServerMessageLogger());
+        
+        ch.pipeline().addLast(new OutgoingPacketEncoder());
+        if (packetManager.isParallelParsingEnabled()) {
+            ch.pipeline().addLast(outgoingPacketLogger);
+        }
     }
 
     public boolean isSSL() {

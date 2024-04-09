@@ -15,7 +15,7 @@ public class RequestRoomHeightmapEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getPlayerEntity() == null) return;
 
         client.getHabbo().getPlayerEntity().getRoom().join(client.getHabbo());

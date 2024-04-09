@@ -8,7 +8,6 @@ import networking.client.INitroClient;
 import networking.packets.IncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
-import packets.outgoing.navigator.search.NewNavigatorSearchResultsComposer;
 
 @Singleton
 public class RequestNewNavigatorRoomsEvent extends IncomingEvent {
@@ -24,7 +23,7 @@ public class RequestNewNavigatorRoomsEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         String tabName = this.navigatorManager.normalizeTab(packet.readString());
         String query = packet.readString();
 

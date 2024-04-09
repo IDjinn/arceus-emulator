@@ -18,7 +18,7 @@ public class MachineIdEvent extends IncomingEvent {
     }
 
     @Override
-    public void ParseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
         var _ = packet.readString();
         var machineId = packet.readString();
 

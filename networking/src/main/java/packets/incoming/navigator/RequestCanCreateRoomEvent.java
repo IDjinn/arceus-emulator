@@ -13,7 +13,7 @@ public class RequestCanCreateRoomEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         client.sendMessage(new CanCreateRoomComposer());
     }
 }

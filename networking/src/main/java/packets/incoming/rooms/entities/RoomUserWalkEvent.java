@@ -13,7 +13,7 @@ public class RoomUserWalkEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getPlayerEntity() == null) return;
 
         var player = client.getHabbo().getPlayerEntity();

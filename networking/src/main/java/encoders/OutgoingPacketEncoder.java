@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import networking.packets.OutgoingPacket;
 
-public class GameServerMessageEncoder extends MessageToByteEncoder<OutgoingPacket> {
+public class OutgoingPacketEncoder extends MessageToByteEncoder<OutgoingPacket> {
 
     @Override
     public boolean acceptOutboundMessage(Object msg) throws Exception {

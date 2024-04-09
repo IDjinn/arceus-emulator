@@ -17,7 +17,7 @@ public class RequestInventoryItemsEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) { // TODO INCOMING RATE LIMIT
+    public void parse(IncomingPacket packet, INitroClient client) { // TODO INCOMING RATE LIMIT
         var allItems = client.getHabbo().getInventory().getItems().values().stream().toList();
         final var totalFragments = Math.max((int) Math.ceil(allItems.size() / InventoryPageSize), 1);
         for (int i = 1; i <= totalFragments; i++) {

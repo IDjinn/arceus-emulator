@@ -20,7 +20,7 @@ public class RequestNewNavigatorDataEvent extends IncomingEvent {
     private INavigatorManager navigatorManager;
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         client.sendMessages(
                 new NewNavigatorSettingsComposer(client.getHabbo().getNavigator().getNavigatorWindowSettings()),
                 new NewNavigatorMetaDataComposer(client.getHabbo().getNavigator()),

@@ -17,7 +17,7 @@ public class CatalogBuyItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         var pageId = packet.readInt();
         var page = catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
         if (page == null)

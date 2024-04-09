@@ -23,7 +23,7 @@ public class RequestCatalogModeEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         var catalogMode = "normal";// THIS MODE IS JUST FOR FLASH. DOES NOT WORK WITH NITRO packet.readString();
         if (catalogMode == null)
             return;

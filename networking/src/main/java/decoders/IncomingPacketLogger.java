@@ -19,10 +19,14 @@ public class IncomingPacketLogger extends MessageToMessageDecoder<IncomingPacket
     private static final Logger logger = LogManager.getLogger();
     @Override
     protected void decode(ChannelHandlerContext ctx, IncomingPacket packet, List<Object> out) {
-        logger.debug("[-> incoming] {} packet {} [{}]",
-                packet.getHeader(),
-                packetManager.getIncomingEventName(packet.getHeader()),
-                packet.getBuffer());
+        try {
+            logger.debug("[-> incoming] {} packet {} [{}]",
+                    packet.getHeader(),
+                    packetManager.getIncomingEventName(packet.getHeader()),
+                    packet.getBuffer());
+        } catch (Exception e) {
+            logger.error("error while decoding packet {}", packet.getHeader(), e);
+        }
 
         out.add(packet);
     }

@@ -25,7 +25,7 @@ public class RequestRoomLoadEvent extends IncomingEvent {
     }
 
     @Override
-    public void Parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IncomingPacket packet, INitroClient client) {
         var id = packet.readInt();
         @Nullable var password = packet.readString();
 
