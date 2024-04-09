@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import packets.incoming.IncomingEvent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -73,12 +74,13 @@ public class PacketManager implements IPacketManager {
         return "Unknown";
     }
 
-
+    private final HashSet<Integer> notFoundPackets = new HashSet<Integer>();
     @Override
     public void parse(IncomingPacket packet, INitroClient client) {
         var incomingEvent = incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
-            logger.warn("[-> incoming] {} was not found", packet.getHeader());
+            if (notFoundPackets.add(packet.getHeader()))
+                logger.warn("[-> incoming] {} was not found", packet.getHeader());
             return;
         }
 
