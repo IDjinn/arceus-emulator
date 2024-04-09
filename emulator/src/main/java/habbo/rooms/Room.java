@@ -111,7 +111,7 @@ public class Room implements IRoom {
                 new HideDoorbellComposer(),
                 new RoomOpenComposer(),
                 new RoomDataComposer(this, habbo, false, true),
-                new RoomModelComposer(this.getData().getModel(), this.getData().getId()),
+                new RoomModelComposer(this.getData().getModelName(), this.getData().getId()),
                 new RoomPaintComposer("landscape", "0.0"),
                 new RoomRightsComposer(this.getRightsManager().getRightLevelFor(habbo)),
                 new RoomScoreComposer(0, true),

@@ -51,7 +51,7 @@ public class RoomModelData implements IRoomModelData, IFillable {
         this.doorX = result.getInt("door_x");
         this.doorY = result.getInt("door_y");
         this.name = result.getString("name");
-        this.heightMap = result.getString("heightmap");
+        this.heightMap = result.getString("heightmap").replaceAll("\r", "");
         this.doorDirection = result.getInt("door_dir");
     }
 }
