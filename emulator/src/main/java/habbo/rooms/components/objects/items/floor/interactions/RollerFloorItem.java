@@ -19,7 +19,6 @@ import java.util.Queue;
 public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent.IEventListener {
     public static final String INTERACTION_NAME = "roller";
     private final Queue<IFloorObject> objectsOnRoller;
-    private final FloorItemEvent event;
     private final int DefaultRollerSpeed = 2;
     private Logger logger = LogManager.getLogger();
     private List<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObject = new ArrayList<>();
@@ -28,14 +27,7 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
         super(itemData, room, furniture);
 
         this.objectsOnRoller = new PriorityQueue<>(5);
-        this.event = this.createEvent(RollerFloorItem.class.getName());
-        if (this.event != null) {
-            this.event.setTotalTicks(DefaultRollerSpeed);
-            this.event.subscribeListener(this);
-            this.enqueueEvent(this.event);
-        } else {
-            logger.error("Failed to create event for RollerFloorItem");
-        }
+        this.resetTimer();
     }
 
     @Override
@@ -53,7 +45,14 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     }
 
     private void resetTimer() {
-        this.event.setTicks(0);
+        var event = this.createEvent(RollerFloorItem.class.getName());
+        if (event != null) {
+            event.setTotalTicks(DefaultRollerSpeed);
+            event.subscribeListener(this);
+            this.enqueueEvent(event);
+        } else {
+            logger.error("Failed to create event for RollerFloorItem");
+        }
     }
 
     @Override
@@ -64,22 +63,32 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
             return;
         }
 
+        this.movementObject.clear();
         synchronized (this.objectsOnRoller) {
             while (!this.objectsOnRoller.isEmpty()) {
                 final var object = this.objectsOnRoller.poll();
-                final var oldPosition = this.getPosition();
+                final var oldPosition = object.getPosition();
                 object.setPosition(this.getPosition().squareInFront(this.getRotation())); // TODO NEW Z
                 movementObject.add(new SlideObjectBundleMessageComposer.SlideObjectEntry(object.getVirtualId(),
                         oldPosition, object.getPosition()));
+                if (object instanceof IRoomEntity entity) {
+                    this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
+                            entity,
+                            SlideObjectBundleMessageComposer.RollerMovementType.Slide,
+                            this.getPosition(),
+                            this.getPosition().squareInFront(this.getRotation()),
+                            movementObject,
+                            this.getVirtualId()
+                    ));
+                } else {
+                    this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
+                            this.getPosition(),
+                            this.getPosition().squareInFront(this.getRotation()),
+                            movementObject,
+                            this.getVirtualId()
+                    ));
+                }
             }
-
-            this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
-                    this.getPosition(),
-                    this.getPosition().squareInFront(this.getRotation()),
-                    movementObject,
-                    this.getVirtualId()
-            ));
-
         }
     }
 }

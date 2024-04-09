@@ -1,5 +1,6 @@
 package packets.outgoing.rooms.objects.floor;
 
+import habbo.rooms.entities.IRoomEntity;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 import utils.Position;
@@ -26,6 +27,25 @@ public class SlideObjectBundleMessageComposer extends OutgoingPacket {
         this.appendInt(rollerId);
     }
 
+    public SlideObjectBundleMessageComposer(
+            IRoomEntity entity,
+            RollerMovementType movementType,
+            Position oldPosition, Position nextPosition,
+            List<SlideObjectEntry> objects, int rollerId
+    ) {
+        this(oldPosition, nextPosition, objects, rollerId);
+
+        this.appendInt(movementType.ordinal());
+        this.appendInt(entity.getVirtualId());
+        this.appendString(String.valueOf(oldPosition.getZ()));
+        this.appendString(String.valueOf(nextPosition.getZ()));
+    }
+
+    public enum RollerMovementType {
+        None,
+        Move,
+        Slide
+    }
     public record SlideObjectEntry(int virutalId, Position oldPosition, Position newPosition) {
     }
 }

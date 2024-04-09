@@ -8,7 +8,7 @@ public class HabboEntity extends RoomEntity implements IHabboEntity {
     private final IHabbo habbo;
 
     public HabboEntity(IHabbo habbo) { // TODO: VIRTUAL ID
-        super(habbo.getRoom(), habbo.getData().getId());
+        super(habbo.getRoom());
         this.habbo = habbo;
     }
 

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class RoomEntity implements IRoomEntity {
     private final ConcurrentHashMap<RoomEntityStatus, StatusBucket> statusBuckets;
-    private final int virtualId;
+    private int virtualId;
     private String name;
     private final IRoom room;
     private Position position;
@@ -23,8 +23,7 @@ public abstract class RoomEntity implements IRoomEntity {
     private @Nullable Position nextPostion;
     private @Nullable IFloorItem onItem;
 
-    public RoomEntity(IRoom room, int virtualId) {
-        this.virtualId = virtualId;
+    public RoomEntity(IRoom room) {
         this.room = room;
         this.position = new Position(4, 5);
         this.direction = Direction.East;
@@ -206,5 +205,9 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public void setNextPosition(@Nullable Position position) {
         this.nextPostion = position;
+    }
+
+    public void setVirtualId(final int virtualId) {
+        this.virtualId = virtualId;
     }
 }
