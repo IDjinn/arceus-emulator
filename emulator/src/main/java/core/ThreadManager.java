@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import core.configuration.IConfigurationManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -18,17 +19,19 @@ public class ThreadManager implements IThreadManager {
     private final AtomicReference<ScheduledThreadPoolExecutor> hardwareThreadExecutor;
     private final IConfigurationManager configurationManager;
     private final AtomicReference<ScheduledThreadPoolExecutor> softwareThreadExecutor;
-    private final AtomicReference<Executor> threadMonitor;
+    private final long threadMonitorInterval;
     private Logger logger = LogManager.getLogger();
 
     private final AtomicLong hardwareThreadCounter;
     private final AtomicLong softwareThreadCounter;
+    private @Nullable AtomicReference<Executor> threadMonitor;
 
     @Inject
     public ThreadManager(IConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
         this.hardwareThreadCounter = new AtomicLong(0);
         this.softwareThreadCounter = new AtomicLong(0);
+        this.threadMonitorInterval = this.configurationManager.getLong("orion.monitor.interval", 1_000L);
 
 
         var hardwareThreadCount = this.configurationManager.getInt("orion.hardware.threads", Runtime.getRuntime().availableProcessors());
@@ -48,15 +51,17 @@ public class ThreadManager implements IThreadManager {
 
         this.softwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(softwareThreadCount, Thread.ofVirtual().factory()));
 
-        this.threadMonitor = new AtomicReference<>(Executors.newSingleThreadExecutor());
-        this.threadMonitor.get().execute(this::monitor);
+        if (this.configurationManager.getBool("orion.monitor.enabled", false)) {
+            this.threadMonitor = new AtomicReference<>(Executors.newSingleThreadExecutor());
+            this.threadMonitor.get().execute(this::monitor);
+        }
     }
 
     @SuppressWarnings({"InfiniteLoopStatement", "BusyWait"})
     private void monitor() {
         while (true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(this.threadMonitorInterval);
             } catch (InterruptedException e) {
                 logger.error("Thread monitor interrupted", e);
             }
