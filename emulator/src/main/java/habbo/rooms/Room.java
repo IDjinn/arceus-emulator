@@ -71,6 +71,7 @@ public class Room implements IRoom {
         this.pathfinder.destroy();
         this.objectManager.destroy();
         this.rightsManager.destroy();
+        this.process.cancel(true);
     }
 
     @Override

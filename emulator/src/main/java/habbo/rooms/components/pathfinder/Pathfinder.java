@@ -1,11 +1,15 @@
 package habbo.rooms.components.pathfinder;
 
+import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import utils.Direction;
 import utils.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.SequencedCollection;
 
 public class Pathfinder implements IPathfinder {
     private IRoom room;
@@ -78,14 +82,14 @@ public class Pathfinder implements IPathfinder {
 
     }
 
+    @SuppressWarnings("UnstableApiUsage") 
     @Override
     public SequencedCollection<Position> tracePath(IRoomGameMap gameMap, Position start, Position goal) {
         assert start != goal : "start != goal; should be checked before call this method";
         if (start.equals(goal))
             return PathUtil.getInstance().EmptyPath;
 
-
-        var openSet = new PriorityQueue<PathfinderNode>(gameMap.getMapSize() / 2);
+        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(gameMap.getMapSize()).create();
         openSet.add(new PathfinderNode(start));
         var closedSet = new HashSet<Position>(gameMap.getMapSize());
 
