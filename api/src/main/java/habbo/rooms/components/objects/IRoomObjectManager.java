@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects;
 
+import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
@@ -25,7 +26,7 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
 
-    public Optional<IFloorItem> getTopFloorItemAt(final Position position, int ignoreId);
+    public Optional<IFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
 
     public Collection<IWallItem> getAllWallItems();
 
@@ -37,7 +38,7 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     List<String> getFurnitureOwners();
 
-    void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation);
+    void placeFloorItem(final IHabbo habbo, IHabboInventoryItem item, int x, int y, double z, int rotation);
 
-    void placeWallItem(IHabboInventoryItem item, String wallPosition);
+    void placeWallItem(final IHabbo habbo, IHabboInventoryItem item, String wallPosition);
 }

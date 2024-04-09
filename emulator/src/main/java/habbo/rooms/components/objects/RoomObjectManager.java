@@ -3,6 +3,7 @@ package habbo.rooms.components.objects;
 import com.google.inject.Inject;
 import habbo.GameConstants;
 import habbo.furniture.FurnitureType;
+import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
@@ -122,7 +123,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public Optional<IFloorItem> getTopFloorItemAt(final Position position, final int ignoreId) {
+    public Optional<IFloorItem> getTopFloorItemAt(final Position position, final long ignoreId) {
         return this.floorItems.values().stream().filter(i -> i.getPosition().equals(position)).filter(i -> i.getId() != ignoreId).findFirst();
     }
 
@@ -156,20 +157,37 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation) {
+    public void placeFloorItem(final IHabbo habbo, IHabboInventoryItem item, int x, int y, double z, int rotation) {
         try {
+            var targetPosition = new Position(x, y, z);
+            if (!this.getRoom().getGameMap().isValidCoordinate(targetPosition))
+                return; // TODO ROOM ITEM PLACEMENT ERROR
+
+            // TODO RANGE TILES & ROTATIONS
+
+            var topItem = this.getTopFloorItemAt(targetPosition, -1);
+            var playerCanStackHere = topItem.isEmpty() ||
+                    (topItem.get().canStack(item.getHabbo().getPlayerEntity()) &&
+                            topItem.get().getStackHeight(item.getHabbo().getPlayerEntity()).isPresent());
+            if (!playerCanStackHere)
+                return;
+
             this.itemsRepository.placeFloorItemFromInventory(result -> {
                 var itemData = this.roomItemFactory.createItemData(
                         item.getId(),
                         item.getFurniture().getId(),
                         item.getHabbo().getData().getId(),
-                        new Position(x, y, z),
+                        targetPosition,
                         rotation,
                         item.getExtraData()
                 );
+                topItem.ifPresent(floorItem -> itemData.getPosition().setZ(floorItem.getStackHeight().get()));
+                
                 var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(floorItem);
+                habbo.getInventory().removeItem(floorItem.getId());
 
+                topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
                 this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
             }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
         } catch (Exception e) {
@@ -178,7 +196,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public void placeWallItem(IHabboInventoryItem item, String wallPosition) {
+    public void placeWallItem(final IHabbo habbo, IHabboInventoryItem item, String wallPosition) {
         try {
             this.itemsRepository.placeWallItemFromInventory(result -> {
                 var itemData = this.roomItemFactory.createItemData(
@@ -190,6 +208,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 );
                 var wallItem = (IWallItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(wallItem);
+                habbo.getInventory().removeItem(wallItem.getId());
 
                 this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
             }, this.getRoom().getData().getId(), item.getId(), wallPosition);

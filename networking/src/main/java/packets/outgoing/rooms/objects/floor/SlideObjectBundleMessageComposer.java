@@ -1,15 +1,15 @@
 package packets.outgoing.rooms.objects.floor;
 
-import habbo.rooms.entities.IRoomEntity;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 import utils.Position;
 
-import java.util.List;
+import java.util.Collection;
 
 public class SlideObjectBundleMessageComposer extends OutgoingPacket {
 
-    public SlideObjectBundleMessageComposer(Position oldPosition, Position nextPosition, List<SlideObjectEntry> objects, int rollerId) {
+    public SlideObjectBundleMessageComposer(Position oldPosition, Position nextPosition, Collection<SlideObjectEntry> objects,
+                                            int rollerId) {
         super(OutgoingHeaders.SlideObjectBundleMessageComposer);
 
         this.appendInt(oldPosition.getX());
@@ -28,15 +28,16 @@ public class SlideObjectBundleMessageComposer extends OutgoingPacket {
     }
 
     public SlideObjectBundleMessageComposer(
-            IRoomEntity entity,
+            SlideObjectEntry entityEntry,
             RollerMovementType movementType,
             Position oldPosition, Position nextPosition,
-            List<SlideObjectEntry> objects, int rollerId
+            Collection<SlideObjectEntry> objects,
+            int rollerId
     ) {
         this(oldPosition, nextPosition, objects, rollerId);
 
         this.appendInt(movementType.ordinal());
-        this.appendInt(entity.getVirtualId());
+        this.appendInt(entityEntry.virutalId);
         this.appendString(String.valueOf(oldPosition.getZ()));
         this.appendString(String.valueOf(nextPosition.getZ()));
     }

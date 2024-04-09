@@ -5,14 +5,13 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.floor.AdvancedFloorItem;
 import habbo.rooms.components.objects.items.floor.FloorItemEvent;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
 import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.objects.floor.SlideObjectBundleMessageComposer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -21,7 +20,6 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     private final Queue<IFloorObject> objectsOnRoller;
     private final int DefaultRollerSpeed = 2;
     private Logger logger = LogManager.getLogger();
-    private List<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObject = new ArrayList<>();
 
     public RollerFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         super(itemData, room, furniture);
@@ -44,6 +42,9 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
         }
     }
 
+    private Queue<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObjects = new PriorityQueue<>();
+    private SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
+
     private void resetTimer() {
         var event = this.createEvent(RollerFloorItem.class.getName());
         if (event != null) {
@@ -56,6 +57,20 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     }
 
     @Override
+    public void onStackInItem(final IFloorItem floorItem) {
+        synchronized (this.objectsOnRoller) {
+            this.objectsOnRoller.add(floorItem);
+        }
+    }
+
+    @Override
+    public void onStackOutItem(final IFloorItem floorItem) {
+        synchronized (this.objectsOnRoller) {
+            this.objectsOnRoller.remove(floorItem);
+        }
+    }
+
+    @Override
     public void onEventComplete(FloorItemEvent event) {
         this.resetTimer();
 
@@ -63,31 +78,39 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
             return;
         }
 
-        this.movementObject.clear();
+        this.movementObjects.clear();
+        this.movementEntity = null;
         synchronized (this.objectsOnRoller) {
             while (!this.objectsOnRoller.isEmpty()) {
                 final var object = this.objectsOnRoller.poll();
                 final var oldPosition = object.getPosition();
+
                 object.setPosition(this.getPosition().squareInFront(this.getRotation())); // TODO NEW Z
-                movementObject.add(new SlideObjectBundleMessageComposer.SlideObjectEntry(object.getVirtualId(),
-                        oldPosition, object.getPosition()));
-                if (object instanceof IRoomEntity entity) {
-                    this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
-                            entity,
-                            SlideObjectBundleMessageComposer.RollerMovementType.Slide,
-                            this.getPosition(),
-                            this.getPosition().squareInFront(this.getRotation()),
-                            movementObject,
-                            this.getVirtualId()
-                    ));
+                if (this.movementEntity == null && object instanceof IRoomEntity) {
+                    this.movementEntity = new SlideObjectBundleMessageComposer.SlideObjectEntry(object.getVirtualId(),
+                            oldPosition, object.getPosition());
                 } else {
-                    this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
-                            this.getPosition(),
-                            this.getPosition().squareInFront(this.getRotation()),
-                            movementObject,
-                            this.getVirtualId()
-                    ));
+                    this.movementObjects.add(new SlideObjectBundleMessageComposer.SlideObjectEntry(object.getVirtualId(),
+                            oldPosition, object.getPosition()));
                 }
+            }
+
+            if (this.movementEntity != null) {
+                this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
+                        this.movementEntity,
+                        SlideObjectBundleMessageComposer.RollerMovementType.Slide,
+                        this.getPosition(),
+                        this.getPosition().squareInFront(this.getRotation()),
+                        this.movementObjects,
+                        this.getVirtualId()
+                ));
+            } else if (!this.movementObjects.isEmpty()) {
+                this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
+                        this.getPosition(),
+                        this.getPosition().squareInFront(this.getRotation()),
+                        this.movementObjects,
+                        this.getVirtualId()
+                ));
             }
         }
     }

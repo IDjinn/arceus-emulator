@@ -58,4 +58,13 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
     public default void onStepOut(IRoomEntity entity) {
 
     }
+
+
+    public default void onStackInItem(IFloorItem floorItem) {
+
+    }
+
+    public default void onStackOutItem(IFloorItem floorItem) {
+
+    }
 }

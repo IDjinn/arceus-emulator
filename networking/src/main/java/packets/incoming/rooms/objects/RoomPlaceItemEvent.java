@@ -32,10 +32,10 @@ public class RoomPlaceItemEvent extends IncomingEvent {
                 var y = Integer.parseInt(data[2]);
                 var rotation = Integer.parseInt(data[3]);
 
-                client.getHabbo().getRoom().getObjectManager().placeFloorItem(item, x, y, 0d, rotation);
+                client.getHabbo().getRoom().getObjectManager().placeFloorItem(client.getHabbo(), item, x, y, 0d, rotation);
             }
             case WALL -> {
-                client.getHabbo().getRoom().getObjectManager().placeWallItem(item, Arrays.stream(data).skip(1).collect(Collectors.joining(" ")));
+                client.getHabbo().getRoom().getObjectManager().placeWallItem(client.getHabbo(), item, Arrays.stream(data).skip(1).collect(Collectors.joining(" ")));
             }
             default -> throw new IllegalArgumentException("Item type is not valid");
         }
