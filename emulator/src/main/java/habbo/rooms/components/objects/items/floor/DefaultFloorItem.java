@@ -5,6 +5,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
 import networking.packets.OutgoingPacket;
+import packets.outgoing.rooms.objects.floor.FloorItemUpdateComposer;
 import utils.Position;
 
 public class DefaultFloorItem extends RoomItem implements IFloorItem {
@@ -43,8 +44,14 @@ public class DefaultFloorItem extends RoomItem implements IFloorItem {
     }
 
     @Override
+    public void sendUpdate() {
+        this.getRoom().broadcastMessage(new FloorItemUpdateComposer(this));
+    }
+
+    @Override
     public int getRotation() {
         return this.getItemData().getRotation();
     }
+
 
 }

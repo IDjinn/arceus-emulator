@@ -6,6 +6,7 @@ import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import utils.Position;
+import utils.cycle.ICycle;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
@@ -14,7 +15,7 @@ import java.util.Optional;
 import java.util.SequencedCollection;
 import java.util.function.Predicate;
 
-public interface IRoomObjectManager extends IRoomComponent {
+public interface IRoomObjectManager extends IRoomComponent, ICycle {
     public void addRoomItem(IRoomItem roomItem);
     public Collection<IRoomItem> getAllItems();
 

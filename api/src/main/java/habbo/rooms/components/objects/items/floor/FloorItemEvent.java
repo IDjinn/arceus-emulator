@@ -47,6 +47,10 @@ public class FloorItemEvent implements Poolable {
         return ticks.get() >= totalTicks;
     }
 
+    public void setTotalTicks(long totalTicks) {
+        this.totalTicks = totalTicks;
+    }
+
 
     @Override
     public void release() {

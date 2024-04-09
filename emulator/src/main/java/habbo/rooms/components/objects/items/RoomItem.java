@@ -10,11 +10,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public abstract class RoomItem implements IRoomItem {
+    private static final int TickDisabled = -1;
     private final IRoomItemData itemData;
     private final IRoom room;
     private final int virtualId;
     private final IFurniture furniture;
     private @Nullable IHabboData ownerData;
+
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         this.itemData = itemData;

@@ -11,10 +11,11 @@ import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import packets.outgoing.rooms.objects.AddFloorItemComposer;
-import packets.outgoing.rooms.objects.AddWallItemComposer;
+import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
+import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.Position;
+import utils.cycle.ICycle;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -135,7 +136,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     public int getVirtualIdForItemId(long itemId) {
         var item = this.items.get(itemId);
         assert item != null;
-        
+
         var newId = this.virtualIdCounter.getAndIncrement();
         this.itemsByVirtualId.put(newId, item);
         return newId;
@@ -190,6 +191,19 @@ public class RoomObjectManager implements IRoomObjectManager {
             }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
         } catch (Exception e) {
             logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        }
+    }
+
+
+    @Override
+    public synchronized void tick() {
+        for (var item : this.items.values()) {
+            try {
+                if (item instanceof ICycle statefulItem)
+                    statefulItem.tick();
+            } catch (Exception e) {
+                this.logger.error(e);
+            }
         }
     }
 }

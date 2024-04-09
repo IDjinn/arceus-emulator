@@ -1,12 +1,11 @@
 package habbo.rooms.components.objects.items.floor;
 
-import habbo.rooms.components.objects.items.IPositionable;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.entities.IRoomEntity;
 
 import java.util.Optional;
 
-public interface IFloorItem extends IRoomItem, IPositionable {
+public interface IFloorItem extends IRoomItem, IFloorObject {
     public boolean isAtDoor();
 
     public int getRotation();

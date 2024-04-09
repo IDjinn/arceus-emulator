@@ -55,7 +55,7 @@ public class OutgoingHeaders {
     public final static int ModToolComposerTwo = 2335;
     public final static int ModToolComposerOne = 3192;
     public final static int RoomRightsComposer = 780;
-    public final static int ObjectOnRollerComposer = 3207;
+    public final static int SlideObjectBundleMessageComposer = 3207;
     public final static int PollStartComposer = 3785;
     public final static int GuildRefreshMembersListComposer = 2445;
     public final static int UserPerksComposer = 2586;

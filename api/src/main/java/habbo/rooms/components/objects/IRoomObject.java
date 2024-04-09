@@ -8,9 +8,12 @@ public interface IRoomObject extends IDisposable {
 
     public IRoom getRoom();
 
-    public void onRoomLoaded();
+    public default void onRoomLoaded() {
 
-    public void init();
+    }
 
-    public void destroy();
+    public default void init() {
+
+    }
+
 }

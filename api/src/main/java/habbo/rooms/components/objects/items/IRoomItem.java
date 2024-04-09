@@ -40,4 +40,6 @@ public interface IRoomItem extends IRoomObject {
 
 
     boolean canUse();
+
+    void sendUpdate();
 }
