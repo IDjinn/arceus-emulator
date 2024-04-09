@@ -28,7 +28,7 @@ public class CatalogBuyItemEvent extends IncomingEvent {
         if (catalogItem == null)
             return;
 
-        var extraData = packet.readString();
+        var extraData = packet.readString((short) 100);
         var amount = packet.readInt();
         if (amount < 1 || amount > 100)
             return;

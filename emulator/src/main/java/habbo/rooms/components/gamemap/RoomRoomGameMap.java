@@ -1,29 +1,19 @@
 package habbo.rooms.components.gamemap;
 
+import com.google.inject.Inject;
 import habbo.rooms.IRoom;
+import habbo.rooms.IRoomManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import utils.Position;
 
 public class RoomRoomGameMap implements IRoomGameMap {
-    private final String MODEL_A = "xxxxxxxxxxxx\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxx000000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxx00000000\n" +
-            "xxxxxxxxxxxx\n" +
-            "xxxxxxxxxxxx".replaceAll("\r", "");
+    private final Logger logger = LogManager.getLogger();
+    @Inject
+    private IRoomManager roomManager;
     private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
-
 
     private static int map_height_lookup(char tile) {
         return switch (tile) {
@@ -68,26 +58,29 @@ public class RoomRoomGameMap implements IRoomGameMap {
 
     @Override
     public IRoom getRoom() {
-        return room;
+        return this.room;
     }
 
     @Override
     public void init(IRoom room) {
         this.room = room;
+        if (this.getRoom().getModel() == null)
+            throw new IllegalArgumentException(STR."invalid room model \{this.getRoom().getData().getModelName()}");
+        
         try {
-            var map = MODEL_A.split("\n");
+            var map = this.getRoom().getModel().getHeightMap().split("\n");
             var modelWidth = map.length;
             var modelHeight = map[0].length();
-            tiles = new IRoomTile[modelWidth][modelHeight];
+            this.tiles = new IRoomTile[modelWidth][modelHeight];
 
             for (int x = 0; x < modelWidth; x++) {
                 for (int y = 0; y < modelHeight; y++) {
-                    tiles[x][y] = new RoomTile(x, y, map_height_lookup(Character.toUpperCase(map[x].charAt(y))));
-                    mapSize++;
+                    this.tiles[x][y] = new RoomTile(x, y, map_height_lookup(Character.toUpperCase(map[x].charAt(y))));
+                    this.mapSize++;
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            this.logger.error(e);
         }
     }
 
@@ -103,22 +96,22 @@ public class RoomRoomGameMap implements IRoomGameMap {
 
     @Override
     public IRoomTile[][] getMap() {
-        return tiles;
+        return this.tiles;
     }
 
     @Override
     public IRoomTile getTile(int x, int y) {
-        return tiles[x][y];
+        return this.tiles[x][y];
     }
 
     @Override
     public int getMaxX() {
-        return tiles.length;
+        return this.tiles.length;
     }
 
     @Override
     public int getMaxY() {
-        return tiles[0].length;
+        return this.tiles[0].length;
     }
 
     @Override
@@ -128,12 +121,12 @@ public class RoomRoomGameMap implements IRoomGameMap {
 
     @Override
     public int getMapSize() {
-        return mapSize;
+        return this.mapSize;
     }
 
     @Override
     public String getModelMap() { // TODO habbo client does use \r instead \n
-        return MODEL_A.replaceAll("\n", "\r");
+        return this.getRoom().getModel().getHeightMap().replaceAll("\n", "\r");
     }
 
     @Override
@@ -141,5 +134,13 @@ public class RoomRoomGameMap implements IRoomGameMap {
         return
                 neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
                         neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
+    }
+
+    @Override
+    public boolean isValidMovement(final Position from, final Position to, final Position goal) {
+        final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(to, -1);
+        if (topItem.isEmpty()) return true;
+
+        return topItem.get().canWalk();
     }
 }

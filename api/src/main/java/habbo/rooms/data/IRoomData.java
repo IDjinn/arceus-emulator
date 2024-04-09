@@ -11,7 +11,7 @@ public interface IRoomData {
 
     String getDescription();
 
-    String getModel();
+    String getModelName();
 
     int getOwnerId();
 

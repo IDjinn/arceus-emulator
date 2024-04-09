@@ -1,14 +1,14 @@
-package packets.outgoing.rooms.objects;
+package packets.outgoing.rooms.objects.wall;
 
 import habbo.furniture.FurnitureUsagePolicy;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
-public class AddWallItemComposer extends OutgoingPacket {
+public class WallItemUpdateComposer extends OutgoingPacket {
 
-    public AddWallItemComposer(IWallItem wallItem) {
-        super(OutgoingHeaders.AddWallItemComposer);
+    public WallItemUpdateComposer(IWallItem wallItem) {
+        super(OutgoingHeaders.WallItemUpdateComposer);
         wallItem.serializeItemIdentity(this);
         wallItem.serializePosition(this);
         wallItem.getExtraData().serializeState(this);

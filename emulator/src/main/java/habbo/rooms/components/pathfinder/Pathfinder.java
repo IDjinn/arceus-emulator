@@ -6,10 +6,7 @@ import habbo.rooms.components.gamemap.IRoomGameMap;
 import utils.Direction;
 import utils.Position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.SequencedCollection;
+import java.util.*;
 
 public class Pathfinder implements IPathfinder {
     private IRoom room;
@@ -118,7 +115,7 @@ public class Pathfinder implements IPathfinder {
                 return path.reversed();
             }
 
-            for (var neighbor : getNeighbors(gameMap, current.getPosition(), closedSet)) {
+            for (var neighbor : getNeighbors(gameMap, current.getPosition(), goal, closedSet)) {
                 neighbor.setParentNode(current);
                 if (!openSet.contains(neighbor)) {
                     neighbor.setGCosts(calculateGCost(current.getPosition(), neighbor.getPosition(), true));
@@ -136,16 +133,24 @@ public class Pathfinder implements IPathfinder {
         return PathUtil.getInstance().EmptyPath;
     }
 
-    private ArrayList<PathfinderNode> getNeighbors(IRoomGameMap gameMap, Position position, HashSet<Position> closedSet) {
-        assert position != null;
-        var neighborSet = new ArrayList<PathfinderNode>(diagonalDirections.size());
+    private Set<PathfinderNode> getNeighbors(IRoomGameMap gameMap, Position from, Position goal,
+                                             Set<Position> closedSet) {
+        assert from != null;
+        final var neighborSet = new HashSet<PathfinderNode>(diagonalDirections.size());
         for (var direction : diagonalDirections.values()) {
-            var neighborPosition = position.add(direction);
+            var neighborPosition = from.add(direction);
 
-            if (!gameMap.isValidCoordinate(neighborPosition)) continue;
             if (closedSet.contains(neighborPosition)) continue;
+            if (!gameMap.isValidCoordinate(neighborPosition)) continue;
+            if (!gameMap.isValidMovement(from, neighborPosition, goal)) continue;
+            final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(neighborPosition, -1);
+            if (topItem.isPresent() && topItem.get().getStackHeight().isPresent())
+                neighborPosition.setZ(topItem.get().getStackHeight().get());
+            else
+                neighborPosition.setZ(from.getZ());// TODO TILE Z
 
-            neighborSet.add(new PathfinderNode(neighborPosition));
+            final var node = new PathfinderNode(neighborPosition);
+            neighborSet.add(node);
         }
         return neighborSet;
     }

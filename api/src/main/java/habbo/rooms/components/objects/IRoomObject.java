@@ -1,15 +1,19 @@
 package habbo.rooms.components.objects;
 
 import habbo.rooms.IRoom;
+import utils.IDisposable;
 
-public interface IRoomObject {
+public interface IRoomObject extends IDisposable {
     public int getVirtualId();
 
     public IRoom getRoom();
 
-    public void onRoomLoaded();
+    public default void onRoomLoaded() {
 
-    public void init();
+    }
 
-    public void destroy();
+    public default void init() {
+
+    }
+
 }

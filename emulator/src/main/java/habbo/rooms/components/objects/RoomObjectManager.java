@@ -1,7 +1,9 @@
 package habbo.rooms.components.objects;
 
 import com.google.inject.Inject;
+import habbo.GameConstants;
 import habbo.furniture.FurnitureType;
+import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
@@ -11,12 +13,16 @@ import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
-import packets.outgoing.rooms.objects.AddFloorItemComposer;
-import packets.outgoing.rooms.objects.AddWallItemComposer;
+import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
+import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
+import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
+import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.Position;
+import utils.cycle.ICycle;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
@@ -37,12 +43,12 @@ public class RoomObjectManager implements IRoomObjectManager {
 
 
     public RoomObjectManager() {
-        items = new HashMap<>();
-        itemsByVirtualId = new HashMap<>();
-        virtualIdCounter = new AtomicInteger(1);
-        furnitureOwners = new HashSet<>(1);
-        wallItems = new HashMap<>();
-        floorItems = new HashMap<>();
+        this.items = new HashMap<>();
+        this.itemsByVirtualId = new HashMap<>();
+        this.virtualIdCounter = new AtomicInteger(1);
+        this.furnitureOwners = new HashSet<>(1);
+        this.wallItems = new HashMap<>();
+        this.floorItems = new HashMap<>();
     }
 
     @Override
@@ -61,10 +67,12 @@ public class RoomObjectManager implements IRoomObjectManager {
                 var item = this.roomItemFactory.create(result, this.getRoom());
                 this.addRoomItem(item);
             } catch (Exception e) {
-                logger.error(e);
+                this.logger.error(e);
             }
         });
         this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
+        this.getRoom().registerProcess(RoomObjectManager.class.getName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -98,6 +106,35 @@ public class RoomObjectManager implements IRoomObjectManager {
         return this.floorItems.values();
     }
 
+    @Nullable
+    @Override
+    public IFloorItem getFloorItem(final int itemId) {
+        return this.floorItems.get(itemId);
+    }
+
+    @Override
+    public Collection<IFloorItem> getAllFloorItemsAt(final Position position) {
+        return this.getAllFloorItemsAt(position, -1);
+    }
+
+    @Override
+    public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId) { // TODO POOLING
+        final var itemsAt = new HashSet<IFloorItem>();
+        for (var item : this.floorItems.values()) {
+            if (item.getId() == ignoreId) continue;
+            if (!item.getPosition().equals(position)) continue;
+
+            itemsAt.add(item);
+        }
+
+        return itemsAt;
+    }
+
+    @Override
+    public Optional<IFloorItem> getTopFloorItemAt(final Position position, final long ignoreId) {
+        return this.floorItems.values().stream().filter(i -> i.getPosition().equals(position)).filter(i -> i.getId() != ignoreId).findFirst();
+    }
+
     @Override
     public Collection<IWallItem> getAllWallItems() {
         return this.wallItems.values();
@@ -109,11 +146,8 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public int getVirtualIdForItemId(long itemId) {
-        var item = this.items.get(itemId);
-        assert item != null;
-        
-        var newId = this.virtualIdCounter.getAndIncrement();
+    public int getVirtualIdForItem(IRoomItem item) {
+        var newId = this.virtualIdCounter.getAndIncrement() | GameConstants.FurnitureVirtualIdMask;
         this.itemsByVirtualId.put(newId, item);
         return newId;
     }
@@ -124,14 +158,53 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     public List<String> getFurnitureOwners() {
-        return furnitureOwners.stream().toList();
+        return this.furnitureOwners.stream().toList();
     }
 
     @Override
-    public void placeWallItem(IHabboInventoryItem item, String wallPosition) {
+    public void placeFloorItem(final IHabbo habbo, IHabboInventoryItem item, int x, int y, double z, int rotation) {
         try {
-            itemsRepository.placeWallItemFromInventory(result -> {
-                var itemData = roomItemFactory.createItemData(
+            var targetPosition = new Position(x, y, z);
+            if (!this.getRoom().getGameMap().isValidCoordinate(targetPosition))
+                return; // TODO ROOM ITEM PLACEMENT ERROR
+
+            // TODO RANGE TILES & ROTATIONS
+
+            var topItem = this.getTopFloorItemAt(targetPosition, -1);
+            var playerCanStackHere = topItem.isEmpty() ||
+                    (topItem.get().canStack(item.getHabbo().getPlayerEntity()) &&
+                            topItem.get().getStackHeight(item.getHabbo().getPlayerEntity()).isPresent());
+            if (!playerCanStackHere)
+                return;
+
+            this.itemsRepository.placeFloorItemFromInventory(result -> {
+                var itemData = this.roomItemFactory.createItemData(
+                        item.getId(),
+                        item.getFurniture().getId(),
+                        item.getHabbo().getData().getId(),
+                        targetPosition,
+                        rotation,
+                        item.getExtraData()
+                );
+                topItem.ifPresent(floorItem -> itemData.getPosition().setZ(floorItem.getStackHeight().get()));
+                
+                var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
+                this.addRoomItem(floorItem);
+                habbo.getInventory().removeItem(floorItem.getId());
+
+                topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
+                this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
+            }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
+        } catch (Exception e) {
+            this.logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        }
+    }
+
+    @Override
+    public void placeWallItem(final IHabbo habbo, IHabboInventoryItem item, String wallPosition) {
+        try {
+            this.itemsRepository.placeWallItemFromInventory(result -> {
+                var itemData = this.roomItemFactory.createItemData(
                         item.getId(),
                         item.getFurniture().getId(),
                         item.getHabbo().getData().getId(),
@@ -140,33 +213,41 @@ public class RoomObjectManager implements IRoomObjectManager {
                 );
                 var wallItem = (IWallItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(wallItem);
+                habbo.getInventory().removeItem(wallItem.getId());
 
                 this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
             }, this.getRoom().getData().getId(), item.getId(), wallPosition);
         } catch (Exception e) {
-            logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+            this.logger.error("failed to place item {} from inventory to floor", item.getId(), e);
         }
     }
 
     @Override
-    public void placeFloorItem(IHabboInventoryItem item, int x, int y, double z, int rotation) {
-        try {
-            itemsRepository.placeFloorItemFromInventory(result -> {
-                var itemData = roomItemFactory.createItemData(
-                        item.getId(),
-                        item.getFurniture().getId(),
-                        item.getHabbo().getData().getId(),
-                        new Position(x, y, z),
-                        rotation,
-                        item.getExtraData()
-                );
-                var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
-                this.addRoomItem(floorItem);
+    public void moveFloorItemTo(final IHabbo habbo, final IFloorItem item, final Position position, final Integer rotation) {
+        if (!this.getRoom().getGameMap().isValidCoordinate(position)) return;
 
-                this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
-            }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
-        } catch (Exception e) {
-            logger.error("failed to place item {} from inventory to floor", item.getId(), e);
+        var oldPosition = position.copy();
+        item.setPosition(position);
+        item.setRotation(rotation);
+        item.onMove(oldPosition);
+        this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer(item));
+    }
+
+    @Override
+    public void moveWallItemTo(final IHabbo habbo, final IWallItem wallItem, final String coordinates) {
+        wallItem.setWallPosition(coordinates);
+        this.getRoom().broadcastMessage(new WallItemUpdateComposer(wallItem));
+    }
+
+    @Override
+    public synchronized void tick() {
+        for (var item : this.items.values()) {
+            try {
+                if (item instanceof ICycle statefulItem)
+                    statefulItem.tick();
+            } catch (Exception e) {
+                this.logger.error(e);
+            }
         }
     }
 }

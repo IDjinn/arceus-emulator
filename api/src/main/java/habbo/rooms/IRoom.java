@@ -7,6 +7,7 @@ import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
+import habbo.rooms.data.models.IRoomModelData;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import utils.IDisposable;
@@ -40,6 +41,8 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     IRoomObjectManager getObjectManager();
 
     IRoomRightsManager getRightsManager();
+
+    IRoomModelData getModel();
     
     boolean isFullyLoaded();
 

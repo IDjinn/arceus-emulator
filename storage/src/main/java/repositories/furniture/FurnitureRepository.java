@@ -12,4 +12,9 @@ public class FurnitureRepository extends ConnectionRepository implements IFurnit
     public void getAllFurniture(IConnectionResultConsumer consumer) {
         this.select(FunitureQuery.SELECT_ALL_FURNITURE.get(), consumer);
     }
+
+    @Override
+    public void createTeleportLink(final IConnectionResultConsumer consumer, final int first, final int second) {
+        this.insert(FunitureQuery.CREATE_TELEPORT_LINK.get(), consumer, first, second);
+    }
 }

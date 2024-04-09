@@ -1,14 +1,18 @@
 package utils.events;
 
-import com.google.inject.Singleton;
 import habbo.rooms.components.objects.items.floor.FloorItemEvent;
 import stormpot.Pool;
 import stormpot.Timeout;
 
 import java.util.concurrent.TimeUnit;
 
-@Singleton
 public class FloorItemEventPool {
+    private static final FloorItemEventPool instance = new FloorItemEventPool();
+
+    public static FloorItemEventPool getInstance() {
+        return FloorItemEventPool.instance;
+    }
+    
     private final Pool<FloorItemEvent> pool = Pool
             .from(new EventAllocator())
             .setSize(1024)

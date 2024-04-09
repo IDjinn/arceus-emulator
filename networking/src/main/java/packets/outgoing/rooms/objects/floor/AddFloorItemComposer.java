@@ -1,4 +1,4 @@
-package packets.outgoing.rooms.objects;
+package packets.outgoing.rooms.objects.floor;
 
 import habbo.furniture.FurnitureUsagePolicy;
 import habbo.rooms.components.objects.items.floor.IFloorItem;

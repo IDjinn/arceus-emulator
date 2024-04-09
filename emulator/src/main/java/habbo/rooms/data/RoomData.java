@@ -81,7 +81,7 @@ public class RoomData implements IRoomData, IFillable {
         return description;
     }
 
-    public String getModel() {
+    public String getModelName() {
         return model;
     }
 

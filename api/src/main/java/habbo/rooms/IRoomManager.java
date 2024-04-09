@@ -2,7 +2,7 @@ package habbo.rooms;
 
 import core.IHotelService;
 import habbo.rooms.data.IRoomCategory;
-import habbo.rooms.data.models.IRoomModel;
+import habbo.rooms.data.models.IRoomModelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public interface IRoomManager extends IHotelService {
 
     IRoomCategory getCategoryFromTab(String tabName);
 
-    HashMap<String, IRoomModel> getRoomModels();
+    HashMap<String, IRoomModelData> getRoomModels();
 
     IRoom getRoomById(int roomId);
 

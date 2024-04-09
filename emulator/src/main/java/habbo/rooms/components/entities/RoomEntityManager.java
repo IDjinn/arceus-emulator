@@ -1,5 +1,6 @@
 package habbo.rooms.components.entities;
 
+import habbo.GameConstants;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.HabboEntity;
@@ -8,31 +9,51 @@ import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.RoomUserStatusComposer;
+import utils.cycle.ICycle;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
     private Logger logger = LogManager.getLogger();
     private IRoom room;
+    private final ConcurrentHashMap<Integer, IRoomEntity> entitiesByVirtualId;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
     private final ConcurrentHashMap<Integer, IHabboEntity> players;
+    private final AtomicInteger virtualIdCounter;
 
     public RoomEntityManager() {
-        entities = new ConcurrentHashMap<>();
-        players = new ConcurrentHashMap<>();
+        this.entities = new ConcurrentHashMap<>();
+        this.entitiesByVirtualId = new ConcurrentHashMap<>();
+        this.players = new ConcurrentHashMap<>();
+        this.virtualIdCounter = new AtomicInteger(0);
     }
 
     @Override
     public IRoom getRoom() {
-        return room;
+        return this.room;
+    }
+
+    @Override
+    public IHabboEntity createHabboEntity(IHabbo habbo) {
+        var entity = new HabboEntity(habbo);
+        var virtualId = this.getVirtualIdForEntity(entity);
+        entity.setVirtualId(virtualId);
+
+        this.entities.put(entity.getVirtualId(), entity);
+        this.players.put(entity.getVirtualId(), entity);
+        return entity;
     }
 
     @Override
     public void init(IRoom room) {
         this.room = room;
+        this.getRoom().registerProcess(RoomEntityManager.class.getName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
     
     @Override
@@ -46,21 +67,20 @@ public class RoomEntityManager implements IRoomEntityManager {
     }
 
     @Override
-    public IHabboEntity createHabboEntity(IHabbo habbo) {
-        var entity = new HabboEntity(habbo);
-        entities.put(entity.getVirtualId(), entity);
-        players.put(entity.getVirtualId(), entity);
-        return entity;
-    }
-
-    @Override
     public List<IRoomEntity> getEntities() {
-        return entities.values().stream().toList();
+        return this.entities.values().stream().toList();
     }
 
     @Override
     public List<IHabboEntity> getPlayers() {
-        return players.values().stream().toList();
+        return this.players.values().stream().toList();
+    }
+
+    @Override
+    public int getVirtualIdForEntity(final IRoomEntity entity) {
+        var newId = this.virtualIdCounter.incrementAndGet() | GameConstants.EntityVirtualIdMask;
+        this.entitiesByVirtualId.put(newId, entity);
+        return newId;
     }
 
     private final Collection<IRoomEntity> entitiesUpdated = new HashSet<>();
@@ -68,19 +88,19 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public synchronized void tick() {
         try {
-            entitiesUpdated.clear();
-            for (var entity : entities.values()) {
+            this.entitiesUpdated.clear();
+            for (var entity : this.entities.values()) {
                 entity.tick();
                 if (entity.isNeedUpdate()) {
-                    entitiesUpdated.add(entity);
+                    this.entitiesUpdated.add(entity);
                     entity.setNeedUpdateStatus(false);
                 }
             }
 
-            if (!entitiesUpdated.isEmpty())
-                this.getRoom().broadcastMessage(new RoomUserStatusComposer(entitiesUpdated));
+            if (!this.entitiesUpdated.isEmpty())
+                this.getRoom().broadcastMessage(new RoomUserStatusComposer(this.entitiesUpdated));
         } catch (Exception e) {
-            logger.error(e);
+            this.logger.error(e);
         }
     }
 }

@@ -1,5 +1,7 @@
 package habbo.rooms.data.models;
 
-public interface IRoomModel {
+import habbo.rooms.IRoomComponent;
+
+public interface IRoomModel extends IRoomComponent {
     IRoomModelData getData();
 }

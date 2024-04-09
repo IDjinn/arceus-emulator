@@ -1,6 +1,5 @@
 package habbo.rooms.components.objects.items.floor;
 
-import com.google.inject.Inject;
 import habbo.furniture.IFurniture;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
@@ -18,8 +17,6 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
     private final Set<FloorItemEvent> events;
     private final int MAX_EVENT_COUNT = 1000; // prevent infinite recursion in while loop
     private Logger logger = LogManager.getLogger();
-    @Inject
-    private FloorItemEventPool pool;
 
     public AdvancedFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         super(itemData, room, furniture);
@@ -28,7 +25,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
 
     public @Nullable FloorItemEvent createEvent(String name) {
         try {
-            return this.pool.borrow();
+            return FloorItemEventPool.getInstance().borrow();
         } catch (Exception e) {
             logger.error("failed to create event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
             return null;
@@ -44,7 +41,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
     }
 
     @Override
-    public void tick() {
+    public synchronized void tick() {
         try {
             var i = 0;
             final var iterator = events.iterator();
@@ -55,7 +52,7 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
                 if (event.isCompleted()) {
                     try {
                         iterator.remove();
-                        event.onCompleted(this);
+                        event.getOnCompleted().onEventComplete(event);
                     } finally {
                         event.release();
                     }
@@ -63,6 +60,13 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
             }
         } catch (Exception e) {
             logger.error("failed while processing item {} events in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        for (FloorItemEvent event : events) {
+            FloorItemEventPool.getInstance().release(event);
         }
     }
 }

@@ -10,7 +10,7 @@ public interface IHabboInventory extends IHabboComponent {
 
     public void addItem(IHabboInventoryItem item);
 
-    public void removeItem(int id);
+    public void removeItem(long id);
 
     public @Nullable IHabboInventoryItem getItem(int id);
 

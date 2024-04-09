@@ -5,6 +5,7 @@ import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.IRoomObject;
+import habbo.rooms.entities.IRoomEntity;
 import networking.packets.OutgoingPacket;
 
 import java.util.Optional;
@@ -40,4 +41,14 @@ public interface IRoomItem extends IRoomObject {
 
 
     boolean canUse();
+
+    default boolean canInteract(IRoomEntity entity) {
+        return this.canUse();
+    }
+
+    void sendUpdate();
+
+    default void onInteract(IRoomEntity entity) {
+
+    } 
 }

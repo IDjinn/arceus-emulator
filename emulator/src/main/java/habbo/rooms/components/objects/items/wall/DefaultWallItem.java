@@ -5,6 +5,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
 import networking.packets.OutgoingPacket;
+import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 
 public class DefaultWallItem extends RoomItem implements IWallItem {
     public static final String INTERACTION_NAME = "default_wall";
@@ -23,6 +24,11 @@ public class DefaultWallItem extends RoomItem implements IWallItem {
     @Override
     public OutgoingPacket serializePosition(OutgoingPacket packet) {
         return packet.appendString(this.getWallPosition());
+    }
+
+    @Override
+    public void sendUpdate() {
+        this.getRoom().broadcastMessage(new WallItemUpdateComposer(this));
     }
 
     @Override

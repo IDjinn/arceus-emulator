@@ -39,8 +39,8 @@ public class HabboInventory implements IHabboInventory {
     }
 
     @Override
-    public void removeItem(int id) {
-
+    public void removeItem(long id) {
+        this.items.remove(id);
     }
 
     @Override
