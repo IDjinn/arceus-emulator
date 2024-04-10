@@ -18,7 +18,7 @@ public interface IRoomGameMap extends IRoomComponent {
 
     public String getModelMap();
 
-    boolean isValidCoordinate(Position neighborPosition);
+    boolean isValidCoordinate(Position position);
 
     boolean isValidMovement(Position from, Position to, Position goal);
 }

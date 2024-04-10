@@ -11,7 +11,7 @@ import networking.packets.OutgoingPacket;
 import java.util.Optional;
 
 public interface IRoomItem extends IRoomObject {
-    long getId();
+    int getId();
 
     IRoom getRoom();
 

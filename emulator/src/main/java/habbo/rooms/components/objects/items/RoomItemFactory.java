@@ -134,7 +134,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IRoomItemData createItemDataFromResult(IConnectionResult result) throws Exception {
-        var id = result.getLong("id");
+        var id = result.getInt("id");
         var itemId = result.getInt("item_id");
         var ownerId = result.getInt("user_id");
         var x = result.getInt("x");

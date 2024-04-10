@@ -5,7 +5,7 @@ import habbo.furniture.extra.data.LegacyExtraData;
 import utils.Position;
 
 public class RoomItemData implements IRoomItemData {
-    private final long id;
+    private final int id;
     private final int itemId;
     private int ownerId;
     private IExtraData data;
@@ -13,7 +13,8 @@ public class RoomItemData implements IRoomItemData {
     private Position floorPosition;
     private String wallPosition;
 
-    public RoomItemData(long id, int itemId, int ownerId, Position position, int rotation, IExtraData data, String wallPosition) {
+    public RoomItemData(int id, int itemId, int ownerId, Position position, int rotation, IExtraData data,
+                        String wallPosition) {
         this.id = id;
         this.itemId = itemId;
         this.ownerId = ownerId;
@@ -26,7 +27,7 @@ public class RoomItemData implements IRoomItemData {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

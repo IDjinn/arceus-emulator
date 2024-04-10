@@ -47,7 +47,7 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return this.getItemData().getId();
     }
 

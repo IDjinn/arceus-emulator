@@ -4,7 +4,7 @@ import habbo.furniture.extra.data.IExtraData;
 import utils.Position;
 
 public interface IRoomItemData {
-    long getId();
+    int getId();
 
     int getFurnitureId();
 

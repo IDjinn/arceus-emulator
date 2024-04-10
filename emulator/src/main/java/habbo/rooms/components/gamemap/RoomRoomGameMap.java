@@ -130,10 +130,9 @@ public class RoomRoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public boolean isValidCoordinate(Position neighborPosition) {
-        return
-                neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
-                        neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
+    public boolean isValidCoordinate(Position position) {
+        return position.getX() >= 0 && position.getX() < getMaxX() &&
+                position.getY() >= 0 && position.getY() < getMaxY();
     }
 
     @Override

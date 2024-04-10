@@ -27,9 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
-    private final HashMap<Long, IRoomItem> items;
-    private final HashMap<Long, IFloorItem> floorItems;
-    private final HashMap<Long, IWallItem> wallItems;
+    private final HashMap<Integer, IRoomItem> items;
+    private final HashMap<Integer, IFloorItem> floorItems;
+    private final HashMap<Integer, IWallItem> wallItems;
     private final AtomicInteger virtualIdCounter;
     private final HashMap<Integer, IRoomItem> itemsByVirtualId;
     private Logger logger = LogManager.getLogger();
