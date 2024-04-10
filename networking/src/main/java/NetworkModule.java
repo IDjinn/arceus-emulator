@@ -7,10 +7,12 @@ import decoders.PacketParser;
 import networking.INetworkingManager;
 import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
+import networking.packets.IIncomingPacketProvider;
 import networking.packets.IPacketManager;
 import packets.IncomingEventAsListProvider;
 import packets.PacketManager;
 import packets.incoming.IncomingEvent;
+import packets.incoming.IncomingPacketProvider;
 
 import java.util.List;
 
@@ -25,5 +27,6 @@ public class NetworkModule extends AbstractModule {
         bind(INitroClientManager.class).to(NitroClientManager.class);
         bind(IncomingPacketLogger.class);
         bind(PacketParser.class);
+        bind(IIncomingPacketProvider.class).to(IncomingPacketProvider.class);
     }
 }

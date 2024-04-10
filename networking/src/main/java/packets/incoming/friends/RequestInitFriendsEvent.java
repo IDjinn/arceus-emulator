@@ -2,7 +2,7 @@ package packets.incoming.friends;
 
 import com.google.inject.Singleton;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.friends.MessengerInitComposer;
@@ -15,7 +15,7 @@ public class RequestInitFriendsEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         // TODO
         client.sendMessage(new MessengerInitComposer(client.getHabbo()));
     }

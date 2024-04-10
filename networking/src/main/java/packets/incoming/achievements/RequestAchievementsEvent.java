@@ -2,7 +2,7 @@ package packets.incoming.achievements;
 
 import com.google.inject.Singleton;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.achievements.AchievementListComposer;
@@ -15,7 +15,7 @@ public class RequestAchievementsEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         client.sendMessage(new AchievementListComposer(client.getHabbo())); // TODO
     }
 }

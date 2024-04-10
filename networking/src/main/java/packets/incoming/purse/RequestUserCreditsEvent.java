@@ -2,7 +2,7 @@ package packets.incoming.purse;
 
 import com.google.inject.Singleton;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.purse.UserCreditsComposer;
@@ -16,7 +16,7 @@ public class RequestUserCreditsEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         // TODO
         client.sendMessages(
                 new UserCreditsComposer(client.getHabbo()),

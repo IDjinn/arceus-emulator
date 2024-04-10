@@ -3,7 +3,7 @@ package packets.incoming.catalog;
 import com.google.inject.Inject;
 import habbo.catalog.ICatalogManager;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
@@ -17,7 +17,7 @@ public class CatalogBuyItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         var pageId = packet.readInt();
         var page = catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
         if (page == null)

@@ -3,7 +3,7 @@ package packets.incoming.rooms.objects;
 import com.google.inject.Singleton;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
@@ -15,7 +15,7 @@ public class RoomMoveWallItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(final IncomingPacket packet, final INitroClient client) {
+    public void parse(final IIncomingPacket packet, final INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
         final var itemId = packet.readInt();

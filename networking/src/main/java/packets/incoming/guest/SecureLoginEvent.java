@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import habbo.habbos.providers.ILoginProvider;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClientManager;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import networking.util.NoAuth;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -25,7 +25,7 @@ public class SecureLoginEvent extends IncomingEvent {
     }
 
     @Override
-    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IIncomingPacket packet, ChannelHandlerContext ctx) {
         String sso = packet.readString().replaceAll(" ", "");
         int integer = packet.readInt();
 

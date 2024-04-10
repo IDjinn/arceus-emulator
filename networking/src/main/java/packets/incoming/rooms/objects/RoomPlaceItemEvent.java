@@ -2,7 +2,7 @@ package packets.incoming.rooms.objects;
 
 import com.google.inject.Singleton;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
@@ -17,7 +17,7 @@ public class RoomPlaceItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
         var data = packet.readString().split(" ");

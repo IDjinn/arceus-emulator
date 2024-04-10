@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
-import networking.packets.IncomingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,11 +14,11 @@ import java.util.List;
 
 @Singleton
 @ChannelHandler.Sharable
-public class IncomingPacketLogger extends MessageToMessageDecoder<IncomingPacket> {
+public class IncomingPacketLogger extends MessageToMessageDecoder<IIncomingPacket> {
     @Inject private IPacketManager packetManager;
     private static final Logger logger = LogManager.getLogger();
     @Override
-    protected void decode(ChannelHandlerContext ctx, IncomingPacket packet, List<Object> out) {
+    protected void decode(ChannelHandlerContext ctx, IIncomingPacket packet, List<Object> out) {
         try {
             logger.debug("[-> incoming] {} packet {} [{}]",
                     packet.getHeader(),

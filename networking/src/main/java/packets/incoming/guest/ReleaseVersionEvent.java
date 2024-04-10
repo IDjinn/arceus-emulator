@@ -2,7 +2,7 @@ package packets.incoming.guest;
 
 import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import networking.util.GameServerAttributes;
 import networking.util.NoAuth;
 import networking.util.ReleaseVersion;
@@ -18,7 +18,7 @@ public class ReleaseVersionEvent extends IncomingEvent {
     }
 
     @Override
-    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IIncomingPacket packet, ChannelHandlerContext ctx) {
         var production = packet.readString();
         var type = packet.readString();
         var platform = packet.readInt();

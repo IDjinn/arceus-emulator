@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import habbo.navigator.INavigatorManager;
 import habbo.navigator.services.INavigatorSearchService;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
@@ -23,7 +23,7 @@ public class RequestNewNavigatorRoomsEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         String tabName = this.navigatorManager.normalizeTab(packet.readString());
         String query = packet.readString();
 

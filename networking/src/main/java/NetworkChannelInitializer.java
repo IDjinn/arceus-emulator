@@ -29,6 +29,8 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     @Inject
     private IPacketManager packetManager;
 
+    @Inject
+    private GameByteDecoder gameByteDecoder;
     public NetworkChannelInitializer() {
         context = SSLCertificateLoader.getContext();
         isSSL = context != null;
@@ -55,7 +57,7 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
         ch.pipeline().addLast(new GamePolicyDecoder());
         ch.pipeline().addLast(new GameByteFrameDecoder());
-        ch.pipeline().addLast(new GameByteDecoder());
+        ch.pipeline().addLast(gameByteDecoder);
 
         if (packetManager.isParallelParsingEnabled()) {
             ch.pipeline().addLast(incomingPacketLogger);

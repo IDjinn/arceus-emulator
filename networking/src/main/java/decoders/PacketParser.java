@@ -7,8 +7,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import networking.client.INitroClient;
 import networking.client.INitroClientManager;
+import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
-import networking.packets.IncomingPacket;
 import networking.util.GameServerAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +37,7 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        var message = (IncomingPacket) msg;
+        var message = (IIncomingPacket) msg;
 
         try {
             var client = (INitroClient) ctx.attr(GameServerAttributes.CLIENT).get();

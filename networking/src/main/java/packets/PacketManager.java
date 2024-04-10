@@ -8,8 +8,8 @@ import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 import networking.client.INitroClientManager;
+import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
-import networking.packets.IncomingPacket;
 import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -76,7 +76,7 @@ public class PacketManager implements IPacketManager {
 
     private final HashSet<Integer> notFoundPackets = new HashSet<Integer>();
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         var incomingEvent = incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
             if (notFoundPackets.add(packet.getHeader()))
@@ -92,7 +92,7 @@ public class PacketManager implements IPacketManager {
     }
 
     @Override
-    public void parseForGuest(IncomingPacket packet, ChannelHandlerContext ctx) {
+    public void parseForGuest(IIncomingPacket packet, ChannelHandlerContext ctx) {
         try {
             var incomingEvent = guestEvents.get(packet.getHeader());
             if (incomingEvent == null) {

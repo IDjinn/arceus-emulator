@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.catalog.ICatalogManager;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import networking.packets.OutgoingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -23,7 +23,7 @@ public class RequestCatalogModeEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         var catalogMode = "normal";// THIS MODE IS JUST FOR FLASH. DOES NOT WORK WITH NITRO packet.readString();
         if (catalogMode == null)
             return;

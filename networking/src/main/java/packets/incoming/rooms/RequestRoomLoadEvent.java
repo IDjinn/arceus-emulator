@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.rooms.IRoomManager;
 import networking.client.INitroClient;
-import networking.packets.IncomingPacket;
+import networking.packets.IIncomingPacket;
 import org.jetbrains.annotations.Nullable;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -25,7 +25,7 @@ public class RequestRoomLoadEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, INitroClient client) {
         var id = packet.readInt();
         @Nullable var password = packet.readString();
 

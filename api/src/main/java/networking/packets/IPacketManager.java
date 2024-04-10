@@ -9,7 +9,7 @@ public interface IPacketManager {
     public boolean isLoggingEnabled();
     public String getIncomingEventName(int headerId);
 
-    public void parse(IncomingPacket incomingPacket, INitroClient client);
+    public void parse(IIncomingPacket IIncomingPacket, INitroClient client);
 
-    public void parseForGuest(IncomingPacket incomingPacket, ChannelHandlerContext channel);
+    public void parseForGuest(IIncomingPacket IIncomingPacket, ChannelHandlerContext channel);
 }
