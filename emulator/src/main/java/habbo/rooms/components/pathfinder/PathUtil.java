@@ -8,7 +8,7 @@ import habbo.rooms.components.pathfinder.pool.NodesSet;
 import habbo.rooms.components.pathfinder.pool.PathfinderNodeFucked;
 import stormpot.Expiration;
 import stormpot.Pool;
-import utils.Position;
+import utils.pathfinder.Position;
 
 import java.util.ArrayList;
 import java.util.SequencedCollection;

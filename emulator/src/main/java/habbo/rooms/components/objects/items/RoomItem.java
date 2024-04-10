@@ -16,6 +16,7 @@ public abstract class RoomItem implements IRoomItem {
     private final int virtualId;
     private final IFurniture furniture;
     private @Nullable IHabboData ownerData;
+    private boolean needSave;
 
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
@@ -95,8 +96,13 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public void setExtraData(IExtraData extraData) {
-        this.getItemData().setData(extraData);
+    public boolean needSave() {
+        return this.needSave;
+    }
+
+    @Override
+    public void setNeedSave(final boolean needSave) {
+        this.needSave = needSave;
     }
 
     @Override

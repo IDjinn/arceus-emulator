@@ -3,8 +3,8 @@ package habbo.rooms.entities;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.jetbrains.annotations.Nullable;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.ArrayList;
 import java.util.SequencedCollection;

@@ -10,8 +10,8 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.models.IRoomModelData;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
-import utils.IDisposable;
-import utils.IWriteable;
+import utils.interfaces.IDisposable;
+import utils.interfaces.IWriteable;
 
 import java.util.concurrent.TimeUnit;
 

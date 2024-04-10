@@ -1,7 +1,7 @@
 package habbo.rooms.components.gamemap;
 
 import habbo.rooms.IRoomComponent;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public interface IRoomGameMap extends IRoomComponent {
     public IRoomTile[][] getMap();

@@ -5,8 +5,6 @@ import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
-import utils.IWriteable;
 
 public class HabboNavigatorSearch implements IHabboNavigatorSearch {
     private final Logger logger = LogManager.getLogger();

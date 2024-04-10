@@ -5,7 +5,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.IRoomManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class RoomRoomGameMap implements IRoomGameMap {
     private final Logger logger = LogManager.getLogger();

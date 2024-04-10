@@ -2,7 +2,7 @@ package habbo.rooms.components.pathfinder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class PathfinderNode implements Comparable<PathfinderNode> {
     public final Position position;

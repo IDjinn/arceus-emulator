@@ -18,8 +18,8 @@ import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
-import utils.Position;
 import utils.cycle.ICycle;
+import utils.pathfinder.Position;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;

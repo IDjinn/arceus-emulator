@@ -3,8 +3,8 @@ package habbo.rooms.components.pathfinder;
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.IRoomGameMap;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.*;
 

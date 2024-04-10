@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public class RoomCategory implements IRoomCategory, IFillable, Comparable<IRoomCategory> {
     private final Logger logger = LogManager.getLogger();

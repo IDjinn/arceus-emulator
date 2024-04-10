@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import stormpot.Poolable;
 import stormpot.Slot;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNodeFucked> {
     private final Slot slot;

@@ -8,8 +8,8 @@ import habbo.rooms.components.pathfinder.pool.PathfinderNodeFucked;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import stormpot.Timeout;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;

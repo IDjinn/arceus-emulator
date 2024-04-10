@@ -1,7 +1,7 @@
 package habbo.furniture;
 
-import utils.IDisposable;
-import utils.IFillable;
+import utils.interfaces.IDisposable;
+import utils.interfaces.IFillable;
 
 public interface IFurniture extends IDisposable, IFillable {
 

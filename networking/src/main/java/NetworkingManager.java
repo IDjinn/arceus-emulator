@@ -12,9 +12,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import networking.INetworkingManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.Initializer;
 
-@Initializer
 public class NetworkingManager implements INetworkingManager {
     private static Logger logger = LogManager.getLogger();
     @Inject private IEmulator emulator;

@@ -1,4 +1,4 @@
-package utils;
+package utils.pathfinder;
 
 import java.util.ArrayList;
 import java.util.List;

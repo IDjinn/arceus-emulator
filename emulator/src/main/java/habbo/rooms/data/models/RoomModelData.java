@@ -3,7 +3,7 @@ package habbo.rooms.data.models;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public class RoomModelData implements IRoomModelData, IFillable {
     private final Logger logger = LogManager.getLogger();

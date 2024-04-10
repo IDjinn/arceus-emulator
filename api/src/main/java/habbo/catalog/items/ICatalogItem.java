@@ -3,7 +3,7 @@ package habbo.catalog.items;
 import habbo.furniture.IFurniture;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public interface ICatalogItem extends IFillable, ISerializable {
     void compose(OutgoingPacket packet);

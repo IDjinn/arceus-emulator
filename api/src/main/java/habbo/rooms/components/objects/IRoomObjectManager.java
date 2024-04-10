@@ -6,8 +6,8 @@ import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
-import utils.Position;
 import utils.cycle.ICycle;
+import utils.pathfinder.Position;
 
 import javax.annotation.Nullable;
 import java.util.Collection;

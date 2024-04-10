@@ -2,7 +2,7 @@ package habbo.rooms.components.objects.items;
 
 import habbo.furniture.extra.data.IExtraData;
 import habbo.furniture.extra.data.LegacyExtraData;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class RoomItemData implements IRoomItemData {
     private final int id;

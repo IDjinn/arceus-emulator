@@ -2,8 +2,8 @@ package habbo.rooms.components.pathfinder;
 
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.gamemap.IRoomGameMap;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.HashMap;
 import java.util.SequencedCollection;
