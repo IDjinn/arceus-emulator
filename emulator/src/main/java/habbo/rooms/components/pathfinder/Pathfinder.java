@@ -78,38 +78,10 @@ public class Pathfinder implements IPathfinder {
 
     }
 
-    @SuppressWarnings("UnstableApiUsage") 
-    @Override
-    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
-        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
-        final var closedSet = new HashSet<Position>();
-        final var firstNode = new PathfinderNode(start);
-        openSet.add(firstNode);
-
-        var step = 0;
-        final var mapSize = this.getRoom().getGameMap().getMapSize();
-        while (!openSet.isEmpty() && step++ < mapSize) {
-            final var current = openSet.poll();
-            if (current.getPosition().equals(goal))
-                return reversePath(current);
-
-            if (closedSet.contains(goal))
-                break;
-
-            closedSet.add(current.getPosition());
-            for (final var node : getNeighbors(current)) {
-                if (closedSet.contains(node)) continue;
-
-                final var tentativeGScore = (float) (current.getGCosts() + current.getPosition().distanceTo(node.getPosition()));
-                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
-                    node.setParentNode(current);
-                    node.setGCosts(tentativeGScore);
-                    node.setHCosts((float) node.getPosition().distanceTo(goal));
-                    openSet.add(node);
-                }
-            }
-        }
-        return Collections.emptyList();
+    private static boolean isDiagonal(Position a, Position b) {
+        assert a != null && b != null;
+        return Math.abs((short) a.getX() - (short) b.getX()) == 1
+                && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
     private List<Position> reversePath(final PathfinderNode node) {
@@ -137,6 +109,46 @@ public class Pathfinder implements IPathfinder {
         return neighbors;
     }
 
+    private static double getGCost(final double currentCost, final Position currentPosition, final Position nextPosition) {
+        final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
+        final var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;
+        final var verticalCost = VerticalCostFactor * dz;
+        return horizontalCost + verticalCost;
+    }
+
+    @SuppressWarnings("UnstableApiUsage") 
+    @Override
+    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
+        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
+        final var closedSet = new HashSet<Position>();
+        final var firstNode = new PathfinderNode(start);
+        openSet.add(firstNode);
+
+        var step = 0;
+        final var mapSize = this.getRoom().getGameMap().getMapSize();
+        while (!openSet.isEmpty() && step++ < mapSize) {
+            final var current = openSet.poll();
+            if (current.getPosition().equals(goal))
+                return reversePath(current);
+
+            if (closedSet.contains(goal))
+                break;
+
+            closedSet.add(current.getPosition());
+            for (final var node : this.getNeighbors(current)) {
+                if (closedSet.contains(node.position)) continue;
+
+                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
+                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
+                    node.setParentNode(current);
+                    node.setGCosts(tentativeGScore);
+                    node.setHCosts((float) node.getPosition().distanceTo(goal));
+                    openSet.add(node);
+                }
+            }
+        }
+        return Collections.emptyList();
+    }
 
     @Override
     public HashMap<Direction, Position> getAdjacentDirections() {
