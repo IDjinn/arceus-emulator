@@ -13,6 +13,6 @@ public class GameByteDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         short header = in.readShort();
         ByteBuf body = Unpooled.copiedBuffer(in.readBytes(in.readableBytes()));
-        out.add(new IncomingPacket(header, body));
+        out.add(new IncomingPacket(header, body, ctx));
     }
 }
