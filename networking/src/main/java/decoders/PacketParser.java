@@ -9,7 +9,7 @@ import networking.client.INitroClient;
 import networking.client.INitroClientManager;
 import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         var message = (IIncomingPacket) msg;
 
         try {
-            var client = (INitroClient) ctx.attr(GameServerAttributes.CLIENT).get();
+            var client = (INitroClient) ctx.attr(GameNetowrkingAttributes.CLIENT).get();
             if (client == null) {
                 packetManager.parseForGuest(message, ctx);
                 return;

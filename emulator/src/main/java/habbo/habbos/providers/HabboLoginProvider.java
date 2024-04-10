@@ -8,7 +8,7 @@ import networking.client.INitroClient;
 import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
 import networking.packets.OutgoingPacket;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 import packets.outgoing.PingComposer;
 import packets.outgoing.guest.SecureLoginOkComposer;
 import packets.outgoing.inventory.InventoryAchievementsComposer;
@@ -70,7 +70,7 @@ public class HabboLoginProvider implements ILoginProvider {
             }
 
             INitroClient client = clientFactory.create(ctx);
-            ctx.attr(GameServerAttributes.CLIENT).set(client);
+            ctx.attr(GameNetowrkingAttributes.CLIENT).set(client);
 
             final IHabbo habbo = habboFactory.create(client, result);
 

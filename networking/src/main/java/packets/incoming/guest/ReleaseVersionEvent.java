@@ -3,7 +3,7 @@ package packets.incoming.guest;
 import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
 import networking.packets.IIncomingPacket;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 import networking.util.NoAuth;
 import networking.util.ReleaseVersion;
 import packets.incoming.IncomingEvent;
@@ -24,6 +24,6 @@ public class ReleaseVersionEvent extends IncomingEvent {
         var platform = packet.readInt();
         var category = packet.readInt();
 
-        ctx.attr(GameServerAttributes.RELEASE_VERSION).set(new ReleaseVersion(production, type, platform, category));
+        ctx.attr(GameNetowrkingAttributes.RELEASE_VERSION).set(new ReleaseVersion(production, type, platform, category));
     }
 }
