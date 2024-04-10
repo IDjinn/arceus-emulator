@@ -59,14 +59,14 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
         ch.pipeline().addLast(new GameByteFrameDecoder());
         ch.pipeline().addLast(gameByteDecoder);
 
-        if (packetManager.isParallelParsingEnabled()) {
+        if (packetManager.isLoggingEnabled()) {
             ch.pipeline().addLast(incomingPacketLogger);
         }
 
         ch.pipeline().addLast(packetParser);
         
         ch.pipeline().addLast(new OutgoingPacketEncoder());
-        if (packetManager.isParallelParsingEnabled()) {
+        if (packetManager.isLoggingEnabled()) {
             ch.pipeline().addLast(outgoingPacketLogger);
         }
     }

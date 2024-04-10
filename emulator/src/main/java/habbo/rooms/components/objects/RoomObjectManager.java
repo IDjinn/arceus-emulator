@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import habbo.GameConstants;
 import habbo.furniture.FurnitureType;
@@ -13,10 +14,15 @@ import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.inventory.AddHabboItemCategory;
+import packets.outgoing.inventory.AddHabboItemComposer;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
+import packets.outgoing.rooms.objects.floor.RemoveFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
+import packets.outgoing.rooms.objects.wall.RemoveWallItemComposer;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
+import storage.repositories.habbo.IHabboInventoryRepository;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.cycle.ICycle;
 import utils.pathfinder.Position;
@@ -38,6 +44,8 @@ public class RoomObjectManager implements IRoomObjectManager {
     private IRoomItemsRepository itemsRepository;
     @Inject
     private IRoomItemFactory roomItemFactory;
+    @Inject
+    private IHabboInventoryRepository inventoryRepository;
 
     private final HashSet<String> furnitureOwners;
 
@@ -110,6 +118,12 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Override
     public IFloorItem getFloorItem(final int itemId) {
         return this.floorItems.get(itemId);
+    }
+
+    @Nullable
+    @Override
+    public IRoomItem getItem(final int itemId) {
+        return this.items.get(itemId);
     }
 
     @Override
@@ -237,6 +251,26 @@ public class RoomObjectManager implements IRoomObjectManager {
     public void moveWallItemTo(final IHabbo habbo, final IWallItem wallItem, final String coordinates) {
         wallItem.setWallPosition(coordinates);
         this.getRoom().broadcastMessage(new WallItemUpdateComposer(wallItem));
+    }
+
+    @Override
+    public void pickupItem(final IHabbo habbo, final IRoomItem item) {
+        this.inventoryRepository.pickupItem(result -> {
+            item.onRemove(habbo);
+            if (item instanceof IFloorItem floorItem) {
+                this.getRoom().broadcastMessage(new RemoveFloorItemComposer(floorItem, habbo.getData().getId()));
+            } else if (item instanceof IWallItem wallItem) {
+                this.getRoom().broadcastMessage(new RemoveWallItemComposer(wallItem, habbo.getData().getId()));
+            }
+
+            habbo.getInventory().removeItem(item.getId());
+            habbo.getInventory().sendUpdate();
+            if (item.getOwnerData().isPresent()) {
+                if (item.getOwnerData().get().getId() == habbo.getData().getId()) {
+                    habbo.getClient().sendMessage(new AddHabboItemComposer(AddHabboItemCategory.OwnedFurni, Lists.newArrayList(item.getVirtualId())));
+                }
+            }
+        }, item.getId(), habbo.getData().getId());
     }
 
     @Override

@@ -24,6 +24,8 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     public @Nullable IFloorItem getFloorItem(int itemId);
 
+    public @Nullable IRoomItem getItem(int itemId);
+
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position);
 
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
@@ -47,4 +49,6 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
     void moveFloorItemTo(IHabbo habbo, IFloorItem item, Position position, Integer rotation);
 
     void moveWallItemTo(IHabbo habbo, IWallItem floorItem, String coordinates);
+
+    void pickupItem(final IHabbo habbo, final IRoomItem item);
 }

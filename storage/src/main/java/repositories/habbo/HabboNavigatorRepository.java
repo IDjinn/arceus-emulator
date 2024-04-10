@@ -2,7 +2,6 @@ package repositories.habbo;
 
 import com.google.inject.Singleton;
 import queries.habbo.HabboNavigatorQuery;
-import queries.habbo.HabboRoomQuery;
 import repositories.ConnectionRepository;
 import storage.repositories.habbo.IHabboNavigatorRepository;
 import storage.results.IConnectionResultConsumer;

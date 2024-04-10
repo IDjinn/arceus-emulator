@@ -8,6 +8,7 @@ import habbo.habbos.inventory.IHabboInventoryItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.inventory.InventoryRefreshComposer;
 import storage.repositories.habbo.IHabboInventoryRepository;
 
 import java.util.HashMap;
@@ -79,5 +80,10 @@ public class HabboInventory implements IHabboInventory {
     @Override
     public boolean canPurchaseItems(int count) {
         return count > 0;
+    }
+
+    @Override
+    public void sendUpdate() {
+        this.getHabbo().getClient().sendMessage(new InventoryRefreshComposer());
     }
 }

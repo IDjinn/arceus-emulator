@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.pathfinder.Position;
 
-public class RoomRoomGameMap implements IRoomGameMap {
+public class RoomGameMap implements IRoomGameMap {
     private final Logger logger = LogManager.getLogger();
     @Inject
     private IRoomManager roomManager;

@@ -15,4 +15,6 @@ public interface IHabboInventory extends IHabboComponent {
     public @Nullable IHabboInventoryItem getItem(int id);
 
     public boolean canPurchaseItems(int count);
+
+    void sendUpdate();
 }
