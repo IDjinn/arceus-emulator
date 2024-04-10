@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
+import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.Position;
 import utils.cycle.ICycle;
@@ -229,7 +230,13 @@ public class RoomObjectManager implements IRoomObjectManager {
         item.setPosition(position);
         item.setRotation(rotation);
         item.onMove(oldPosition);
-        this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer((IFloorItem) item));
+        this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer(item));
+    }
+
+    @Override
+    public void moveWallItemTo(final IHabbo habbo, final IWallItem wallItem, final String coordinates) {
+        wallItem.setWallPosition(coordinates);
+        this.getRoom().broadcastMessage(new WallItemUpdateComposer(wallItem));
     }
 
     @Override
