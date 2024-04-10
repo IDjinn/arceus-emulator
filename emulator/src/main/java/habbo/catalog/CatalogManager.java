@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.mysql.cj.util.StringUtils;
+import habbo.catalog.handlers.TeleportPurchaseHandler;
 import habbo.catalog.items.ICatalogFactory;
 import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.ICatalogPage;
@@ -46,6 +47,7 @@ public class CatalogManager implements ICatalogManager {
         this.purchaseHandlers = new HashMap<>();
 
         this.purchaseHandlers.put(DEFAULT_PURCHASE_HANDLER, new DefaultCatalogPurchaseHandler());
+        this.purchaseHandlers.put(TeleportPurchaseHandler.HandlerId, new TeleportPurchaseHandler());
         for (var handler : this.purchaseHandlers.values())
             injector.injectMembers(handler);
     }

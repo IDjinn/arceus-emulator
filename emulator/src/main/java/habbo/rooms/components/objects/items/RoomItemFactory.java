@@ -53,7 +53,7 @@ public class RoomItemFactory implements IRoomItemFactory {
         this.itemDefinitionMap.put(SitFloorItem.INTERACTION_NAME, SitFloorItem.class);
         this.itemDefinitionMap.put(LayFloorItem.INTERACTION_NAME, LayFloorItem.class);
         this.itemDefinitionMap.put(RollerFloorItem.INTERACTION_NAME, RollerFloorItem.class);
-
+        // TODO: DETECT DUPLICATE CLASSES/INTERACTION
         logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
     }
 
