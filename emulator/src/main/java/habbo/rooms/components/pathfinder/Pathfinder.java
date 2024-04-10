@@ -29,30 +29,6 @@ public class Pathfinder implements IPathfinder {
         diagonalDirections.putAll(adjacentDirections);
     }
 
-    private static float calculateHCost(Position a, Position b) {
-        var dx = Math.abs(b.getX() - a.getX());
-        var dy = Math.abs(b.getY() - a.getY());
-        var dz = Math.abs(b.getZ() - a.getZ());
-        var horizontalCost = BasicCost * (dx + dy) + (DiagonalCost - 2 * BasicCost) * Math.min(dx, dy);
-        var verticalCost = VerticalCostFactor * dz;
-        return (float) (horizontalCost + verticalCost);
-    }
-
-    private static float calculateGCost(Position a, Position b, boolean diagonalEnabled) {
-        assert a != null && b != null;
-
-        var dz = Math.abs(b.getZ() - a.getZ());
-        var horizontalCost = is_diagonal(a, b) ? (diagonalEnabled ? DiagonalCost : Float.POSITIVE_INFINITY) : BasicCost;
-        var verticalCost = VerticalCostFactor * dz;
-        return (float) (horizontalCost + verticalCost);
-    }
-
-    private static boolean is_diagonal(Position a, Position b) {
-        assert a != null && b != null;
-        return Math.abs((short) a.getX() - (short) b.getX()) == 1
-                && Math.abs((short) a.getY() - (short) b.getY()) == 1;
-    }
-
     @Override
     public void init(IRoom room) {
         this.room = room;
@@ -111,7 +87,7 @@ public class Pathfinder implements IPathfinder {
 
     private static double getGCost(final double currentCost, final Position currentPosition, final Position nextPosition) {
         final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
-        final var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;
+        final var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;// TODO CHECK THIS
         final var verticalCost = VerticalCostFactor * dz;
         return horizontalCost + verticalCost;
     }
