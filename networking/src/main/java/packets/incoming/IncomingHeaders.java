@@ -48,7 +48,7 @@ public class IncomingHeaders {
     public static final int RequestPetInformationEvent = 2934;
     public static final int RoomUserWhisperEvent = 1543;
     public static final int ModToolRequestUserInfoEvent = 3295;
-    public static final int RotateMoveItemEvent = 248;
+    public static final int RoomMoveOrRotateFloorItemEvent = 248;
     public static final int CancelPollEvent = 1773;
     public static final int RequestRoomLoadEvent = 2312;
     public static final int RequestGuildPartsEvent = 813;

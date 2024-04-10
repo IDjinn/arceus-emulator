@@ -22,6 +22,8 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     public Collection<IFloorItem> getAllFloorItems();
 
+    public @Nullable IFloorItem getFloorItem(int itemId);
+
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position);
 
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
@@ -32,7 +34,7 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate);
 
-    public int getVirtualIdForItemId(long itemId);
+    public int getVirtualIdForItem(IRoomItem item);
 
     public @Nullable IRoomItem getItemByVirtualId(int virtualId);
 
@@ -41,4 +43,6 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
     void placeFloorItem(final IHabbo habbo, IHabboInventoryItem item, int x, int y, double z, int rotation);
 
     void placeWallItem(final IHabbo habbo, IHabboInventoryItem item, String wallPosition);
+
+    void moveFloorItemTo(IHabbo habbo, IFloorItem item, Position position, Integer rotation);
 }

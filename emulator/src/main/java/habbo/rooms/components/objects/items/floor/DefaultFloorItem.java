@@ -32,6 +32,10 @@ public class DefaultFloorItem extends RoomItem implements IFloorItem {
         return false;
     }
 
+    @Override
+    public void setRotation(final int rotation) {
+        this.getItemData().setRotation(rotation);
+    }
 
     @Override
     public OutgoingPacket serializePosition(OutgoingPacket packet) {

@@ -2,6 +2,7 @@ package habbo.rooms.components.objects.items.floor;
 
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.entities.IRoomEntity;
+import utils.Position;
 
 import java.util.Optional;
 
@@ -66,5 +67,11 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
 
     public default void onStackOutItem(IFloorItem floorItem) {
 
+    }
+
+    void setRotation(int rotation);
+
+    default void onMove(Position oldPosition) {
+        
     }
 }

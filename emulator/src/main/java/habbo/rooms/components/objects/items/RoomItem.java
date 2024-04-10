@@ -23,7 +23,7 @@ public abstract class RoomItem implements IRoomItem {
         this.room = room;
         this.furniture = furniture;
 
-        this.virtualId = this.getRoom().getObjectManager().getVirtualIdForItemId(this.getId());
+        this.virtualId = this.getRoom().getObjectManager().getVirtualIdForItem(this);
     }
 
     @Override

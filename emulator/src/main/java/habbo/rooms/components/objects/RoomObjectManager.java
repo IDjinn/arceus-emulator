@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
+import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.Position;
@@ -104,6 +105,12 @@ public class RoomObjectManager implements IRoomObjectManager {
         return this.floorItems.values();
     }
 
+    @Nullable
+    @Override
+    public IFloorItem getFloorItem(final int itemId) {
+        return this.floorItems.get(itemId);
+    }
+
     @Override
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position) {
         return this.getAllFloorItemsAt(position, -1);
@@ -138,10 +145,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public int getVirtualIdForItemId(long itemId) {
-        var item = this.items.get(itemId);
-        assert item != null;
-
+    public int getVirtualIdForItem(IRoomItem item) {
         var newId = this.virtualIdCounter.getAndIncrement() | GameConstants.FurnitureVirtualIdMask;
         this.itemsByVirtualId.put(newId, item);
         return newId;
@@ -217,6 +221,16 @@ public class RoomObjectManager implements IRoomObjectManager {
         }
     }
 
+    @Override
+    public void moveFloorItemTo(final IHabbo habbo, final IFloorItem item, final Position position, final Integer rotation) {
+        if (!this.getRoom().getGameMap().isValidCoordinate(position)) return;
+
+        var oldPosition = position.copy();
+        item.setPosition(position);
+        item.setRotation(rotation);
+        item.onMove(oldPosition);
+        this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer((IFloorItem) item));
+    }
 
     @Override
     public synchronized void tick() {
