@@ -2,6 +2,7 @@ package utils.pathfinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Position {
     public static final int NORTH = 0;
@@ -260,7 +261,6 @@ public class Position {
 
     public double distanceTo(Position pos) {
         return Math.sqrt(Math.pow((this.getX() - pos.getX()), 2) + Math.pow((this.getY() - pos.getY()), 2));
-        //return Math.abs(this.getX() - pos.getX()) + Math.abs(this.getY() - pos.getY());
     }
 
     public boolean touching(Position pos) {
@@ -335,7 +335,7 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return 0;
+        return Objects.hash(x, y, z);
     }
 
     public int getFlag() {

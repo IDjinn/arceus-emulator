@@ -2,7 +2,6 @@ package habbo.rooms.components.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
-import habbo.rooms.components.gamemap.IRoomGameMap;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 
@@ -81,79 +80,63 @@ public class Pathfinder implements IPathfinder {
 
     @SuppressWarnings("UnstableApiUsage") 
     @Override
-    public SequencedCollection<Position> tracePath(IRoomGameMap gameMap, Position start, Position goal) {
-        assert start != goal : "start != goal; should be checked before call this method";
-        if (start.equals(goal))
-            return PathUtil.getInstance().EmptyPath;
+    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
+        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
+        final var closedSet = new HashSet<Position>();
+        final var firstNode = new PathfinderNode(start);
+        openSet.add(firstNode);
 
-        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(gameMap.getMapSize()).create();
-        openSet.add(new PathfinderNode(start));
-        var closedSet = new HashSet<Position>(gameMap.getMapSize());
-
-        var size = 0;
-        while (!openSet.isEmpty()) {
-            if (closedSet.size() > gameMap.getMapSize() || openSet.size() > gameMap.getMapSize()) // something went wrong with pathfinder logic. prevent overflow
-                return PathUtil.getInstance().EmptyPath;
+        var step = 0;
+        final var mapSize = this.getRoom().getGameMap().getMapSize();
+        while (!openSet.isEmpty() && step++ < mapSize) {
+            final var current = openSet.poll();
+            if (current.getPosition().equals(goal))
+                return reversePath(current);
 
             if (closedSet.contains(goal))
-                return PathUtil.getInstance().EmptyPath;
+                break;
 
-            var current = openSet.poll();
-            assert current != null;
             closedSet.add(current.getPosition());
-            openSet.remove(current);
+            for (final var node : getNeighbors(current)) {
+                if (closedSet.contains(node)) continue;
 
-            if (current.getPosition().equals(goal)) {
-                var path = new ArrayList<Position>(size);
-                var tile = current;
-                while (tile != null) {
-                    if (tile.getPosition().equals(start)) break;
-
-                    path.add(tile.getPosition());
-                    tile = tile.getParentNode();
-                }
-                return path.reversed();
-            }
-
-            for (var neighbor : getNeighbors(gameMap, current.getPosition(), goal, closedSet)) {
-                neighbor.setParentNode(current);
-                if (!openSet.contains(neighbor)) {
-                    neighbor.setGCosts(calculateGCost(current.getPosition(), neighbor.getPosition(), true));
-                    neighbor.setHCosts(calculateHCost(neighbor.getPosition(), goal));
-                    openSet.add(neighbor);
-                    size++;
-                } else if (BasicCost + neighbor.getGCosts() < neighbor.getFCosts()) {
-                    neighbor.setGCosts(BasicCost);
-                    size++;
+                final var tentativeGScore = (float) (current.getGCosts() + current.getPosition().distanceTo(node.getPosition()));
+                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
+                    node.setParentNode(current);
+                    node.setGCosts(tentativeGScore);
+                    node.setHCosts((float) node.getPosition().distanceTo(goal));
+                    openSet.add(node);
                 }
             }
         }
-
-
-        return PathUtil.getInstance().EmptyPath;
+        return Collections.emptyList();
     }
 
-    private Set<PathfinderNode> getNeighbors(IRoomGameMap gameMap, Position from, Position goal,
-                                             Set<Position> closedSet) {
-        assert from != null;
-        final var neighborSet = new HashSet<PathfinderNode>(diagonalDirections.size());
-        for (var direction : diagonalDirections.values()) {
-            var neighborPosition = from.add(direction);
-
-            if (closedSet.contains(neighborPosition)) continue;
-            if (!gameMap.isValidCoordinate(neighborPosition)) continue;
-            if (!gameMap.isValidMovement(from, neighborPosition, goal)) continue;
-            final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(neighborPosition, -1);
-            if (topItem.isPresent() && topItem.get().getStackHeight().isPresent())
-                neighborPosition.setZ(topItem.get().getStackHeight().get());
-            else
-                neighborPosition.setZ(from.getZ());// TODO TILE Z
-
-            final var node = new PathfinderNode(neighborPosition);
-            neighborSet.add(node);
+    private List<Position> reversePath(final PathfinderNode node) {
+        final var path = new ArrayList<Position>();
+        var current = node;
+        while (current.parentNode != null) {
+            path.add(current.getPosition());
+            current = current.parentNode;
         }
-        return neighborSet;
+        Collections.reverse(path);
+        return path;
     }
+
+    private List<PathfinderNode> getNeighbors(final PathfinderNode current) {
+        final var neighbors = new ArrayList<PathfinderNode>();
+        for (final var direction : diagonalDirections.values()) {
+            final var neighborPosition = current.getPosition().add(direction);
+
+            if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
+
+            final var neighbor = new PathfinderNode(neighborPosition);
+            neighbor.parentNode = current;
+            neighbors.add(neighbor);
+        }
+        return neighbors;
+    }
+
 
     @Override
     public HashMap<Direction, Position> getAdjacentDirections() {
