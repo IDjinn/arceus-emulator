@@ -84,7 +84,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Override
     public void onRoomLoaded() {
         this.items.values().forEach(IRoomObject::onRoomLoaded);
-        this.getRoom().registerProcess(RoomObjectManager.class.getName(), this::tick,
+        this.getRoom().registerProcess(RoomObjectManager.class.getSimpleName(), this::tick,
                 ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
