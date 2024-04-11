@@ -14,6 +14,4 @@ public interface IRoomEntityManager extends IRoomComponent, ICycle {
     List<IRoomEntity> getEntities();
 
     List<IHabboEntity> getPlayers();
-
-    int getVirtualIdForEntity(IRoomEntity entity);
 }

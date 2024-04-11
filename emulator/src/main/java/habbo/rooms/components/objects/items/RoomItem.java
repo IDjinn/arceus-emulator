@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects.items;
 
+import habbo.GameConstants;
 import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
@@ -24,7 +25,7 @@ public abstract class RoomItem implements IRoomItem {
         this.room = room;
         this.furniture = furniture;
 
-        this.virtualId = this.getRoom().getObjectManager().getVirtualIdForItem(this);
+        this.virtualId = this.getId() | GameConstants.FurnitureVirtualIdMask;
     }
 
     @Override

@@ -23,8 +23,9 @@ public abstract class RoomEntity implements IRoomEntity {
     private @Nullable Position nextPostion;
     private @Nullable IFloorItem onItem;
 
-    public RoomEntity(IRoom room) {
+    public RoomEntity(IRoom room, int virtualId) {
         this.room = room;
+        this.virtualId = virtualId;
         this.position = new Position(4, 5);
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
@@ -204,9 +205,5 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public void setNextPosition(@Nullable Position position) {
         this.nextPostion = position;
-    }
-
-    public void setVirtualId(final int virtualId) {
-        this.virtualId = virtualId;
     }
 }

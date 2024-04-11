@@ -36,10 +36,6 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate);
 
-    public int getVirtualIdForItem(IRoomItem item);
-
-    public @Nullable IRoomItem getItemByVirtualId(int virtualId);
-
     List<String> getFurnitureOwners();
 
     void placeFloorItem(final IHabbo habbo, IHabboInventoryItem item, int x, int y, double z, int rotation);

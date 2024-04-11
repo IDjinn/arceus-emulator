@@ -1,6 +1,5 @@
 package habbo.rooms.components.entities;
 
-import habbo.GameConstants;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.HabboEntity;
@@ -41,8 +40,6 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public IHabboEntity createHabboEntity(IHabbo habbo) {
         var entity = new HabboEntity(habbo);
-        var virtualId = this.getVirtualIdForEntity(entity);
-        entity.setVirtualId(virtualId);
 
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
@@ -73,13 +70,6 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public List<IHabboEntity> getPlayers() {
         return this.players.values().stream().toList();
-    }
-
-    @Override
-    public int getVirtualIdForEntity(final IRoomEntity entity) {
-        var newId = this.virtualIdCounter.incrementAndGet() | GameConstants.EntityVirtualIdMask;
-        this.entitiesByVirtualId.put(newId, entity);
-        return newId;
     }
 
     private final Collection<IRoomEntity> entitiesUpdated = new HashSet<>();

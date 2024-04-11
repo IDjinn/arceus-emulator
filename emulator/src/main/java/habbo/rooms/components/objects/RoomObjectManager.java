@@ -29,15 +29,12 @@ import utils.pathfinder.Position;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Integer, IRoomItem> items;
     private final HashMap<Integer, IFloorItem> floorItems;
     private final HashMap<Integer, IWallItem> wallItems;
-    private final AtomicInteger virtualIdCounter;
-    private final HashMap<Integer, IRoomItem> itemsByVirtualId;
     private Logger logger = LogManager.getLogger();
     private IRoom room;
     @Inject
@@ -52,8 +49,6 @@ public class RoomObjectManager implements IRoomObjectManager {
 
     public RoomObjectManager() {
         this.items = new HashMap<>();
-        this.itemsByVirtualId = new HashMap<>();
-        this.virtualIdCounter = new AtomicInteger(1);
         this.furnitureOwners = new HashSet<>(1);
         this.wallItems = new HashMap<>();
         this.floorItems = new HashMap<>();
@@ -123,7 +118,8 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Nullable
     @Override
     public IRoomItem getItem(final int itemId) {
-        return this.items.get(itemId);
+        final var realId = itemId & ~GameConstants.FurnitureVirtualIdMask; // TODO MOVE IT TO PACKET ASSERTION
+        return this.items.get(realId);
     }
 
     @Override
@@ -157,18 +153,6 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Override
     public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate) {
         return this.items.values().stream().filter(predicate).toList();
-    }
-
-    @Override
-    public int getVirtualIdForItem(IRoomItem item) {
-        var newId = this.virtualIdCounter.getAndIncrement() | GameConstants.FurnitureVirtualIdMask;
-        this.itemsByVirtualId.put(newId, item);
-        return newId;
-    }
-
-    @Override
-    public @Nullable IRoomItem getItemByVirtualId(int virtualId) {
-        return this.itemsByVirtualId.get(virtualId);
     }
 
     public List<String> getFurnitureOwners() {

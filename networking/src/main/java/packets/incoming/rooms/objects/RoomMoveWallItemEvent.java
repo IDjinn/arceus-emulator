@@ -19,7 +19,7 @@ public class RoomMoveWallItemEvent extends IncomingEvent {
         if (client.getHabbo().getRoom() == null) return;
 
         final var itemId = packet.readInt();
-        var item = client.getHabbo().getRoom().getObjectManager().getItemByVirtualId(itemId);
+        var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
         if (!(item instanceof IWallItem wallItem)) return;
 
         final var coordinates = packet.readString();

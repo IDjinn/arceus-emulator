@@ -19,7 +19,7 @@ public class PickupItemEvent extends IncomingEvent {
 
         var isFloorItem = packet.readInt() == 2;
         var itemId = packet.readInt();
-        var item = client.getHabbo().getRoom().getObjectManager().getItemByVirtualId(itemId);
+        var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
         if (item == null) return;
 
         client.getHabbo().getRoom().getObjectManager().pickupItem(client.getHabbo(), item);
