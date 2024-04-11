@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 
 public interface IRoomManager extends IHotelService {
-    public ConcurrentHashMap<Integer, IRoom> getLoadedRooms();
+    ConcurrentHashMap<Integer, IRoom> getLoadedRooms();
 
-    public List<IRoom> getLoadedRoomsBy(Predicate<IRoom> predicate);
+    List<IRoom> getLoadedRoomsBy(Predicate<IRoom> predicate);
 
-    public @Nullable IRoom tryLoadRoom(int roomId);
+    @Nullable IRoom tryLoadRoom(int roomId);
 
     HashMap<Integer, IRoomCategory> getRoomCategories();
 

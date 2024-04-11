@@ -26,7 +26,7 @@ public class HabboInventory implements IHabboInventory {
 
     public HabboInventory(IHabbo habbo) {
         this.habbo = habbo;
-        this.items = new HashMap<Integer, IHabboInventoryItem>();
+        this.items = new HashMap<>();
     }
 
     @Override

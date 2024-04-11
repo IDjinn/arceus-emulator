@@ -32,7 +32,7 @@ public interface IRoomItem extends IRoomObject {
     /**
      * write item id and sprite id to packet
      */
-    public void serializeItemIdentity(OutgoingPacket packet);
+    void serializeItemIdentity(OutgoingPacket packet);
 
     OutgoingPacket serializePosition(OutgoingPacket packet);
 

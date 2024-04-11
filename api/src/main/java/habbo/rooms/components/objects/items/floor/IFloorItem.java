@@ -7,65 +7,66 @@ import utils.pathfinder.Position;
 import java.util.Optional;
 
 public interface IFloorItem extends IRoomItem, IFloorObject {
-    public boolean isAtDoor();
+    boolean isAtDoor();
 
-    public int getRotation();
+    int getRotation();
 
-    public default boolean canSit(IRoomEntity entity) {
+    default boolean canSit(IRoomEntity entity) {
         return this.getFurniture().isCanSit();
     }
 
-    public default boolean canLay(IRoomEntity entity) {
+    default boolean canLay(IRoomEntity entity) {
         return this.getFurniture().isCanLay();
     }
 
-    public default boolean canWalk() {
-        return this.getFurniture().isCanWalk();
-    }
-    public default boolean canWalk(IRoomEntity entity) {
+    default boolean canWalk() {
         return this.getFurniture().isCanWalk();
     }
 
-    public default boolean canUse(IRoomEntity entity) {
+    default boolean canWalk(IRoomEntity entity) {
+        return this.getFurniture().isCanWalk();
+    }
+
+    default boolean canUse(IRoomEntity entity) {
         return this.getFurniture().getInteractionModesCount() > 0;
     }
 
-    public default boolean canStack(IRoomEntity entity) {
+    default boolean canStack(IRoomEntity entity) {
         return this.getFurniture().isCanStack();
     }
 
-    public default boolean canStack() {
+    default boolean canStack() {
         return this.getFurniture().isCanStack();
     }
 
-    public default Optional<Double> getStackHeight(IRoomEntity entity) {
+    default Optional<Double> getStackHeight(IRoomEntity entity) {
         if (!this.canStack(entity))
             return Optional.empty();
 
         return Optional.of(this.getFurniture().getStackHeight());
     }
 
-    public default Optional<Double> getStackHeight() {
+    default Optional<Double> getStackHeight() {
         if (!this.canStack())
             return Optional.empty();
 
         return Optional.of(this.getFurniture().getStackHeight());
     }
 
-    public default void onStepIn(IRoomEntity entity) {
+    default void onStepIn(IRoomEntity entity) {
 
     }
 
-    public default void onStepOut(IRoomEntity entity) {
+    default void onStepOut(IRoomEntity entity) {
 
     }
 
 
-    public default void onStackInItem(IFloorItem floorItem) {
+    default void onStackInItem(IFloorItem floorItem) {
 
     }
 
-    public default void onStackOutItem(IFloorItem floorItem) {
+    default void onStackOutItem(IFloorItem floorItem) {
 
     }
 

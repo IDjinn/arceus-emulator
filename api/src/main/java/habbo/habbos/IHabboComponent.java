@@ -2,11 +2,11 @@ package habbo.habbos;
 
 public interface IHabboComponent {
 
-    public void init();
+    void init();
 
-    public void update();
+    void update();
 
-    public void destory();
+    void destory();
 
-    public IHabbo getHabbo();
+    IHabbo getHabbo();
 }

@@ -8,9 +8,9 @@ import utils.pathfinder.Position;
 public interface IRoomItemFactory {
     IRoomItem create(IConnectionResult result, IRoom room) throws Exception;
 
-    public IRoomItem create(IRoomItemData itemData, IRoom room);
+    IRoomItem create(IRoomItemData itemData, IRoom room);
 
-    public IRoomItemData createItemData(
+    IRoomItemData createItemData(
             int id,
             int furnitureId,
             int ownerId,
@@ -19,7 +19,7 @@ public interface IRoomItemFactory {
             IExtraData extraData
     );
 
-    public IRoomItemData createItemData(
+    IRoomItemData createItemData(
             int id,
             int furnitureId,
             int ownerId,

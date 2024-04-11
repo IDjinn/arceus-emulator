@@ -4,6 +4,7 @@ import habbo.rooms.components.objects.items.IRoomItem;
 
 public interface IWallItem extends IRoomItem {
 
-    public void setWallPosition(String position);
-    public String getWallPosition();
+    String getWallPosition();
+
+    void setWallPosition(String position);
 }

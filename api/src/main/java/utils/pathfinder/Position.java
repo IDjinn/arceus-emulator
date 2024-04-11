@@ -67,7 +67,7 @@ public class Position {
 //                if (lengthX < 0 || lengthY < 0 || lengthX > 200 || lengthY > 200)
 //                    return null;
 
-                return ":w=" + widthX + "," + widthY + " " + "l=" + lengthX + "," + lengthY + " " + data[2];
+                return STR."\{STR."\{STR."\{STR."\{":w=" + widthX + "," + widthY} "}l=" + lengthX}," + lengthY} " + data[2];
             }
         } catch (Exception ignored) {
 
@@ -112,26 +112,18 @@ public class Position {
     }
 
     public static int getInvertedRotation(int currentRotation) {
-        switch (currentRotation) {
-            case NORTH_EAST:
-                return SOUTH_WEST;
-            case NORTH_WEST:
-                return SOUTH_EAST;
-            case SOUTH_WEST:
-                return NORTH_EAST;
-            case SOUTH_EAST:
-                return NORTH_WEST;
-            case NORTH:
-                return SOUTH;
-            case SOUTH:
-                return NORTH;
-            case EAST:
-                return WEST;
-            case WEST:
-                return EAST;
-        }
+        return switch (currentRotation) {
+            case NORTH_EAST -> SOUTH_WEST;
+            case NORTH_WEST -> SOUTH_EAST;
+            case SOUTH_WEST -> NORTH_EAST;
+            case SOUTH_EAST -> NORTH_WEST;
+            case NORTH -> SOUTH;
+            case SOUTH -> NORTH;
+            case EAST -> WEST;
+            case WEST -> EAST;
+            default -> currentRotation;
+        };
 
-        return currentRotation;
     }
 
     public static Position calculatePosition(int x, int y, int angle, boolean isReversed, int distance) {
@@ -278,7 +270,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "(" + this.getX() + ", " + this.getY() + ", " + this.getZ() + ")";
+        return STR."\{STR."\{"(" + this.getX() + ", " + this.getY()}, " + this.getZ()})";
     }
 
     public int getX() {

@@ -5,8 +5,8 @@ import habbo.habbos.data.IHabboData;
 import java.util.Optional;
 
 public interface IHabboManager {
-    public Optional<IHabboData> getHabboData(String name);
+    Optional<IHabboData> getHabboData(String name);
 
-    public Optional<IHabboData> getHabboData(int id);
+    Optional<IHabboData> getHabboData(int id);
     
 }

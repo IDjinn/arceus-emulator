@@ -4,15 +4,15 @@ import habbo.rooms.components.objects.items.ILimitedData;
 import networking.packets.OutgoingPacket;
 
 public interface IExtraData {
-    public ExtraDataType getExtraDataType();
+    ExtraDataType getExtraDataType();
 
-    public void serialize(OutgoingPacket packet);
+    void serialize(OutgoingPacket packet);
 
-    public ILimitedData getLimitedData();
+    ILimitedData getLimitedData();
 
-    public void setLimitedData(ILimitedData data);
+    void setLimitedData(ILimitedData data);
 
-    public void serializeState(OutgoingPacket packet);
+    void serializeState(OutgoingPacket packet);
 
-    public String toJson();
+    String toJson();
 }

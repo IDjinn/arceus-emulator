@@ -14,7 +14,7 @@ public class Pathfinder implements IPathfinder {
     private static final int DiagonalCost = 14;
     private static final int BasicCost = 10;
     private static final HashMap<Direction, Position> adjacentDirections = new HashMap<>();
-    private static final HashMap<Direction, Position> diagonalDirections = new HashMap<Direction, Position>();
+    private static final HashMap<Direction, Position> diagonalDirections = new HashMap<>();
 
     static {
         adjacentDirections.put(Direction.North, new Position(1, 0, 0));

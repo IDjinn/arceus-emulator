@@ -28,9 +28,9 @@ public class PacketManager implements IPacketManager {
     private final INitroClientManager clientManager;
     private final IConfigurationManager configuration;
     private final IThreadManager threadManager;
-    
-    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<Integer, IncomingEvent>();
-    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<Integer, IncomingEvent>();
+
+    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<>();
+    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<>();
 
     @Inject
     public PacketManager(INitroClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
@@ -74,7 +74,7 @@ public class PacketManager implements IPacketManager {
         return "Unknown";
     }
 
-    private final HashSet<Integer> notFoundPackets = new HashSet<Integer>();
+    private final HashSet<Integer> notFoundPackets = new HashSet<>();
     @Override
     public void parse(IIncomingPacket packet, INitroClient client) {
         var incomingEvent = this.incomingEvents.get(packet.getHeader());

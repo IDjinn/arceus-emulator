@@ -4,7 +4,7 @@ import habbo.habbos.IHabbo;
 import networking.client.INitroClient;
 
 public interface IHabboEntity extends IRoomEntity {
-    public IHabbo getHabbo();
+    IHabbo getHabbo();
 
-    public INitroClient getClient();
+    INitroClient getClient();
 }

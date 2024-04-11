@@ -5,9 +5,9 @@ import storage.results.IConnectionResultConsumer;
 
 public interface ICatalogRepository extends IConnectionRepository {
 
-    public void getAllCatalogPages(IConnectionResultConsumer result);
+    void getAllCatalogPages(IConnectionResultConsumer result);
 
-    public void getAllCatalogItems(IConnectionResultConsumer result);
+    void getAllCatalogItems(IConnectionResultConsumer result);
 //    void purchaseItems(List<ICatalogItem> catalogItems, Consumer<List<Long>> idConsumer,
 //                       int userId,
 //                       int furniId,

@@ -1,9 +1,9 @@
 package habbo.rooms.components.objects.items;
 
 public interface ILimitedData {
-    int getLimitedRare();
+    int limitedRare();
 
-    int getLimitedRareTotal();
+    int limitedRareTotal();
 
-    public boolean isLimited();
+    boolean isLimited();
 }

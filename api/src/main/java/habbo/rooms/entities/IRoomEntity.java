@@ -14,40 +14,40 @@ import java.util.SequencedCollection;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface IRoomEntity extends ISerializable, ICycle, IFloorObject {
-    public int getVirtualId();
+    int getVirtualId();
 
-    public @Nullable IFloorItem getOnItem();
+    IRoom getRoom();
 
-    public String getName();
+    @Nullable IFloorItem getOnItem();
 
-    public void setName(String name);
+    String getName();
 
-    public IRoom getRoom();
+    void setName(String name);
 
-    public void serializeStatus(OutgoingPacket packet);
+    void serializeStatus(OutgoingPacket packet);
 
-    public @Nullable Position getNextPosition();
+    @Nullable Position getNextPosition();
 
-    public void setNextPosition(@Nullable Position position);
+    void setNextPosition(@Nullable Position position);
 
-    public Direction getDirection();
+    Direction getDirection();
 
-    public void setDirection(Direction direction);
+    void setDirection(Direction direction);
 
-    public ConcurrentHashMap<RoomEntityStatus, StatusBucket> getStatus();
+    ConcurrentHashMap<RoomEntityStatus, StatusBucket> getStatus();
 
-    public void setStatus(StatusBucket status);
+    void setStatus(StatusBucket status);
 
-    public void removeStatus(RoomEntityStatus status);
+    void removeStatus(RoomEntityStatus status);
 
-    public void setNeedUpdateStatus(boolean needUpdate);
+    void setNeedUpdateStatus(boolean needUpdate);
 
-    public boolean isNeedUpdate();
+    boolean isNeedUpdate();
 
 
-    public @Nullable Position getGoal();
+    @Nullable Position getGoal();
 
-    public void setGoal(@Nullable Position goal);
+    void setGoal(@Nullable Position goal);
 
-    public SequencedCollection<Position> getWalkPath();
+    SequencedCollection<Position> getWalkPath();
 }

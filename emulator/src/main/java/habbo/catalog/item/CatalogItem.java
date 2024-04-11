@@ -61,21 +61,6 @@ public class CatalogItem implements ICatalogItem {
 
 
     @Override
-    public void compose(OutgoingPacket packet) {
-
-    }
-
-    @Override
-    public void composeClubPresents(OutgoingPacket packet) {
-
-    }
-
-    @Override
-    public void serializeAvailability(OutgoingPacket packet) {
-
-    }
-
-    @Override
     public int getId() {
         return this.id;
     }
@@ -134,11 +119,6 @@ public class CatalogItem implements ICatalogItem {
     @Override
     public boolean allowOffer() {
         return this.allowOffer;
-    }
-
-    @Override
-    public void increaseLimitedSells(int amount) {
-
     }
 
 

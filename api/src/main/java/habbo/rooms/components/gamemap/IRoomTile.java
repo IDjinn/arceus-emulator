@@ -1,9 +1,9 @@
 package habbo.rooms.components.gamemap;
 
 public interface IRoomTile {
-    public int getX();
+    int x();
 
-    public int getY();
+    int y();
 
-    public int getZ();
+    int z();
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 @Singleton
 public class CatalogFactory implements ICatalogFactory {
-    private final HashMap<String, ICatalogPage> catalogPageTypes = new HashMap<String, ICatalogPage>();
+    private final HashMap<String, ICatalogPage> catalogPageTypes = new HashMap<>();
     @Inject
     private IFurnitureManager furnitureManager;
 

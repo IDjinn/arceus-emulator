@@ -7,9 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 public interface IFurnitureManager extends IHotelService {
-    public HashMap<Integer,IFurniture> getAll();
-    
-    public @Nullable IFurniture get(int id);
+    HashMap<Integer, IFurniture> getAll();
 
-    public IExtraData parseExtraData(String json);
+    @Nullable IFurniture get(int id);
+
+    IExtraData parseExtraData(String json);
 }

@@ -29,7 +29,7 @@ public abstract class CatalogPage implements ICatalogPage {
     private boolean vipOnly;
     private List<String> images;
     private List<String> texts;
-    private final HashMap<Integer, ICatalogItem> items = new HashMap<Integer, ICatalogItem>();
+    private final HashMap<Integer, ICatalogItem> items = new HashMap<>();
     private String extraData;
 
     @Override

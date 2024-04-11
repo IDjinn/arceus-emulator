@@ -8,5 +8,6 @@ public interface IHabboInventoryRepository {
     void getInventoryByOwnerId(int habboId, IConnectionResultConsumer consumer);
 
     void pickupItem(IConnectionBooleanResultConsumer consumer, int itemId, int ownerId);
-    public void createInventoryItem(IConnectionStatementConsumer consumer, IConnectionResultConsumer resultConsumer);
+
+    void createInventoryItem(IConnectionStatementConsumer consumer, IConnectionResultConsumer resultConsumer);
 }

@@ -17,24 +17,27 @@ import java.util.SequencedCollection;
 import java.util.function.Predicate;
 
 public interface IRoomObjectManager extends IRoomComponent, ICycle {
-    public void addRoomItem(IRoomItem roomItem);
-    public Collection<IRoomItem> getAllItems();
+    void addRoomItem(IRoomItem roomItem);
 
-    public Collection<IFloorItem> getAllFloorItems();
+    Collection<IRoomItem> getAllItems();
 
-    public @Nullable IFloorItem getFloorItem(int itemId);
+    Collection<IFloorItem> getAllFloorItems();
 
-    public @Nullable IRoomItem getItem(int itemId);
+    @Nullable
+    IFloorItem getFloorItem(int itemId);
 
-    public Collection<IFloorItem> getAllFloorItemsAt(final Position position);
+    @Nullable
+    IRoomItem getItem(int itemId);
 
-    public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
+    Collection<IFloorItem> getAllFloorItemsAt(final Position position);
 
-    public Optional<IFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
+    Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
 
-    public Collection<IWallItem> getAllWallItems();
+    Optional<IFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
 
-    public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate);
+    Collection<IWallItem> getAllWallItems();
+
+    SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate);
 
     List<String> getFurnitureOwners();
 

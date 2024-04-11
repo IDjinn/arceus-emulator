@@ -4,12 +4,13 @@ import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;
 
 public interface IPacketManager {
-    public boolean isParallelParsingEnabled();
+    boolean isParallelParsingEnabled();
 
-    public boolean isLoggingEnabled();
-    public String getIncomingEventName(int headerId);
+    boolean isLoggingEnabled();
 
-    public void parse(IIncomingPacket IIncomingPacket, INitroClient client);
+    String getIncomingEventName(int headerId);
 
-    public void parseForGuest(IIncomingPacket IIncomingPacket, ChannelHandlerContext channel);
+    void parse(IIncomingPacket IIncomingPacket, INitroClient client);
+
+    void parseForGuest(IIncomingPacket IIncomingPacket, ChannelHandlerContext channel);
 }

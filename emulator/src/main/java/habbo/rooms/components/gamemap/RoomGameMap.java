@@ -3,6 +3,7 @@ package habbo.rooms.components.gamemap;
 import com.google.inject.Inject;
 import habbo.rooms.IRoom;
 import habbo.rooms.IRoomManager;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.pathfinder.Position;
@@ -138,8 +139,7 @@ public class RoomGameMap implements IRoomGameMap {
     @Override
     public boolean isValidMovement(final Position from, final Position to, final Position goal) {
         final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(to, -1);
-        if (topItem.isEmpty()) return true;
+        return topItem.map(IFloorItem::canWalk).orElse(true);
 
-        return topItem.get().canWalk();
     }
 }

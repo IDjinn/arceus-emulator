@@ -5,9 +5,9 @@ import habbo.rooms.IRoomComponent;
 import habbo.rooms.RoomRightLevel;
 
 public interface IRoomRightsManager extends IRoomComponent {
-    public boolean hasRights(IHabbo habbo);
+    boolean hasRights(IHabbo habbo);
 
-    public boolean hasRights(IHabbo habbo, RoomRightLevel level);
+    boolean hasRights(IHabbo habbo, RoomRightLevel level);
 
-    public RoomRightLevel getRightLevelFor(IHabbo habbo);
+    RoomRightLevel getRightLevelFor(IHabbo habbo);
 }

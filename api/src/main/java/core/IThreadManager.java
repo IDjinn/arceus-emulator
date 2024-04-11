@@ -3,7 +3,7 @@ package core;
 import java.util.concurrent.ScheduledExecutorService;
 
 public interface IThreadManager {
-    public ScheduledExecutorService getHardwareThreadExecutor();
+    ScheduledExecutorService getHardwareThreadExecutor();
 
-    public ScheduledExecutorService getSoftwareThreadExecutor();
+    ScheduledExecutorService getSoftwareThreadExecutor();
 }

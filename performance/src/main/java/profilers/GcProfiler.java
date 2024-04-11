@@ -93,22 +93,22 @@ public class GcProfiler implements InternalProfiler {
 
         if (this.stats.contains(Metric.ALLOC)) {
             if (this.beforeAlloc == HotspotAllocationSnapshot.EMPTY) {
-                results.add(new ScalarResult(PREFIX + "alloc.rate", NaN, "MB/sec", AVG));
-                results.add(new ScalarResult(PREFIX + "alloc.norm", NaN, "B/op", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX}alloc.rate", NaN, "MB/sec", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX}alloc.norm", NaN, "B/op", AVG));
             } else {
                 long alloc = newSnapshot.subtract(this.beforeAlloc);
                 long allOps = iResult.getMetadata().getAllOps();
                 double rate = afterT == this.beforeT ? NaN :
                         1.0 * alloc / 1024 / 1024 * SECONDS.toNanos(1) / (afterT - this.beforeT);
                 double norm = alloc == 0 ? 0 : allOps != 0 ? 1.0 * alloc / allOps : NaN;
-                results.add(new ScalarResult(PREFIX + "alloc.rate", rate, "MB/sec", AVG));
-                results.add(new ScalarResult(PREFIX + "alloc.norm", norm, "B/op", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX}alloc.rate", rate, "MB/sec", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX}alloc.norm", norm, "B/op", AVG));
             }
         }
 
         if (this.stats.contains(Metric.COLLECT)) {
-            results.add(new ScalarResult(PREFIX + "collect.count", gcCount - this.beforeGcCount, "counts", SUM));
-            results.add(new ScalarResult(PREFIX + "collect.time", gcTime - this.beforeGcTime, "ms", SUM));
+            results.add(new ScalarResult(STR."\{PREFIX}collect.count", gcCount - this.beforeGcCount, "counts", SUM));
+            results.add(new ScalarResult(STR."\{PREFIX}collect.time", gcTime - this.beforeGcTime, "ms", SUM));
         }
 
         if (pool != null) {
@@ -117,18 +117,18 @@ public class GcProfiler implements InternalProfiler {
                 double rate = afterT == this.beforeT ? NaN :
                         1.0 * pool.usedDiffByPool.count(space) * SECONDS.toNanos(1) / (afterT - this.beforeT) / 1024 / 1024;
                 double norm = 1.0 * pool.usedDiffByPool.count(space) / iResult.getMetadata().getAllOps();
-                results.add(new ScalarResult(PREFIX + "pool." + name + ".rate", rate, "MB/sec", AVG));
-                results.add(new ScalarResult(PREFIX + "pool." + name + ".norm", norm, "B/op", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX + "pool." + name}.rate", rate, "MB/sec", AVG));
+                results.add(new ScalarResult(STR."\{PREFIX + "pool." + name}.norm", norm, "B/op", AVG));
             }
             if (!pool.usedAfterGc.isEmpty()) {
                 Collections.sort(pool.usedAfterGc);
                 long maxUag = pool.usedAfterGc.get(pool.usedAfterGc.size() - 1);
-                results.add(new ScalarResult(PREFIX + "pool.all.maxUsed", maxUag, "bytes", MAX));
+                results.add(new ScalarResult(STR."\{PREFIX}pool.all.maxUsed", maxUag, "bytes", MAX));
             }
             if (!pool.committedAfterGc.isEmpty()) {
                 Collections.sort(pool.committedAfterGc);
                 long maxCag = pool.committedAfterGc.get(pool.committedAfterGc.size() - 1);
-                results.add(new ScalarResult(PREFIX + "pool.all.maxCommitted", maxCag, "bytes", MAX));
+                results.add(new ScalarResult(STR."\{PREFIX}pool.all.maxCommitted", maxCag, "bytes", MAX));
             }
         }
 
@@ -206,7 +206,7 @@ public class GcProfiler implements InternalProfiler {
             } catch (Throwable e) { // To avoid jmh failure in case of incompatible JDK and/or inaccessible method
                 getBytes = null;
                 allocationNotAvailable = true;
-                System.out.println("Allocation profiling is not available: " + e.getMessage());
+                System.out.println(STR."Allocation profiling is not available: \{e.getMessage()}");
             }
             GET_THREAD_ALLOCATED_BYTES = getBytes;
             return getBytes;

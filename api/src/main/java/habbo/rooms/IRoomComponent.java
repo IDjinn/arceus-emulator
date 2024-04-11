@@ -1,11 +1,11 @@
 package habbo.rooms;
 
 public interface IRoomComponent {
-    public IRoom getRoom();
+    IRoom getRoom();
 
-    public void init(IRoom room);
+    void init(IRoom room);
 
-    public void onRoomLoaded();
+    void onRoomLoaded();
 
-    public void destroy();
+    void destroy();
 }

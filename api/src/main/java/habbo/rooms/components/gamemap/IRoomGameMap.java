@@ -4,19 +4,19 @@ import habbo.rooms.IRoomComponent;
 import utils.pathfinder.Position;
 
 public interface IRoomGameMap extends IRoomComponent {
-    public IRoomTile[][] getMap();
+    IRoomTile[][] getMap();
 
-    public IRoomTile getTile(int x, int y);
+    IRoomTile getTile(int x, int y);
 
-    public int getMaxX();
+    int getMaxX();
 
-    public int getMaxY();
+    int getMaxY();
 
-    public int getMaxZ();
+    int getMaxZ();
 
-    public int getMapSize();
+    int getMapSize();
 
-    public String getModelMap();
+    String getModelMap();
 
     boolean isValidCoordinate(Position position);
 

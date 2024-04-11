@@ -1,15 +1,7 @@
 package habbo.rooms.components.objects.items;
 
-public class LimitedData implements ILimitedData {
+public record LimitedData(int limitedRare, int limitedRareTotal) implements ILimitedData {
     public static final LimitedData NONE = new LimitedData(0, 0);
-
-    private final int limitedRare;
-    private final int limitedRareTotal;
-
-    public LimitedData(int limitedRare, int limitedRareTotal) {
-        this.limitedRare = limitedRare;
-        this.limitedRareTotal = limitedRareTotal;
-    }
 
     public static LimitedData fromString(String limitedData) {
         try {
@@ -18,14 +10,6 @@ public class LimitedData implements ILimitedData {
         } catch (Exception e) {
             return NONE;
         }
-    }
-
-    public int getLimitedRare() {
-        return this.limitedRare;
-    }
-
-    public int getLimitedRareTotal() {
-        return this.limitedRareTotal;
     }
 
     @Override

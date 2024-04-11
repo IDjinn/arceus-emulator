@@ -8,17 +8,17 @@ import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IFillable;
 
 public interface IHabboInventoryItem extends IFillable, ISerializable {
-    public int getId();
+    int getId();
 
-    public IHabbo getHabbo();
-    
-    public IFurniture getFurniture();
+    IHabbo getHabbo();
 
-    public IExtraData getExtraData();
+    IFurniture getFurniture();
+
+    IExtraData getExtraData();
 
 
-    public @Nullable String getWiredData(); // TODO MOVE TO OWN TABLE
+    @Nullable String getWiredData(); // TODO MOVE TO OWN TABLE
 
-    public int getGroup();
+    int getGroup();
 
 }

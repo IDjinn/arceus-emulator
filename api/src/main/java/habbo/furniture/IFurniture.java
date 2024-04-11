@@ -5,41 +5,41 @@ import utils.interfaces.IFillable;
 
 public interface IFurniture extends IDisposable, IFillable {
 
-    public int getId();
+    int getId();
 
-    public int getSpriteId();
+    int getSpriteId();
 
-    public String getPublicName();
+    String getPublicName();
 
-    public String getItemName();
+    String getItemName();
 
-    public FurnitureType getType();
+    FurnitureType getType();
 
-    public int getWidth();
+    int getWidth();
 
-    public int getLength();
+    int getLength();
 
-    public double getStackHeight();
+    double getStackHeight();
 
-    public String getInteractionType();
+    String getInteractionType();
 
-    public int getInteractionModesCount();
+    int getInteractionModesCount();
 
-    public boolean isCanSit();
+    boolean isCanSit();
 
-    public boolean isCanWalk();
+    boolean isCanWalk();
 
-    public boolean isCanLay();
+    boolean isCanLay();
 
-    public boolean isCanStack();
+    boolean isCanStack();
 
-    public boolean isCanGift();
+    boolean isCanGift();
 
-    public boolean isCanTrade();
+    boolean isCanTrade();
 
-    public boolean isCanRecycle();
+    boolean isCanRecycle();
 
-    public boolean isCanSellOnMarketplace();
+    boolean isCanSellOnMarketplace();
 
-    public boolean isCanStackOnInventory();
+    boolean isCanStackOnInventory();
 }

@@ -49,7 +49,7 @@ public interface ICatalogPage extends ISerializable, IFillable {
 
     List<ICatalogPage> getChildren();
 
-    public void serializePageData(OutgoingPacket packet);
+    void serializePageData(OutgoingPacket packet);
 
     OutgoingPacket serializeItems(OutgoingPacket packet, IHabbo habbo);
 

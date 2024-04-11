@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.SequencedCollection;
 
 public interface IPathfinder extends IRoomComponent {
-    public boolean isEnabled3d();
+    boolean isEnabled3d();
 
-    public void setEnabled3d(boolean enabled3d);
+    void setEnabled3d(boolean enabled3d);
 
 
-    public SequencedCollection<Position> tracePath(final Position from, final Position to);
+    SequencedCollection<Position> tracePath(final Position from, final Position to);
 
-    public HashMap<Direction, Position> getAdjacentDirections();
+    HashMap<Direction, Position> getAdjacentDirections();
 
-    public HashMap<Direction, Position> getDiagonalDirections();
+    HashMap<Direction, Position> getDiagonalDirections();
 }

@@ -12,7 +12,7 @@ public class SSLCertificateLoader {
     public static SslContext getContext() {
         SslContext context;
         try {
-            context = SslContextBuilder.forServer(new File(STR."\{filePath}\{File.separator}cert.pem"), new File( filePath + File.separator + "privkey.pem" )).build();
+            context = SslContextBuilder.forServer(new File(STR."\{filePath}\{File.separator}cert.pem"), new File(STR."\{filePath + File.separator}privkey.pem")).build();
         } catch ( Exception e ) {
             logger.info("Unable to load ssl: {}", e.getMessage());
             context = null;

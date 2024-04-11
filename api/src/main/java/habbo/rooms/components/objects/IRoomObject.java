@@ -4,15 +4,15 @@ import habbo.rooms.IRoom;
 import utils.interfaces.IDisposable;
 
 public interface IRoomObject extends IDisposable {
-    public int getVirtualId();
+    int getVirtualId();
 
-    public IRoom getRoom();
+    IRoom getRoom();
 
-    public default void onRoomLoaded() {
+    default void onRoomLoaded() {
 
     }
 
-    public default void init() {
+    default void init() {
 
     }
 

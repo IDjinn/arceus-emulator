@@ -23,8 +23,8 @@ public abstract class ExtraData implements IExtraData {
         packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? this.LTD_FLAG : 0));
         this.serializeState(packet);
         if (this.getLimitedData().isLimited()) {
-            packet.appendInt(this.getLimitedData().getLimitedRare())
-                    .appendInt(this.getLimitedData().getLimitedRareTotal());
+            packet.appendInt(this.getLimitedData().limitedRare())
+                    .appendInt(this.getLimitedData().limitedRareTotal());
         }
     }
 

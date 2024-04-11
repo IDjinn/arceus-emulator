@@ -13,13 +13,13 @@ import javax.annotation.Nullable;
 
 public interface IHabbo {
 
-    public void init();
+    void init();
 
-    public void onLoaded();
+    void onLoaded();
 
-    public void update(); // TODO
+    void update(); // TODO
 
-    public void destroy();
+    void destroy();
 
     INitroClient getClient();
 

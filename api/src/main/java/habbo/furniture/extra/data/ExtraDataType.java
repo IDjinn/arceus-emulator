@@ -19,7 +19,7 @@ public enum ExtraDataType {
         final var types = new HashSet<ExtraDataType>();
         for (ExtraDataType type : values()) {
             if (types.contains(type))
-                throw new IllegalArgumentException("Duplicate type: " + type);
+                throw new IllegalArgumentException(STR."Duplicate type: \{type}");
 
             types.add(type);
         }

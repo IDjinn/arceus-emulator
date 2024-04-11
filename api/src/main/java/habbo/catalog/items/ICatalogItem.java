@@ -1,16 +1,10 @@
 package habbo.catalog.items;
 
 import habbo.furniture.IFurniture;
-import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import utils.interfaces.IFillable;
 
 public interface ICatalogItem extends IFillable, ISerializable {
-    void compose(OutgoingPacket packet);
-
-    void composeClubPresents(OutgoingPacket packet);
-
-    void serializeAvailability(OutgoingPacket packet);
 
     int getId();
 
@@ -35,8 +29,6 @@ public interface ICatalogItem extends IFillable, ISerializable {
     int getLimitedSells();
 
     boolean allowOffer();
-
-    void increaseLimitedSells(int amount);
 
     boolean hasBadge();
 

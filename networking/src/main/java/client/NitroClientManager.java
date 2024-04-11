@@ -14,8 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public class NitroClientManager implements INitroClientManager {
-    private final ConcurrentHashMap<ChannelId, Channel>  guests = new ConcurrentHashMap<ChannelId, Channel>();
-    private final ConcurrentHashMap<ChannelId, INitroClient> clients = new ConcurrentHashMap<ChannelId, INitroClient>();
+    private final ConcurrentHashMap<ChannelId, Channel> guests = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<ChannelId, INitroClient> clients = new ConcurrentHashMap<>();
 
     @Inject
     private INitroClientFactory clientFactory;

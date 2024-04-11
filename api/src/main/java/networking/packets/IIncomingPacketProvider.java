@@ -5,5 +5,5 @@ import io.netty.channel.ChannelHandlerContext;
 
 public interface IIncomingPacketProvider {
 
-    public IIncomingPacket createIncomingPacket(int packetId, ByteBuf buffer, ChannelHandlerContext ctx);
+    IIncomingPacket createIncomingPacket(int packetId, ByteBuf buffer, ChannelHandlerContext ctx);
 }
