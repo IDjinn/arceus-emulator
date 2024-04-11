@@ -1,6 +1,7 @@
 package habbo.rooms.data.models;
 
 import org.apache.logging.log4j.Logger;
+import utils.pathfinder.Direction;
 
 public interface IRoomModelData {
     int getDoorX();
@@ -11,7 +12,7 @@ public interface IRoomModelData {
 
     String getHeightMap();
 
-    int getDoorDirection();
+    Direction getDoorDirection();
 
     Logger getLogger();
 }

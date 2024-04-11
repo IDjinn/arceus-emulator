@@ -26,11 +26,13 @@ public abstract class RoomEntity implements IRoomEntity {
     public RoomEntity(IRoom room, int virtualId) {
         this.room = room;
         this.virtualId = virtualId;
-        this.position = new Position(4, 5);
-        this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
         this.walkPath = new ArrayList<>();
         this.onItem = null;
+
+        final var door = this.getRoom().getGameMap().getTile(this.getRoom().getModel().getDoorX(), this.getRoom().getModel().getDoorY());
+        this.position = door.getPosition();
+        this.direction = this.getRoom().getModel().getDoorDirection();
     }
 
     @Override

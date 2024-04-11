@@ -1,9 +1,13 @@
 package habbo.rooms.components.gamemap;
 
+import utils.pathfinder.Position;
+
 public interface IRoomTile {
-    int x();
+    int getX();
 
-    int y();
+    int getY();
 
-    int z();
+    int getZ();
+
+    Position getPosition();
 }

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
+import utils.pathfinder.Direction;
 
 public class RoomModelData implements IRoomModelData, IFillable {
     private final Logger logger = LogManager.getLogger();
@@ -12,7 +13,7 @@ public class RoomModelData implements IRoomModelData, IFillable {
     private int doorY;
     private String name;
     private String heightMap;
-    private int doorDirection;
+    private Direction doorDirection;
 
     public RoomModelData(IConnectionResult data) {
         try {
@@ -42,7 +43,7 @@ public class RoomModelData implements IRoomModelData, IFillable {
         return this.heightMap;
     }
 
-    public int getDoorDirection() {
+    public Direction getDoorDirection() {
         return this.doorDirection;
     }
 
@@ -52,6 +53,6 @@ public class RoomModelData implements IRoomModelData, IFillable {
         this.doorY = result.getInt("door_y");
         this.name = result.getString("name");
         this.heightMap = result.getString("heightmap").replaceAll("\r", "");
-        this.doorDirection = result.getInt("door_dir");
+        this.doorDirection = Direction.get(result.getInt("door_dir"));
     }
 }

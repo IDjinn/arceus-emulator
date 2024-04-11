@@ -76,7 +76,7 @@ public class RoomGameMap implements IRoomGameMap {
 
             for (int x = 0; x < modelWidth; x++) {
                 for (int y = 0; y < modelHeight; y++) {
-                    this.tiles[x][y] = new RoomTile(x, y, map_height_lookup(Character.toUpperCase(map[x].charAt(y))));
+                    this.tiles[x][y] = new RoomTile(new Position(x, y, map_height_lookup(Character.toUpperCase(map[x].charAt(y)))));
                     this.mapSize++;
                 }
             }
