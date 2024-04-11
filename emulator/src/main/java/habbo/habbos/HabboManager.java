@@ -25,7 +25,10 @@ public class HabboManager implements IHabboManager {
     @Inject
     public HabboManager(IHotel hotel) {
         this.hotel = hotel;
+        this.connectedHabbos = new ConcurrentHashMap<>();
 
+        this.hotel.getProcessHandler().registerProcess(HabboManager.class.getSimpleName(), this::updateHabbos, 5, 5,
+                TimeUnit.MINUTES);
         this.habboDataCache = Caffeine.newBuilder()
                 .maximumSize(10)
                 .expireAfterAccess(10, TimeUnit.MINUTES)
@@ -34,9 +37,6 @@ public class HabboManager implements IHabboManager {
                 .maximumSize(10)
                 .expireAfterAccess(10, TimeUnit.MINUTES)
                 .build();
-        this.hotel.getProcessHandler().registerProcess(HabboManager.class.getSimpleName(), this::updateHabbos, 5, 5,
-                TimeUnit.MINUTES);
-        this.connectedHabbos = new ConcurrentHashMap<>();
     }
 
     private void updateHabbos() {
@@ -47,6 +47,8 @@ public class HabboManager implements IHabboManager {
                 this.logger.error("error while updating habbo {}", habbo.getData().getId(), e);
             }
         }
+
+        this.logger.info("total of {} habbos updated", this.connectedHabbos.size());
     }
 
     @Override
@@ -79,10 +81,14 @@ public class HabboManager implements IHabboManager {
 
     @Override
     public void onLogoff(final IHabbo habbo) {
-        habbo.update();
-        habbo.destroy();
-
-        this.invalidateCache(habbo.getData().getId());
-        this.connectedHabbos.remove(habbo.getData().getId());
+        try {
+            habbo.update();
+            habbo.destroy();
+        } catch (Exception e) {
+            this.logger.error("error while disposing habbo {}", habbo.getData().getId(), e);
+        } finally {
+            this.invalidateCache(habbo.getData().getId());
+            this.connectedHabbos.remove(habbo.getData().getId());
+        }
     }
 }
