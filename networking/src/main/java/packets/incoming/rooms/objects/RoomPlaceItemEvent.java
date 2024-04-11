@@ -20,12 +20,14 @@ public class RoomPlaceItemEvent extends IncomingEvent {
     public void parse(IIncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
+        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+            return; // TODO: CHECK RIGHTS IN SPACE TO PLACE
+        
         var data = packet.readString().split(" ");
         var itemId = Integer.parseInt(data[0]);
         var item = client.getHabbo().getInventory().getItem(itemId);
         if (item == null) return;
 
-        // TODO CHECK RIGHTS
         switch (item.getFurniture().getType()) {
             case FLOOR -> {
                 var x = Integer.parseInt(data[1]);

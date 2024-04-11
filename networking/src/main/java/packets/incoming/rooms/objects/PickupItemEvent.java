@@ -17,6 +17,10 @@ public class PickupItemEvent extends IncomingEvent {
     public void parse(IIncomingPacket packet, INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
+        // TODO ITEM OWNER
+        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+            return;
+        
         var isFloorItem = packet.readInt() == 2;
         var itemId = packet.readInt();
         var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
