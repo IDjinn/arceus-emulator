@@ -1,7 +1,8 @@
 package habbo.rooms;
 
 import com.google.inject.Inject;
-import core.IThreadManager;
+import core.concurrency.IProcessHandler;
+import core.concurrency.IThreadManager;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
@@ -16,20 +17,25 @@ import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.RoomEntitiesComposer;
 import packets.outgoing.rooms.RoomUserStatusComposer;
 import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
 import packets.outgoing.rooms.objects.wall.RoomWallItemsComposer;
 import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
-import utils.ReflectionHelpers;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 public class Room implements IRoom {
-    public ConcurrentHashMap<String, ScheduledFuture<?>> processes = new ConcurrentHashMap<>();
+    private final Logger logger = LogManager.getLogger();
+    private final IRoomData data;
+
+    private final Map<Class<? extends IRoomComponent>, IRoomComponent> customComponents;
+    private IRoomModelData model;
+    private boolean isFullyLoaded = false;
+    
     @Inject
     private IRoomObjectManager objectManager;
 
@@ -47,15 +53,13 @@ public class Room implements IRoom {
     private IRoomRightsManager rightsManager;
     @Inject
     private IRoomManager roomManager;
+    @Inject
+    private IProcessHandler processesHandler;
 
-    private final IRoomData data;
-    private IRoomModelData model;
-
-    private boolean isFullyLoaded = false;
-    private final Logger logger = LogManager.getLogger();
 
     public Room(IConnectionResult data) {
         this.data = new RoomData(data);
+        this.customComponents = new ConcurrentHashMap<>();
     }
 
     public IRoomData getData() {
@@ -71,6 +75,9 @@ public class Room implements IRoom {
         this.pathfinder.init(this);
         this.objectManager.init(this);
 
+        for (var customComponent : this.customComponents.values()) {
+            customComponent.init(this);
+        }
     }
 
     @Override
@@ -80,7 +87,12 @@ public class Room implements IRoom {
         this.pathfinder.destroy();
         this.objectManager.destroy();
         this.rightsManager.destroy();
-        this.unregisterAllProcess();
+
+        for (var customComponent : this.customComponents.values()) {
+            customComponent.destroy();
+        }
+
+        this.processesHandler.unregisterAllProcess();
     }
 
     @Override
@@ -90,6 +102,11 @@ public class Room implements IRoom {
         this.pathfinder.onRoomLoaded();
         this.objectManager.onRoomLoaded();
         this.rightsManager.onRoomLoaded();
+
+        for (var customComponent : this.customComponents.values()) {
+            customComponent.onRoomLoaded();
+        }
+        
         this.setFullyLoaded(true);
     }
 
@@ -108,7 +125,7 @@ public class Room implements IRoom {
     public void prepareForHabbo(IHabbo habbo, String password) {
         // TODO: IN ROOM CHECKS
         habbo.setRoom(this);
-        var entity = getEntityManager().createHabboEntity(habbo);
+        var entity = this.getEntityManager().createHabboEntity(habbo);
 
         habbo.setPlayerEntity(entity);
 
@@ -121,8 +138,8 @@ public class Room implements IRoom {
                 new RoomRightsComposer(this.getRightsManager().getRightLevelFor(habbo)),
                 new RoomScoreComposer(0, true),
                 new RoomPromotionMessageComposer(),
-                new RoomRelativeMapComposer(getGameMap()),
-                new RoomHeightMapComposer(getGameMap()),
+                new RoomRelativeMapComposer(this.getGameMap()),
+                new RoomHeightMapComposer(this.getGameMap()),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems())
         );
@@ -133,30 +150,30 @@ public class Room implements IRoom {
         habbo.getClient().sendMessages(
                 new RoomOpenComposer(),
                 new HideDoorbellComposer(),
-                new RoomRelativeMapComposer(getGameMap()),
-                new RoomHeightMapComposer(getGameMap()),
+                new RoomRelativeMapComposer(this.getGameMap()),
+                new RoomHeightMapComposer(this.getGameMap()),
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
                 new OutgoingPacket(2402).appendInt(0)
         );
 
-        broadcastMessages(
-                new RoomEntitiesComposer(getEntityManager().getEntities()),
-                new RoomUserStatusComposer(getEntityManager().getEntities())
+        this.broadcastMessages(
+                new RoomEntitiesComposer(this.getEntityManager().getEntities()),
+                new RoomUserStatusComposer(this.getEntityManager().getEntities())
         );
     }
 
     @Override
     public void broadcastMessage(OutgoingPacket packet) {
-        for (var player : getEntityManager().getPlayers()) {
+        for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
     public void broadcastMessages(OutgoingPacket... packets) {
-        for (var player : getEntityManager().getPlayers()) {
+        for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }
     }
@@ -202,35 +219,22 @@ public class Room implements IRoom {
     }
 
     @Override
-    public void registerProcess(@NotNull String key, Runnable runnable, long interval, TimeUnit timeUnit) {
-        if (this.processes.containsKey(key))
-            throw new IllegalStateException("already registered");
+    public IProcessHandler getProcessHandler() {
+        return this.processesHandler;
+    }
 
-        this.processes.put(key, this.threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(runnable
-                , 0,
-                interval,
-                timeUnit));
-
-        this.logger.debug("registered process '{}' for room '{}' by '{}'", key, this.getData().getId(),
-                ReflectionHelpers.getCallerInfo());
+    @Nullable
+    @Override
+    public <TRoomComponent extends IRoomComponent> TRoomComponent getCustomComponent(final Class<TRoomComponent> componentType) {
+        assert componentType != null;
+        assert componentType.isInstance(this.customComponents.get(componentType));
+        return componentType.cast(this.customComponents.get(componentType));
     }
 
     @Override
-    public boolean unregisterProcess(@NotNull String key) {
-        var process = this.processes.get(key);
-        if (process == null)
-            return false;
-
-        return process.cancel(true);
-    }
-
-    private void unregisterAllProcess() {
-        for (var key : this.processes.keySet()) {
-            try {
-                unregisterProcess(key);
-            } catch (Exception e) {
-                this.logger.error("Unable to unregister process {} from room {} due exception {}", key, this.data.getId(), e.getMessage(), e);
-            }
-        }
+    public void registerCustomComponent(final Class<? extends IRoomComponent> component, IRoomComponent instance) {
+        this.customComponents.put(component, instance);
+        this.logger.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
+                instance.getClass().getName());   
     }
 }

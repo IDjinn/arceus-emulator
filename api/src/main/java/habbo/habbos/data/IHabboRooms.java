@@ -1,10 +1,11 @@
 package habbo.habbos.data;
 
+import habbo.habbos.IHabboComponent;
 import habbo.rooms.IRoom;
 
 import java.util.List;
 
-public interface IHabboRooms {
+public interface IHabboRooms extends IHabboComponent {
     void init();
 
     List<IRoom> getOwnRooms();

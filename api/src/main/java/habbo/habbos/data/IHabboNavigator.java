@@ -1,5 +1,6 @@
 package habbo.habbos.data;
 
+import habbo.habbos.IHabboComponent;
 import habbo.habbos.data.navigator.IHabboNavigatorCategorySettings;
 import habbo.habbos.data.navigator.IHabboNavigatorSearch;
 import habbo.habbos.data.navigator.IHabboNavigatorWindowSettings;
@@ -8,7 +9,7 @@ import habbo.navigator.enums.NavigatorLayoutDisplay;
 
 import java.util.List;
 
-public interface IHabboNavigator {
+public interface IHabboNavigator extends IHabboComponent {
     IHabboNavigatorWindowSettings getNavigatorWindowSettings();
 
     List<IHabboNavigatorSearch> getNavigatorSearches();

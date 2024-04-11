@@ -8,6 +8,7 @@ db.pool.minsize=25
 db.pool.maxsize=100
 
 
+orion.debug.enabled=true
 orion.monitor.enabled=false
 orion.monitor.interval=1000
 

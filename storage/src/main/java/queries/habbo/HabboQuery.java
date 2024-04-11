@@ -25,7 +25,29 @@ public enum HabboQuery {
 
     GET_ALL_ITEMS_BY_OWNER_ID("""
             SELECT * FROM `items` WHERE `user_id` = ? AND room_id = 0;
-            """);
+            """),
+
+    UPDATE_HABBO_DATA("""
+            UPDATE users
+            SET
+                username = ?,
+                mail = ?,
+                account_created = ?,
+                last_login = ?,
+                last_online = ?,
+                motto = ?,
+                look = ?,
+                gender = ?,
+                rank = ?,
+                credits = ?,
+                online = ?,
+                auth_ticket = ?,
+                ip_register = ?,
+                ip_current = ?,
+                machine_id = ?,
+                home_room = ?
+            WHERE id = ?;
+            """);;
 
     private final String query;
 

@@ -16,7 +16,7 @@ public class ConfigurationManager implements IConfigurationManager {
     
     public ConfigurationManager() {
         this.properties = new Properties();
-        var inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
+        var inputStream = this.getClass().getClassLoader().getResourceAsStream("config.properties");
         try {
             if (inputStream != null)
                 this.properties.load(inputStream);
@@ -27,6 +27,12 @@ public class ConfigurationManager implements IConfigurationManager {
         }
         
     }
+
+    @Override
+    public boolean isDebugging() {
+        return this.getBool("orion.debug.enabled", false);
+    }
+
     @Override
     public boolean getBool(@NotNull String key) {
             return this.properties.getProperty(key).equals("1");

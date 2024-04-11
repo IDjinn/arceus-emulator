@@ -123,4 +123,10 @@ public class HabboRooms implements IHabboRooms {
     public List<IRoom> getRoomsWithRights() {
         return this.roomsWithRights;
     }
+
+
+    @Override
+    public IHabbo getHabbo() {
+        return this.habbo;
+    }
 }

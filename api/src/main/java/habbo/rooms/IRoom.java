@@ -1,5 +1,6 @@
 package habbo.rooms;
 
+import core.concurrency.IProcessHandler;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
@@ -9,11 +10,9 @@ import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.models.IRoomModelData;
 import networking.packets.OutgoingPacket;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IDisposable;
 import utils.interfaces.IWriteable;
-
-import java.util.concurrent.TimeUnit;
 
 public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     IRoomData getData();
@@ -48,7 +47,9 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
 
     void setFullyLoaded(boolean isFullyLoaded);
 
-    void registerProcess(@NotNull String key, Runnable runnable, long interval, TimeUnit timeUnit);
+    IProcessHandler getProcessHandler();
 
-    boolean unregisterProcess(@NotNull String key);
+    @Nullable <TRoomComponent extends IRoomComponent> TRoomComponent getCustomComponent(final Class<TRoomComponent> componentType);
+
+    void registerCustomComponent(Class<? extends IRoomComponent> component, IRoomComponent instance);
 }

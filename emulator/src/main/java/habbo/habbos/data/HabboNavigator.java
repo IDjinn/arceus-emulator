@@ -45,6 +45,11 @@ public class HabboNavigator implements IHabboNavigator {
         }
     }
 
+    @Override
+    public IHabbo getHabbo() {
+        return this.habbo;
+    }
+
     private void loadNavigatorSearches() {
         this.repository.loadNavigatorSearches(result -> {
             if(result == null) return;

@@ -3,7 +3,7 @@ package packets;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import core.IThreadManager;
+import core.concurrency.IThreadManager;
 import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.INitroClient;

@@ -64,17 +64,23 @@ public class Habbo implements IHabbo {
     }
 
     @Override
-    public void destroy() {
-        this.data.destory();
-        this.settings.destory();
-        this.inventory.destory();
-    }
-
-    @Override
     public void update() {
         this.data.update();
         this.settings.update();
         this.inventory.update();
+        this.navigator.update();
+        this.rooms.update();
+        this.wallet.update();
+    }
+
+    @Override
+    public void destroy() {
+        this.data.destory();
+        this.settings.destory();
+        this.inventory.destory();
+        this.navigator.destory();
+        this.rooms.destory();
+        this.wallet.destory();
     }
     
 

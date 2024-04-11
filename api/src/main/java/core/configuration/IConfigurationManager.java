@@ -3,6 +3,8 @@ package core.configuration;
 import org.jetbrains.annotations.NotNull;
 
 public interface IConfigurationManager {
+    boolean isDebugging();
+    
     boolean getBool(@NotNull String key);
 
     boolean getBool(@NotNull String key, boolean defaultValue);

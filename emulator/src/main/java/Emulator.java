@@ -4,8 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.IEmulator;
 import core.IHotel;
-import core.IThreadManager;
-import core.ThreadManager;
+import core.concurrency.IProcessHandler;
+import core.concurrency.IThreadManager;
+import core.concurrency.ProcessHandler;
+import core.concurrency.ThreadManager;
 import core.configuration.ConfigurationManager;
 import core.configuration.ConfigurationModule;
 import core.configuration.IConfigurationManager;
@@ -39,17 +41,11 @@ import storage.IConnection;
 public class Emulator extends AbstractModule implements IEmulator {
     private final Logger logger = LogManager.getLogger();
 
-    /**
-     * The configuration manager (based in config.properties local file).
-     */
     @Inject
     private IConfigurationManager configurationManager;
     @Inject
     IThreadManager threadManager;
 
-    /**
-     * The emulator settings (based in the emulator_settings table).
-     */
     @Inject
     private IEmulatorSettings emulatorSettings;
 
@@ -107,12 +103,13 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Override
     protected void configure() {
-        bind(IEmulator.class).to(Emulator.class);
-        bind(IConfigurationManager.class).to(ConfigurationManager.class);
-        bind(IHotel.class).to(Hotel.class);
-        bind(IConcurrentLock.class).to(ConcurrentLock.class);
-        bind(IThreadManager.class).to(ThreadManager.class);
-        bind(IScriptManager.class).to(ScriptManager.class);
+        this.bind(IEmulator.class).to(Emulator.class);
+        this.bind(IConfigurationManager.class).to(ConfigurationManager.class);
+        this.bind(IHotel.class).to(Hotel.class);
+        this.bind(IConcurrentLock.class).to(ConcurrentLock.class);
+        this.bind(IThreadManager.class).to(ThreadManager.class);
+        this.bind(IScriptManager.class).to(ScriptManager.class);
+        this.bind(IProcessHandler.class).to(ProcessHandler.class);
     }
 
 

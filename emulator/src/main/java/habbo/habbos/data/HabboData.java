@@ -3,12 +3,14 @@ package habbo.habbos.data;
 import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import storage.repositories.habbo.IHabboRepository;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
 
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
+    private IHabboRepository habboRepository;
 
     private int id;
     private String username;
@@ -133,7 +135,9 @@ public class HabboData implements IHabboData, IFillable {
 
     @Override
     public void update() {
-
+        habboRepository.saveHabboData(result -> {
+            logger.warn("wtf");
+        }, this);
     }
 
     @Override
