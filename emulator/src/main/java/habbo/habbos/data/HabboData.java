@@ -137,8 +137,9 @@ public class HabboData implements IHabboData, IFillable {
 
     @Override
     public void update() {
-        habboRepository.saveHabboData(result -> {
-            logger.warn("wtf");
+        this.habboRepository.saveHabboData(result -> {
+            if (!result)
+                this.logger.warn("habbo data {} was not successfully saved into database", this.getId());
         }, this);
     }
 

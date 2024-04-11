@@ -6,6 +6,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.IHotel;
 import habbo.habbos.data.IHabboData;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Singleton
 public class HabboManager implements IHabboManager {
+    private final Logger logger = LogManager.getLogger();
     private final IHotel hotel;
     private final Cache<Integer, IHabboData> habboDataCache;
     private final Cache<String, IHabboData> habboDataCacheByUsername;
@@ -37,7 +40,13 @@ public class HabboManager implements IHabboManager {
     }
 
     private void updateHabbos() {
-
+        for (var habbo : this.connectedHabbos.values()) {
+            try {
+                habbo.update();
+            } catch (Exception e) {
+                this.logger.error("error while updating habbo {}", habbo.getData().getId(), e);
+            }
+        }
     }
 
     @Override

@@ -38,7 +38,7 @@ public enum HabboQuery {
                 motto = ?,
                 look = ?,
                 gender = ?,
-                rank = ?,
+                `rank` = ?,
                 credits = ?,
                 online = ?,
                 auth_ticket = ?,

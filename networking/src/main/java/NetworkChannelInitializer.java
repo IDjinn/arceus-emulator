@@ -1,5 +1,6 @@
 import codec.WebSocketCodec;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import decoders.*;
 import encoders.OutgoingPacketEncoder;
 import encoders.OutgoingPacketLogger;
@@ -30,7 +31,7 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     private IPacketManager packetManager;
 
     @Inject
-    private GameByteDecoder gameByteDecoder;
+    Injector injector;
     public NetworkChannelInitializer() {
         this.context = SSLCertificateLoader.getContext();
         this.isSSL = this.context != null;
@@ -57,7 +58,10 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
         ch.pipeline().addLast(new GamePolicyDecoder());
         ch.pipeline().addLast(new GameByteFrameDecoder());
-        ch.pipeline().addLast(this.gameByteDecoder);
+
+        final var byteDecoder = new GameByteDecoder();
+        injector.injectMembers(byteDecoder);
+        ch.pipeline().addLast(byteDecoder);
 
         if (this.packetManager.isLoggingEnabled()) {
             ch.pipeline().addLast(this.incomingPacketLogger);
