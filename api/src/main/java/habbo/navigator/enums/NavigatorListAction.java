@@ -12,6 +12,6 @@ public enum NavigatorListAction {
     }
 
     public int get() {
-        return value;
+        return this.value;
     }
 }

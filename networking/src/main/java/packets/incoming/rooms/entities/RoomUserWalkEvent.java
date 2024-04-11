@@ -4,7 +4,7 @@ import networking.client.INitroClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
-import utils.Position;
+import utils.pathfinder.Position;
  
 public class RoomUserWalkEvent extends IncomingEvent {
     @Override

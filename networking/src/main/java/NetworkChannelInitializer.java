@@ -32,9 +32,9 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     @Inject
     private GameByteDecoder gameByteDecoder;
     public NetworkChannelInitializer() {
-        context = SSLCertificateLoader.getContext();
-        isSSL = context != null;
-        config = WebSocketServerProtocolConfig.newBuilder()
+        this.context = SSLCertificateLoader.getContext();
+        this.isSSL = this.context != null;
+        this.config = WebSocketServerProtocolConfig.newBuilder()
                 .websocketPath("/")
                 .checkStartsWith(true)
                 .maxFramePayloadLength(MAX_FRAME_SIZE)
@@ -43,35 +43,35 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
 
     @Override
     public void initChannel(SocketChannel ch) {
-        assert incomingPacketLogger != null;
-        assert packetParser != null;
+        assert this.incomingPacketLogger != null;
+        assert this.packetParser != null;
         ch.pipeline().addLast("logger", new LoggingHandler());
 
-        if (isSSL) {
-            ch.pipeline().addLast(context.newHandler(ch.alloc()));
+        if (this.isSSL) {
+            ch.pipeline().addLast(this.context.newHandler(ch.alloc()));
         }
         ch.pipeline().addLast("httpCodec", new HttpServerCodec());
         ch.pipeline().addLast("objectAggregator", new HttpObjectAggregator(MAX_FRAME_SIZE));
-        ch.pipeline().addLast("protocolHandler", new WebSocketServerProtocolHandler(config));
+        ch.pipeline().addLast("protocolHandler", new WebSocketServerProtocolHandler(this.config));
         ch.pipeline().addLast("websocketCodec", new WebSocketCodec());
 
         ch.pipeline().addLast(new GamePolicyDecoder());
         ch.pipeline().addLast(new GameByteFrameDecoder());
-        ch.pipeline().addLast(gameByteDecoder);
+        ch.pipeline().addLast(this.gameByteDecoder);
 
-        if (packetManager.isParallelParsingEnabled()) {
-            ch.pipeline().addLast(incomingPacketLogger);
+        if (this.packetManager.isLoggingEnabled()) {
+            ch.pipeline().addLast(this.incomingPacketLogger);
         }
 
-        ch.pipeline().addLast(packetParser);
+        ch.pipeline().addLast(this.packetParser);
         
         ch.pipeline().addLast(new OutgoingPacketEncoder());
-        if (packetManager.isParallelParsingEnabled()) {
-            ch.pipeline().addLast(outgoingPacketLogger);
+        if (this.packetManager.isLoggingEnabled()) {
+            ch.pipeline().addLast(this.outgoingPacketLogger);
         }
     }
 
     public boolean isSSL() {
-        return isSSL;
+        return this.isSSL;
     }
 }

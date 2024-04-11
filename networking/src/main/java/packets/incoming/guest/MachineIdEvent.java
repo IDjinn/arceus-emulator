@@ -3,7 +3,7 @@ package packets.incoming.guest;
 import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandlerContext;
 import networking.packets.IIncomingPacket;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 import networking.util.MachineId;
 import networking.util.NoAuth;
 import packets.incoming.IncomingEvent;
@@ -22,6 +22,6 @@ public class MachineIdEvent extends IncomingEvent {
         var _ = packet.readString();
         var machineId = packet.readString();
 
-        ctx.attr(GameServerAttributes.MACHINE_ID).set(new MachineId(machineId));
+        ctx.attr(GameNetowrkingAttributes.MACHINE_ID).set(new MachineId(machineId));
     }
 }

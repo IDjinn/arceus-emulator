@@ -1,6 +1,6 @@
 package habbo.rooms.components.objects.items;
 
-import utils.Position;
+import utils.pathfinder.Position;
 
 public interface IPositionable {
     public Position getPosition();

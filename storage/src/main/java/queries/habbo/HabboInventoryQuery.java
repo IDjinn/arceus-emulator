@@ -11,7 +11,7 @@ public enum HabboInventoryQuery {
             """),
 
     PICKUP_ITEM("""
-            INSERT INTO items (id, user_id, room_id, item_id, wall_pos, x, y, z, rot, extra_data, limited_data) VALUES (?,?,?,?,?,?,?,?,?,?,?);
+            UPDATE items SET room_id = 0, user_id = ? WHERE id = ?;
             """);
 
     private final String query;
@@ -21,6 +21,6 @@ public enum HabboInventoryQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

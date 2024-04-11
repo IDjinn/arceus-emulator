@@ -5,7 +5,7 @@ import habbo.navigator.enums.NavigatorLayoutDisplay;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public class HabboNavigatorCategorySettings implements IHabboNavigatorCategorySettings, IFillable {
     private final Logger logger = LogManager.getLogger();
@@ -18,23 +18,23 @@ public class HabboNavigatorCategorySettings implements IHabboNavigatorCategorySe
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill [HabboNavigatorCategorySettings]", e);
+            this.logger.error("Failed to fill [HabboNavigatorCategorySettings]", e);
         }
     }
 
     @Override
     public String getCaption() {
-        return caption;
+        return this.caption;
     }
 
     @Override
     public NavigatorDisplayMode getDisplayMode() {
-        return displayMode;
+        return this.displayMode;
     }
 
     @Override
     public NavigatorLayoutDisplay getLayoutDisplay() {
-        return layoutDisplay;
+        return this.layoutDisplay;
     }
 
     @Override

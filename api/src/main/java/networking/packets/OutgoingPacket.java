@@ -14,10 +14,10 @@ public class OutgoingPacket {
     private static final Logger logger = LogManager.getLogger();
     private boolean initialized;
 
-    private int header;
+    private final int header;
     private AtomicInteger refs;
-    private ByteBufOutputStream stream;
-    private ByteBuf channelBuffer;
+    private final ByteBufOutputStream stream;
+    private final ByteBuf channelBuffer;
 
     public OutgoingPacket(int header) {
         this.header = header;

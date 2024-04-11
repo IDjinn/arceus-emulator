@@ -16,27 +16,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
     private final Set<FloorItemEvent> events;
     private final int MAX_EVENT_COUNT = 1000; // prevent infinite recursion in while loop
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     public AdvancedFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         super(itemData, room, furniture);
-        events = ConcurrentHashMap.newKeySet();
+        this.events = ConcurrentHashMap.newKeySet();
     }
 
     public @Nullable FloorItemEvent createEvent(String name) {
         try {
             return FloorItemEventPool.getInstance().borrow();
         } catch (Exception e) {
-            logger.error("failed to create event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
+            this.logger.error("failed to create event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
             return null;
         }
     }
 
     public void enqueueEvent(FloorItemEvent event) {
         try {
-            events.add(event);
+            this.events.add(event);
         } catch (Exception e) {
-            logger.error("failed to enqueue event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
+            this.logger.error("failed to enqueue event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
         }
     }
 
@@ -44,8 +44,8 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
     public synchronized void tick() {
         try {
             var i = 0;
-            final var iterator = events.iterator();
-            while (i++ < MAX_EVENT_COUNT && iterator.hasNext()) {
+            final var iterator = this.events.iterator();
+            while (i++ < this.MAX_EVENT_COUNT && iterator.hasNext()) {
                 final var event = iterator.next();
                 event.incrementTicks();
 
@@ -59,13 +59,13 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
                 }
             }
         } catch (Exception e) {
-            logger.error("failed while processing item {} events in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
+            this.logger.error("failed while processing item {} events in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
         }
     }
 
     @Override
     public void destroy() {
-        for (FloorItemEvent event : events) {
+        for (FloorItemEvent event : this.events) {
             FloorItemEventPool.getInstance().release(event);
         }
     }

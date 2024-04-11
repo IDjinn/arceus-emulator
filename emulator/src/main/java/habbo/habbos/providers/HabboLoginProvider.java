@@ -8,7 +8,7 @@ import networking.client.INitroClient;
 import networking.client.INitroClientFactory;
 import networking.client.INitroClientManager;
 import networking.packets.OutgoingPacket;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 import packets.outgoing.PingComposer;
 import packets.outgoing.guest.SecureLoginOkComposer;
 import packets.outgoing.inventory.InventoryAchievementsComposer;
@@ -49,7 +49,7 @@ public class HabboLoginProvider implements ILoginProvider {
 
         final AtomicInteger habboId = new AtomicInteger(-1);
 
-        habboRepository.getHabboIdByAuthTicket(consumer -> {
+        this.habboRepository.getHabboIdByAuthTicket(consumer -> {
             if(consumer == null) return;
 
             habboId.set(consumer.getInt("id"));
@@ -59,23 +59,23 @@ public class HabboLoginProvider implements ILoginProvider {
             return false;
         }
 
-        return !clientManager.hasLoggedHabboById(habboId.get());
+        return !this.clientManager.hasLoggedHabboById(habboId.get());
     }
 
     public void attemptLogin(ChannelHandlerContext ctx, String authTicket) {
-        habboRepository.getHabboDataByAuthTicket(result -> {
+        this.habboRepository.getHabboDataByAuthTicket(result -> {
             if(result == null) {
-                clientManager.disconnectGuest(ctx);
+                this.clientManager.disconnectGuest(ctx);
                 return;
             }
 
-            INitroClient client = clientFactory.create(ctx);
-            ctx.attr(GameServerAttributes.CLIENT).set(client);
+            INitroClient client = this.clientFactory.create(ctx);
+            ctx.attr(GameNetowrkingAttributes.CLIENT).set(client);
 
-            final IHabbo habbo = habboFactory.create(client, result);
+            final IHabbo habbo = this.habboFactory.create(client, result);
 
             client.setHabbo(habbo);
-            clientManager.addClient(client);
+            this.clientManager.addClient(client);
 
             this.sendLoginPackets(client);
         }, authTicket);

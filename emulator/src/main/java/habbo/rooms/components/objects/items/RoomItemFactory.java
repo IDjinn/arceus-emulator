@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
-import utils.Position;
+import utils.pathfinder.Position;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
     private final IFurnitureManager furnitureManager;
     private final IHabboManager habboManager;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     @Inject
     public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager, Injector injector) {
@@ -54,12 +54,12 @@ public class RoomItemFactory implements IRoomItemFactory {
         this.itemDefinitionMap.put(LayFloorItem.INTERACTION_NAME, LayFloorItem.class);
         this.itemDefinitionMap.put(RollerFloorItem.INTERACTION_NAME, RollerFloorItem.class);
         // TODO: DETECT DUPLICATE CLASSES/INTERACTION
-        logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
+        this.logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
     }
 
     @Override
     public IRoomItem create(IRoomItemData itemData, IRoom room) {
-        var furnitureData = furnitureManager.get(itemData.getFurnitureId());
+        var furnitureData = this.furnitureManager.get(itemData.getFurnitureId());
         if (furnitureData == null)
             throw new IllegalArgumentException(STR."Furniture data  not found for id \{itemData.getFurnitureId()}");
 
@@ -71,7 +71,7 @@ public class RoomItemFactory implements IRoomItemFactory {
         };
         this.injector.injectMembers(item);
 
-        var ownerData = habboManager.getHabboData(itemData.getOwnerId());
+        var ownerData = this.habboManager.getHabboData(itemData.getOwnerId());
         ownerData.ifPresent(item::setOwnerData);
         return item;
     }
@@ -106,25 +106,25 @@ public class RoomItemFactory implements IRoomItemFactory {
 
         // TODO:GIFTS
 
-        if (itemDefinitionMap.containsKey(furniture.getInteractionType())) {
+        if (this.itemDefinitionMap.containsKey(furniture.getInteractionType())) {
             try {
                 Constructor<? extends IRoomItem> constructor;
 
-                if (itemConstructorCache.containsKey(furniture.getInteractionType())) {
-                    constructor = itemConstructorCache.get(furniture.getInteractionType());
+                if (this.itemConstructorCache.containsKey(furniture.getInteractionType())) {
+                    constructor = this.itemConstructorCache.get(furniture.getInteractionType());
                 } else {
-                    constructor = itemDefinitionMap.get(furniture.getInteractionType()).getConstructor(IRoomItemData.class, IRoom.class, IFurniture.class);
-                    itemConstructorCache.put(furniture.getInteractionType(), constructor);
+                    constructor = this.itemDefinitionMap.get(furniture.getInteractionType()).getConstructor(IRoomItemData.class, IRoom.class, IFurniture.class);
+                    this.itemConstructorCache.put(furniture.getInteractionType(), constructor);
                 }
 
                 if (constructor != null)
                     return constructor.newInstance(data, room, furniture);
             } catch (Exception e) {
-                logger.warn(STR."Failed to create instance for item: \{furniture.getId()}, type: \{furniture.getInteractionType()}", e);
+                this.logger.warn(STR."Failed to create instance for item: \{furniture.getId()}, type: \{furniture.getInteractionType()}", e);
             }
         }
 
-        logger.warn("interaction type {} was not found to create instance for item {}", furniture.getInteractionType(), data.getId());
+        this.logger.warn("interaction type {} was not found to create instance for item {}", furniture.getInteractionType(), data.getId());
         if (furniture.getType().equals(FurnitureType.FLOOR))
             return new DefaultFloorItem(data, room, furniture);
         if (furniture.getType().equals(FurnitureType.WALL))
@@ -134,7 +134,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IRoomItemData createItemDataFromResult(IConnectionResult result) throws Exception {
-        var id = result.getLong("id");
+        var id = result.getInt("id");
         var itemId = result.getInt("item_id");
         var ownerId = result.getInt("user_id");
         var x = result.getInt("x");

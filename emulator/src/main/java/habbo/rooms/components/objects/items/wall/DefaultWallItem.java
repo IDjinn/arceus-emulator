@@ -29,6 +29,7 @@ public class DefaultWallItem extends RoomItem implements IWallItem {
     @Override
     public void sendUpdate() {
         this.getRoom().broadcastMessage(new WallItemUpdateComposer(this));
+        super.setNeedSave(true);
     }
 
     @Override

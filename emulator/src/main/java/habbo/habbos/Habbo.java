@@ -73,7 +73,7 @@ public class Habbo implements IHabbo {
     
 
     public INitroClient getClient() {
-        return client;
+        return this.client;
     }
 
     @Override

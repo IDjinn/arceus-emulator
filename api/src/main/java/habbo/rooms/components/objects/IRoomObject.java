@@ -1,7 +1,7 @@
 package habbo.rooms.components.objects;
 
 import habbo.rooms.IRoom;
-import utils.IDisposable;
+import utils.interfaces.IDisposable;
 
 public interface IRoomObject extends IDisposable {
     public int getVirtualId();

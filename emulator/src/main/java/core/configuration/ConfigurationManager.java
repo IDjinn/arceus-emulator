@@ -15,66 +15,66 @@ public class ConfigurationManager implements IConfigurationManager {
     private final Properties properties;
     
     public ConfigurationManager() {
-        properties = new Properties();
+        this.properties = new Properties();
         var inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
         try {
             if (inputStream != null)
-                properties.load(inputStream);
+                this.properties.load(inputStream);
         } catch (FileNotFoundException ex) {
-            logger.error("Configuration file config.properties was not found");
+            this.logger.error("Configuration file config.properties was not found");
         } catch (IOException ex) {
-            logger.error("Configuration file exception: {}", ex.getMessage(), ex);
+            this.logger.error("Configuration file exception: {}", ex.getMessage(), ex);
         }
         
     }
     @Override
     public boolean getBool(@NotNull String key) {
-            return properties.getProperty(key).equals("1");
+            return this.properties.getProperty(key).equals("1");
     }
 
     @Override
     public boolean getBool(@NotNull String key, boolean defaultValue) {
-            return Boolean.parseBoolean(properties.getProperty(key, String.valueOf(defaultValue)));
+            return Boolean.parseBoolean(this.properties.getProperty(key, String.valueOf(defaultValue)));
     }
 
     @Override
     public String getString(@NotNull String key) {
         
-        return properties.getProperty(key);
+        return this.properties.getProperty(key);
     }
 
     @Override
     public String getString(@NotNull String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
+        return this.properties.getProperty(key, defaultValue);
     }
 
     @Override
     public int getInt(@NotNull String key) {
-      return Integer.parseInt(properties.getProperty(key));
+      return Integer.parseInt(this.properties.getProperty(key));
     }
 
     @Override
     public int getInt(@NotNull String key, int defaultValue) {
-        return Integer.parseInt(properties.getProperty(key, String.valueOf(defaultValue)));
+        return Integer.parseInt(this.properties.getProperty(key, String.valueOf(defaultValue)));
     }
 
     @Override
     public long getLong(@NotNull String key) {
-        return Long.parseLong(properties.getProperty(key));
+        return Long.parseLong(this.properties.getProperty(key));
     }
 
     @Override
     public long getLong(@NotNull String key, long defaultValue) {
-        return Long.parseLong(properties.getProperty(key, String.valueOf(defaultValue)));
+        return Long.parseLong(this.properties.getProperty(key, String.valueOf(defaultValue)));
     }
 
     @Override
     public double getDouble(@NotNull String key) {
-        return Double.parseDouble(properties.getProperty(key));
+        return Double.parseDouble(this.properties.getProperty(key));
     }
 
     @Override
     public double getDouble(@NotNull String key, double defaultValue) {
-        return Double.parseDouble(properties.getProperty(key, String.valueOf(defaultValue)));
+        return Double.parseDouble(this.properties.getProperty(key, String.valueOf(defaultValue)));
     }
 }

@@ -1,4 +1,6 @@
-package utils;
+package utils.pathfinder;
+
+import utils.RandomUtil;
 
 public enum Direction {
     North,

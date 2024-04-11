@@ -1,7 +1,7 @@
 package habbo.rooms.components.gamemap;
 
 import habbo.rooms.IRoomComponent;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public interface IRoomGameMap extends IRoomComponent {
     public IRoomTile[][] getMap();
@@ -18,7 +18,7 @@ public interface IRoomGameMap extends IRoomComponent {
 
     public String getModelMap();
 
-    boolean isValidCoordinate(Position neighborPosition);
+    boolean isValidCoordinate(Position position);
 
     boolean isValidMovement(Position from, Position to, Position goal);
 }

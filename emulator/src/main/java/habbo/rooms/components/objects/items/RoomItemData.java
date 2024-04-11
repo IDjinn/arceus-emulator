@@ -2,18 +2,19 @@ package habbo.rooms.components.objects.items;
 
 import habbo.furniture.extra.data.IExtraData;
 import habbo.furniture.extra.data.LegacyExtraData;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class RoomItemData implements IRoomItemData {
-    private final long id;
+    private final int id;
     private final int itemId;
-    private int ownerId;
+    private final int ownerId;
     private IExtraData data;
     private int rotation;
     private Position floorPosition;
     private String wallPosition;
 
-    public RoomItemData(long id, int itemId, int ownerId, Position position, int rotation, IExtraData data, String wallPosition) {
+    public RoomItemData(int id, int itemId, int ownerId, Position position, int rotation, IExtraData data,
+                        String wallPosition) {
         this.id = id;
         this.itemId = itemId;
         this.ownerId = ownerId;
@@ -26,8 +27,8 @@ public class RoomItemData implements IRoomItemData {
 
     }
 
-    public long getId() {
-        return id;
+    public int getId() {
+        return this.id;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class RoomItemData implements IRoomItemData {
     }
 
     public int getOwnerId() {
-        return ownerId;
+        return this.ownerId;
     }
     
     @Override
@@ -71,7 +72,7 @@ public class RoomItemData implements IRoomItemData {
 
     @Override
     public IExtraData getData() {
-        return data;
+        return this.data;
     }
 
     @Override

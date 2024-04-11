@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import habbo.GameConstants;
 import habbo.furniture.FurnitureType;
@@ -13,39 +14,41 @@ import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.inventory.AddHabboItemCategory;
+import packets.outgoing.inventory.AddHabboItemComposer;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
+import packets.outgoing.rooms.objects.floor.RemoveFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
+import packets.outgoing.rooms.objects.wall.RemoveWallItemComposer;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
+import storage.repositories.habbo.IHabboInventoryRepository;
 import storage.repositories.rooms.IRoomItemsRepository;
-import utils.Position;
 import utils.cycle.ICycle;
+import utils.pathfinder.Position;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
-    private final HashMap<Long, IRoomItem> items;
-    private final HashMap<Long, IFloorItem> floorItems;
-    private final HashMap<Long, IWallItem> wallItems;
-    private final AtomicInteger virtualIdCounter;
-    private final HashMap<Integer, IRoomItem> itemsByVirtualId;
-    private Logger logger = LogManager.getLogger();
+    private final HashMap<Integer, IRoomItem> items;
+    private final HashMap<Integer, IFloorItem> floorItems;
+    private final HashMap<Integer, IWallItem> wallItems;
+    private final Logger logger = LogManager.getLogger();
     private IRoom room;
     @Inject
     private IRoomItemsRepository itemsRepository;
     @Inject
     private IRoomItemFactory roomItemFactory;
+    @Inject
+    private IHabboInventoryRepository inventoryRepository;
 
     private final HashSet<String> furnitureOwners;
 
 
     public RoomObjectManager() {
         this.items = new HashMap<>();
-        this.itemsByVirtualId = new HashMap<>();
-        this.virtualIdCounter = new AtomicInteger(1);
         this.furnitureOwners = new HashSet<>(1);
         this.wallItems = new HashMap<>();
         this.floorItems = new HashMap<>();
@@ -71,13 +74,13 @@ public class RoomObjectManager implements IRoomObjectManager {
             }
         });
         this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
-        this.getRoom().registerProcess(RoomObjectManager.class.getName(), this::tick,
-                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void onRoomLoaded() {
         this.items.values().forEach(IRoomObject::onRoomLoaded);
+        this.getRoom().registerProcess(RoomObjectManager.class.getSimpleName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -112,6 +115,13 @@ public class RoomObjectManager implements IRoomObjectManager {
         return this.floorItems.get(itemId);
     }
 
+    @Nullable
+    @Override
+    public IRoomItem getItem(final int itemId) {
+        final var realId = itemId & ~GameConstants.FurnitureVirtualIdMask; // TODO MOVE IT TO PACKET ASSERTION
+        return this.items.get(realId);
+    }
+
     @Override
     public Collection<IFloorItem> getAllFloorItemsAt(final Position position) {
         return this.getAllFloorItemsAt(position, -1);
@@ -143,18 +153,6 @@ public class RoomObjectManager implements IRoomObjectManager {
     @Override
     public SequencedCollection<IRoomItem> getItemsWhere(Predicate<IRoomItem> predicate) {
         return this.items.values().stream().filter(predicate).toList();
-    }
-
-    @Override
-    public int getVirtualIdForItem(IRoomItem item) {
-        var newId = this.virtualIdCounter.getAndIncrement() | GameConstants.FurnitureVirtualIdMask;
-        this.itemsByVirtualId.put(newId, item);
-        return newId;
-    }
-
-    @Override
-    public @Nullable IRoomItem getItemByVirtualId(int virtualId) {
-        return this.itemsByVirtualId.get(virtualId);
     }
 
     public List<String> getFurnitureOwners() {
@@ -237,6 +235,26 @@ public class RoomObjectManager implements IRoomObjectManager {
     public void moveWallItemTo(final IHabbo habbo, final IWallItem wallItem, final String coordinates) {
         wallItem.setWallPosition(coordinates);
         this.getRoom().broadcastMessage(new WallItemUpdateComposer(wallItem));
+    }
+
+    @Override
+    public void pickupItem(final IHabbo habbo, final IRoomItem item) {
+        this.inventoryRepository.pickupItem(result -> {
+            item.onRemove(habbo);
+            if (item instanceof IFloorItem floorItem) {
+                this.getRoom().broadcastMessage(new RemoveFloorItemComposer(floorItem, habbo.getData().getId()));
+            } else if (item instanceof IWallItem wallItem) {
+                this.getRoom().broadcastMessage(new RemoveWallItemComposer(wallItem, habbo.getData().getId()));
+            }
+
+            habbo.getInventory().removeItem(item.getId());
+            habbo.getInventory().sendUpdate();
+            if (item.getOwnerData().isPresent()) {
+                if (item.getOwnerData().get().getId() == habbo.getData().getId()) {
+                    habbo.getClient().sendMessage(new AddHabboItemComposer(AddHabboItemCategory.OwnedFurni, Lists.newArrayList(item.getVirtualId())));
+                }
+            }
+        }, item.getId(), habbo.getData().getId());
     }
 
     @Override

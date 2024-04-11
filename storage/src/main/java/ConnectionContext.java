@@ -9,6 +9,6 @@ public class ConnectionContext implements IConnectionContext {
     private IConnectionProvider connectionProvider;
 
     public IConnectionProvider getProvider() {
-        return connectionProvider;
+        return this.connectionProvider;
     }
 }

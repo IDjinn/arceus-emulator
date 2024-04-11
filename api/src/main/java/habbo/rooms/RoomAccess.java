@@ -15,6 +15,6 @@ public enum RoomAccess {
     }
 
     public int getState() {
-        return state;
+        return this.state;
     }
 }

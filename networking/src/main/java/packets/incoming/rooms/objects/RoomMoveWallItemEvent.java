@@ -18,8 +18,11 @@ public class RoomMoveWallItemEvent extends IncomingEvent {
     public void parse(final IIncomingPacket packet, final INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
+        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+            return;
+        
         final var itemId = packet.readInt();
-        var item = client.getHabbo().getRoom().getObjectManager().getItemByVirtualId(itemId);
+        var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
         if (!(item instanceof IWallItem wallItem)) return;
 
         final var coordinates = packet.readString();

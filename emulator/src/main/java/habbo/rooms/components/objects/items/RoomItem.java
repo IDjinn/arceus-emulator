@@ -1,5 +1,6 @@
 package habbo.rooms.components.objects.items;
 
+import habbo.GameConstants;
 import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
@@ -16,6 +17,7 @@ public abstract class RoomItem implements IRoomItem {
     private final int virtualId;
     private final IFurniture furniture;
     private @Nullable IHabboData ownerData;
+    private boolean needSave;
 
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
@@ -23,31 +25,34 @@ public abstract class RoomItem implements IRoomItem {
         this.room = room;
         this.furniture = furniture;
 
-        this.virtualId = this.getRoom().getObjectManager().getVirtualIdForItem(this);
+        this.virtualId = this.getId() | GameConstants.FurnitureVirtualIdMask;
     }
 
     @Override
     public int getVirtualId() {
-        return virtualId;
+        return this.virtualId;
     }
 
     @Override
     public void onRoomLoaded() {
 
+        IRoomItem.super.onRoomLoaded();
     }
 
     @Override
     public void init() {
 
+        IRoomItem.super.init();
     }
 
     @Override
     public void destroy() {
 
+        IRoomItem.super.destroy();
     }
 
     @Override
-    public long getId() {
+    public int getId() {
         return this.getItemData().getId();
     }
 
@@ -95,8 +100,13 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public void setExtraData(IExtraData extraData) {
-        this.getItemData().setData(extraData);
+    public boolean needSave() {
+        return this.needSave;
+    }
+
+    @Override
+    public void setNeedSave(final boolean needSave) {
+        this.needSave = needSave;
     }
 
     @Override

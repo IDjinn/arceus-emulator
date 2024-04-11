@@ -12,24 +12,24 @@ public class ConcurrentLock implements IConcurrentLock {
 
     @Override
     public boolean lock(@NotNull ILockValue lockerKey) {
-        return lock.putIfAbsent(lockerKey.key(), new Object()) == null;
+        return this.lock.putIfAbsent(lockerKey.key(), new Object()) == null;
     }
 
     @Override
     public ILockValue lock(ILockType type, @NotNull String key) {
         var lockValue = LockValue.fromType(type, key);
-        lock.putIfAbsent(lockValue.key(), new Object());
+        this.lock.putIfAbsent(lockValue.key(), new Object());
         return lockValue;
     }
 
     @Override
     public boolean isLocked(@NotNull ILockValue lockerKey) {
-        return lock.contains(lockerKey.key());
+        return this.lock.contains(lockerKey.key());
     }
 
     @Override
     public boolean isLocked(@NotNull String key) {
-        return lock.contains(key);
+        return this.lock.contains(key);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class ConcurrentLock implements IConcurrentLock {
 
     @Override
     public boolean unlock(@NotNull ILockValue key) {
-        return lock.remove(key.key()) != null;
+        return this.lock.remove(key.key()) != null;
     }
 }

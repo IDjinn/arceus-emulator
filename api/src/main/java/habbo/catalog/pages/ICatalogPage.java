@@ -5,7 +5,7 @@ import habbo.habbos.IHabbo;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 import java.util.List;
 import java.util.Map;

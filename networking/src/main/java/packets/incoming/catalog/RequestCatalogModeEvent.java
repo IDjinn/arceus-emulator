@@ -31,6 +31,6 @@ public class RequestCatalogModeEvent extends IncomingEvent {
             throw new IllegalArgumentException("Invalid catalog mode");
 
         client.sendMessage(new OutgoingPacket(3828).appendInt(0));
-        client.sendMessage(new CatalogIndexComposer(client.getHabbo(), catalogMode, catalogManager.getCatalogPagesForHabbo(RootPageId, client.getHabbo())));
+        client.sendMessage(new CatalogIndexComposer(client.getHabbo(), catalogMode, this.catalogManager.getCatalogPagesForHabbo(this.RootPageId, client.getHabbo())));
     }
 }

@@ -22,7 +22,7 @@ public class CatalogFactory implements ICatalogFactory {
 
     @Override
     public ICatalogItem createCatalogItem(IConnectionResult result) throws Exception {
-        var item = new CatalogItem(furnitureManager);
+        var item = new CatalogItem(this.furnitureManager);
         item.fill(result);
         return item;
     }

@@ -6,7 +6,7 @@ import networking.client.INitroClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
-import utils.Position;
+import utils.pathfinder.Position;
 
 @Singleton
 public class RoomMoveOrRotateFloorItemEvent extends IncomingEvent {
@@ -19,8 +19,11 @@ public class RoomMoveOrRotateFloorItemEvent extends IncomingEvent {
     public void parse(final IIncomingPacket packet, final INitroClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
+        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+            return;
+        
         final var itemId = packet.readInt();
-        var item = client.getHabbo().getRoom().getObjectManager().getItemByVirtualId(itemId);
+        var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
         if (!(item instanceof IFloorItem floorItem)) return;
 
         final var x = packet.readInt();

@@ -1,6 +1,5 @@
 package habbo.rooms.components.entities;
 
-import habbo.GameConstants;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.HabboEntity;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entitiesByVirtualId;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
@@ -41,8 +40,6 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public IHabboEntity createHabboEntity(IHabbo habbo) {
         var entity = new HabboEntity(habbo);
-        var virtualId = this.getVirtualIdForEntity(entity);
-        entity.setVirtualId(virtualId);
 
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
@@ -52,13 +49,12 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public void init(IRoom room) {
         this.room = room;
-        this.getRoom().registerProcess(RoomEntityManager.class.getName(), this::tick,
-                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
     
     @Override
     public void onRoomLoaded() {
-
+        this.getRoom().registerProcess(RoomEntityManager.class.getSimpleName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -74,13 +70,6 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public List<IHabboEntity> getPlayers() {
         return this.players.values().stream().toList();
-    }
-
-    @Override
-    public int getVirtualIdForEntity(final IRoomEntity entity) {
-        var newId = this.virtualIdCounter.incrementAndGet() | GameConstants.EntityVirtualIdMask;
-        this.entitiesByVirtualId.put(newId, entity);
-        return newId;
     }
 
     private final Collection<IRoomEntity> entitiesUpdated = new HashSet<>();

@@ -3,7 +3,7 @@ package decoders;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import networking.packets.IIncomingPacket;
-import networking.util.GameServerAttributes;
+import networking.util.GameNetowrkingAttributes;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class GameMessageRateLimit extends MessageToMessageDecoder<IIncomingPacke
 
     @Override
     protected void decode(ChannelHandlerContext ctx, IIncomingPacket message, List<Object> out) throws Exception {
-        var client = ctx.channel().attr(GameServerAttributes.CLIENT).get();
+        var client = ctx.channel().attr(GameNetowrkingAttributes.CLIENT).get();
         if (client == null) {
             return;
         }

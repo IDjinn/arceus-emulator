@@ -2,7 +2,7 @@ package habbo.rooms.components.objects.items.floor;
 
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.entities.IRoomEntity;
-import utils.Position;
+import utils.pathfinder.Position;
 
 import java.util.Optional;
 

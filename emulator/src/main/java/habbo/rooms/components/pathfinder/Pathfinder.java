@@ -2,9 +2,8 @@ package habbo.rooms.components.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
-import habbo.rooms.components.gamemap.IRoomGameMap;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.*;
 
@@ -28,30 +27,6 @@ public class Pathfinder implements IPathfinder {
         diagonalDirections.put(Direction.SouthEast, new Position(1, -1, 0));
         diagonalDirections.put(Direction.SouthWest, new Position(-1, -1, 0));
         diagonalDirections.putAll(adjacentDirections);
-    }
-
-    private static float calculateHCost(Position a, Position b) {
-        var dx = Math.abs(b.getX() - a.getX());
-        var dy = Math.abs(b.getY() - a.getY());
-        var dz = Math.abs(b.getZ() - a.getZ());
-        var horizontalCost = BasicCost * (dx + dy) + (DiagonalCost - 2 * BasicCost) * Math.min(dx, dy);
-        var verticalCost = VerticalCostFactor * dz;
-        return (float) (horizontalCost + verticalCost);
-    }
-
-    private static float calculateGCost(Position a, Position b, boolean diagonalEnabled) {
-        assert a != null && b != null;
-
-        var dz = Math.abs(b.getZ() - a.getZ());
-        var horizontalCost = is_diagonal(a, b) ? (diagonalEnabled ? DiagonalCost : Float.POSITIVE_INFINITY) : BasicCost;
-        var verticalCost = VerticalCostFactor * dz;
-        return (float) (horizontalCost + verticalCost);
-    }
-
-    private static boolean is_diagonal(Position a, Position b) {
-        assert a != null && b != null;
-        return Math.abs((short) a.getX() - (short) b.getX()) == 1
-                && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
     @Override
@@ -79,80 +54,76 @@ public class Pathfinder implements IPathfinder {
 
     }
 
-    @SuppressWarnings("UnstableApiUsage") 
-    @Override
-    public SequencedCollection<Position> tracePath(IRoomGameMap gameMap, Position start, Position goal) {
-        assert start != goal : "start != goal; should be checked before call this method";
-        if (start.equals(goal))
-            return PathUtil.getInstance().EmptyPath;
-
-        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(gameMap.getMapSize()).create();
-        openSet.add(new PathfinderNode(start));
-        var closedSet = new HashSet<Position>(gameMap.getMapSize());
-
-        var size = 0;
-        while (!openSet.isEmpty()) {
-            if (closedSet.size() > gameMap.getMapSize() || openSet.size() > gameMap.getMapSize()) // something went wrong with pathfinder logic. prevent overflow
-                return PathUtil.getInstance().EmptyPath;
-
-            if (closedSet.contains(goal))
-                return PathUtil.getInstance().EmptyPath;
-
-            var current = openSet.poll();
-            assert current != null;
-            closedSet.add(current.getPosition());
-            openSet.remove(current);
-
-            if (current.getPosition().equals(goal)) {
-                var path = new ArrayList<Position>(size);
-                var tile = current;
-                while (tile != null) {
-                    if (tile.getPosition().equals(start)) break;
-
-                    path.add(tile.getPosition());
-                    tile = tile.getParentNode();
-                }
-                return path.reversed();
-            }
-
-            for (var neighbor : getNeighbors(gameMap, current.getPosition(), goal, closedSet)) {
-                neighbor.setParentNode(current);
-                if (!openSet.contains(neighbor)) {
-                    neighbor.setGCosts(calculateGCost(current.getPosition(), neighbor.getPosition(), true));
-                    neighbor.setHCosts(calculateHCost(neighbor.getPosition(), goal));
-                    openSet.add(neighbor);
-                    size++;
-                } else if (BasicCost + neighbor.getGCosts() < neighbor.getFCosts()) {
-                    neighbor.setGCosts(BasicCost);
-                    size++;
-                }
-            }
-        }
-
-
-        return PathUtil.getInstance().EmptyPath;
+    private static boolean isDiagonal(Position a, Position b) {
+        assert a != null && b != null;
+        return Math.abs((short) a.getX() - (short) b.getX()) == 1
+                && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
-    private Set<PathfinderNode> getNeighbors(IRoomGameMap gameMap, Position from, Position goal,
-                                             Set<Position> closedSet) {
-        assert from != null;
-        final var neighborSet = new HashSet<PathfinderNode>(diagonalDirections.size());
-        for (var direction : diagonalDirections.values()) {
-            var neighborPosition = from.add(direction);
-
-            if (closedSet.contains(neighborPosition)) continue;
-            if (!gameMap.isValidCoordinate(neighborPosition)) continue;
-            if (!gameMap.isValidMovement(from, neighborPosition, goal)) continue;
-            final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(neighborPosition, -1);
-            if (topItem.isPresent() && topItem.get().getStackHeight().isPresent())
-                neighborPosition.setZ(topItem.get().getStackHeight().get());
-            else
-                neighborPosition.setZ(from.getZ());// TODO TILE Z
-
-            final var node = new PathfinderNode(neighborPosition);
-            neighborSet.add(node);
+    private List<Position> reversePath(final PathfinderNode node) {
+        final var path = new ArrayList<Position>();
+        var current = node;
+        while (current.parentNode != null) {
+            path.add(current.getPosition());
+            current = current.parentNode;
         }
-        return neighborSet;
+        Collections.reverse(path);
+        return path;
+    }
+
+    private List<PathfinderNode> getNeighbors(final PathfinderNode current) {
+        final var neighbors = new ArrayList<PathfinderNode>();
+        for (final var direction : diagonalDirections.values()) {
+            final var neighborPosition = current.getPosition().add(direction);
+
+            if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
+
+            final var neighbor = new PathfinderNode(neighborPosition);
+            neighbor.parentNode = current;
+            neighbors.add(neighbor);
+        }
+        return neighbors;
+    }
+
+    private static double getGCost(final double currentCost, final Position currentPosition, final Position nextPosition) {
+        final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
+        final var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;// TODO CHECK THIS
+        final var verticalCost = VerticalCostFactor * dz;
+        return horizontalCost + verticalCost;
+    }
+
+    @SuppressWarnings("UnstableApiUsage") 
+    @Override
+    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
+        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
+        final var closedSet = new HashSet<Position>();
+        final var firstNode = new PathfinderNode(start);
+        openSet.add(firstNode);
+
+        var step = 0;
+        final var mapSize = this.getRoom().getGameMap().getMapSize();
+        while (!openSet.isEmpty() && step++ < mapSize) {
+            final var current = openSet.poll();
+            if (current.getPosition().equals(goal))
+                return reversePath(current);
+
+            if (closedSet.contains(goal))
+                break;
+
+            closedSet.add(current.getPosition());
+            for (final var node : this.getNeighbors(current)) {
+                if (closedSet.contains(node.position)) continue;
+
+                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
+                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
+                    node.setParentNode(current);
+                    node.setGCosts(tentativeGScore);
+                    node.setHCosts((float) node.getPosition().distanceTo(goal));
+                    openSet.add(node);
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 
     @Override

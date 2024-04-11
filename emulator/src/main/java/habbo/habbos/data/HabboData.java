@@ -4,7 +4,7 @@ import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();
@@ -36,12 +36,12 @@ public class HabboData implements IHabboData, IFillable {
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error(STR."Failed to create HabboData from IConnectionResult: \{e.getMessage()}");
+            this.logger.error(STR."Failed to create HabboData from IConnectionResult: \{e.getMessage()}");
         }
     }
 
     public Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     @Override
@@ -143,7 +143,7 @@ public class HabboData implements IHabboData, IFillable {
 
     @Override
     public IHabbo getHabbo() {
-        return habbo;
+        return this.habbo;
     }
 
     @Override

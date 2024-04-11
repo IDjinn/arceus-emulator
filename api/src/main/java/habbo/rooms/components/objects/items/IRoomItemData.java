@@ -1,10 +1,10 @@
 package habbo.rooms.components.objects.items;
 
 import habbo.furniture.extra.data.IExtraData;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public interface IRoomItemData {
-    long getId();
+    int getId();
 
     int getFurnitureId();
 

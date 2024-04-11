@@ -20,7 +20,7 @@ public abstract class ExtraData implements IExtraData {
 
     @Override
     public void serialize(OutgoingPacket packet) {
-        packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? LTD_FLAG : 0));
+        packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? this.LTD_FLAG : 0));
         this.serializeState(packet);
         if (this.getLimitedData().isLimited()) {
             packet.appendInt(this.getLimitedData().getLimitedRare())
@@ -42,10 +42,10 @@ public abstract class ExtraData implements IExtraData {
 
     @Override
     public ExtraDataType getExtraDataType() {
-        return dataType;
+        return this.dataType;
     }
 
-    public class ExtraDataReader {
+    public final class ExtraDataReader {
         public final int type;
 
         public ExtraDataReader(int type) {

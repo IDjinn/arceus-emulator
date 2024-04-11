@@ -24,7 +24,7 @@ public class HikariConnector implements IConnector {
         try {
             this.initializeHikari();
         } catch (Exception e) {
-            logger.error(STR."Failed to initialize Hikari: \{e.getMessage()}");
+            this.logger.error(STR."Failed to initialize Hikari: \{e.getMessage()}");
         }
     }
 
@@ -57,7 +57,7 @@ public class HikariConnector implements IConnector {
 
         this.dataSource = new HikariDataSource(databaseConfiguration);
 
-        logger.info("Database connection established.");
+        this.logger.info("Database connection established.");
     }
 
     public HikariDataSource getDataSource() {

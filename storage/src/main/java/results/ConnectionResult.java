@@ -23,7 +23,7 @@ public class ConnectionResult implements IConnectionResult {
 
     @Override
     public int getInt(int columnIndex) throws Exception {
-        return result.getInt(columnIndex);
+        return this.result.getInt(columnIndex);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ConnectionResult implements IConnectionResult {
 
     @Override
     public long getLong(int columnIndex) throws Exception {
-        return result.getLong(columnIndex);
+        return this.result.getLong(columnIndex);
     }
 
     @Override

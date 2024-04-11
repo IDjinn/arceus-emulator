@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 
 @Singleton
 public class PacketManager implements IPacketManager {
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private final Executor sharedGuestExecutor = Executors.newSingleThreadExecutor();
     private final INitroClientManager clientManager;
     private final IConfigurationManager configuration;
@@ -45,12 +45,12 @@ public class PacketManager implements IPacketManager {
     }
 
     private void registerIncomingEvent(IncomingEvent incomingEvent) {
-        incomingEvents.put(incomingEvent.getHeaderId(), incomingEvent);
+        this.incomingEvents.put(incomingEvent.getHeaderId(), incomingEvent);
     }
 
 
     private void registerGuestEvent(IncomingEvent event) {
-        guestEvents.put(event.getHeaderId(), event);
+        this.guestEvents.put(event.getHeaderId(), event);
     }
 
     @Override
@@ -65,11 +65,11 @@ public class PacketManager implements IPacketManager {
 
     @Override
     public String getIncomingEventName(int headerId) {
-        if (incomingEvents.containsKey(headerId))
-            return incomingEvents.get(headerId).getClass().getName();
+        if (this.incomingEvents.containsKey(headerId))
+            return this.incomingEvents.get(headerId).getClass().getName();
 
-        if (guestEvents.containsKey(headerId))
-            return guestEvents.get(headerId).getClass().getName();
+        if (this.guestEvents.containsKey(headerId))
+            return this.guestEvents.get(headerId).getClass().getName();
 
         return "Unknown";
     }
@@ -77,10 +77,10 @@ public class PacketManager implements IPacketManager {
     private final HashSet<Integer> notFoundPackets = new HashSet<Integer>();
     @Override
     public void parse(IIncomingPacket packet, INitroClient client) {
-        var incomingEvent = incomingEvents.get(packet.getHeader());
+        var incomingEvent = this.incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
-            if (notFoundPackets.add(packet.getHeader()))
-                logger.warn("[-> incoming] {} was not found", packet.getHeader());
+            if (this.notFoundPackets.add(packet.getHeader()))
+                this.logger.warn("[-> incoming] {} was not found", packet.getHeader());
             return;
         }
 
@@ -94,18 +94,18 @@ public class PacketManager implements IPacketManager {
     @Override
     public void parseForGuest(IIncomingPacket packet, ChannelHandlerContext ctx) {
         try {
-            var incomingEvent = guestEvents.get(packet.getHeader());
+            var incomingEvent = this.guestEvents.get(packet.getHeader());
             if (incomingEvent == null) {
-                if (incomingEvents.containsKey(packet.getHeader()))
-                    clientManager.disconnectGuest(ctx);
+                if (this.incomingEvents.containsKey(packet.getHeader()))
+                    this.clientManager.disconnectGuest(ctx);
                 return;
             }
 
-            sharedGuestExecutor.execute(() -> incomingEvent.parseForGuest(packet, ctx));
+            this.sharedGuestExecutor.execute(() -> incomingEvent.parseForGuest(packet, ctx));
         }
         catch (Exception e) {
-            clientManager.disconnectGuest(ctx);
-            logger.error(e.getMessage(), e);
+            this.clientManager.disconnectGuest(ctx);
+            this.logger.error(e.getMessage(), e);
         }
     }
 }

@@ -18,7 +18,7 @@ public class FurnitureManager implements IFurnitureManager {
     private final IFurnitureRepository furnitureRepository;
     private final HashMap<Integer, IFurniture> furnitures;
     private final IFurnitureFactory furnitureFactory;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     private final HashMap<Integer, Class<? extends ExtraData>> extraDataParsers;
 
@@ -38,8 +38,8 @@ public class FurnitureManager implements IFurnitureManager {
         this.furnitureRepository.getAllFurniture(result -> {
             if (result == null) return;
 
-            var furniture = furnitureFactory.create(result);
-            furnitures.put(furniture.getId(), furniture);
+            var furniture = this.furnitureFactory.create(result);
+            this.furnitures.put(furniture.getId(), furniture);
         });
 
         this.logger.info(STR."Loaded \{this.furnitures.size()} furniture from database.");
@@ -68,8 +68,8 @@ public class FurnitureManager implements IFurnitureManager {
         
         try {
             var extraDataType = GsonHelper.getGson().fromJson(json, ExtraData.ExtraDataReader.class).type;
-            if (extraDataParsers.containsKey(extraDataType))
-                return GsonHelper.getGson().fromJson(json, extraDataParsers.get(extraDataType));
+            if (this.extraDataParsers.containsKey(extraDataType))
+                return GsonHelper.getGson().fromJson(json, this.extraDataParsers.get(extraDataType));
 
             return GsonHelper.getGson().fromJson(json, LegacyExtraData.class);
         } catch (JsonSyntaxException _) {

@@ -19,7 +19,7 @@ public class CatalogBuyItemEvent extends IncomingEvent {
     @Override
     public void parse(IIncomingPacket packet, INitroClient client) {
         var pageId = packet.readInt();
-        var page = catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
+        var page = this.catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
         if (page == null)
             return;
 
@@ -34,7 +34,7 @@ public class CatalogBuyItemEvent extends IncomingEvent {
             return;
 
 
-        var purchaseHandler = catalogManager.getPurchaseHandlerForItem(catalogItem);
+        var purchaseHandler = this.catalogManager.getPurchaseHandlerForItem(catalogItem);
         if (purchaseHandler == null)
             throw new IllegalArgumentException("No purchase handlers were found. Missing implementation!");
 

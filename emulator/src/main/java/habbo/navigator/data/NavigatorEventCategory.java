@@ -14,7 +14,7 @@ public class NavigatorEventCategory implements INavigatorEventCategory {
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill navigator event category", e);
+            this.logger.error("Failed to fill navigator event category", e);
         }
     }
 

@@ -6,9 +6,9 @@ import habbo.rooms.components.objects.items.floor.IFloorObject;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
-import utils.Direction;
-import utils.Position;
 import utils.cycle.ICycle;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.SequencedCollection;
 import java.util.concurrent.ConcurrentHashMap;

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import stormpot.Poolable;
 import stormpot.Slot;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNodeFucked> {
     private final Slot slot;
@@ -29,7 +29,7 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     }
 
     public @Nullable Position getPosition() {
-        return position;
+        return this.position;
     }
 
     public void setPosition(Position position) {
@@ -38,7 +38,7 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     }
 
     public @Nullable PathfinderNodeFucked getParentNode() {
-        return parentNode;
+        return this.parentNode;
     }
 
     public void setParentNode(@Nullable PathfinderNodeFucked parentNode) {
@@ -46,11 +46,11 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     }
 
     public float getFCosts() {
-        return gCosts + hCosts;
+        return this.gCosts + this.hCosts;
     }
 
     public float getGCosts() {
-        return gCosts;
+        return this.gCosts;
     }
 
     public void setGCosts(float gCosts) {
@@ -58,7 +58,7 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     }
 
     public float getHCosts() {
-        return hCosts;
+        return this.hCosts;
     }
 
     public void setHCosts(float hCosts) {
@@ -66,7 +66,7 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     }
 
     public boolean isFree() {
-        return free;
+        return this.free;
     }
 
     public void setFree(boolean isOpen) {

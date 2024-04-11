@@ -10,10 +10,10 @@ public class Connection implements IConnection {
 
     @Override
     public java.sql.Connection get() throws Exception {
-        return connectionContext.getProvider().getConnection();
+        return this.connectionContext.getProvider().getConnection();
     }
 
     public IConnectionContext getConnectionContext() {
-        return connectionContext;
+        return this.connectionContext;
     }
 }

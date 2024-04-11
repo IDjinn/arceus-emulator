@@ -5,9 +5,9 @@ import habbo.rooms.IRoom;
 import habbo.rooms.IRoomManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.Position;
+import utils.pathfinder.Position;
 
-public class RoomRoomGameMap implements IRoomGameMap {
+public class RoomGameMap implements IRoomGameMap {
     private final Logger logger = LogManager.getLogger();
     @Inject
     private IRoomManager roomManager;
@@ -130,10 +130,9 @@ public class RoomRoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public boolean isValidCoordinate(Position neighborPosition) {
-        return
-                neighborPosition.getX() >= 0 && neighborPosition.getX() < getMaxX() &&
-                        neighborPosition.getY() >= 0 && neighborPosition.getY() < getMaxY();
+    public boolean isValidCoordinate(Position position) {
+        return position.getX() >= 0 && position.getX() < getMaxX() &&
+                position.getY() >= 0 && position.getY() < getMaxY();
     }
 
     @Override

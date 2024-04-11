@@ -37,6 +37,6 @@ public enum RoomItemsQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

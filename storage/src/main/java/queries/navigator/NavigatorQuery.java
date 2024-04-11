@@ -15,6 +15,6 @@ public enum NavigatorQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

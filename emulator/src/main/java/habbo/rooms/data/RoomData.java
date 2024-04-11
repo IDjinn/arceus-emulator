@@ -4,7 +4,7 @@ import habbo.rooms.enums.RoomAccessState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,184 +61,184 @@ public class RoomData implements IRoomData, IFillable {
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill room data", e);
+            this.logger.error("Failed to fill room data", e);
         }
     }
 
     public Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getModelName() {
-        return model;
+        return this.model;
     }
 
     public int getOwnerId() {
-        return ownerId;
+        return this.ownerId;
     }
 
     public String getOwnerName() {
-        return ownerName;
+        return this.ownerName;
     }
 
     public int getMaxUsers() {
-        return maxUsers;
+        return this.maxUsers;
     }
 
     public int getScore() {
-        return score;
+        return this.score;
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public RoomAccessState getAccessState() {
-        return state;
+        return this.state;
     }
 
     public int getGuildId() {
-        return guildId;
+        return this.guildId;
     }
 
     public int getCategoryId() {
-        return categoryId;
+        return this.categoryId;
     }
 
     public String getPaperFloor() {
-        return paperFloor;
+        return this.paperFloor;
     }
 
     public String getPaperWall() {
-        return paperWall;
+        return this.paperWall;
     }
 
     public String getPaperLandscape() {
-        return paperLandscape;
+        return this.paperLandscape;
     }
 
     public int getThicknessWall() {
-        return thicknessWall;
+        return this.thicknessWall;
     }
 
     public int getWallHeight() {
-        return wallHeight;
+        return this.wallHeight;
     }
 
     public int getThicknessFloor() {
-        return thicknessFloor;
+        return this.thicknessFloor;
     }
 
     public String getMoodlightData() {
-        return moodlightData;
+        return this.moodlightData;
     }
 
     public List<String> getTags() {
-        return tags;
+        return this.tags;
     }
 
     public boolean isPublic() {
-        return isPublic;
+        return this.isPublic;
     }
 
     public boolean isStaffPicked() {
-        return isStaffPicked;
+        return this.isStaffPicked;
     }
 
     public boolean allowPets() {
-        return allowPets;
+        return this.allowPets;
     }
 
     public boolean allowPetsEat() {
-        return allowPetsEat;
+        return this.allowPetsEat;
     }
 
     public boolean allowWalkthrough() {
-        return allowWalkthrough;
+        return this.allowWalkthrough;
     }
 
     public boolean isHideWall() {
-        return hideWall;
+        return this.hideWall;
     }
 
     public int getChatMode() {
-        return chatMode;
+        return this.chatMode;
     }
 
     public int getChatWeight() {
-        return chatWeight;
+        return this.chatWeight;
     }
 
     public int getChatSpeed() {
-        return chatSpeed;
+        return this.chatSpeed;
     }
 
     public int getChatDistance() {
-        return chatDistance;
+        return this.chatDistance;
     }
 
     public int getChatProtection() {
-        return chatProtection;
+        return this.chatProtection;
     }
 
     public boolean isOverrideModel() {
-        return overrideModel;
+        return this.overrideModel;
     }
 
     public int getWhoCanMute() {
-        return whoCanMute;
+        return this.whoCanMute;
     }
 
     public int getWhoCanKick() {
-        return whoCanKick;
+        return this.whoCanKick;
     }
 
     public int getWhoCanBan() {
-        return whoCanBan;
+        return this.whoCanBan;
     }
 
     public int getPollId() {
-        return pollId;
+        return this.pollId;
     }
 
     public int getRollerSpeed() {
-        return rollerSpeed;
+        return this.rollerSpeed;
     }
 
     public boolean isPromoted() {
-        return isPromoted;
+        return this.isPromoted;
     }
 
     public int getTradeMode() {
-        return tradeMode;
+        return this.tradeMode;
     }
 
     public boolean canMoveDiagonally() {
-        return canMoveDiagonally;
+        return this.canMoveDiagonally;
     }
 
     public boolean hasJukeboxActive() {
-        return hasJukeboxActive;
+        return this.hasJukeboxActive;
     }
 
     public boolean isHideWireds() {
-        return hideWireds;
+        return this.hideWireds;
     }
 
     public boolean isForSale() {
-        return isForSale;
+        return this.isForSale;
     }
 
     @Override

@@ -20,7 +20,7 @@ public class ThreadManager implements IThreadManager {
     private final IConfigurationManager configurationManager;
     private final AtomicReference<ScheduledThreadPoolExecutor> softwareThreadExecutor;
     private final long threadMonitorInterval;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     private final AtomicLong hardwareThreadCounter;
     private final AtomicLong softwareThreadCounter;
@@ -38,7 +38,7 @@ public class ThreadManager implements IThreadManager {
         var softwareThreadCount = this.configurationManager.getInt("orion.software.threads", Runtime.getRuntime().availableProcessors() * 200);
 
         this.hardwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(hardwareThreadCount, runnable -> {
-            var currentId = hardwareThreadCounter.incrementAndGet();
+            var currentId = this.hardwareThreadCounter.incrementAndGet();
 
             var hardwareThread = new Thread(runnable);
             hardwareThread.setName(STR."Hardware-Thread-\{currentId}");
@@ -63,13 +63,13 @@ public class ThreadManager implements IThreadManager {
             try {
                 Thread.sleep(this.threadMonitorInterval);
             } catch (InterruptedException e) {
-                logger.error("Thread monitor interrupted", e);
+                this.logger.error("Thread monitor interrupted", e);
             }
 
             var hardwareThreads = this.hardwareThreadExecutor.get().getQueue().size();
             var softwareThreads = this.softwareThreadExecutor.get().getQueue().size();
 
-            logger.debug("Hardware thread count: {}, Software thread count: {}", hardwareThreads, softwareThreads);
+            this.logger.debug("Hardware thread count: {}, Software thread count: {}", hardwareThreads, softwareThreads);
         }
     }
 

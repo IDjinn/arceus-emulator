@@ -13,6 +13,6 @@ public enum LockType implements ILockType {
 
     @Override
     public String getLockCode() {
-        return code;
+        return this.code;
     }
 }

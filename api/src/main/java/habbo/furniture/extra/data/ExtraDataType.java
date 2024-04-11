@@ -25,7 +25,7 @@ public enum ExtraDataType {
         }
     }
 
-    private int type;
+    private final int type;
 
     ExtraDataType(int type) {
         this.type = type;

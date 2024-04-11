@@ -29,7 +29,7 @@ public class RequestRoomLoadEvent extends IncomingEvent {
         var id = packet.readInt();
         @Nullable var password = packet.readString();
 
-        var room = roomManager.tryLoadRoom(id);
+        var room = this.roomManager.tryLoadRoom(id);
 
         if (room == null) {
             client.sendMessage(new HotelViewComposer());

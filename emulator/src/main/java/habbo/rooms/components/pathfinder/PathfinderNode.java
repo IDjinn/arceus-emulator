@@ -2,7 +2,7 @@ package habbo.rooms.components.pathfinder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import utils.Position;
+import utils.pathfinder.Position;
 
 public class PathfinderNode implements Comparable<PathfinderNode> {
     public final Position position;
@@ -16,12 +16,12 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
 
 
     public Position getPosition() {
-        return position;
+        return this.position;
     }
 
 
     public @Nullable PathfinderNode getParentNode() {
-        return parentNode;
+        return this.parentNode;
     }
 
     public void setParentNode(@Nullable PathfinderNode parentNode) {
@@ -29,11 +29,11 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
     }
 
     public float getFCosts() {
-        return gCosts + hCosts;
+        return this.gCosts + this.hCosts;
     }
 
     public float getGCosts() {
-        return gCosts;
+        return this.gCosts;
     }
 
     public void setGCosts(float gCosts) {
@@ -41,7 +41,7 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
     }
 
     public float getHCosts() {
-        return hCosts;
+        return this.hCosts;
     }
 
     public void setHCosts(float hCosts) {

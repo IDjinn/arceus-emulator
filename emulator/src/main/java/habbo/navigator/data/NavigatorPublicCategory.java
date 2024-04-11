@@ -5,7 +5,7 @@ import habbo.rooms.IRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class NavigatorPublicCategory implements INavigatorPublicCategory, IFilla
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill NavigatorPublicCategory", e);
+            this.logger.error("Failed to fill NavigatorPublicCategory", e);
         }
     }
 

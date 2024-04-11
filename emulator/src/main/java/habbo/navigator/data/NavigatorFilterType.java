@@ -2,7 +2,7 @@ package habbo.navigator.data;
 
 import habbo.navigator.enums.NavigatorFilterComparator;
 import storage.results.IConnectionResult;
-import utils.IFillable;
+import utils.interfaces.IFillable;
 
 public class NavigatorFilterType implements INavigatorFilterType, IFillable {
     public String key;

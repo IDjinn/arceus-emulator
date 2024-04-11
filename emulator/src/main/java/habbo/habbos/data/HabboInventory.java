@@ -8,6 +8,7 @@ import habbo.habbos.inventory.IHabboInventoryItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.inventory.InventoryRefreshComposer;
 import storage.repositories.habbo.IHabboInventoryRepository;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 public class HabboInventory implements IHabboInventory {
     private final HashMap<Integer, IHabboInventoryItem> items;
     private final IHabbo habbo;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     @Inject
     private IHabboInventoryRepository inventoryRepository;
@@ -50,13 +51,13 @@ public class HabboInventory implements IHabboInventory {
 
     @Override
     public void init() {
-        inventoryRepository.getInventoryByOwnerId(this.getHabbo().getData().getId(), result -> {
+        this.inventoryRepository.getInventoryByOwnerId(this.getHabbo().getData().getId(), result -> {
             if (result == null) return;
             try {
-                var item = inventoryItemFactory.create(result, this.getHabbo());
+                var item = this.inventoryItemFactory.create(result, this.getHabbo());
                 this.items.put(item.getId(), item);
             } catch (Exception e) {
-                logger.error("Error while creating inventory item {} for habbo {}", result.getInt("id"), e);
+                this.logger.error("Error while creating inventory item {} for habbo {}", result.getInt("id"), e);
             }
         });
     }
@@ -79,5 +80,10 @@ public class HabboInventory implements IHabboInventory {
     @Override
     public boolean canPurchaseItems(int count) {
         return count > 0;
+    }
+
+    @Override
+    public void sendUpdate() {
+        this.getHabbo().getClient().sendMessage(new InventoryRefreshComposer());
     }
 }

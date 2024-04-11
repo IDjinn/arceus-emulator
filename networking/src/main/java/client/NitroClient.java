@@ -55,6 +55,6 @@ public class NitroClient implements INitroClient {
 
     @Override
     public IHabbo getHabbo() {
-        return habbo;
+        return this.habbo;
     }
 }

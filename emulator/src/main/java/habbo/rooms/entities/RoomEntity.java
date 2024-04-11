@@ -3,8 +3,8 @@ package habbo.rooms.entities;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.jetbrains.annotations.Nullable;
-import utils.Direction;
-import utils.Position;
+import utils.pathfinder.Direction;
+import utils.pathfinder.Position;
 
 import java.util.ArrayList;
 import java.util.SequencedCollection;
@@ -12,19 +12,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class RoomEntity implements IRoomEntity {
     private final ConcurrentHashMap<RoomEntityStatus, StatusBucket> statusBuckets;
-    private int virtualId;
+    private final int virtualId;
     private String name;
     private final IRoom room;
     private Position position;
     private Direction direction;
     private boolean needUpdateStatus;
     private @Nullable Position goal;
-    private SequencedCollection<Position> walkPath;
+    private final SequencedCollection<Position> walkPath;
     private @Nullable Position nextPostion;
     private @Nullable IFloorItem onItem;
 
-    public RoomEntity(IRoom room) {
+    public RoomEntity(IRoom room, int virtualId) {
         this.room = room;
+        this.virtualId = virtualId;
         this.position = new Position(4, 5);
         this.direction = Direction.East;
         this.statusBuckets = new ConcurrentHashMap<>();
@@ -77,7 +78,7 @@ public abstract class RoomEntity implements IRoomEntity {
 
     @Override
     public ConcurrentHashMap<RoomEntityStatus, StatusBucket> getStatus() {
-        return statusBuckets;
+        return this.statusBuckets;
     }
 
     @Override
@@ -87,27 +88,27 @@ public abstract class RoomEntity implements IRoomEntity {
 
     @Override
     public void removeStatus(RoomEntityStatus status) {
-        needUpdateStatus |= statusBuckets.remove(status) != null;
+        this.needUpdateStatus |= this.statusBuckets.remove(status) != null;
     }
 
     @Override
     public void setNeedUpdateStatus(boolean needUpdate) {
-        needUpdateStatus = needUpdate;
+        this.needUpdateStatus = needUpdate;
     }
 
     @Override
     public boolean isNeedUpdate() {
-        return needUpdateStatus;
+        return this.needUpdateStatus;
     }
 
     @Override
     public void setStatus(StatusBucket bucket) {
-        if (statusBuckets.containsKey(bucket.getStatus())) {
-            var currentBucket = statusBuckets.get(bucket.getStatus());
+        if (this.statusBuckets.containsKey(bucket.getStatus())) {
+            var currentBucket = this.statusBuckets.get(bucket.getStatus());
             currentBucket.setTicks(bucket.getTicks());
             currentBucket.setValue(bucket.getValue());
         } else {
-            statusBuckets.put(bucket.getStatus(), bucket);
+            this.statusBuckets.put(bucket.getStatus(), bucket);
         }
 
         this.setNeedUpdateStatus(true);
@@ -146,13 +147,12 @@ public abstract class RoomEntity implements IRoomEntity {
 
         if (this.walkPath.isEmpty() && this.getGoal() != null) {
             this.walkPath.addAll(this.getRoom().getPathfinder().tracePath(
-                    this.getRoom().getGameMap(),
                     this.getPosition(),
                     this.getGoal()
             ));
         }
 
-        if (walkPath.isEmpty()) {
+        if (this.walkPath.isEmpty()) {
             this.setNextPosition(null);
             this.setGoal(null);
             this.removeStatus(RoomEntityStatus.MOVE);
@@ -160,7 +160,7 @@ public abstract class RoomEntity implements IRoomEntity {
             return;
         }
 
-        this.setNextPosition(walkPath.removeFirst());
+        this.setNextPosition(this.walkPath.removeFirst());
         this.setDirection(Direction.calculate(
                 this.getPosition().getX(),
                 this.getPosition().getY(),
@@ -172,8 +172,8 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     private void handleStatus() {
-        synchronized (statusBuckets) {
-            for (StatusBucket bucket : statusBuckets.values()) {
+        synchronized (this.statusBuckets) {
+            for (StatusBucket bucket : this.statusBuckets.values()) {
                 if (bucket.getTicks() <= 0) {
                     this.removeStatus(bucket.getStatus());
                 }
@@ -205,9 +205,5 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public void setNextPosition(@Nullable Position position) {
         this.nextPostion = position;
-    }
-
-    public void setVirtualId(final int virtualId) {
-        this.virtualId = virtualId;
     }
 }
