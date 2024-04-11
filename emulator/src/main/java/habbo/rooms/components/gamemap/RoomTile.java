@@ -13,16 +13,16 @@ public class RoomTile implements IRoomTile {
 
     @Override
     public int getX() {
-        return x;
+        return this.x;
     }
 
     @Override
     public int getY() {
-        return y;
+        return this.y;
     }
 
     @Override
     public int getZ() {
-        return z;
+        return this.z;
     }
 }

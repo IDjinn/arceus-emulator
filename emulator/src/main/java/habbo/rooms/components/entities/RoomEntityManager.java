@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entitiesByVirtualId;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;

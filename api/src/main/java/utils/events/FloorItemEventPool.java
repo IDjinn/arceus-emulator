@@ -24,7 +24,7 @@ public class FloorItemEventPool {
     }
 
     public FloorItemEvent borrow(Timeout timeout) throws InterruptedException {
-        return pool.claim(timeout);
+        return this.pool.claim(timeout);
     }
 
     public void release(FloorItemEvent event) {

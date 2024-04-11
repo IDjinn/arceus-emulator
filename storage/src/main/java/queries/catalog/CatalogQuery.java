@@ -15,6 +15,6 @@ public enum CatalogQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

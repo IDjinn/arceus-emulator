@@ -21,15 +21,15 @@ public class LimitedData implements ILimitedData {
     }
 
     public int getLimitedRare() {
-        return limitedRare;
+        return this.limitedRare;
     }
 
     public int getLimitedRareTotal() {
-        return limitedRareTotal;
+        return this.limitedRareTotal;
     }
 
     @Override
     public boolean isLimited() {
-        return limitedRare > 0 && limitedRareTotal > 0;
+        return this.limitedRare > 0 && this.limitedRareTotal > 0;
     }
 }

@@ -43,7 +43,7 @@ import static org.openjdk.jmh.results.AggregationPolicy.*;
  */
 public class GcProfiler implements InternalProfiler {
     static final String PREFIX = "mem.";
-    private EnumSet<Metric> stats = EnumSet.of(Metric.ALLOC);
+    private final EnumSet<Metric> stats = EnumSet.of(Metric.ALLOC);
     private @Nullable MyHook hook;
     private long beforeT;
     private long beforeGcTime;
@@ -57,7 +57,7 @@ public class GcProfiler implements InternalProfiler {
 
     @Override
     public void beforeIteration(BenchmarkParams benchmarkParams, IterationParams iterationParams) {
-        if (stats.contains(Metric.POOLS)) installHooks();
+        if (this.stats.contains(Metric.POOLS)) installHooks();
 
         long gcTime = 0, gcCount = 0;
         for (GarbageCollectorMXBean bean : ManagementFactory.getGarbageCollectorMXBeans()) {
@@ -80,7 +80,7 @@ public class GcProfiler implements InternalProfiler {
         }
 
         long afterT = System.nanoTime();
-        @Nullable MyHook pool = stats.contains(Metric.POOLS) ? uninstallHooks() : null;
+        @Nullable MyHook pool = this.stats.contains(Metric.POOLS) ? uninstallHooks() : null;
         HotspotAllocationSnapshot newSnapshot = HotspotAllocationSnapshot.create();
 
         long gcTime = 0, gcCount = 0;
@@ -91,31 +91,31 @@ public class GcProfiler implements InternalProfiler {
 
         Stream.Builder<Result> results = Stream.builder();
 
-        if (stats.contains(Metric.ALLOC)) {
-            if (beforeAlloc == HotspotAllocationSnapshot.EMPTY) {
+        if (this.stats.contains(Metric.ALLOC)) {
+            if (this.beforeAlloc == HotspotAllocationSnapshot.EMPTY) {
                 results.add(new ScalarResult(PREFIX + "alloc.rate", NaN, "MB/sec", AVG));
                 results.add(new ScalarResult(PREFIX + "alloc.norm", NaN, "B/op", AVG));
             } else {
-                long alloc = newSnapshot.subtract(beforeAlloc);
+                long alloc = newSnapshot.subtract(this.beforeAlloc);
                 long allOps = iResult.getMetadata().getAllOps();
-                double rate = afterT == beforeT ? NaN :
-                        1.0 * alloc / 1024 / 1024 * SECONDS.toNanos(1) / (afterT - beforeT);
+                double rate = afterT == this.beforeT ? NaN :
+                        1.0 * alloc / 1024 / 1024 * SECONDS.toNanos(1) / (afterT - this.beforeT);
                 double norm = alloc == 0 ? 0 : allOps != 0 ? 1.0 * alloc / allOps : NaN;
                 results.add(new ScalarResult(PREFIX + "alloc.rate", rate, "MB/sec", AVG));
                 results.add(new ScalarResult(PREFIX + "alloc.norm", norm, "B/op", AVG));
             }
         }
 
-        if (stats.contains(Metric.COLLECT)) {
-            results.add(new ScalarResult(PREFIX + "collect.count", gcCount - beforeGcCount, "counts", SUM));
-            results.add(new ScalarResult(PREFIX + "collect.time", gcTime - beforeGcTime, "ms", SUM));
+        if (this.stats.contains(Metric.COLLECT)) {
+            results.add(new ScalarResult(PREFIX + "collect.count", gcCount - this.beforeGcCount, "counts", SUM));
+            results.add(new ScalarResult(PREFIX + "collect.time", gcTime - this.beforeGcTime, "ms", SUM));
         }
 
         if (pool != null) {
             for (String space : pool.usedDiffByPool.keys()) {
                 String name = space.replaceAll(" ", "_");
-                double rate = afterT == beforeT ? NaN :
-                        1.0 * pool.usedDiffByPool.count(space) * SECONDS.toNanos(1) / (afterT - beforeT) / 1024 / 1024;
+                double rate = afterT == this.beforeT ? NaN :
+                        1.0 * pool.usedDiffByPool.count(space) * SECONDS.toNanos(1) / (afterT - this.beforeT) / 1024 / 1024;
                 double norm = 1.0 * pool.usedDiffByPool.count(space) / iResult.getMetadata().getAllOps();
                 results.add(new ScalarResult(PREFIX + "pool." + name + ".rate", rate, "MB/sec", AVG));
                 results.add(new ScalarResult(PREFIX + "pool." + name + ".norm", norm, "B/op", AVG));
@@ -136,7 +136,7 @@ public class GcProfiler implements InternalProfiler {
     }
 
     private synchronized void installHooks() {
-        if (hook != null) throw new IllegalStateException("hook already installed");
+        if (this.hook != null) throw new IllegalStateException("hook already installed");
         MyHook hook = (this.hook = new MyHook());
         for (GarbageCollectorMXBean bean : ManagementFactory.getGarbageCollectorMXBeans()) {
             ((NotificationEmitter) bean).addNotificationListener(hook, null, null);
@@ -144,7 +144,7 @@ public class GcProfiler implements InternalProfiler {
     }
 
     private synchronized MyHook uninstallHooks() {
-        if (hook == null) throw new IllegalStateException("hook already uninstalled or never installed");
+        if (this.hook == null) throw new IllegalStateException("hook already uninstalled or never installed");
         MyHook hook = this.hook;
         this.hook = null;
         for (GarbageCollectorMXBean bean : ManagementFactory.getGarbageCollectorMXBeans()) {
@@ -229,12 +229,12 @@ public class GcProfiler implements InternalProfiler {
             }
             long currentThreadId = Thread.currentThread().getId();
             long allocated = 0;
-            for (int i = 0; i < threadIds.length; i++) {
-                long id = threadIds[i];
+            for (int i = 0; i < this.threadIds.length; i++) {
+                long id = this.threadIds[i];
                 if (id == currentThreadId) {
                     continue;
                 }
-                allocated += allocatedBytes[i];
+                allocated += this.allocatedBytes[i];
                 Integer prev = prevIndex.get(id);
                 if (prev != null) {
                     allocated -= other.allocatedBytes[prev];
@@ -258,12 +258,12 @@ public class GcProfiler implements InternalProfiler {
 
         public MyHook() {
             try {
-                infoType = Class.forName("com.sun.management.GarbageCollectionNotificationInfo");
-                GC_TYPE = infoType.getField("GARBAGE_COLLECTION_NOTIFICATION").get(null);
-                infoMethod = infoType.getMethod("from", CompositeData.class);
-                getGcInfo = infoType.getMethod("getGcInfo");
-                memoryUsageBeforeGc = getGcInfo.getReturnType().getMethod("getMemoryUsageBeforeGc");
-                memoryUsageAfterGc = getGcInfo.getReturnType().getMethod("getMemoryUsageAfterGc");
+                this.infoType = Class.forName("com.sun.management.GarbageCollectionNotificationInfo");
+                this.GC_TYPE = this.infoType.getField("GARBAGE_COLLECTION_NOTIFICATION").get(null);
+                this.infoMethod = this.infoType.getMethod("from", CompositeData.class);
+                this.getGcInfo = this.infoType.getMethod("getGcInfo");
+                this.memoryUsageBeforeGc = this.getGcInfo.getReturnType().getMethod("getMemoryUsageBeforeGc");
+                this.memoryUsageAfterGc = this.getGcInfo.getReturnType().getMethod("getMemoryUsageAfterGc");
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException("unexpected reflection error, maybe a non sun friendly jdk?", e);
             }
@@ -272,13 +272,13 @@ public class GcProfiler implements InternalProfiler {
 
         @Override
         public void handleNotification(Notification n, Object o) {
-            if (!n.getType().equals(GC_TYPE)) return;
+            if (!n.getType().equals(this.GC_TYPE)) return;
             try {
-                Object gc = getGcInfo.invoke(infoMethod.invoke(null, n.getUserData()));
+                Object gc = this.getGcInfo.invoke(this.infoMethod.invoke(null, n.getUserData()));
                 @SuppressWarnings("unchecked") Map<String, MemoryUsage> mapBefore =
-                        (Map<String, MemoryUsage>) memoryUsageBeforeGc.invoke(gc);
+                        (Map<String, MemoryUsage>) this.memoryUsageBeforeGc.invoke(gc);
                 @SuppressWarnings("unchecked") Map<String, MemoryUsage> mapAfter =
-                        (Map<String, MemoryUsage>) memoryUsageAfterGc.invoke(gc);
+                        (Map<String, MemoryUsage>) this.memoryUsageAfterGc.invoke(gc);
                 long committed = 0, used = 0;
                 for (Map.Entry<String, MemoryUsage> entry : mapAfter.entrySet()) {
                     String name = entry.getKey();
@@ -286,10 +286,10 @@ public class GcProfiler implements InternalProfiler {
                     committed += after.getCommitted();
                     used += after.getUsed();
                     MemoryUsage before = mapBefore.get(name);
-                    usedDiffByPool.add(name, before.getUsed() - after.getUsed());
+                    this.usedDiffByPool.add(name, before.getUsed() - after.getUsed());
                 }
-                usedAfterGc.add(used);
-                committedAfterGc.add(committed);
+                this.usedAfterGc.add(used);
+                this.committedAfterGc.add(committed);
             } catch (IllegalAccessException | InvocationTargetException ignore) {
             }
         }

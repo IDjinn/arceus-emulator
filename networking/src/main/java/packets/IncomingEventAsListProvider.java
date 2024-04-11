@@ -15,7 +15,7 @@ public class IncomingEventAsListProvider implements Provider<List<Class<? extend
     @Override
     public List<Class<? extends IncomingEvent>> get() {
         List<Class<? extends IncomingEvent>> eventClasses = new ArrayList<>();
-        Set<Class<? extends IncomingEvent>> subTypes = reflections.getSubTypesOf(IncomingEvent.class);
+        Set<Class<? extends IncomingEvent>> subTypes = this.reflections.getSubTypesOf(IncomingEvent.class);
 
         for (Class<? extends IncomingEvent> clazz : subTypes) {
             if (!Modifier.isAbstract(clazz.getModifiers())) {

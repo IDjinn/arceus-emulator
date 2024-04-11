@@ -28,13 +28,13 @@ public class EmulatorSettings implements IEmulatorSettings {
 
         this.settings = new HashMap<>();
 
-        emulatorRepository.loadAllSettings(result -> {
+        this.emulatorRepository.loadAllSettings(result -> {
             if(result == null) return;
 
             this.settings.put(result.getString("key"), result.getString("value"));
         });
 
-        logger.info(STR."Loaded \{this.settings.size()} emulator settings from database.");
+        this.logger.info(STR."Loaded \{this.settings.size()} emulator settings from database.");
 
         this.isLoaded = true;
     }

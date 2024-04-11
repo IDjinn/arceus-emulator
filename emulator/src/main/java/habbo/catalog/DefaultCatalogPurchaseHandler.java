@@ -29,7 +29,7 @@ public class DefaultCatalogPurchaseHandler implements ICatalogPurchaseHandler {
     @Override
     public boolean purchase(IHabbo habbo, ICatalogItem item, String extraData, int amount) {
         var unseen = new ArrayList<Integer>();
-        inventoryRepository.createInventoryItem(statement -> {
+        this.inventoryRepository.createInventoryItem(statement -> {
 //            INSERT INTO items (user_id, item_id, extra_data, limited_data) VALUES (?, ?, ?, ?);
             for (var i = 0; i < amount; i++) {
                 statement.setInt(1, habbo.getData().getId());
@@ -43,7 +43,7 @@ public class DefaultCatalogPurchaseHandler implements ICatalogPurchaseHandler {
             var itemExtraData = new LegacyExtraData(extraData);
             itemExtraData.setLimitedData(LimitedData.fromString("0:0"));
 
-            var inventoryItem = inventoryItemFactory.create(habbo, itemId, item.getFurniture(), itemExtraData);
+            var inventoryItem = this.inventoryItemFactory.create(habbo, itemId, item.getFurniture(), itemExtraData);
             habbo.getInventory().addItem(inventoryItem);
             unseen.add(itemId);
         });

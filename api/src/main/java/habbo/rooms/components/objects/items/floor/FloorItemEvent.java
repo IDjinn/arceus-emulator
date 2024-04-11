@@ -20,11 +20,11 @@ public class FloorItemEvent implements Poolable {
     }
 
     public long getTotalTicks() {
-        return totalTicks;
+        return this.totalTicks;
     }
 
     public long getTicks() {
-        return ticks.get();
+        return this.ticks.get();
     }
 
     public void setTicks(long ticks) {
@@ -32,19 +32,19 @@ public class FloorItemEvent implements Poolable {
     }
 
     public void incrementTicks() {
-        ticks.incrementAndGet();
+        this.ticks.incrementAndGet();
     }
 
     public void decrementTicks() {
-        ticks.decrementAndGet();
+        this.ticks.decrementAndGet();
     }
 
     public void resetTicks() {
-        ticks.set(0);
+        this.ticks.set(0);
     }
 
     public boolean isCompleted() {
-        return ticks.get() >= totalTicks;
+        return this.ticks.get() >= this.totalTicks;
     }
 
     public void setTotalTicks(long totalTicks) {
@@ -61,7 +61,7 @@ public class FloorItemEvent implements Poolable {
     }
 
     public IEventListener getOnCompleted() {
-        return onCompleted;
+        return this.onCompleted;
     }
 
     public void subscribeListener(IEventListener listener) {

@@ -18,23 +18,23 @@ public class HabboNavigatorCategorySettings implements IHabboNavigatorCategorySe
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill [HabboNavigatorCategorySettings]", e);
+            this.logger.error("Failed to fill [HabboNavigatorCategorySettings]", e);
         }
     }
 
     @Override
     public String getCaption() {
-        return caption;
+        return this.caption;
     }
 
     @Override
     public NavigatorDisplayMode getDisplayMode() {
-        return displayMode;
+        return this.displayMode;
     }
 
     @Override
     public NavigatorLayoutDisplay getLayoutDisplay() {
-        return layoutDisplay;
+        return this.layoutDisplay;
     }
 
     @Override

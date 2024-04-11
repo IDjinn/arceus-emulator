@@ -59,7 +59,7 @@ public class HabboInventoryItem implements IHabboInventoryItem {
 
     @Override
     public IExtraData getExtraData() {
-        return extraData;
+        return this.extraData;
     }
 
 
@@ -76,11 +76,11 @@ public class HabboInventoryItem implements IHabboInventoryItem {
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
-        this.furniture = furnitureManager.get(result.getInt("item_id"));
+        this.furniture = this.furnitureManager.get(result.getInt("item_id"));
         if (this.furniture == null)
             throw new IllegalArgumentException(STR."Invalid furniture base id for item id \{this.id}");
 
-        this.extraData = furnitureManager.parseExtraData(result.getString("extra_data"));
+        this.extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
         this.extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
         this.wiredData = result.getString("wired_data");
         this.group = result.getInt("guild_id");

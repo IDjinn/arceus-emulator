@@ -7,7 +7,7 @@ import utils.pathfinder.Position;
 public class RoomItemData implements IRoomItemData {
     private final int id;
     private final int itemId;
-    private int ownerId;
+    private final int ownerId;
     private IExtraData data;
     private int rotation;
     private Position floorPosition;
@@ -28,7 +28,7 @@ public class RoomItemData implements IRoomItemData {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class RoomItemData implements IRoomItemData {
     }
 
     public int getOwnerId() {
-        return ownerId;
+        return this.ownerId;
     }
     
     @Override
@@ -72,7 +72,7 @@ public class RoomItemData implements IRoomItemData {
 
     @Override
     public IExtraData getData() {
-        return data;
+        return this.data;
     }
 
     @Override

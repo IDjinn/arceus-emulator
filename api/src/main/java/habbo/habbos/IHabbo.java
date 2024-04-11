@@ -3,7 +3,6 @@ package habbo.habbos;
 import habbo.habbos.data.IHabboData;
 import habbo.habbos.data.IHabboNavigator;
 import habbo.habbos.data.IHabboRooms;
-import habbo.habbos.data.navigator.IHabboNavigatorWindowSettings;
 import habbo.habbos.data.IHabboSettings;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;

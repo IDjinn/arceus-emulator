@@ -77,63 +77,63 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public IFurniture getFurniture() {
-        return furniture;
+        return this.furniture;
     }
 
 
     @Override
     public String getDisplayName() {
-        return displayName;
+        return this.displayName;
     }
 
     @Override
     public int getCostCredits() {
-        return costCredits;
+        return this.costCredits;
     }
 
     @Override
     public int getCostActivityPoints() {
-        return costActivityPoints;
+        return this.costActivityPoints;
     }
 
     @Override
     public int getCostDiamonds() {
-        return costDiamonds;
+        return this.costDiamonds;
     }
 
     @Override
     public int getCostSeasonal() {
-        return costSeasonal;
+        return this.costSeasonal;
     }
 
     @Override
     public int getAmount() {
-        return amount;
+        return this.amount;
     }
 
     @Override
     public boolean isVip() {
-        return vip;
+        return this.vip;
     }
 
     @Override
     public int getLimitedTotal() {
-        return limitedTotal;
+        return this.limitedTotal;
     }
 
     @Override
     public int getLimitedSells() {
-        return limitedSells;
+        return this.limitedSells;
     }
 
     @Override
     public boolean allowOffer() {
-        return allowOffer;
+        return this.allowOffer;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public boolean hasBadge() {
-        return !StringUtil.isNullOrEmpty(badgeId);
+        return !StringUtil.isNullOrEmpty(this.badgeId);
     }
 
     @Override
@@ -154,23 +154,23 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public String getBadgeId() {
-        return badgeId;
+        return this.badgeId;
     }
 
     @Override
     public String getPresetData() {
-        return presetData;
+        return this.presetData;
     }
 
     @Override
     public int getPageId() {
-        return pageId;
+        return this.pageId;
     }
 
 
     @Override
     public int getOrder() {
-        return orderNum;
+        return this.orderNum;
     }
 
     public int compareTo(ICatalogItem item) {
@@ -180,7 +180,7 @@ public class CatalogItem implements ICatalogItem {
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
-        this.furniture = furnitureManager.get(Integer.parseInt(result.getString("item_ids")));
+        this.furniture = this.furnitureManager.get(Integer.parseInt(result.getString("item_ids")));
         this.displayName = result.getString("catalog_name");
         this.costCredits = result.getInt("cost_credits");
         this.costActivityPoints = result.getInt("cost_points");

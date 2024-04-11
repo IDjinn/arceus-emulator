@@ -52,100 +52,101 @@ public class Furniture implements IFurniture {
     @Override
     public void destroy() {
 
+        IFurniture.super.destroy();
     }
 
     @Override
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override
     public int getSpriteId() {
-        return spriteId;
+        return this.spriteId;
     }
 
     @Override
     public String getPublicName() {
-        return publicName;
+        return this.publicName;
     }
 
     @Override
     public String getItemName() {
-        return itemName;
+        return this.itemName;
     }
 
     @Override
     public FurnitureType getType() {
-        return type;
+        return this.type;
     }
 
     @Override
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     @Override
     public int getLength() {
-        return length;
+        return this.length;
     }
 
     @Override
     public double getStackHeight() {
-        return stackHeight;
+        return this.stackHeight;
     }
 
     @Override
     public String getInteractionType() {
-        return interactionType;
+        return this.interactionType;
     }
 
     @Override
     public int getInteractionModesCount() {
-        return interactionModesCount;
+        return this.interactionModesCount;
     }
 
     @Override
     public boolean isCanStackOnInventory() {
-        return canStackOnInventory;
+        return this.canStackOnInventory;
     }
 
     @Override
     public boolean isCanSellOnMarketplace() {
-        return canSellOnMarketplace;
+        return this.canSellOnMarketplace;
     }
 
     @Override
     public boolean isCanRecycle() {
-        return canRecycle;
+        return this.canRecycle;
     }
 
     @Override
     public boolean isCanTrade() {
-        return canTrade;
+        return this.canTrade;
     }
 
     @Override
     public boolean isCanGift() {
-        return canGift;
+        return this.canGift;
     }
 
     @Override
     public boolean isCanStack() {
-        return canStack;
+        return this.canStack;
     }
 
     @Override
     public boolean isCanLay() {
-        return canLay;
+        return this.canLay;
     }
 
     @Override
     public boolean isCanWalk() {
-        return canWalk;
+        return this.canWalk;
     }
 
     @Override
     public boolean isCanSit() {
-        return canSit;
+        return this.canSit;
     }
 }

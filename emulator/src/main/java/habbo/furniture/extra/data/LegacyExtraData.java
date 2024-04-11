@@ -29,7 +29,7 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
 
     @Override
     public void serializeState(OutgoingPacket packet) {
-        packet.appendString(data);
+        packet.appendString(this.data);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
 
     public int getStateValue() {
         try {
-            return Integer.parseInt(data);
+            return Integer.parseInt(this.data);
         } catch (NumberFormatException e) {
             return 0;
         }

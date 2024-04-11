@@ -41,7 +41,7 @@ public class HabboNavigator implements IHabboNavigator {
             this.loadNavigatorSearches();
             this.loadNavigatorCategoriesSettings();
         } catch (Exception e) {
-            logger.error("Failed to fill [HabboNavigator]", e);
+            this.logger.error("Failed to fill [HabboNavigator]", e);
         }
     }
 
@@ -66,11 +66,11 @@ public class HabboNavigator implements IHabboNavigator {
     }
 
     public IHabboNavigatorWindowSettings getNavigatorWindowSettings() {
-        return navigatorWindowSettings;
+        return this.navigatorWindowSettings;
     }
 
     public List<IHabboNavigatorSearch> getNavigatorSearches() {
-        return navigatorSearches;
+        return this.navigatorSearches;
     }
 
     public IHabboNavigatorCategorySettings getNavigatorCategorySettingsFromName(String name) {

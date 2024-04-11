@@ -18,6 +18,6 @@ public enum AddHabboItemCategory {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 }

@@ -23,7 +23,7 @@ public enum RoomAccessState {
     }
 
     public int getState() {
-        return state;
+        return this.state;
     }
 
 }

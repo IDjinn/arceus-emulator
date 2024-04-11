@@ -29,7 +29,7 @@ public abstract class CatalogPage implements ICatalogPage {
     private boolean vipOnly;
     private List<String> images;
     private List<String> texts;
-    private HashMap<Integer, ICatalogItem> items = new HashMap<Integer, ICatalogItem>();
+    private final HashMap<Integer, ICatalogItem> items = new HashMap<Integer, ICatalogItem>();
     private String extraData;
 
     @Override
@@ -64,22 +64,22 @@ public abstract class CatalogPage implements ICatalogPage {
 
     @Override
     public int getParentId() {
-        return parentId;
+        return this.parentId;
     }
 
     @Override
     public boolean isVipOnly() {
-        return vipOnly;
+        return this.vipOnly;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return this.enabled;
     }
 
     @Override
     public Map<Integer, ICatalogItem> getItems() {
-        return items;
+        return this.items;
     }
 
     @Override
@@ -89,37 +89,37 @@ public abstract class CatalogPage implements ICatalogPage {
 
     @Override
     public List<String> getImages() {
-        return images;
+        return this.images;
     }
 
     @Override
     public List<String> getTexts() {
-        return texts;
+        return this.texts;
     }
 
     @Override
     public String getLinkName() {
-        return linkName;
+        return this.linkName;
     }
 
     @Override
     public String getExtraData() {
-        return extraData;
+        return this.extraData;
     }
 
     @Override
     public CatalogPageType getType() {
-        return type;
+        return this.type;
     }
 
     @Override
     public int getOrder() {
-        return order;
+        return this.order;
     }
 
     @Override
     public List<ICatalogPage> getChildren() {
-        return children;
+        return this.children;
     }
 
     @Override

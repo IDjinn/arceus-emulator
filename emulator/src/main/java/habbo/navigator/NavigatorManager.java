@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import core.configuration.IEmulatorSettings;
-import habbo.navigator.data.INavigatorEventCategory;
 import habbo.navigator.data.*;
 import habbo.navigator.tabs.*;
 import org.apache.logging.log4j.LogManager;
@@ -60,7 +59,7 @@ public class NavigatorManager implements INavigatorManager {
             this.publicCategories.put(category.getId(), category);
         });
 
-        logger.info("Loaded {} navigator public categories", this.publicCategories.size());
+        this.logger.info("Loaded {} navigator public categories", this.publicCategories.size());
     }
 
     private void loadFilterTypes() {
@@ -72,7 +71,7 @@ public class NavigatorManager implements INavigatorManager {
             this.filterTypes.put(filterType.getKey(), filterType);
         });
 
-        logger.info("Loaded {} navigator filter types", this.filterTypes.size());
+        this.logger.info("Loaded {} navigator filter types", this.filterTypes.size());
     }
 
     private void loadEventCategories() {
@@ -86,7 +85,7 @@ public class NavigatorManager implements INavigatorManager {
             this.eventCategories.put(category.getId(), category);
         }
 
-        logger.info("Loaded {} navigator event categories", this.eventCategories.size());
+        this.logger.info("Loaded {} navigator event categories", this.eventCategories.size());
     }
 
     private void registerTabs() {

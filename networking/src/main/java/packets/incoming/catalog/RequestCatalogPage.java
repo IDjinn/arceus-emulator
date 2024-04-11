@@ -23,7 +23,7 @@ public class RequestCatalogPage extends IncomingEvent {
         var offerId = packet.readInt();
         var mode = packet.readString();
 
-        var page = catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
+        var page = this.catalogManager.getCatalogPageForHabbo(pageId, client.getHabbo());
         if (page == null)
             return;
 

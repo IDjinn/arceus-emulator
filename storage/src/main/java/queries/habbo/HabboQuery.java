@@ -34,6 +34,6 @@ public enum HabboQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

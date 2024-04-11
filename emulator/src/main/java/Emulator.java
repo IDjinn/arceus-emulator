@@ -118,24 +118,24 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Override
     public void start() {
-        logger.info("Orion has been started!");
+        this.logger.info("Orion has been started!");
 
         try {
-            emulatorSettings.init();
-            networkingManager.init();
+            this.emulatorSettings.init();
+            this.networkingManager.init();
 
-            furnitureManager.init();
-            catalogManager.init();
+            this.furnitureManager.init();
+            this.catalogManager.init();
 
-            roomManager.init();
-            navigatorManager.init();
+            this.roomManager.init();
+            this.navigatorManager.init();
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            this.logger.error(e.getMessage());
         }
     }
 
     @Override
     public void shutdown() {
-        logger.info("Orion has been shutdown!");
+        this.logger.info("Orion has been shutdown!");
     }
 }

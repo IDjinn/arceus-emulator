@@ -17,7 +17,7 @@ public class HabboNavigatorSearch implements IHabboNavigatorSearch {
         try {
             this.fill(result);
         } catch (Exception e) {
-            logger.error("Failed to fill navigator search", e);
+            this.logger.error("Failed to fill navigator search", e);
         }
     }
 

@@ -24,9 +24,9 @@ public class CatalogManager implements ICatalogManager {
     private final IFurnitureManager furnitureManager;
     private final ICatalogRepository catalogRepository;
     private final ICatalogFactory catalogFactory;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private HashMap<Integer, ICatalogItem> catalogItems;
-    private HashMap<Integer, ICatalogPage> catalogPages;
+    private final HashMap<Integer, ICatalogPage> catalogPages;
 
 
     private static final String DEFAULT_PURCHASE_HANDLER = "default_purchase_handler";
@@ -65,10 +65,10 @@ public class CatalogManager implements ICatalogManager {
                 if (!StringUtils.isStrictlyNumeric(itemsId))
                     throw new IllegalArgumentException("Catalog multi-item is not supported.");
 
-                var catalogItem = catalogFactory.createCatalogItem(result);
-                catalogItems.put(catalogItem.getId(), catalogItem);
+                var catalogItem = this.catalogFactory.createCatalogItem(result);
+                this.catalogItems.put(catalogItem.getId(), catalogItem);
             } catch (Exception e) {
-                logger.error("Error while trying to fetch catalog item {}", result.getInt("id"), e);
+                this.logger.error("Error while trying to fetch catalog item {}", result.getInt("id"), e);
             }
         });
         this.logger.info(STR."Loaded \{this.catalogItems.size()} catalog items from database.");
@@ -80,21 +80,21 @@ public class CatalogManager implements ICatalogManager {
             try {
                 var pageId = result.getInt("id");
                 var items = new ArrayList<ICatalogItem>();
-                for (var item : catalogItems.values()) {
+                for (var item : this.catalogItems.values()) {
                     if (item.getPageId() == pageId)
                         items.add(item);
                 }
 
-                var catalogPage = catalogFactory.createCatalogPage(result, items);
-                catalogPages.put(catalogPage.getId(), catalogPage);
+                var catalogPage = this.catalogFactory.createCatalogPage(result, items);
+                this.catalogPages.put(catalogPage.getId(), catalogPage);
             } catch (Exception e) {
-                logger.error("Error while trying to fetch catalog page{}", result.getInt("id"), e);
+                this.logger.error("Error while trying to fetch catalog page{}", result.getInt("id"), e);
             }
         });
         this.logger.info(STR."Loaded \{this.catalogPages.size()} catalog pages from database.");
 
-        for (var catalogPage : catalogPages.values()) {
-            var parent = catalogPages.get(catalogPage.getParentId());
+        for (var catalogPage : this.catalogPages.values()) {
+            var parent = this.catalogPages.get(catalogPage.getParentId());
             if (parent != null) {
                 parent.getChildren().add(catalogPage);
             }
@@ -108,7 +108,7 @@ public class CatalogManager implements ICatalogManager {
 
     @Override
     public HashMap<Integer, ICatalogItem> getCatalogItems() {
-        return catalogItems;
+        return this.catalogItems;
     }
 
     public void setCatalogItems(HashMap<Integer, ICatalogItem> catalogItems) {

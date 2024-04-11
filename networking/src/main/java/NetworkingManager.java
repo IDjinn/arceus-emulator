@@ -14,11 +14,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class NetworkingManager implements INetworkingManager {
-    private static Logger logger = LogManager.getLogger();
-    @Inject private IEmulator emulator;
-    @Inject private IConfigurationManager configurationManager;
+    private static final Logger logger = LogManager.getLogger();
+    @Inject private final IEmulator emulator;
+    @Inject private final IConfigurationManager configurationManager;
     @Inject
-    private NetworkChannelInitializer networkChannel;
+    private final NetworkChannelInitializer networkChannel;
     private final ServerBootstrap serverBootstrap;
     private final EventLoopGroup bossGroup;
     private final EventLoopGroup workerGroup;
@@ -41,8 +41,8 @@ public class NetworkingManager implements INetworkingManager {
                 configurationManager.getInt("net.worker.threads", 5)
         );
         this.serverBootstrap = new ServerBootstrap();
-        host = configurationManager.getString("net.host", "0.0.0.0");
-        port = configurationManager.getInt("net.port", 5000);
+        this.host = configurationManager.getString("net.host", "0.0.0.0");
+        this.port = configurationManager.getInt("net.port", 5000);
         
         this.serverBootstrap.group(this.bossGroup, this.workerGroup);
         this.serverBootstrap.channel(NioServerSocketChannel.class);

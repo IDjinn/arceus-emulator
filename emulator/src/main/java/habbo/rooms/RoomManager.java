@@ -73,17 +73,17 @@ public class RoomManager implements IRoomManager {
             if(result == null) return;
 
             try {
-                final IRoom room = roomFactory.createRoom(result);
+                final IRoom room = this.roomFactory.createRoom(result);
                 room.init();
 
                 this.rooms.put(room.getData().getId(), room);
                 publics.incrementAndGet();
             } catch (Exception e) {
-                logger.error("Failed to load public room: {}", result.getInt("id"));
+                this.logger.error("Failed to load public room: {}", result.getInt("id"));
             }
         }, "1", "1");
 
-        logger.info("Loaded all {} public rooms", publics.get());
+        this.logger.info("Loaded all {} public rooms", publics.get());
     }
 
     private void loadStaffPickedRooms() {
@@ -105,17 +105,17 @@ public class RoomManager implements IRoomManager {
                     return;
                 }
 
-                room = roomFactory.createRoom(result);
+                room = this.roomFactory.createRoom(result);
                 room.init();
 
                 this.rooms.put(room.getData().getId(), room);
                 picked.incrementAndGet();
             } catch (Exception e) {
-                logger.error("Failed to load staff picked room: {}", result.getInt("id"));
+                this.logger.error("Failed to load staff picked room: {}", result.getInt("id"));
             }
         }, "1");
 
-        logger.info("Loaded all {} staff picked rooms", picked.get());
+        this.logger.info("Loaded all {} staff picked rooms", picked.get());
     }
 
     private void loadRoomCategories() {
@@ -127,7 +127,7 @@ public class RoomManager implements IRoomManager {
             this.roomCategories.put(roomCategory.getId(), roomCategory);
         });
 
-        logger.info("Loaded {} room categories", this.roomCategories.size());
+        this.logger.info("Loaded {} room categories", this.roomCategories.size());
     }
 
     private void loadRoomModels() {
@@ -139,7 +139,7 @@ public class RoomManager implements IRoomManager {
             this.roomModels.put(roomModel.getName(), roomModel);
         });
 
-        logger.info("Loaded {} room models", this.roomModels.size());
+        this.logger.info("Loaded {} room models", this.roomModels.size());
     }
 
     @Override

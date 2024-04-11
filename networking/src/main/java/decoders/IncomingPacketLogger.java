@@ -22,7 +22,7 @@ public class IncomingPacketLogger extends MessageToMessageDecoder<IIncomingPacke
         try {
             logger.debug("[-> incoming] {} packet {} [{}]",
                     packet.getHeader(),
-                    packetManager.getIncomingEventName(packet.getHeader()),
+                    this.packetManager.getIncomingEventName(packet.getHeader()),
                     packet.getBuffer());
         } catch (Exception e) {
             logger.error("error while decoding packet {}", packet.getHeader(), e);

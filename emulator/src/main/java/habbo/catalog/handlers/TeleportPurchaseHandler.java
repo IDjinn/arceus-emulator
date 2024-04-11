@@ -61,7 +61,7 @@ public class TeleportPurchaseHandler implements ICatalogPurchaseHandler {
 
             this.furnitureRepository.createTeleportLink(result -> {
                 if (result == null)
-                    logger.error("error while creating teleport link for player {} with items ({}, {})", habbo.getData().getId(),
+                    this.logger.error("error while creating teleport link for player {} with items ({}, {})", habbo.getData().getId(),
                             first, second);
             }, (Integer) first, (Integer) second);
         }

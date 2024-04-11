@@ -16,7 +16,7 @@ public class FurnitureFactory implements IFurnitureFactory {
     @Override
     public IFurniture create(IConnectionResult result) throws Exception {
         var furniture = new Furniture();
-        injector.injectMembers(furniture);
+        this.injector.injectMembers(furniture);
         furniture.fill(result);
         return furniture;
     }

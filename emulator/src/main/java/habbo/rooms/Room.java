@@ -52,14 +52,14 @@ public class Room implements IRoom {
     private IRoomModelData model;
 
     private boolean isFullyLoaded = false;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
 
     public Room(IConnectionResult data) {
         this.data = new RoomData(data);
     }
 
     public IRoomData getData() {
-        return data;
+        return this.data;
     }
 
     @Override
@@ -163,12 +163,12 @@ public class Room implements IRoom {
 
     @Override
     public IRoomEntityManager getEntityManager() {
-        return entityManager;
+        return this.entityManager;
     }
 
     @Override
     public IRoomGameMap getGameMap() {
-        return gameMap;
+        return this.gameMap;
     }
 
     @Override
@@ -193,7 +193,7 @@ public class Room implements IRoom {
 
     @Override
     public boolean isFullyLoaded() {
-        return isFullyLoaded;
+        return this.isFullyLoaded;
     }
 
     @Override
@@ -229,7 +229,7 @@ public class Room implements IRoom {
             try {
                 unregisterProcess(key);
             } catch (Exception e) {
-                logger.error("Unable to unregister process {} from room {} due exception {}", key, data.getId(), e.getMessage(), e);
+                this.logger.error("Unable to unregister process {} from room {} due exception {}", key, this.data.getId(), e.getMessage(), e);
             }
         }
     }

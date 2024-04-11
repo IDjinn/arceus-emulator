@@ -14,6 +14,6 @@ public enum FunitureQuery {
     }
     
     public String get() {
-        return query;
+        return this.query;
     }
 }

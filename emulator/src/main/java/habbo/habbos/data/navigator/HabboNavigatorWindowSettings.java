@@ -22,36 +22,36 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
         try {
             this.fillOrCreate(result);
         } catch (Exception e) {
-            logger.error(STR."Failed to create HabboNavigatorWindowSettings from IConnectionResult: \{e.getMessage()}");
+            this.logger.error(STR."Failed to create HabboNavigatorWindowSettings from IConnectionResult: \{e.getMessage()}");
         }
     }
 
     public Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     public int getWindowX() {
-        return windowX;
+        return this.windowX;
     }
 
     public int getWindowY() {
-        return windowY;
+        return this.windowY;
     }
 
     public int getWindowWidth() {
-        return windowWidth;
+        return this.windowWidth;
     }
 
     public int getWindowHeight() {
-        return windowHeight;
+        return this.windowHeight;
     }
 
     public boolean isLeftPanelCollapsed() {
-        return leftPanelCollapsed;
+        return this.leftPanelCollapsed;
     }
 
     public int getResultsMode() {
-        return resultsMode;
+        return this.resultsMode;
     }
 
     private void fillOrCreate(IConnectionResult result) throws Exception {

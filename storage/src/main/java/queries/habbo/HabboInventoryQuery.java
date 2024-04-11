@@ -21,6 +21,6 @@ public enum HabboInventoryQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

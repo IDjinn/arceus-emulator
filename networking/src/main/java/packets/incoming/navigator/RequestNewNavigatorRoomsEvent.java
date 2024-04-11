@@ -27,6 +27,6 @@ public class RequestNewNavigatorRoomsEvent extends IncomingEvent {
         String tabName = this.navigatorManager.normalizeTab(packet.readString());
         String query = packet.readString();
 
-        navigatorSearchService.commit(client.getHabbo(), tabName, query);
+        this.navigatorSearchService.commit(client.getHabbo(), tabName, query);
     }
 }

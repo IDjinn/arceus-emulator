@@ -24,12 +24,12 @@ public class StatusBucket {
     }
 
     public RoomEntityStatus getStatus() {
-        return status;
+        return this.status;
     }
 
     @Nullable
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public void setValue(@Nullable String value) {
@@ -37,7 +37,7 @@ public class StatusBucket {
     }
 
     public int getTicks() {
-        return ticks;
+        return this.ticks;
     }
 
     public void setTicks(int ticks) {

@@ -23,7 +23,7 @@ public class NavigatorPublicCategory implements INavigatorPublicCategory, IFilla
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill NavigatorPublicCategory", e);
+            this.logger.error("Failed to fill NavigatorPublicCategory", e);
         }
     }
 

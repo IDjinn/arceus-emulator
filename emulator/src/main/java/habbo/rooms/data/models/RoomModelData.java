@@ -18,32 +18,32 @@ public class RoomModelData implements IRoomModelData, IFillable {
         try {
             this.fill(data);
         } catch (Exception e) {
-            logger.error("Failed to fill room model data", e);
+            this.logger.error("Failed to fill room model data", e);
         }
     }
 
     public Logger getLogger() {
-        return logger;
+        return this.logger;
     }
 
     public int getDoorX() {
-        return doorX;
+        return this.doorX;
     }
 
     public int getDoorY() {
-        return doorY;
+        return this.doorY;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getHeightMap() {
-        return heightMap;
+        return this.heightMap;
     }
 
     public int getDoorDirection() {
-        return doorDirection;
+        return this.doorDirection;
     }
 
     @Override

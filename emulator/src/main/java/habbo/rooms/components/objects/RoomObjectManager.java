@@ -35,7 +35,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Integer, IRoomItem> items;
     private final HashMap<Integer, IFloorItem> floorItems;
     private final HashMap<Integer, IWallItem> wallItems;
-    private Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger();
     private IRoom room;
     @Inject
     private IRoomItemsRepository itemsRepository;

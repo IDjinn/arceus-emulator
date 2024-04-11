@@ -86,7 +86,7 @@ public class HabboRooms implements IHabboRooms {
             }
 
             this.roomHistory.add(room);
-        }, this.habbo.getData().getId(), TimeUtil.now());
+        }, this.habbo.getData().getId(), TimeUtil.unixNow());
 
     }
 

@@ -14,6 +14,6 @@ public enum HabboNavigatorQuery {
     }
 
     public String get() {
-        return query;
+        return this.query;
     }
 }

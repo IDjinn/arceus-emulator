@@ -66,9 +66,9 @@ public class IncomingPacket implements IIncomingPacket {
         this.buffer.readBytes(data);
         if (unsecureLength > secureLength) {
             final var level = unsecureLength * 3 > maxLength ? SecurityBreachLevel.HIGH : SecurityBreachLevel.MEDIUM;
-            final var connectionId = ctx.hasAttr(GameNetowrkingAttributes.CLIENT)
-                    ? ctx.attr(GameNetowrkingAttributes.CLIENT).get().getHabbo().getData().getUsername()
-                    : ctx.channel().id();
+            final var connectionId = this.ctx.hasAttr(GameNetowrkingAttributes.CLIENT)
+                    ? this.ctx.attr(GameNetowrkingAttributes.CLIENT).get().getHabbo().getData().getUsername()
+                    : this.ctx.channel().id();
             this.scriptManager.report(level, "client {} tried to send string larger than {} in packet header {}", connectionId, maxLength, this.header);
             this.buffer.skipBytes(unsecureLength - secureLength);
         }

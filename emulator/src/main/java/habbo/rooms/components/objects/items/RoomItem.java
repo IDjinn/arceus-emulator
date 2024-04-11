@@ -30,22 +30,25 @@ public abstract class RoomItem implements IRoomItem {
 
     @Override
     public int getVirtualId() {
-        return virtualId;
+        return this.virtualId;
     }
 
     @Override
     public void onRoomLoaded() {
 
+        IRoomItem.super.onRoomLoaded();
     }
 
     @Override
     public void init() {
 
+        IRoomItem.super.init();
     }
 
     @Override
     public void destroy() {
 
+        IRoomItem.super.destroy();
     }
 
     @Override

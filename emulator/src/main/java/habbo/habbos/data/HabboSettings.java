@@ -63,155 +63,155 @@ public class HabboSettings implements IHabboSettings, IFillable {
     }
 
     public int getRespectPointsReceived() {
-        return respectPointsReceived;
+        return this.respectPointsReceived;
     }
 
     public int getAchievementScore() {
-        return achievementScore;
+        return this.achievementScore;
     }
 
     public int getRespectPointsGiven() {
-        return respectPointsGiven;
+        return this.respectPointsGiven;
     }
 
     public int getPetRespectPointsToGive() {
-        return petRespectPointsToGive;
+        return this.petRespectPointsToGive;
     }
 
     public int getRespectPointsToGive() {
-        return respectPointsToGive;
+        return this.respectPointsToGive;
     }
 
     public boolean isBlockFollowing() {
-        return blockFollowing;
+        return this.blockFollowing;
     }
 
     public boolean isBlockFriendRequests() {
-        return blockFriendRequests;
+        return this.blockFriendRequests;
     }
 
     public boolean isBlockRoomInvites() {
-        return blockRoomInvites;
+        return this.blockRoomInvites;
     }
 
     public boolean isPreferOldChat() {
-        return preferOldChat;
+        return this.preferOldChat;
     }
 
     public boolean isBlockCameraFollow() {
-        return blockCameraFollow;
+        return this.blockCameraFollow;
     }
 
     public int getGuild() {
-        return guild;
+        return this.guild;
     }
 
     public String[] getTags() {
-        return tags;
+        return this.tags;
     }
 
     public boolean allowTrade() {
-        return allowTrade;
+        return this.allowTrade;
     }
 
     public int getClubExpireTimestamp() {
-        return clubExpireTimestamp;
+        return this.clubExpireTimestamp;
     }
 
     public int getLoginStreak() {
-        return loginStreak;
+        return this.loginStreak;
     }
 
     public int getRentedItemId() {
-        return rentedItemId;
+        return this.rentedItemId;
     }
 
     public int getRentedTimeEnd() {
-        return rentedTimeEnd;
+        return this.rentedTimeEnd;
     }
 
     public int getSystemVolume() {
-        return systemVolume;
+        return this.systemVolume;
     }
 
     public int getFurnitureVolume() {
-        return furnitureVolume;
+        return this.furnitureVolume;
     }
 
     public int getTraxVolume() {
-        return traxVolume;
+        return this.traxVolume;
     }
 
     public int getChatColor() {
-        return chatColor;
+        return this.chatColor;
     }
 
     public int getHofPoints() {
-        return hofPoints;
+        return this.hofPoints;
     }
 
     public boolean isBlockStaffAlerts() {
-        return blockStaffAlerts;
+        return this.blockStaffAlerts;
     }
 
     public int getCitizenshipLevel() {
-        return citizenshipLevel;
+        return this.citizenshipLevel;
     }
 
     public int getHelpersLevel() {
-        return helpersLevel;
+        return this.helpersLevel;
     }
 
     public boolean isIgnoreBots() {
-        return ignoreBots;
+        return this.ignoreBots;
     }
 
     public boolean isIgnorePets() {
-        return ignorePets;
+        return this.ignorePets;
     }
 
     public boolean isNux() {
-        return nux;
+        return this.nux;
     }
 
     public int getMuteEndTime() {
-        return muteEndTime;
+        return this.muteEndTime;
     }
 
     public boolean allowNameChange() {
-        return allowNameChange;
+        return this.allowNameChange;
     }
 
     public boolean isPerkTrade() {
-        return perkTrade;
+        return this.perkTrade;
     }
 
     public int getForumPostsCount() {
-        return forumPostsCount;
+        return this.forumPostsCount;
     }
 
     public int getUiFlags() {
-        return uiFlags;
+        return this.uiFlags;
     }
 
     public boolean isHasGottenDefaultSavedSearches() {
-        return hasGottenDefaultSavedSearches;
+        return this.hasGottenDefaultSavedSearches;
     }
 
     public int getMaxFriends() {
-        return maxFriends;
+        return this.maxFriends;
     }
 
     public int getMaxRooms() {
-        return maxRooms;
+        return this.maxRooms;
     }
 
     public int getLastHCPayday() {
-        return lastHCPayday;
+        return this.lastHCPayday;
     }
 
     public int getHcGiftsClaimed() {
-        return hcGiftsClaimed;
+        return this.hcGiftsClaimed;
     }
 
     @Override
@@ -273,6 +273,6 @@ public class HabboSettings implements IHabboSettings, IFillable {
 
     @Override
     public IHabbo getHabbo() {
-        return habbo;
+        return this.habbo;
     }
 }

@@ -335,11 +335,11 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, z);
+        return Objects.hash(this.x, this.y, this.z);
     }
 
     public int getFlag() {
-        return flag;
+        return this.flag;
     }
 
     public void setFlag(int flag) {

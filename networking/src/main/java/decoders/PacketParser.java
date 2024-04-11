@@ -25,14 +25,14 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) {
-        if (!nitroClientManager.tryAddClient(ctx)) {
-            nitroClientManager.disconnectGuest(ctx);
+        if (!this.nitroClientManager.tryAddClient(ctx)) {
+            this.nitroClientManager.disconnectGuest(ctx);
         }
     }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) {
-        nitroClientManager.disconnectGuest(ctx);
+        this.nitroClientManager.disconnectGuest(ctx);
     }
 
     @Override
@@ -42,11 +42,11 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         try {
             var client = (INitroClient) ctx.attr(GameNetowrkingAttributes.CLIENT).get();
             if (client == null) {
-                packetManager.parseForGuest(message, ctx);
+                this.packetManager.parseForGuest(message, ctx);
                 return;
             }
 
-            packetManager.parse(message, client);
+            this.packetManager.parse(message, client);
         } catch (Exception e) {
             logger.error("Caught exception", e);
         }
@@ -54,7 +54,7 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        nitroClientManager.disconnectGuest(ctx);
+        this.nitroClientManager.disconnectGuest(ctx);
     }
 
     @Override

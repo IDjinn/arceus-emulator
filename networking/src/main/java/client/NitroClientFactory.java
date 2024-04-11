@@ -15,7 +15,7 @@ public class NitroClientFactory implements INitroClientFactory {
     @Override
     public INitroClient create(ChannelHandlerContext ctx) {
         var client = new NitroClient(ctx);
-        injector.injectMembers(client);
+        this.injector.injectMembers(client);
 
         return client;
     }

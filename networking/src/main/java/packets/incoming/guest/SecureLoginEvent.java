@@ -29,11 +29,11 @@ public class SecureLoginEvent extends IncomingEvent {
         String sso = packet.readString().replaceAll(" ", "");
         int integer = packet.readInt();
 
-        if(!loginProvider.canLogin(ctx, sso)) {
-            clientManager.disconnectGuest(ctx);
+        if(!this.loginProvider.canLogin(ctx, sso)) {
+            this.clientManager.disconnectGuest(ctx);
             return;
         }
 
-        loginProvider.attemptLogin(ctx, sso);
+        this.loginProvider.attemptLogin(ctx, sso);
     }
 }

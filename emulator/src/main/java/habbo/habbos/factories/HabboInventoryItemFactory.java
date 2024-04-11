@@ -20,7 +20,7 @@ public class HabboInventoryItemFactory implements IHabboInventoryItemFactory {
     @Override
     public IHabboInventoryItem create(IConnectionResult data, IHabbo habbo) throws Exception {
         var inventoryItem = new HabboInventoryItem(habbo);
-        injector.injectMembers(inventoryItem);
+        this.injector.injectMembers(inventoryItem);
         inventoryItem.fill(data);
         return inventoryItem;
     }
@@ -28,7 +28,7 @@ public class HabboInventoryItemFactory implements IHabboInventoryItemFactory {
     @Override
     public IHabboInventoryItem create(IHabbo habbo, int itemId, IFurniture furniture, IExtraData extraData) throws Exception {
         var inventoryItem = new HabboInventoryItem(habbo, itemId, furniture, extraData, "", 0);
-        injector.injectMembers(inventoryItem);
+        this.injector.injectMembers(inventoryItem);
         return inventoryItem;
     }
 }
