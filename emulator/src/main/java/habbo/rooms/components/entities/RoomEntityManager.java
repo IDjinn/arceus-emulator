@@ -52,13 +52,12 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public void init(IRoom room) {
         this.room = room;
-        this.getRoom().registerProcess(RoomEntityManager.class.getName(), this::tick,
-                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
     
     @Override
     public void onRoomLoaded() {
-
+        this.getRoom().registerProcess(RoomEntityManager.class.getName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override

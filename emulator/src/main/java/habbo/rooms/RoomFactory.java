@@ -21,6 +21,7 @@ public class RoomFactory implements IRoomFactory {
         var room = new Room(data);
         injector.injectMembers(room);
         room.init();
+        room.onLoaded();
         this.roomManager.addRoom(room);
         return room;
     }

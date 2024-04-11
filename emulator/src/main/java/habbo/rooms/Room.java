@@ -22,6 +22,7 @@ import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
 import packets.outgoing.rooms.objects.wall.RoomWallItemsComposer;
 import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
+import utils.ReflectionHelpers;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
@@ -205,7 +206,13 @@ public class Room implements IRoom {
         if (this.processes.containsKey(key))
             throw new IllegalStateException("already registered");
 
-        this.processes.put(key, threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(runnable, 0, interval, timeUnit));
+        this.processes.put(key, this.threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(runnable
+                , 0,
+                interval,
+                timeUnit));
+
+        this.logger.debug("registered process '{}' for room '{}' by '{}'", key, this.getData().getId(),
+                ReflectionHelpers.getCallerInfo());
     }
 
     @Override

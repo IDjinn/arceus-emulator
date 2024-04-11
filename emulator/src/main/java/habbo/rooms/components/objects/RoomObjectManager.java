@@ -79,13 +79,13 @@ public class RoomObjectManager implements IRoomObjectManager {
             }
         });
         this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
-        this.getRoom().registerProcess(RoomObjectManager.class.getName(), this::tick,
-                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void onRoomLoaded() {
         this.items.values().forEach(IRoomObject::onRoomLoaded);
+        this.getRoom().registerProcess(RoomObjectManager.class.getName(), this::tick,
+                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override
