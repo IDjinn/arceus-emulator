@@ -2,7 +2,7 @@ package packets.incoming.catalog;
 
 import com.google.inject.Inject;
 import habbo.catalog.ICatalogManager;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -18,7 +18,7 @@ public class RequestCatalogPage extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         var pageId = packet.readInt();
         var offerId = packet.readInt();
         var mode = packet.readString();

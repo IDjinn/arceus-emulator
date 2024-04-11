@@ -26,6 +26,12 @@
     <artifactId>emulator</artifactId>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>

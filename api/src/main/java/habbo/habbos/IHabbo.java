@@ -8,7 +8,7 @@ import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
-import networking.client.INitroClient;
+import networking.client.IClient;
 
 import javax.annotation.Nullable;
 
@@ -22,7 +22,7 @@ public interface IHabbo {
 
     void destroy();
 
-    INitroClient getClient();
+    IClient getClient();
 
     void setRoom(@Nullable IRoom room);
 

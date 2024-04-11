@@ -1,7 +1,7 @@
 package packets.incoming.rooms.objects;
 
 import com.google.inject.Singleton;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -14,7 +14,7 @@ public class PickupItemEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
         // TODO ITEM OWNER

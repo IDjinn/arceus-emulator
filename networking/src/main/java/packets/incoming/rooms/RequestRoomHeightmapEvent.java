@@ -1,7 +1,7 @@
 package packets.incoming.rooms;
 
 import com.google.inject.Singleton;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -15,7 +15,7 @@ public class RequestRoomHeightmapEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         if (client.getHabbo().getPlayerEntity() == null) return;
 
         client.getHabbo().getPlayerEntity().getRoom().join(client.getHabbo());

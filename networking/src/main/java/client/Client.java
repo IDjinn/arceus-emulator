@@ -2,16 +2,16 @@ package client;
 
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 
 import java.util.List;
 
-public class NitroClient implements INitroClient {
+public class Client implements IClient {
     private final ChannelHandlerContext ctx;
     private IHabbo habbo;
 
-    public NitroClient(ChannelHandlerContext ctx) {
+    public Client(ChannelHandlerContext ctx) {
         this.ctx = ctx;
     }
 
@@ -56,5 +56,10 @@ public class NitroClient implements INitroClient {
     @Override
     public IHabbo getHabbo() {
         return this.habbo;
+    }
+
+    @Override
+    public void dispose() {
+        this.ctx.channel().disconnect();
     }
 }

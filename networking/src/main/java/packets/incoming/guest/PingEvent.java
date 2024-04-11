@@ -1,7 +1,7 @@
 package packets.incoming.guest;
 
 import com.google.inject.Singleton;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import networking.util.NoAuth;
 import packets.incoming.IncomingEvent;
@@ -17,7 +17,7 @@ public class PingEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         client.sendMessage(new PingComposer());
     }
 }

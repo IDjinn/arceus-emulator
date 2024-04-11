@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import habbo.habbos.Habbo;
 import habbo.habbos.IHabbo;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import storage.results.IConnectionResult;
 
 @Singleton
@@ -14,7 +14,7 @@ public class HabboFactory implements IHabboFactory {
     Injector injector;
 
     @Override
-    public IHabbo create(INitroClient client, IConnectionResult result) {
+    public IHabbo create(IClient client, IConnectionResult result) {
         var habbo = new Habbo(this.injector, client, result);
         this.injector.injectMembers(habbo);
         habbo.init();

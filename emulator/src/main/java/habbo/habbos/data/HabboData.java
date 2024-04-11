@@ -1,5 +1,6 @@
 package habbo.habbos.data;
 
+import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,7 @@ import utils.interfaces.IFillable;
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
+    @Inject
     private IHabboRepository habboRepository;
 
     private int id;

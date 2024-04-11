@@ -5,8 +5,15 @@ import habbo.habbos.data.IHabboData;
 import java.util.Optional;
 
 public interface IHabboManager {
-    Optional<IHabboData> getHabboData(String name);
+    Optional<IHabboData> getHabboDataByUsername(String name);
 
     Optional<IHabboData> getHabboData(int id);
-    
+
+    void cache(IHabboData data);
+
+    void invalidateCache(int id);
+
+    void onLogin(IHabbo habbo);
+
+    void onLogoff(IHabbo habbo);
 }

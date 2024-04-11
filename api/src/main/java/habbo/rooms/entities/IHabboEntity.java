@@ -1,10 +1,10 @@
 package habbo.rooms.entities;
 
 import habbo.habbos.IHabbo;
-import networking.client.INitroClient;
+import networking.client.IClient;
 
 public interface IHabboEntity extends IRoomEntity {
     IHabbo getHabbo();
 
-    INitroClient getClient();
+    IClient getClient();
 }

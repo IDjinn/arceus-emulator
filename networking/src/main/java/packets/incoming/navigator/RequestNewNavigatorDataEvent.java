@@ -3,7 +3,7 @@ package packets.incoming.navigator;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.navigator.INavigatorManager;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -20,7 +20,7 @@ public class RequestNewNavigatorDataEvent extends IncomingEvent {
     private INavigatorManager navigatorManager;
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         client.sendMessages(
                 new NewNavigatorSettingsComposer(client.getHabbo().getNavigator().getNavigatorWindowSettings()),
                 new NewNavigatorMetaDataComposer(client.getHabbo().getNavigator()),

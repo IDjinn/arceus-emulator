@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import habbo.habbos.providers.ILoginProvider;
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClientManager;
+import networking.client.IClientManager;
 import networking.packets.IIncomingPacket;
 import networking.util.NoAuth;
 import packets.incoming.IncomingEvent;
@@ -14,7 +14,7 @@ import packets.incoming.IncomingHeaders;
 @NoAuth
 public class SecureLoginEvent extends IncomingEvent {
     @Inject
-    private INitroClientManager clientManager;
+    private IClientManager clientManager;
 
     @Inject
     private ILoginProvider loginProvider;

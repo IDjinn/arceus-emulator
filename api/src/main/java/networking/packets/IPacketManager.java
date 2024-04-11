@@ -1,7 +1,7 @@
 package networking.packets;
 
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClient;
+import networking.client.IClient;
 
 public interface IPacketManager {
     boolean isParallelParsingEnabled();
@@ -10,7 +10,7 @@ public interface IPacketManager {
 
     String getIncomingEventName(int headerId);
 
-    void parse(IIncomingPacket IIncomingPacket, INitroClient client);
+    void parse(IIncomingPacket IIncomingPacket, IClient client);
 
     void parseForGuest(IIncomingPacket IIncomingPacket, ChannelHandlerContext channel);
 }

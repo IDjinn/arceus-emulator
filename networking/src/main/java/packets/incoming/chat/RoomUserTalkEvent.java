@@ -1,7 +1,7 @@
 package packets.incoming.chat;
 
 import com.google.inject.Singleton;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -14,7 +14,7 @@ public class RoomUserTalkEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(final IIncomingPacket packet, final INitroClient client) {
+    public void parse(final IIncomingPacket packet, final IClient client) {
         var message = packet.readString((short) 10);
     }
 }

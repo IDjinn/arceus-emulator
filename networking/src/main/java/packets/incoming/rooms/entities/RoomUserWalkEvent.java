@@ -1,6 +1,6 @@
 package packets.incoming.rooms.entities;
 
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -13,7 +13,7 @@ public class RoomUserWalkEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         if (client.getHabbo().getPlayerEntity() == null) return;
 
         var player = client.getHabbo().getPlayerEntity();

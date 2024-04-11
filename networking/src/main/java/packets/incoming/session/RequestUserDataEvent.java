@@ -1,7 +1,7 @@
 package packets.incoming.session;
 
 import com.google.inject.Singleton;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -17,7 +17,7 @@ public class RequestUserDataEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         client.sendMessages(
                 new UserDataComposer(client.getHabbo()),
                 new UserPerksComposer(client.getHabbo()),

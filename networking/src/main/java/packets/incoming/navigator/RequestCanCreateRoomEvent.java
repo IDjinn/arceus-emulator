@@ -1,6 +1,6 @@
 package packets.incoming.navigator;
 
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
@@ -13,7 +13,7 @@ public class RequestCanCreateRoomEvent extends IncomingEvent {
     }
 
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         client.sendMessage(new CanCreateRoomComposer());
     }
 }

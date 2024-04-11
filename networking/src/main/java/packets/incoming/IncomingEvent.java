@@ -1,13 +1,13 @@
 package packets.incoming;
 
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 
 public abstract class IncomingEvent {
     public abstract int getHeaderId();
 
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         
     }
 

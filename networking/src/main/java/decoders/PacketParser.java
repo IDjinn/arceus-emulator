@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import networking.client.INitroClient;
-import networking.client.INitroClientManager;
+import networking.client.IClient;
+import networking.client.IClientManager;
 import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
 import networking.util.GameNetowrkingAttributes;
@@ -20,19 +20,20 @@ import java.io.IOException;
 @ChannelHandler.Sharable
 public class PacketParser extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LogManager.getLogger();
-    @Inject private INitroClientManager nitroClientManager;
+    @Inject
+    private IClientManager clientManager;
     @Inject private IPacketManager packetManager;
 
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) {
-        if (!this.nitroClientManager.tryAddClient(ctx)) {
-            this.nitroClientManager.disconnectGuest(ctx);
+        if (!this.clientManager.tryAddClient(ctx)) {
+            this.clientManager.disconnectGuest(ctx);
         }
     }
 
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) {
-        this.nitroClientManager.disconnectGuest(ctx);
+        this.clientManager.onDisconnect(ctx);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         var message = (IIncomingPacket) msg;
 
         try {
-            var client = (INitroClient) ctx.attr(GameNetowrkingAttributes.CLIENT).get();
+            var client = (IClient) ctx.attr(GameNetowrkingAttributes.CLIENT).get();
             if (client == null) {
                 this.packetManager.parseForGuest(message, ctx);
                 return;
@@ -52,20 +53,17 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         }
     }
 
-    @Override
-    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        this.nitroClientManager.disconnectGuest(ctx);
-    }
+//    @Override
+//    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+//        this.clientManager.onDisconnect(ctx);
+//    }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        if (cause instanceof IOException) {
-            ctx.channel().close();
+        this.clientManager.onDisconnect(ctx);
+        if (cause instanceof IOException) 
             return;
-        }
-        
-        logger.error("Disconnecting client, exception in GameMessageHander.", cause);
-        ctx.channel().close();
-    }
 
+        logger.error("Disconnecting client, exception in PacketParser.", cause);
+    }
 }

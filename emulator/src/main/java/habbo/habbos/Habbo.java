@@ -7,12 +7,12 @@ import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
 public class Habbo implements IHabbo {
-    private final INitroClient client;
+    private final IClient client;
 
     private @Nullable IRoom room;
     private @Nullable IHabboEntity entity;
@@ -28,7 +28,7 @@ public class Habbo implements IHabbo {
     private final IHabboRooms rooms;
     private final IHabboWallet wallet;
 
-    public Habbo(final Injector injector, INitroClient client, IConnectionResult result) {
+    public Habbo(final Injector injector, IClient client, IConnectionResult result) {
         this.client = client;
 
         this.data = new HabboData(this, result);
@@ -42,6 +42,8 @@ public class Habbo implements IHabbo {
     }
 
     private void injectDependenciesOnComponents(final Injector injector) {
+        injector.injectMembers(this.data);
+        injector.injectMembers(this.settings);
         injector.injectMembers(this.inventory);
         injector.injectMembers(this.navigator);
         injector.injectMembers(this.rooms);
@@ -82,9 +84,9 @@ public class Habbo implements IHabbo {
         this.rooms.destory();
         this.wallet.destory();
     }
-    
 
-    public INitroClient getClient() {
+
+    public IClient getClient() {
         return this.client;
     }
 

@@ -1,7 +1,7 @@
 package habbo.rooms.entities;
 
 import habbo.habbos.IHabbo;
-import networking.client.INitroClient;
+import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 
 public class HabboEntity extends RoomEntity implements IHabboEntity {
@@ -18,7 +18,7 @@ public class HabboEntity extends RoomEntity implements IHabboEntity {
     }
 
     @Override
-    public INitroClient getClient() {
+    public IClient getClient() {
         return this.getHabbo().getClient();
     }
 

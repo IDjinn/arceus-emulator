@@ -2,11 +2,12 @@ package habbo.habbos.providers;
 
 import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
+import habbo.habbos.IHabboManager;
 import habbo.habbos.factories.IHabboFactory;
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClient;
-import networking.client.INitroClientFactory;
-import networking.client.INitroClientManager;
+import networking.client.IClient;
+import networking.client.IClientFactory;
+import networking.client.IClientManager;
 import networking.util.GameNetowrkingAttributes;
 import packets.outgoing.PingComposer;
 import packets.outgoing.guest.SecureLoginOkComposer;
@@ -31,13 +32,16 @@ public class HabboLoginProvider implements ILoginProvider {
     private IHabboRepository habboRepository;
 
     @Inject
-    private INitroClientManager clientManager;
+    private IClientManager clientManager;
 
     @Inject
-    private INitroClientFactory clientFactory;
+    private IClientFactory clientFactory;
 
     @Inject
     private IHabboFactory habboFactory;
+
+    @Inject
+    private IHabboManager habboManager;
 
     @Override
     public boolean canLogin(ChannelHandlerContext ctx, String authTicket) {
@@ -67,10 +71,11 @@ public class HabboLoginProvider implements ILoginProvider {
                 return;
             }
 
-            INitroClient client = this.clientFactory.create(ctx);
+            IClient client = this.clientFactory.create(ctx);
             ctx.attr(GameNetowrkingAttributes.CLIENT).set(client);
 
             final IHabbo habbo = this.habboFactory.create(client, result);
+            this.habboManager.onLogin(habbo);
 
             client.setHabbo(habbo);
             this.clientManager.addClient(client);
@@ -79,7 +84,7 @@ public class HabboLoginProvider implements ILoginProvider {
         }, authTicket);
     }
 
-    private void sendLoginPackets(INitroClient client) {
+    private void sendLoginPackets(IClient client) {
         client.sendMessages(new SecureLoginOkComposer()
                 , new UserEffectsListComposer()
                 , new UserClothesComposer()

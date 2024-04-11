@@ -6,8 +6,8 @@ import com.google.inject.Singleton;
 import core.concurrency.IThreadManager;
 import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
-import networking.client.INitroClient;
-import networking.client.INitroClientManager;
+import networking.client.IClient;
+import networking.client.IClientManager;
 import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
 import networking.util.NoAuth;
@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 public class PacketManager implements IPacketManager {
     private final Logger logger = LogManager.getLogger();
     private final Executor sharedGuestExecutor = Executors.newSingleThreadExecutor();
-    private final INitroClientManager clientManager;
+    private final IClientManager clientManager;
     private final IConfigurationManager configuration;
     private final IThreadManager threadManager;
 
@@ -33,7 +33,7 @@ public class PacketManager implements IPacketManager {
     private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<>();
 
     @Inject
-    public PacketManager(INitroClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
+    public PacketManager(IClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
         this.clientManager = clientManager;
         this.configuration = configuration;
         this.threadManager = threadManager;
@@ -76,7 +76,7 @@ public class PacketManager implements IPacketManager {
 
     private final HashSet<Integer> notFoundPackets = new HashSet<>();
     @Override
-    public void parse(IIncomingPacket packet, INitroClient client) {
+    public void parse(IIncomingPacket packet, IClient client) {
         var incomingEvent = this.incomingEvents.get(packet.getHeader());
         if (incomingEvent == null) {
             if (this.notFoundPackets.add(packet.getHeader()))
