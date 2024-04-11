@@ -4,9 +4,12 @@ public interface IHabboComponent {
 
     void init();
 
-    void update();
+    default void update() {
 
-    void destory();
+    }
+
+    default void destory() {
+    }
 
     IHabbo getHabbo();
 }

@@ -2,6 +2,8 @@ package habbo.habbos;
 
 import com.google.inject.Injector;
 import habbo.habbos.data.*;
+import habbo.habbos.data.wallet.HabboWallet;
+import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IHabboEntity;
@@ -24,6 +26,7 @@ public class Habbo implements IHabbo {
     private final IHabboNavigator navigator;
 
     private final IHabboRooms rooms;
+    private final IHabboWallet wallet;
 
     public Habbo(final Injector injector, INitroClient client, IConnectionResult result) {
         this.client = client;
@@ -33,6 +36,7 @@ public class Habbo implements IHabbo {
         this.inventory = new HabboInventory(this);
         this.navigator = new HabboNavigator(this, result);
         this.rooms = new HabboRooms(this);
+        this.wallet = new HabboWallet(this);
 
         this.injectDependenciesOnComponents(injector);
     }
@@ -41,6 +45,7 @@ public class Habbo implements IHabbo {
         injector.injectMembers(this.inventory);
         injector.injectMembers(this.navigator);
         injector.injectMembers(this.rooms);
+        injector.injectMembers(this.wallet);
     }
 
     @Override
@@ -50,6 +55,7 @@ public class Habbo implements IHabbo {
         this.inventory.init();
         this.navigator.init();
         this.rooms.init();
+        this.wallet.init();
     }
 
     @Override
@@ -121,6 +127,11 @@ public class Habbo implements IHabbo {
     @Override
     public IHabboRooms getRooms() {
         return this.rooms;
+    }
+
+    @Override
+    public IHabboWallet getWallet() {
+        return this.wallet;
     }
 }
 

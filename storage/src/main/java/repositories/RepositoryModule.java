@@ -30,5 +30,6 @@ public class RepositoryModule extends AbstractModule {
         bind(IHabboSettingsRepository.class).to(HabboSettingsRepository.class);
         bind(IHabboNavigatorRepository.class).to(HabboNavigatorRepository.class);
         bind(IHabboRoomsRepository.class).to(HabboRoomsRepository.class);
+        bind(IHabboWalletRepository.class).to(HabboWalletRepository.class);
     }
 }
