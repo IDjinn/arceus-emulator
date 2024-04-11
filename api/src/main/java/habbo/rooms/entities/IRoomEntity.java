@@ -50,4 +50,5 @@ public interface IRoomEntity extends ISerializable, ICycle, IFloorObject {
     void setGoal(@Nullable Position goal);
 
     SequencedCollection<Position> getWalkPath();
+
 }

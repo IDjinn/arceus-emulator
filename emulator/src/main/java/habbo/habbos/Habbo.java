@@ -6,7 +6,7 @@ import habbo.habbos.data.wallet.HabboWallet;
 import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.IHabboEntity;
+import habbo.rooms.entities.IPlayerEntity;
 import networking.client.IClient;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
@@ -15,7 +15,7 @@ public class Habbo implements IHabbo {
     private final IClient client;
 
     private @Nullable IRoom room;
-    private @Nullable IHabboEntity entity;
+    private @Nullable IPlayerEntity entity;
 
     private final IHabboData data;
 
@@ -77,6 +77,8 @@ public class Habbo implements IHabbo {
 
     @Override
     public void destroy() {
+        this.setRoom(null);
+        this.setPlayerEntity(null);
         this.data.destory();
         this.settings.destory();
         this.inventory.destory();
@@ -103,12 +105,12 @@ public class Habbo implements IHabbo {
 
     @Nullable
     @Override
-    public IHabboEntity getPlayerEntity() {
+    public IPlayerEntity getPlayerEntity() {
         return this.entity;
     }
 
     @Override
-    public void setPlayerEntity(@Nullable IHabboEntity entity) {
+    public void setPlayerEntity(@Nullable IPlayerEntity entity) {
         this.entity = entity;
     }
 

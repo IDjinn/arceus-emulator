@@ -1,4 +1,4 @@
-package packets.outgoing.rooms;
+package packets.outgoing.rooms.entities;
 
 import habbo.rooms.entities.IRoomEntity;
 import networking.packets.OutgoingPacket;

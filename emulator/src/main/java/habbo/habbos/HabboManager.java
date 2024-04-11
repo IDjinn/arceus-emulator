@@ -8,6 +8,7 @@ import core.IHotel;
 import habbo.habbos.data.IHabboData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.outgoing.rooms.entities.RoomUserRemoveComposer;
 
 import java.util.Map;
 import java.util.Optional;
@@ -77,12 +78,19 @@ public class HabboManager implements IHabboManager {
     public void onLogin(final IHabbo habbo) {
         this.connectedHabbos.put(habbo.getData().getId(), habbo);
         this.cache(habbo.getData());
+        habbo.onLoaded();
     }
 
     @Override
     public void onLogoff(final IHabbo habbo) {
         try {
             habbo.update();
+
+            if (habbo.getRoom() != null && habbo.getPlayerEntity() != null) {
+                habbo.getRoom().getEntityManager().kick(habbo.getPlayerEntity());
+                habbo.getRoom().broadcastMessage(new RoomUserRemoveComposer(habbo.getPlayerEntity()));
+            }
+            
             habbo.destroy();
         } catch (Exception e) {
             this.logger.error("error while disposing habbo {}", habbo.getData().getId(), e);

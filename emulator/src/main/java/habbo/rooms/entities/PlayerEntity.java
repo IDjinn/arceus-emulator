@@ -4,10 +4,10 @@ import habbo.habbos.IHabbo;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 
-public class HabboEntity extends RoomEntity implements IHabboEntity {
+public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     private final IHabbo habbo;
 
-    public HabboEntity(IHabbo habbo) {
+    public PlayerEntity(IHabbo habbo) {
         super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
     }
@@ -48,4 +48,5 @@ public class HabboEntity extends RoomEntity implements IHabboEntity {
     public void serializeStatus(OutgoingPacket packet) {
 
     }
+
 }

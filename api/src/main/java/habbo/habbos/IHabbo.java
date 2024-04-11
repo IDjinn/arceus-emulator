@@ -7,7 +7,7 @@ import habbo.habbos.data.IHabboSettings;
 import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.IHabboEntity;
+import habbo.rooms.entities.IPlayerEntity;
 import networking.client.IClient;
 
 import javax.annotation.Nullable;
@@ -30,9 +30,9 @@ public interface IHabbo {
     IRoom getRoom();
 
     @Nullable
-    IHabboEntity getPlayerEntity();
+    IPlayerEntity getPlayerEntity();
 
-    void setPlayerEntity(@Nullable IHabboEntity entity);
+    void setPlayerEntity(@Nullable IPlayerEntity entity);
 
     IHabboData getData();
 

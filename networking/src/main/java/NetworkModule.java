@@ -19,14 +19,14 @@ import java.util.List;
 public class NetworkModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(new TypeLiteral<List<Class<? extends IncomingEvent>>>() {
+        this.bind(new TypeLiteral<List<Class<? extends IncomingEvent>>>() {
         }).toProvider(IncomingEventAsListProvider.class);
-        bind(IClientFactory.class).to(ClientFactory.class);
-        bind(INetworkingManager.class).to(NetworkingManager.class);
-        bind(IPacketManager.class).to(PacketManager.class);
-        bind(IClientManager.class).to(ClientManager.class);
-        bind(IncomingPacketLogger.class);
-        bind(PacketParser.class);
-        bind(IIncomingPacketProvider.class).to(IncomingPacketProvider.class);
+        this.bind(IClientFactory.class).to(ClientFactory.class);
+        this.bind(INetworkingManager.class).to(NetworkingManager.class);
+        this.bind(IPacketManager.class).to(PacketManager.class);
+        this.bind(IClientManager.class).to(ClientManager.class);
+        this.bind(IncomingPacketLogger.class);
+        this.bind(PacketParser.class);
+        this.bind(IIncomingPacketProvider.class).to(IncomingPacketProvider.class);
     }
 }

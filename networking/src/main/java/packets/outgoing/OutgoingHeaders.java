@@ -1,6 +1,6 @@
 package packets.outgoing;
 
-public class OutgoingHeaders {
+public final class OutgoingHeaders {
     public static final int PetStatusUpdateComposer = 1907;//error 404
 
     public final static int CfhTopicsMessageComposer = 325;

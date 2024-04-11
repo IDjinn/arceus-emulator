@@ -60,7 +60,7 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
         ch.pipeline().addLast(new GameByteFrameDecoder());
 
         final var byteDecoder = new GameByteDecoder();
-        injector.injectMembers(byteDecoder);
+        this.injector.injectMembers(byteDecoder);
         ch.pipeline().addLast(byteDecoder);
 
         if (this.packetManager.isLoggingEnabled()) {

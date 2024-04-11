@@ -2,12 +2,12 @@ package habbo.rooms.components.entities;
 
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
-import habbo.rooms.entities.HabboEntity;
-import habbo.rooms.entities.IHabboEntity;
+import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
+import habbo.rooms.entities.PlayerEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import packets.outgoing.rooms.RoomUserStatusComposer;
+import packets.outgoing.rooms.entities.RoomUserStatusComposer;
 import utils.cycle.ICycle;
 
 import java.util.Collection;
@@ -22,7 +22,7 @@ public class RoomEntityManager implements IRoomEntityManager {
     private IRoom room;
     private final ConcurrentHashMap<Integer, IRoomEntity> entitiesByVirtualId;
     private final ConcurrentHashMap<Integer, IRoomEntity> entities;
-    private final ConcurrentHashMap<Integer, IHabboEntity> players;
+    private final ConcurrentHashMap<Integer, IPlayerEntity> players;
     private final AtomicInteger virtualIdCounter;
 
     public RoomEntityManager() {
@@ -38,8 +38,8 @@ public class RoomEntityManager implements IRoomEntityManager {
     }
 
     @Override
-    public IHabboEntity createHabboEntity(IHabbo habbo) {
-        var entity = new HabboEntity(habbo);
+    public IPlayerEntity createHabboEntity(IHabbo habbo) {
+        var entity = new PlayerEntity(habbo);
 
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
@@ -68,12 +68,20 @@ public class RoomEntityManager implements IRoomEntityManager {
     }
 
     @Override
-    public List<IHabboEntity> getPlayers() {
+    public List<IPlayerEntity> getPlayers() {
         return this.players.values().stream().toList();
     }
 
     private final Collection<IRoomEntity> entitiesUpdated = new HashSet<>();
-    
+
+    @Override
+    public void kick(final IRoomEntity roomEntity) {
+        synchronized (this.entities) {
+            this.entities.remove(roomEntity.getVirtualId());
+            this.players.remove(roomEntity.getVirtualId());
+        }
+    }
+
     @Override
     public synchronized void tick() {
         try {
