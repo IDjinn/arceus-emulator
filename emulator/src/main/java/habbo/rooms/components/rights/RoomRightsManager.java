@@ -3,6 +3,7 @@ package habbo.rooms.components.rights;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
 import habbo.rooms.RoomRightLevel;
+import habbo.rooms.entities.IRoomEntity;
 
 public class RoomRightsManager implements IRoomRightsManager {
     private IRoom room;
@@ -41,5 +42,15 @@ public class RoomRightsManager implements IRoomRightsManager {
     @Override
     public RoomRightLevel getRightLevelFor(IHabbo habbo) {
         return RoomRightLevel.Moderator;
+    }
+
+    @Override
+    public boolean canType(final IRoomEntity entity) {
+        return true;
+    }
+
+    @Override
+    public boolean canTalk(final IRoomEntity entity) {
+        return true;
     }
 }
