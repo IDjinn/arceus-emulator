@@ -78,6 +78,8 @@ public class Room implements IRoom {
         for (var customComponent : this.customComponents.values()) {
             customComponent.init(this);
         }
+
+        this.onLoaded();
     }
 
     @Override

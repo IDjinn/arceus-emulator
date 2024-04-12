@@ -18,10 +18,8 @@ public class RoomFactory implements IRoomFactory {
 
     @Override
     public IRoom createRoom(IConnectionResult data) {
-        var room = new Room(data);
+        final var room = new Room(data);
         this.injector.injectMembers(room);
-        room.init();
-        room.onLoaded();
         this.roomManager.addRoom(room);
         return room;
     }

@@ -59,7 +59,11 @@ public class RoomManager implements IRoomManager {
 
     @Override
     public @Nullable IRoom tryLoadRoom(int roomId) {
-        return this.rooms.get(roomId);
+        final var room = this.rooms.get(roomId);
+        if (room == null) return null;
+
+        room.init();
+        return room;
     }
 
     @Override
