@@ -1,4 +1,4 @@
-package habbo.rooms.entities;
+package habbo.rooms.entities.status;
 
 public enum RoomEntityStatus {
     MOVE("mv", true),

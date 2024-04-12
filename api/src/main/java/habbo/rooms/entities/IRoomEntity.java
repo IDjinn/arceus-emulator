@@ -3,6 +3,9 @@ package habbo.rooms.entities;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.entities.status.RoomEntityStatus;
+import habbo.rooms.entities.status.StatusBucket;
+import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import networking.packets.OutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
@@ -51,4 +54,5 @@ public interface IRoomEntity extends ISerializable, ICycle, IFloorObject {
 
     SequencedCollection<Position> getWalkPath();
 
+    IEntityVariablesComponent getVariablesComponent();
 }

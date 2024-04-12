@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import utils.pathfinder.Position;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class PathfinderNode implements Comparable<PathfinderNode> {
-    //    public static final AtomicInteger total = new AtomicInteger(0);
+    public static final AtomicInteger total = new AtomicInteger(0);
     public final Position position;
     public @Nullable PathfinderNode parentNode;
     public float gCosts;
@@ -13,7 +15,7 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
 
     public PathfinderNode(Position position) {
         this.position = position;
-//        total.incrementAndGet();
+        total.incrementAndGet();
     }
 
 

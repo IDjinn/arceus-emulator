@@ -2,6 +2,11 @@ package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.pathfinder.PathfinderNode;
+import habbo.rooms.entities.components.variables.EntityVariablesComponent;
+import habbo.rooms.entities.status.RoomEntityStatus;
+import habbo.rooms.entities.status.StatusBucket;
+import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import org.jetbrains.annotations.Nullable;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
@@ -23,6 +28,8 @@ public abstract class RoomEntity implements IRoomEntity {
     private @Nullable Position nextPostion;
     private @Nullable IFloorItem onItem;
 
+    private final IEntityVariablesComponent variables;
+
     public RoomEntity(IRoom room, int virtualId) {
         this.room = room;
         this.virtualId = virtualId;
@@ -33,6 +40,8 @@ public abstract class RoomEntity implements IRoomEntity {
         final var door = this.getRoom().getGameMap().getTile(this.getRoom().getModel().getDoorX(), this.getRoom().getModel().getDoorY());
         this.position = door.getPosition();
         this.direction = this.getRoom().getModel().getDoorDirection();
+
+        this.variables = new EntityVariablesComponent(this);
     }
 
     @Override
@@ -120,6 +129,14 @@ public abstract class RoomEntity implements IRoomEntity {
     public void tick() {
         this.handleStatus();
         this.handleWalking();
+        this.handleVariables();
+    }
+
+    private void handleVariables() {
+        if (this.variables.isNeedUpdate()) {
+            this.variables.update();
+            this.variables.setNeedUpdate(false);
+        }
     }
 
     private void handleWalking() {
@@ -152,6 +169,10 @@ public abstract class RoomEntity implements IRoomEntity {
                     this.getPosition(),
                     this.getGoal()
             ));
+
+            this.getVariablesComponent().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
+            this.getVariablesComponent().setOrCreate("dev.path.total.nodes.size", String.valueOf(PathfinderNode.total.get()));
+            PathfinderNode.total.set(0);
         }
 
         if (this.walkPath.isEmpty()) {
@@ -207,5 +228,10 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public void setNextPosition(@Nullable Position position) {
         this.nextPostion = position;
+    }
+
+    @Override
+    public IEntityVariablesComponent getVariablesComponent() {
+        return this.variables;
     }
 }
