@@ -42,9 +42,11 @@ public class EntityVariablesComponent implements IEntityVariablesComponent {
     public void setOrCreate(final String variable, @Nullable final String value) {
         var var = this.get(variable);
         if (var != null) {
+            this.setNeedUpdate(!Objects.equals(var.getValue(), value));
             var.setValue(value);
         } else {
             this.setOrCreate(new Variable(variable, value));
+            this.setNeedUpdate(true);
         }
     }
 
