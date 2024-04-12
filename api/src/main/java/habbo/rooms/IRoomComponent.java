@@ -5,7 +5,13 @@ public interface IRoomComponent {
 
     void init(IRoom room);
 
-    void onRoomLoaded();
+    default void update() {
+
+    }
+
+    default void onRoomLoaded() {
+
+    }
 
     void destroy();
 }

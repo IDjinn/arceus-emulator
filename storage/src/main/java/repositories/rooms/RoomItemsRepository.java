@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
 import queries.rooms.RoomItemsQuery;
 import repositories.ConnectionRepository;
+import storage.data.IConnectionStatementConsumer;
 import storage.repositories.rooms.IRoomItemsRepository;
 import storage.results.IConnectionBooleanResultConsumer;
 import storage.results.IConnectionResultConsumer;
@@ -32,5 +33,11 @@ public class RoomItemsRepository extends ConnectionRepository implements IRoomIt
     @Override
     public void getTeleportPair(final long teleportId, final IConnectionResultConsumer consumer) {
         this.select(RoomItemsQuery.FIND_TELEPORT_PAIR.get(), consumer, teleportId, teleportId);
+    }
+
+    @Override
+    public void updateItemsBatch(final IConnectionStatementConsumer statementConsumer,
+                                 final IConnectionResultConsumer resultConsumer) {
+        this.updateBatch(RoomItemsQuery.UPDATE_ITEM.get(), statementConsumer, resultConsumer);
     }
 }

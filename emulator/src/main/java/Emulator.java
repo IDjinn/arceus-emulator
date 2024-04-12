@@ -133,6 +133,10 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Override
     public void shutdown() {
+        this.networkingManager.destroy();
+        this.furnitureManager.destroy();
+        this.catalogManager.destroy();
+        this.roomManager.destroy();
         this.logger.info("Orion has been shutdown!");
     }
 }

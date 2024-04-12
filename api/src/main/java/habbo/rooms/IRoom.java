@@ -19,6 +19,7 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
 
     void init();
 
+    void update();
     void destroy();
 
     void onLoaded();

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import storage.repositories.navigator.INavigatorRepository;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 public class NavigatorManager implements INavigatorManager {
@@ -98,12 +99,12 @@ public class NavigatorManager implements INavigatorManager {
     }
 
     @Override
-    public HashMap<Integer, INavigatorEventCategory> getEventCategories() {
+    public Map<Integer, INavigatorEventCategory> getEventCategories() {
         return this.eventCategories;
     }
 
     @Override
-    public HashMap<Integer, INavigatorPublicCategory> getPublicCategories() {
+    public Map<Integer, INavigatorPublicCategory> getPublicCategories() {
         return this.publicCategories;
     }
 
@@ -141,5 +142,10 @@ public class NavigatorManager implements INavigatorManager {
 
     public INavigatorTab getTab(String tabName) {
         return this.tabs.get(tabName);
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

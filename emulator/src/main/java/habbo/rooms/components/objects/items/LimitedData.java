@@ -13,6 +13,11 @@ public record LimitedData(int limitedRare, int limitedRareTotal) implements ILim
     }
 
     @Override
+    public String toString() {
+        return STR."\{this.limitedRare}:\{this.limitedRareTotal}";
+    }
+
+    @Override
     public boolean isLimited() {
         return this.limitedRare > 0 && this.limitedRareTotal > 0;
     }

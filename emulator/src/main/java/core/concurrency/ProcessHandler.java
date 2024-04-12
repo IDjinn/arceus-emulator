@@ -32,7 +32,7 @@ public class ProcessHandler implements IProcessHandler {
             throw new IllegalStateException("already registered");
 
         this.processes.put(key, this.threadManager.getSoftwareThreadExecutor().scheduleAtFixedRate(runnable,
-                0,
+                initialDelay,
                 interval,
                 timeUnit));
         this.logger.debug("registered process {} with interval {} {} from class {}", key, interval,

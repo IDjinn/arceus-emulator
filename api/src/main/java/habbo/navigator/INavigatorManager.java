@@ -1,21 +1,20 @@
 package habbo.navigator;
 
+import core.IHotelService;
 import habbo.navigator.data.INavigatorEventCategory;
 import habbo.navigator.data.INavigatorFilterType;
 import habbo.navigator.data.INavigatorPublicCategory;
 import habbo.navigator.tabs.INavigatorTab;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.Map;
 
-public interface INavigatorManager {
+public interface INavigatorManager extends IHotelService {
     String normalizeTab(@Nullable String view);
 
-    void init();
+    Map<Integer, INavigatorEventCategory> getEventCategories();
 
-    HashMap<Integer, INavigatorEventCategory> getEventCategories();
-
-    HashMap<Integer, INavigatorPublicCategory> getPublicCategories();
+    Map<Integer, INavigatorPublicCategory> getPublicCategories();
 
     INavigatorPublicCategory getPublicCategoryById(int id);
 

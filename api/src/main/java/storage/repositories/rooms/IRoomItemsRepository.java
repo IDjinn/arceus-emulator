@@ -1,5 +1,6 @@
 package storage.repositories.rooms;
 
+import storage.data.IConnectionStatementConsumer;
 import storage.results.IConnectionBooleanResultConsumer;
 import storage.results.IConnectionResultConsumer;
 
@@ -11,4 +12,7 @@ public interface IRoomItemsRepository {
     void placeWallItemFromInventory(IConnectionBooleanResultConsumer consumer, int roomId, int id, String wallPosition);
 
     void getTeleportPair(long teleportId, IConnectionResultConsumer consumer);
+
+    void updateItemsBatch(final IConnectionStatementConsumer statementConsumer,
+                          final IConnectionResultConsumer resultConsumer);
 }

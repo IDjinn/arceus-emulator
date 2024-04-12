@@ -84,8 +84,45 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public void destroy() {
+    public void update() {
+        this.itemsRepository.updateItemsBatch(statement -> {
+            for (var item : this.items.values()) {
+                if (!item.needSave()) continue;
 
+                if (item instanceof IFloorItem floorItem) {
+                    statement.setInt(1, floorItem.getRoom().getData().getId());
+                    statement.setInt(2, floorItem.getPosition().getX());
+                    statement.setInt(3, floorItem.getPosition().getY());
+                    statement.setDouble(4, floorItem.getPosition().getZ());
+                    statement.setInt(5, floorItem.getRotation());
+                    statement.setString(6, "");
+                    statement.addBatch();
+                } else if (item instanceof IWallItem wallItem) {
+                    statement.setInt(1, wallItem.getRoom().getData().getId());
+                    statement.setInt(2, 0);
+                    statement.setInt(3, 0);
+                    statement.setDouble(4, 0);
+                    statement.setInt(5, 0);
+                    statement.setString(6, wallItem.getWallPosition());
+                } else {
+                    throw new IllegalArgumentException("invalid item type");
+                }
+
+                statement.setString(7, item.getExtraData().toJson());
+                statement.setString(8, item.getExtraData().getLimitedData().toString());
+                statement.setString(9, "");
+                statement.setInt(10, item.getItemData().getOwnerId());
+                statement.setInt(11, item.getGroup());
+                statement.setInt(12, item.getItemData().getId());
+                statement.addBatch();
+            }
+        }, result -> {
+        });
+    }
+
+    @Override
+    public void destroy() {
+        this.items.values().forEach(IRoomObject::destroy);
     }
 
     @Override

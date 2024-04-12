@@ -28,6 +28,23 @@ public enum RoomItemsQuery {
                     SELECT * FROM `items_teleports`
                     WHERE `teleport_one_id` = ? OR `teleport_two_id` = ?;
                     """),
+
+
+    UPDATE_ITEM("""
+            UPDATE `items`
+                SET `room_id` = ?,
+                `x` = ?,
+                `y` = ?,
+                `z` = ?,
+                `rot` = ?,
+                `wall_pos` = ?,
+                `extra_data` = ?,
+                `limited_data` = ?,
+                `wired_data` = ?,
+                `user_id` = ?,
+                `guild_id` = ?
+            WHERE `id` = ?;
+            """),
     ;
 
     private final String query;

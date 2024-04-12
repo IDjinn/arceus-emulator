@@ -7,7 +7,6 @@ import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import habbo.furniture.extra.data.IExtraData;
-import habbo.furniture.extra.data.LegacyExtraData;
 import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
@@ -143,7 +142,7 @@ public class RoomItemFactory implements IRoomItemFactory {
         var rotation = result.getInt("rot");
         var wallPosition = result.getString("wall_pos");
 
-        var extraData = LegacyExtraData.fromLegacyString(result.getString("extra_data"));
+        var extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
         extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
 
         return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition);

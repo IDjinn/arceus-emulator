@@ -81,12 +81,25 @@ public class Room implements IRoom {
     }
 
     @Override
+    public void update() {
+        this.rightsManager.update();
+        this.objectManager.update();
+        this.entityManager.update();
+        this.pathfinder.update();
+        this.gameMap.update();
+
+        for (var customComponent : this.customComponents.values()) {
+            customComponent.update();
+        }
+    }
+
+    @Override
     public void destroy() {
-        this.gameMap.destroy();
+        this.rightsManager.destroy();
+        this.objectManager.destroy();
         this.entityManager.destroy();
         this.pathfinder.destroy();
-        this.objectManager.destroy();
-        this.rightsManager.destroy();
+        this.gameMap.destroy();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.destroy();

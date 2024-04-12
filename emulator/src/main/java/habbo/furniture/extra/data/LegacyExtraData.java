@@ -7,7 +7,6 @@ import utils.gson.GsonHelper;
 
 
 public class LegacyExtraData extends ExtraData implements IExtraData {
-
     public LegacyExtraData() {
         super(ExtraDataType.Legacy);
         this.data = "";

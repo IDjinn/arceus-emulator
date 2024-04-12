@@ -2,6 +2,7 @@ package habbo.rooms;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import core.IHotel;
 import habbo.navigator.INavigatorManager;
 import habbo.navigator.data.INavigatorPublicCategory;
 import habbo.rooms.data.IRoomCategory;
@@ -18,6 +19,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
@@ -36,16 +38,18 @@ public class RoomManager implements IRoomManager {
     private final HashMap<Integer, IRoomCategory> roomCategories;
 
     private final HashMap<String, IRoomModelData> roomModels;
+    private final IHotel hotel;
 
     @Inject
     public RoomManager(
             IRoomFactory roomFactory,
             IRoomRepository roomRepository,
-            INavigatorManager navigatorManager
+            INavigatorManager navigatorManager, IHotel hotel
     ) {
         this.roomFactory = roomFactory;
         this.roomRepository = roomRepository;
         this.navigatorManager = navigatorManager;
+        this.hotel = hotel;
 
         this.rooms = new ConcurrentHashMap<>();
 
@@ -65,6 +69,15 @@ public class RoomManager implements IRoomManager {
 
         this.loadRoomCategories();
         this.loadRoomModels();
+
+        this.hotel.getProcessHandler().registerProcess(RoomManager.class.getSimpleName(), this::updateRooms,
+                1, 5, TimeUnit.MINUTES);
+    }
+
+    @Override
+    public void destroy() {
+        this.updateRooms();
+        this.rooms.values().forEach(IRoom::destroy);
     }
 
     private void loadPublicRooms() {
@@ -185,8 +198,15 @@ public class RoomManager implements IRoomManager {
         this.rooms.putIfAbsent(room.getData().getId(), room);
     }
 
-    @Override
-    public void destroy() {
-        this.rooms.values().forEach(IRoom::destroy);
+    private void updateRooms() {
+        for (var room : this.rooms.values()) {
+            try {
+                room.update();
+            } catch (Exception e) {
+                this.logger.error("error while updating room {}", room.getData().getId(), e);
+            }
+        }
+
+        this.logger.info("total of {} updated", this.rooms.size());
     }
 }
