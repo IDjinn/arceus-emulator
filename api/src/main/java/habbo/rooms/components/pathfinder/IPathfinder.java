@@ -1,6 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
 import habbo.rooms.IRoomComponent;
+import habbo.rooms.components.objects.items.floor.IFloorObject;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 
@@ -13,7 +14,11 @@ public interface IPathfinder extends IRoomComponent {
     void setEnabled3d(boolean enabled3d);
 
 
-    SequencedCollection<Position> tracePath(final Position from, final Position to);
+    SequencedCollection<Position> tracePath(
+            final IFloorObject floorObject,
+            final Position start,
+            final Position goal
+    );
 
     HashMap<Direction, Position> getAdjacentDirections();
 

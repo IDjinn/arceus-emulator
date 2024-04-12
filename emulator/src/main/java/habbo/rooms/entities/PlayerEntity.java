@@ -1,10 +1,12 @@
 package habbo.rooms.entities;
 
 import habbo.habbos.IHabbo;
+import habbo.rooms.components.gamemap.ITileMetadata;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntity {
+    public static final double PLAYER_HEIGHT = 2d;
     private final IHabbo habbo;
 
     public PlayerEntity(IHabbo habbo) {
@@ -49,4 +51,13 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
 
     }
 
+    @Override
+    public double getHeight() {
+        return PLAYER_HEIGHT;
+    }
+
+    @Override
+    public boolean canSlideTo(final ITileMetadata metadata) {
+        return metadata.getEntityHeight().isPresent();
+    }
 }

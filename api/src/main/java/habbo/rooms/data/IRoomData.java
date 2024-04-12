@@ -90,4 +90,8 @@ public interface IRoomData {
     boolean isOverrideModel();
 
     boolean isHideWireds();
+
+    PathfinderMode getPathfinderMode();
+
+    void setPathfinderMode(PathfinderMode pathfinderMode);
 }

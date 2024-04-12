@@ -2,6 +2,8 @@ package habbo.rooms.components.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
+import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.data.PathfinderMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import stormpot.Allocator;
@@ -87,13 +89,27 @@ public class Pathfinder implements IPathfinder {
                 && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
-    private List<PathfinderNode> getNeighbors(final PathfinderNode current) {
+    private static double getGCost(final double currentCost, final Position currentPosition,
+                                   final Position nextPosition) {
+        final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
+        final var horizontalCost = BasicCost;
+        final var verticalCost = VerticalCostFactor * dz;
+        return horizontalCost + verticalCost;
+    }
+
+    private List<PathfinderNode> getNeighbors(final IFloorObject floorObject, final PathfinderNode current,
+                                              final Position goal) {
         final var neighbors = new ArrayList<PathfinderNode>();
+        final var newModeEnabled = this.getRoom().getData().getPathfinderMode() == PathfinderMode.New3dPathfinder;
         for (final var direction : diagonalDirections.values()) {
             try {
                 final var neighborPosition = current.getPosition().add(direction);
 
                 if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
+
+                var metadata = this.getRoom().getGameMap().getMetadataAt(neighborPosition, floorObject.getHeight());
+                if (metadata.isEmpty()) continue;
+                if (!floorObject.canSlideTo(metadata.get())) continue;
 
                 final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
                 neighbor.setPosition(neighborPosition);
@@ -108,7 +124,11 @@ public class Pathfinder implements IPathfinder {
 
     @SuppressWarnings("UnstableApiUsage") 
     @Override
-    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
+    public SequencedCollection<Position> tracePath(
+            final IFloorObject floorObject,
+            final Position start,
+            final Position goal
+    ) {
         final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
         final var closedSet = new HashSet<Position>();
         final var mapSize = this.getRoom().getGameMap().getMapSize();
@@ -130,14 +150,14 @@ public class Pathfinder implements IPathfinder {
                     break;
 
                 closedSet.add(current.getPosition());
-                for (final var node : this.getNeighbors(current)) {
+                for (final var node : this.getNeighbors(floorObject, current, goal)) {
                     if (closedSet.contains(node.position)) {
                         closed++;
                         node.release();
                         continue;
                     }
 
-                    final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position, true);
+                    final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
                     if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
                         open++;
                         node.setParentNode(current);
@@ -157,14 +177,6 @@ public class Pathfinder implements IPathfinder {
                 openNode.release();
             }
         }
-    }
-
-    private static double getGCost(final double currentCost, final Position currentPosition,
-                                   final Position nextPosition, boolean diagonalEnabled) {
-        final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
-        final var horizontalCost = BasicCost;
-        final var verticalCost = VerticalCostFactor * dz;
-        return horizontalCost + verticalCost;
     }
 
     private class PathfinderNodeAllocator implements Allocator<PathfinderNode> {

@@ -10,6 +10,7 @@ import stormpot.Pool;
 import stormpot.Timeout;
 import utils.pathfinder.Position;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class RoomGameMap implements IRoomGameMap {
@@ -112,6 +113,16 @@ public class RoomGameMap implements IRoomGameMap {
             metadata.release();
         }
 
+        try {
+            var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
+            metadata.setRoomTile(tile);
+            metadata.setWalkableHeight(tile.getPosition().getZ());
+            tile.getMetadata().add(metadata);
+        } catch (Exception e) {
+            this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
+                    tile.getX(), tile.getY(), e);
+        }
+        
         final var itemsAt = this.getRoom().getObjectManager().getAllFloorItemsAt(tile.getPosition());
         for (final var item : itemsAt) {
             try {
@@ -119,10 +130,10 @@ public class RoomGameMap implements IRoomGameMap {
                 metadata.setRoomTile(tile);
                 metadata.setItem(item);
 
+                item.getWalkableHeight().ifPresent(metadata::setWalkableHeight);
+                item.getSitHeight().ifPresent(metadata::setSitHeight);
+                item.getLayHeight().ifPresent(metadata::setLayHeight);
                 item.getStackHeight().ifPresent(metadata::setStackHeight);
-                item.getStackHeight().ifPresent(metadata::setStackHeight);
-                item.getStackHeight().ifPresent(metadata::setStackHeight);
-
                 tile.getMetadata().add(metadata);
             } catch (Exception e) {
                 this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
@@ -187,5 +198,12 @@ public class RoomGameMap implements IRoomGameMap {
     @Override
     public IRoomTile getTile(final Position position) {
         return this.getTile(position.getX(), position.getY());
+    }
+
+    @Override
+    public Optional<ITileMetadata> getMetadataAt(final Position position, final double objectHeight) {
+        var tile = this.getTile(position.getX(), position.getY());
+
+        return tile.getMetadata().stream().findFirst();
     }
 }

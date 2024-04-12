@@ -11,10 +11,16 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
 
     int getRotation();
 
+    default boolean canSit() {
+        return this.getFurniture().isCanSit();
+    }
     default boolean canSit(IRoomEntity entity) {
         return this.getFurniture().isCanSit();
     }
 
+    default boolean canLay() {
+        return this.getFurniture().isCanLay();
+    }
     default boolean canLay(IRoomEntity entity) {
         return this.getFurniture().isCanLay();
     }
@@ -37,6 +43,48 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
 
     default boolean canStack() {
         return this.getFurniture().isCanStack();
+    }
+
+    default Optional<Double> getLayHeight() {
+        if (!this.canLay())
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
+    }
+
+    default Optional<Double> getLayHeight(IRoomEntity entity) {
+        if (!this.canLay(entity))
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
+    }
+
+    default Optional<Double> getSitHeight() {
+        if (!this.canSit())
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
+    }
+
+    default Optional<Double> getSitHeight(IRoomEntity entity) {
+        if (!this.canSit(entity))
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
+    }
+
+    default Optional<Double> getWalkableHeight() {
+        if (!this.canWalk())
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
+    }
+
+    default Optional<Double> getWalkableHeight(IRoomEntity entity) {
+        if (!this.canWalk(entity))
+            return Optional.empty();
+
+        return Optional.of(this.getFurniture().getStackHeight());
     }
 
     default Optional<Double> getStackHeight(IRoomEntity entity) {

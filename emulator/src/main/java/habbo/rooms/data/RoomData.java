@@ -57,6 +57,11 @@ public class RoomData implements IRoomData, IFillable {
     private boolean hideWireds;
     private boolean isForSale;
 
+    private PathfinderMode pathfinderMode;
+
+
+  
+
     public RoomData(IConnectionResult data) {
         try {
             this.fill(data);
@@ -286,5 +291,18 @@ public class RoomData implements IRoomData, IFillable {
         this.hasJukeboxActive = result.getBoolean("jukebox_active");
         this.hideWireds = result.getBoolean("hidewired");
         this.isForSale = result.getBoolean("is_forsale");
+
+        this.pathfinderMode = PathfinderMode.New3dPathfinder;
+    }
+
+
+    @Override
+    public PathfinderMode getPathfinderMode() {
+        return pathfinderMode;
+    }
+
+    @Override
+    public void setPathfinderMode(final PathfinderMode pathfinderMode) {
+        this.pathfinderMode = pathfinderMode;
     }
 }

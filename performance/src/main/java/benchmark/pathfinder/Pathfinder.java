@@ -84,7 +84,7 @@ public class Pathfinder {
             if (neighborPosition.getX() > maxX && neighborPosition.getY() > maxY) continue;
 
 
-            final var neighbor = new PathfinderNode(neighborPosition);
+            final var neighbor = new PathfinderNode(null);
             neighbor.parentNode = current;
             neighbors.add(neighbor);
         }
@@ -95,7 +95,7 @@ public class Pathfinder {
     public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
         final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
         final var closedSet = new HashSet<Position>();
-        final var firstNode = new PathfinderNode(start);
+        final var firstNode = new PathfinderNode(null);
         openSet.add(firstNode);
 
         var step = 0;

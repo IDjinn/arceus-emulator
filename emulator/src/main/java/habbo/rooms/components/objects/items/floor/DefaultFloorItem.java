@@ -2,6 +2,7 @@ package habbo.rooms.components.objects.items.floor;
 
 import habbo.furniture.IFurniture;
 import habbo.rooms.IRoom;
+import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
 import networking.packets.OutgoingPacket;
@@ -59,4 +60,13 @@ public class DefaultFloorItem extends RoomItem implements IFloorItem {
     }
 
 
+    @Override
+    public double getHeight() {
+        return this.getFurniture().getStackHeight();
+    }
+
+    @Override
+    public boolean canSlideTo(final ITileMetadata metadata) {
+        return metadata.getStackableHeight().isPresent();
+    }
 }
