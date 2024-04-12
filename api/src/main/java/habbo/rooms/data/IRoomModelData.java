@@ -1,4 +1,4 @@
-package habbo.rooms.data.models;
+package habbo.rooms.data;
 
 import org.apache.logging.log4j.Logger;
 import utils.pathfinder.Direction;
