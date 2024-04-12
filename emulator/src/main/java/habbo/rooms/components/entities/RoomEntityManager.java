@@ -8,6 +8,9 @@ import habbo.rooms.entities.PlayerEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
+import packets.outgoing.rooms.entities.chat.RoomUserShoutMessageComposer;
+import packets.outgoing.rooms.entities.chat.RoomUserTalkMessageComposer;
+import packets.outgoing.rooms.entities.chat.RoomUserWhisperMessageComposer;
 import utils.cycle.ICycle;
 
 import java.util.Collection;
@@ -80,6 +83,21 @@ public class RoomEntityManager implements IRoomEntityManager {
             this.entities.remove(roomEntity.getVirtualId());
             this.players.remove(roomEntity.getVirtualId());
         }
+    }
+
+    @Override
+    public void talk(final IRoomEntity entity, final String message, final int bubble) {
+        this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
+    }
+
+    @Override
+    public void shout(final IRoomEntity entity, final String message, final int bubble) {
+        this.getRoom().broadcastMessage(new RoomUserShoutMessageComposer(entity, message, 0, bubble));
+    }
+
+    @Override
+    public void whisper(final IRoomEntity entity, final String message, final int bubble) {
+        this.getRoom().broadcastMessage(new RoomUserWhisperMessageComposer(entity, message, 0, bubble));
     }
 
     @Override
