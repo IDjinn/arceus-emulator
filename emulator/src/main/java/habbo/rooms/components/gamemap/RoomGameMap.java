@@ -107,12 +107,12 @@ public class RoomGameMap implements IRoomGameMap {
 
     @Override
     public int getMaxX() {
-        return this.tiles.length;
+        return this.tiles[0].length;
     }
 
     @Override
     public int getMaxY() {
-        return this.tiles[0].length;
+        return this.tiles.length;
     }
 
     @Override
