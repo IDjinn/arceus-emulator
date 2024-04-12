@@ -6,15 +6,28 @@ import habbo.rooms.IRoomManager;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import stormpot.Pool;
+import stormpot.Timeout;
 import utils.pathfinder.Position;
+
+import java.util.concurrent.TimeUnit;
 
 public class RoomGameMap implements IRoomGameMap {
     private final Logger logger = LogManager.getLogger();
     @Inject
     private IRoomManager roomManager;
+
+
     private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
+
+
+    private final Pool<TileMetadata> tileMetadataPool = Pool
+            .from(new TileMetadataAllocator())
+            .setSize(1000)
+            .setThreadFactory(Thread.ofVirtual().factory())
+            .build();
 
     private static int map_height_lookup(char tile) {
         return switch (tile) {
@@ -87,8 +100,37 @@ public class RoomGameMap implements IRoomGameMap {
 
     @Override
     public void onRoomLoaded() {
-
+        for (final var mapRow : this.getMap()) {
+            for (final var tile : mapRow) {
+                this.updateTile(tile);
+            }
+        }
     }
+
+    private void updateTile(final IRoomTile tile) {
+        for (var metadata : tile.getMetadata()) {
+            metadata.release();
+        }
+
+        final var itemsAt = this.getRoom().getObjectManager().getAllFloorItemsAt(tile.getPosition());
+        for (final var item : itemsAt) {
+            try {
+                var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
+                metadata.setRoomTile(tile);
+                metadata.setItem(item);
+
+                item.getStackHeight().ifPresent(metadata::setStackHeight);
+                item.getStackHeight().ifPresent(metadata::setStackHeight);
+                item.getStackHeight().ifPresent(metadata::setStackHeight);
+
+                tile.getMetadata().add(metadata);
+            } catch (Exception e) {
+                this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
+                        tile.getX(), tile.getY(), e);
+            }
+        }
+    }
+
 
     @Override
     public void destroy() {
@@ -140,6 +182,10 @@ public class RoomGameMap implements IRoomGameMap {
     public boolean isValidMovement(final Position from, final Position to, final Position goal) {
         final var topItem = this.getRoom().getObjectManager().getTopFloorItemAt(to, -1);
         return topItem.map(IFloorItem::canWalk).orElse(true);
+    }
 
+    @Override
+    public IRoomTile getTile(final Position position) {
+        return this.getTile(position.getX(), position.getY());
     }
 }

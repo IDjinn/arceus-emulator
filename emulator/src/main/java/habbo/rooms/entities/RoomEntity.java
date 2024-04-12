@@ -2,7 +2,6 @@ package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
-import habbo.rooms.components.pathfinder.PathfinderNode;
 import habbo.rooms.entities.components.variables.EntityVariablesComponent;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
@@ -171,8 +170,8 @@ public abstract class RoomEntity implements IRoomEntity {
             ));
 
             this.getVariablesComponent().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
-            this.getVariablesComponent().setOrCreate("dev.path.total.nodes.size", String.valueOf(PathfinderNode.total.get()));
-            PathfinderNode.total.set(0);
+//            this.getVariablesComponent().setOrCreate("dev.path.total.nodes.size", String.valueOf(PathfinderNode.total.get()));
+//            PathfinderNode.total.set(0);
         }
 
         if (this.walkPath.isEmpty()) {

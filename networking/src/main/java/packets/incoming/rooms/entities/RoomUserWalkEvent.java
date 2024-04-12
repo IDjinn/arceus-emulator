@@ -1,5 +1,6 @@
 package packets.incoming.rooms.entities;
 
+import habbo.rooms.components.gamemap.IRoomTile;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import packets.incoming.IncomingEvent;
@@ -16,8 +17,11 @@ public class RoomUserWalkEvent extends IncomingEvent {
     public void parse(IIncomingPacket packet, IClient client) {
         if (client.getHabbo().getPlayerEntity() == null) return;
 
+        final Position goal = new Position(packet.readInt(), packet.readInt());
+        final IRoomTile tileGoal = client.getHabbo().getRoom().getGameMap().getTile(goal);
+        
         var player = client.getHabbo().getPlayerEntity();
         player.getWalkPath().clear();
-        player.setGoal(new Position(packet.readInt(), packet.readInt()));
+        player.setGoal(goal);
     }
 }

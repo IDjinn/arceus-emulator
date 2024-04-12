@@ -21,4 +21,6 @@ public interface IRoomGameMap extends IRoomComponent {
     boolean isValidCoordinate(Position position);
 
     boolean isValidMovement(Position from, Position to, Position goal);
+
+    IRoomTile getTile(final Position position);
 }

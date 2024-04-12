@@ -2,11 +2,16 @@ package habbo.rooms.components.gamemap;
 
 import utils.pathfinder.Position;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class RoomTile implements IRoomTile {
     private final Position position;
+    private final List<ITileMetadata> metaData;
 
-    public RoomTile(Position position) {
+    public RoomTile(final Position position) {
         this.position = position;
+        this.metaData = new LinkedList<>();
     }
 
     @Override
@@ -27,5 +32,15 @@ public class RoomTile implements IRoomTile {
     @Override
     public Position getPosition() {
         return this.position;
+    }
+
+    @Override
+    public TileState getState() {
+        return TileState.Open;
+    }
+
+    @Override
+    public List<ITileMetadata> getMetadata() {
+        return this.metaData;
     }
 }

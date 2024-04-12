@@ -2,10 +2,17 @@ package habbo.rooms.components.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import stormpot.Allocator;
+import stormpot.Pool;
+import stormpot.Slot;
+import stormpot.Timeout;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Pathfinder implements IPathfinder {
     private IRoom room;
@@ -29,6 +36,26 @@ public class Pathfinder implements IPathfinder {
         diagonalDirections.putAll(adjacentDirections);
     }
 
+    private final Logger logger = LogManager.getLogger();
+    private final Pool<PathfinderNode> nodePool = Pool
+            .from(new PathfinderNodeAllocator())
+            .setThreadFactory(Thread.ofVirtual().factory())
+            .setSize(1000)
+            .build();
+
+    private List<Position> reversePath(final PathfinderNode node) {
+        final var path = new ArrayList<Position>();
+        var current = node;
+        while (current.parentNode != null) {
+            path.add(current.getPosition());
+            var aux = current.parentNode;
+            current.release();
+            current = aux;
+        }
+        Collections.reverse(path);
+        return path;
+    }
+    
     @Override
     public void init(IRoom room) {
         this.room = room;
@@ -60,29 +87,76 @@ public class Pathfinder implements IPathfinder {
                 && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
-    private List<Position> reversePath(final PathfinderNode node) {
-        final var path = new ArrayList<Position>();
-        var current = node;
-        while (current.parentNode != null) {
-            path.add(current.getPosition());
-            current = current.parentNode;
-        }
-        Collections.reverse(path);
-        return path;
-    }
-
     private List<PathfinderNode> getNeighbors(final PathfinderNode current) {
         final var neighbors = new ArrayList<PathfinderNode>();
         for (final var direction : diagonalDirections.values()) {
-            final var neighborPosition = current.getPosition().add(direction);
+            try {
+                final var neighborPosition = current.getPosition().add(direction);
 
-            if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
+                if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
 
-            final var neighbor = new PathfinderNode(neighborPosition);
-            neighbor.parentNode = current;
-            neighbors.add(neighbor);
+                final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+                neighbor.setPosition(neighborPosition);
+                neighbor.parentNode = current;
+                neighbors.add(neighbor);
+            } catch (Exception e) {
+                this.logger.error("error while getting neighbors for room {}", this.getRoom().getData().getId(), e);
+            }
         }
         return neighbors;
+    }
+
+    @SuppressWarnings("UnstableApiUsage") 
+    @Override
+    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
+        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
+        final var closedSet = new HashSet<Position>();
+        final var mapSize = this.getRoom().getGameMap().getMapSize();
+
+        var step = 0;
+        var closed = 0;
+        var open = 0;
+        PathfinderNode startNode = null;
+        try {
+            startNode = nodePool.claim(new Timeout(1, TimeUnit.SECONDS));
+            startNode.setPosition(start);
+            openSet.add(startNode);
+            while (!openSet.isEmpty() && step++ < mapSize) {
+                final var current = openSet.poll();
+                if (current.getPosition().equals(goal))
+                    return reversePath(current);
+
+                if (closedSet.contains(goal))
+                    break;
+
+                closedSet.add(current.getPosition());
+                for (final var node : this.getNeighbors(current)) {
+                    if (closedSet.contains(node.position)) {
+                        closed++;
+                        node.release();
+                        continue;
+                    }
+
+                    final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position, true);
+                    if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
+                        open++;
+                        node.setParentNode(current);
+                        node.setGCosts(tentativeGScore);
+                        node.setHCosts((float) node.getPosition().distanceTo(goal));
+                        openSet.add(node);
+                    }
+                }
+            }
+            return Collections.emptyList();
+        } catch (Exception e) {
+            this.logger.error("error while tracing path for room {}", this.getRoom().getData().getId(), e);
+            return Collections.emptyList();
+        } finally {
+            if (startNode != null) startNode.release();
+            for (var openNode : openSet) {
+                openNode.release();
+            }
+        }
     }
 
     private static double getGCost(final double currentCost, final Position currentPosition,
@@ -93,38 +167,17 @@ public class Pathfinder implements IPathfinder {
         return horizontalCost + verticalCost;
     }
 
-    @SuppressWarnings("UnstableApiUsage") 
-    @Override
-    public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
-        final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
-        final var closedSet = new HashSet<Position>();
-        final var firstNode = new PathfinderNode(start);
-        openSet.add(firstNode);
+    private class PathfinderNodeAllocator implements Allocator<PathfinderNode> {
 
-        var step = 0;
-        final var mapSize = this.getRoom().getGameMap().getMapSize();
-        while (!openSet.isEmpty() && step++ < mapSize) {
-            final var current = openSet.poll();
-            if (current.getPosition().equals(goal))
-                return reversePath(current);
-
-            if (closedSet.contains(goal))
-                break;
-
-            closedSet.add(current.getPosition());
-            for (final var node : this.getNeighbors(current)) {
-                if (closedSet.contains(node.position)) continue;
-
-                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position, true);
-                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
-                    node.setParentNode(current);
-                    node.setGCosts(tentativeGScore);
-                    node.setHCosts((float) node.getPosition().distanceTo(goal));
-                    openSet.add(node);
-                }
-            }
+        @Override
+        public PathfinderNode allocate(final Slot slot) throws Exception {
+            return new PathfinderNode(slot);
         }
-        return Collections.emptyList();
+
+        @Override
+        public void deallocate(final PathfinderNode poolable) throws Exception {
+
+        }
     }
 
     @Override

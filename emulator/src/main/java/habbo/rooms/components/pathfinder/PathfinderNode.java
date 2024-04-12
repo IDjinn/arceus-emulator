@@ -2,20 +2,19 @@ package habbo.rooms.components.pathfinder;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import stormpot.Poolable;
+import stormpot.Slot;
 import utils.pathfinder.Position;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-public class PathfinderNode implements Comparable<PathfinderNode> {
-    public static final AtomicInteger total = new AtomicInteger(0);
-    public final Position position;
+public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
+    private final Slot slot;
+    public Position position;
     public @Nullable PathfinderNode parentNode;
     public float gCosts;
     public float hCosts;
 
-    public PathfinderNode(Position position) {
-        this.position = position;
-        total.incrementAndGet();
+    public PathfinderNode(Slot slot) {
+        this.slot = slot;
     }
 
 
@@ -61,5 +60,18 @@ public class PathfinderNode implements Comparable<PathfinderNode> {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public void release() {
+        this.position = null;
+        this.parentNode = null;
+        this.gCosts = 0f;
+        this.hCosts = 0f;
+        this.slot.release(this);
+    }
+
+    public void setPosition(final Position position) {
+        this.position = position;
     }
 }
