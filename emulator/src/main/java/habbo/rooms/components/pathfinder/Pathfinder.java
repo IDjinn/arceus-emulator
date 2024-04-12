@@ -85,9 +85,10 @@ public class Pathfinder implements IPathfinder {
         return neighbors;
     }
 
-    private static double getGCost(final double currentCost, final Position currentPosition, final Position nextPosition) {
+    private static double getGCost(final double currentCost, final Position currentPosition,
+                                   final Position nextPosition, boolean diagonalEnabled) {
         final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
-        final var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;// TODO CHECK THIS
+        final var horizontalCost = BasicCost;
         final var verticalCost = VerticalCostFactor * dz;
         return horizontalCost + verticalCost;
     }
@@ -114,7 +115,7 @@ public class Pathfinder implements IPathfinder {
             for (final var node : this.getNeighbors(current)) {
                 if (closedSet.contains(node.position)) continue;
 
-                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
+                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position, true);
                 if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
                     node.setParentNode(current);
                     node.setGCosts(tentativeGScore);
