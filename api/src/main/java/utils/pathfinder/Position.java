@@ -327,7 +327,7 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.x, this.y, this.z);
+        return Objects.hash(this.x, this.y);
     }
 
     public int getFlag() {

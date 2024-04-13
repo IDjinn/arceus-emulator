@@ -3,7 +3,6 @@ package habbo.rooms.components.pathfinder;
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
-import habbo.rooms.data.PathfinderMode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import stormpot.Allocator;
@@ -19,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class Pathfinder implements IPathfinder {
     private IRoom room;
 
-    private static final int VerticalCostFactor = 22;
+    private static final int VerticalBasicCost = 22;
     private static final int DiagonalCost = 14;
     private static final int BasicCost = 10;
     private static final HashMap<Direction, Position> adjacentDirections = new HashMap<>();
@@ -45,19 +44,6 @@ public class Pathfinder implements IPathfinder {
             .setSize(1000)
             .build();
 
-    private List<Position> reversePath(final PathfinderNode node) {
-        final var path = new ArrayList<Position>();
-        var current = node;
-        while (current.parentNode != null) {
-            path.add(current.getPosition());
-            var aux = current.parentNode;
-            current.release();
-            current = aux;
-        }
-        Collections.reverse(path);
-        return path;
-    }
-    
     @Override
     public void init(IRoom room) {
         this.room = room;
@@ -82,6 +68,11 @@ public class Pathfinder implements IPathfinder {
     public void setEnabled3d(boolean enabled3d) {
 
     }
+    private final Pool<Position3d> positionPool = Pool
+            .from(new Position3dAllocator())
+            .setThreadFactory(Thread.ofVirtual().factory())
+            .setSize(10_000)
+            .build();
 
     private static boolean isDiagonal(Position a, Position b) {
         assert a != null && b != null;
@@ -89,40 +80,41 @@ public class Pathfinder implements IPathfinder {
                 && Math.abs((short) a.getY() - (short) b.getY()) == 1;
     }
 
-    private static double getGCost(final double currentCost, final Position currentPosition,
-                                   final Position nextPosition) {
-        final var dz = Math.abs(nextPosition.getZ() - currentPosition.getZ());
-        final var horizontalCost = BasicCost;
-        final var verticalCost = VerticalCostFactor * dz;
+    private static double getHCost(
+            final Position currentPosition,
+            final Position nextPosition,
+            final double objectHeight) {
+        var dz = Math.abs(currentPosition.getZ() - nextPosition.getZ());
+        var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;
+        var verticalCost = dz == 0 ? VerticalBasicCost : dz;
         return horizontalCost + verticalCost;
     }
 
-    private List<PathfinderNode> getNeighbors(final IFloorObject floorObject, final PathfinderNode current,
-                                              final Position goal) {
-        final var neighbors = new ArrayList<PathfinderNode>();
-        final var newModeEnabled = this.getRoom().getData().getPathfinderMode() == PathfinderMode.New3dPathfinder;
-        for (final var direction : diagonalDirections.values()) {
-            try {
-                final var neighborPosition = current.getPosition().add(direction);
-
-                if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
-
-                var metadata = this.getRoom().getGameMap().getMetadataAt(neighborPosition, floorObject.getHeight());
-                if (metadata.isEmpty()) continue;
-                if (!floorObject.canSlideTo(metadata.get())) continue;
-
-                final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
-                neighbor.setPosition(neighborPosition);
-                neighbor.parentNode = current;
-                neighbors.add(neighbor);
-            } catch (Exception e) {
-                this.logger.error("error while getting neighbors for room {}", this.getRoom().getData().getId(), e);
-            }
-        }
-        return neighbors;
+    private static double getGCost(
+            final double currentGCost,
+            final Position3d currentPosition,
+            final Position3d nextPosition,
+            final double objectHeight
+    ) {
+        var dx = Math.abs(currentPosition.getX() - nextPosition.getX());
+        var dy = Math.abs(currentPosition.getY() - nextPosition.getY());
+        return BasicCost * (dx + dy) + (DiagonalCost - 2 * BasicCost) * Math.min(dx, dy);
     }
 
-    @SuppressWarnings("UnstableApiUsage") 
+    private List<Position> reversePath(final PathfinderNode node) {
+        final var path = new ArrayList<Position>();
+        var current = node;
+        while (current.parentNode != null) {
+            path.add(new Position(current.getPosition().getX(), current.getPosition().getY(), current.getPosition().getZ()));
+            var aux = current.parentNode;
+            current.release();
+            current = aux;
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
     @Override
     public SequencedCollection<Position> tracePath(
             final IFloorObject floorObject,
@@ -130,39 +122,43 @@ public class Pathfinder implements IPathfinder {
             final Position goal
     ) {
         final MinMaxPriorityQueue<PathfinderNode> openSet = MinMaxPriorityQueue.maximumSize(256).create();
-        final var closedSet = new HashSet<Position>();
+        final var closedSet = new HashSet<Position3d>();
         final var mapSize = this.getRoom().getGameMap().getMapSize();
 
         var step = 0;
-        var closed = 0;
-        var open = 0;
         PathfinderNode startNode = null;
+        Position3d startPosition = null;
+        Position3d goalPosition = null;
         try {
-            startNode = nodePool.claim(new Timeout(1, TimeUnit.SECONDS));
-            startNode.setPosition(start);
+            startNode = this.nodePool.claim(new Timeout(1, TimeUnit.SECONDS));
+            startPosition = this.positionPool.claim(new Timeout(1, TimeUnit.SECONDS));
+            goalPosition = this.positionPool.claim(new Timeout(1, TimeUnit.SECONDS));
+            goalPosition.setFromPosition(goal);
+            startPosition.setFromPosition(start);
+            startNode.setPosition(startPosition);
             openSet.add(startNode);
+
             while (!openSet.isEmpty() && step++ < mapSize) {
                 final var current = openSet.poll();
-                if (current.getPosition().equals(goal))
-                    return reversePath(current);
+                assert current != null;
+                if (current.getPosition().tileEquals(goalPosition))
+                    return this.reversePath(current);
 
-                if (closedSet.contains(goal))
+                if (closedSet.contains(goalPosition) || openSet.size() > mapSize || closedSet.size() > mapSize)
                     break;
 
                 closedSet.add(current.getPosition());
-                for (final var node : this.getNeighbors(floorObject, current, goal)) {
+                for (final var node : this.getNeighbors(floorObject, current, goalPosition)) {
                     if (closedSet.contains(node.position)) {
-                        closed++;
                         node.release();
                         continue;
                     }
 
-                    final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
+                    final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position, floorObject.getHeight());
                     if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
-                        open++;
                         node.setParentNode(current);
                         node.setGCosts(tentativeGScore);
-                        node.setHCosts((float) node.getPosition().distanceTo(goal));
+                        node.setHCosts((float) node.getPosition().distanceTo(goalPosition));
                         openSet.add(node);
                     }
                 }
@@ -173,10 +169,49 @@ public class Pathfinder implements IPathfinder {
             return Collections.emptyList();
         } finally {
             if (startNode != null) startNode.release();
+//            if (startPosition != null) startPosition.release();
+            if (goalPosition != null) goalPosition.release();
             for (var openNode : openSet) {
                 openNode.release();
             }
+            for (var closed : closedSet) {
+                closed.release();
+            }
         }
+    }
+
+    private List<PathfinderNode> getNeighbors(
+            final IFloorObject floorObject,
+            final PathfinderNode current,
+            final Position3d goal
+    ) {
+        final var neighbors = new ArrayList<PathfinderNode>();
+        for (final var direction : diagonalDirections.values()) {
+            try {
+                final var neighborPosition = positionPool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+                neighborPosition.setX(current.getPosition().getX() + direction.getX());
+                neighborPosition.setY(current.getPosition().getY() + direction.getY());
+                if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition.getX(), neighborPosition.getY()))
+                    continue;
+
+                for (var metadata : this.getRoom().getGameMap().getMetadataAt(neighborPosition.getX(), neighborPosition.getY(), floorObject.getHeight())) {
+                    if (metadata.getHeight().isEmpty()) continue;
+                    if (!floorObject.canSlideTo(metadata)) continue;
+
+                    final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+                    neighborPosition.setZ(metadata.getHeight().get().floatValue()); // TODO MAYBE FLOOR_OBJECT METHOD?
+                    neighbor.setPosition(neighborPosition);
+                    neighbor.parentNode = current;
+                    neighbor.setHCosts(Float.POSITIVE_INFINITY);
+                    neighbors.add(neighbor);
+                    break;
+                }
+            } catch (Exception e) {
+                this.logger.error("error while getting neighbors for room {}",
+                        this.getRoom().getData().getId(), e);
+            }
+        }
+        return neighbors;
     }
 
     private class PathfinderNodeAllocator implements Allocator<PathfinderNode> {
@@ -188,6 +223,18 @@ public class Pathfinder implements IPathfinder {
 
         @Override
         public void deallocate(final PathfinderNode poolable) throws Exception {
+
+        }
+    }
+
+    private class Position3dAllocator implements Allocator<Position3d> {
+        @Override
+        public Position3d allocate(final Slot slot) throws Exception {
+            return new Position3d(slot);
+        }
+
+        @Override
+        public void deallocate(final Position3d poolable) throws Exception {
 
         }
     }

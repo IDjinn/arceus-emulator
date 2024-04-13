@@ -3,7 +3,7 @@ package habbo.rooms.components.gamemap;
 import habbo.rooms.IRoomComponent;
 import utils.pathfinder.Position;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface IRoomGameMap extends IRoomComponent {
     IRoomTile[][] getMap();
@@ -22,9 +22,13 @@ public interface IRoomGameMap extends IRoomComponent {
 
     boolean isValidCoordinate(Position position);
 
+    boolean isValidCoordinate(final int x, final int y);
+
     boolean isValidMovement(Position from, Position to, Position goal);
 
     IRoomTile getTile(final Position position);
 
-    Optional<ITileMetadata> getMetadataAt(final Position position, double objectHeight);
+    List<ITileMetadata> getMetadataAt(final Position position, double objectHeight);
+
+    List<ITileMetadata> getMetadataAt(final int x, final int y, double objectHeight);
 }

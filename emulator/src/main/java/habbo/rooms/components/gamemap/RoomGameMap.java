@@ -10,7 +10,8 @@ import stormpot.Pool;
 import stormpot.Timeout;
 import utils.pathfinder.Position;
 
-import java.util.Optional;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RoomGameMap implements IRoomGameMap {
@@ -84,13 +85,14 @@ public class RoomGameMap implements IRoomGameMap {
         
         try {
             var map = this.getRoom().getModel().getHeightMap().split("\n");
-            var modelWidth = map.length;
-            var modelHeight = map[0].length();
-            this.tiles = new IRoomTile[modelWidth][modelHeight];
+            var maxX = map[0].length();
+            var maxY = map.length;
+            this.tiles = new IRoomTile[maxX][maxY];
 
-            for (int x = 0; x < modelWidth; x++) {
-                for (int y = 0; y < modelHeight; y++) {
-                    this.tiles[x][y] = new RoomTile(new Position(x, y, map_height_lookup(Character.toUpperCase(map[x].charAt(y)))));
+            for (int x = 0; x < maxX; x++) {
+                for (int y = 0; y < maxY; y++) {
+                    var height = map_height_lookup(Character.toUpperCase(map[y].charAt(x)));
+                    this.tiles[x][y] = new RoomTile(new Position(x, y, height));
                     this.mapSize++;
                 }
             }
@@ -160,12 +162,12 @@ public class RoomGameMap implements IRoomGameMap {
 
     @Override
     public int getMaxX() {
-        return this.tiles[0].length;
+        return this.tiles.length;
     }
 
     @Override
     public int getMaxY() {
-        return this.tiles.length;
+        return this.tiles[0].length;
     }
 
     @Override
@@ -184,9 +186,17 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public boolean isValidCoordinate(Position position) {
-        return position.getX() >= 0 && position.getX() < getMaxX() &&
-                position.getY() >= 0 && position.getY() < getMaxY();
+    public boolean isValidCoordinate(final Position position) {
+        return this.isValidCoordinate(position.getX(), position.getY());
+    }
+
+    @Override
+    public boolean isValidCoordinate(final int x, final int y) {
+        return x >= 0
+                && x < this.getMaxX()
+                && y >= 0
+                && y < this.getMaxY()
+                ;
     }
 
     @Override
@@ -201,9 +211,35 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public Optional<ITileMetadata> getMetadataAt(final Position position, final double objectHeight) {
-        var tile = this.getTile(position.getX(), position.getY());
+    public List<ITileMetadata> getMetadataAt(final Position position, final double objectHeight) {
+        return this.getMetadataAt(position.getX(), position.getY(), objectHeight);
+    }
 
-        return tile.getMetadata().stream().findFirst();
+    @Override
+    public List<ITileMetadata> getMetadataAt(final int x, final int y, final double objectHeight) {
+        final var tile = this.getTile(x, y);
+        final var result = new LinkedList<ITileMetadata>();
+        for (int i = 0; i < tile.getMetadata().size(); i++) {
+            var current = tile.getMetadata().get(i);
+            var next = tile.getMetadata().size() > i + 1 ? tile.getMetadata().get(i + 1) : null;
+
+            if (current.getHeight().isEmpty()) continue;
+            if (next == null || next.getHeight().isEmpty()) {
+                result.add(current);
+                return result;
+            }
+
+            var currentTopZ = current.getHeight().get(); // TODO CHECK TILE.Z + ITEM.Z = CURRENT.HEIGHT
+            if (currentTopZ == Short.MAX_VALUE)
+                continue;
+            var nextBottomZ = next.getHeight().get();
+
+            if (currentTopZ + objectHeight <= nextBottomZ) {
+                result.add(current);
+            }
+        }
+
+
+        return tile.getMetadata();
     }
 }

@@ -4,11 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import stormpot.Poolable;
 import stormpot.Slot;
-import utils.pathfinder.Position;
 
 public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
     private final Slot slot;
-    public Position position;
+    public Position3d position;
     public @Nullable PathfinderNode parentNode;
     public float gCosts;
     public float hCosts;
@@ -18,7 +17,7 @@ public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
     }
 
 
-    public Position getPosition() {
+    public Position3d getPosition() {
         return this.position;
     }
 
@@ -51,15 +50,8 @@ public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
         this.hCosts = hCosts;
     }
 
-    @Override
-    public int compareTo(@NotNull PathfinderNode otherNode) {
-        if (this.getFCosts() < otherNode.getFCosts()) {
-            return -1;
-        } else if (this.getFCosts() > otherNode.getFCosts()) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public void setPosition(final Position3d position) {
+        this.position = position;
     }
 
     @Override
@@ -71,7 +63,8 @@ public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
         this.slot.release(this);
     }
 
-    public void setPosition(final Position position) {
-        this.position = position;
+    @Override
+    public int compareTo(@NotNull PathfinderNode otherNode) {
+        return Float.compare(this.getFCosts(), otherNode.getFCosts());
     }
 }
