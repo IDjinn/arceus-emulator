@@ -1,5 +1,7 @@
 package core.plugins;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +13,8 @@ import java.util.*;
 public class PluginManager implements IPluginManager {
     private final Logger logger = LogManager.getLogger();
     private final Map<Class<? extends IPlugin>, IPlugin> plugins;
+    @Inject
+    private Injector injector;
 
     public PluginManager() {
         this.plugins = new HashMap<>();
@@ -31,7 +35,7 @@ public class PluginManager implements IPluginManager {
         if (this.plugins.containsKey(instance.getClass()))
             return false;
 
-        instance.init();
+        instance.init(this.injector);
         this.plugins.put(instance.getClass(), instance);
         this.logger.info("plugin {}, made by {} at version {} was successfully registered in hotel.",
                 instance.getName(),
