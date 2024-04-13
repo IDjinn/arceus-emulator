@@ -3,6 +3,7 @@ package habbo.rooms.components.objects.items;
 import habbo.GameConstants;
 import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
+import habbo.furniture.extra.data.LegacyExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
 import networking.packets.OutgoingPacket;
@@ -113,4 +114,19 @@ public abstract class RoomItem implements IRoomItem {
     public boolean canUse() {
         return this.getFurniture().getInteractionModesCount() > 0;
     } // TODO USAGE POLICY!
+
+    @Override
+    public void toggleState(final int state) {
+        if (this.getExtraData() instanceof LegacyExtraData legacyExtraData) {
+            if (state != 0)
+                legacyExtraData.setData(String.valueOf(state));
+            else {
+                var newState = legacyExtraData.getStateValue() + 1 < this.getFurniture().getInteractionModesCount() ?
+                        legacyExtraData.getStateValue() + 1 : 0;
+                legacyExtraData.setData(String.valueOf(newState));
+            }
+            this.setNeedSave(true);
+            this.sendUpdate();
+        }
+    }
 }

@@ -60,4 +60,6 @@ public interface IRoomItem extends IRoomObject {
     default void onRemove(IHabbo taker) {
 
     }
+
+    void toggleState(final int state);
 }
