@@ -51,42 +51,14 @@ public class VariableManager implements IVariableManager {
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
     public void setNeedUpdate(final boolean needUpdate) {
         this.needUpdate = needUpdate;
     }
-
-//    @Override
-//    public void sendUpdate() {
-//        if (this.getEntity() instanceof IPlayerEntity playerEntity) {
-//            var packet = new OutgoingPacket(8899);
-//            packet.appendInt(this.variables.size());
-//            for (var entry : this.variables.values()) {
-//                packet.appendString(entry.getKey());
-//                packet.appendString(entry.getValue());
-//            }
-//            playerEntity.getClient().sendMessage(packet);
-//        }
-//    }
 
     @Override
     public void removeVariable(@NotNull final String key) {
         this.variables.remove(key);
         this.setNeedUpdate(true);
-    }
-
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void destroy() {
-
     }
 
     @Override

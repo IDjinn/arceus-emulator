@@ -1,13 +1,11 @@
 package habbo.variables;
 
-import core.IHotelService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import utils.cycle.ICycle;
 
 import java.util.Map;
 
-public interface IVariableManager extends IHotelService, ICycle {
+public interface IVariableManager {
     Map<String, IVariable> getVariables();
     
     void setOrCreate(IVariable variable);
@@ -20,7 +18,7 @@ public interface IVariableManager extends IHotelService, ICycle {
 
     void setNeedUpdate(boolean needUpdate);
 
-    void update();
-
     void removeVariable(@NotNull String key);
+
+    void tick();
 }

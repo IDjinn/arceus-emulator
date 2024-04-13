@@ -15,4 +15,14 @@ public class EntityVariablesManager extends VariableManager implements IEntityVa
     public IRoomEntity getEntity() {
         return this.entity;
     }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 }

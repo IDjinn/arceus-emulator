@@ -7,6 +7,7 @@ import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.rights.IRoomRightsManager;
+import habbo.rooms.components.variables.IRoomVariablesManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import networking.packets.OutgoingPacket;
@@ -43,6 +44,8 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     IRoomRightsManager getRightsManager();
 
     IRoomModelData getModel();
+
+    IRoomVariablesManager getVariablesManager();
     
     boolean isFullyLoaded();
 

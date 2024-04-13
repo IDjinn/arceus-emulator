@@ -9,6 +9,7 @@ import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
 import habbo.rooms.components.pathfinder.IPathfinder;
 import habbo.rooms.components.rights.IRoomRightsManager;
+import habbo.rooms.components.variables.IRoomVariablesManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
@@ -55,6 +56,8 @@ public class Room implements IRoom {
     private IRoomManager roomManager;
     @Inject
     private IProcessHandler processesHandler;
+    @Inject
+    private IRoomVariablesManager variablesManager;
 
 
     public Room(IConnectionResult data) {
@@ -69,7 +72,8 @@ public class Room implements IRoom {
     @Override
     public void init() {
         this.model = this.roomManager.getRoomModels().get(this.getData().getModelName());
-        
+
+        this.variablesManager.init(this);
         this.gameMap.init(this);
         this.entityManager.init(this);
         this.pathfinder.init(this);
@@ -84,6 +88,7 @@ public class Room implements IRoom {
 
     @Override
     public void update() {
+        this.variablesManager.update();
         this.rightsManager.update();
         this.objectManager.update();
         this.entityManager.update();
@@ -97,6 +102,7 @@ public class Room implements IRoom {
 
     @Override
     public void destroy() {
+        this.variablesManager.destroy();
         this.rightsManager.destroy();
         this.objectManager.destroy();
         this.entityManager.destroy();
@@ -112,6 +118,7 @@ public class Room implements IRoom {
 
     @Override
     public void onLoaded() {
+        this.variablesManager.onRoomLoaded();
         this.gameMap.onRoomLoaded();
         this.entityManager.onRoomLoaded();
         this.pathfinder.onRoomLoaded();
@@ -221,6 +228,11 @@ public class Room implements IRoom {
     @Override
     public IRoomModelData getModel() {
         return this.model;
+    }
+
+    @Override
+    public IRoomVariablesManager getVariablesManager() {
+        return this.variablesManager;
     }
 
     @Override
