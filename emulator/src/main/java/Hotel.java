@@ -1,5 +1,3 @@
-package habbo;
-
 import com.google.inject.Inject;
 import core.IHotel;
 import core.concurrency.IProcessHandler;

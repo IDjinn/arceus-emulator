@@ -1,23 +1,26 @@
-package habbo.rooms.entities.variables;
+package habbo.variables;
 
-import habbo.rooms.entities.IEntityComponent;
-import habbo.rooms.entities.IRoomEntity;
+import core.IHotelService;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import utils.cycle.ICycle;
 
-public interface IEntityVariablesComponent extends IEntityComponent {
+import java.util.Map;
+
+public interface IVariableManager extends IHotelService, ICycle {
+    Map<String, IVariable> getVariables();
+    
     void setOrCreate(IVariable variable);
 
     void setOrCreate(String variable, @Nullable String value);
 
     @Nullable IVariable get(@NotNull String key);
 
-
-    IRoomEntity getEntity();
-
     boolean isNeedUpdate();
 
     void setNeedUpdate(boolean needUpdate);
 
     void update();
+
+    void removeVariable(@NotNull String key);
 }

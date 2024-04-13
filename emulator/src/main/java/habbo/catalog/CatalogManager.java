@@ -53,7 +53,7 @@ public class CatalogManager implements ICatalogManager {
     }
 
     @Override
-    public void init() throws InterruptedException {
+    public void init() {
         this.logger.info("Initializing catalog from database...");
         this.catalogRepository.getAllCatalogItems(result -> {
             if (result == null) return;

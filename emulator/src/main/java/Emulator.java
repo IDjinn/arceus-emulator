@@ -16,7 +16,6 @@ import core.locking.ConcurrentLock;
 import core.locking.IConcurrentLock;
 import core.security.IScriptManager;
 import core.security.ScriptManager;
-import habbo.Hotel;
 import habbo.catalog.CatalogModule;
 import habbo.catalog.ICatalogManager;
 import habbo.furniture.FurnitureModule;

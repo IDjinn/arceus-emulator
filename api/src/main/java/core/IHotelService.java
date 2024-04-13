@@ -2,7 +2,7 @@ package core;
 
 public interface IHotelService {
 
-    void init() throws InterruptedException;
+    void init();
 
     void destroy();
 }

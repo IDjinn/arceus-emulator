@@ -31,7 +31,7 @@ public class FurnitureManager implements IFurnitureManager {
     }
 
     @Override
-    public void init() throws InterruptedException {
+    public void init() {
         this.logger.info("Initializing furniture's from database...");
         this.extraDataParsers.put(ExtraDataType.Empty.getType(), EmptyExtraData.class);
 
