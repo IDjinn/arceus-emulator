@@ -1,13 +1,18 @@
 package core.plugins;
 
-import core.IHotelService;
+import com.google.inject.Injector;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
-public interface IPlugin extends IHotelService {
+public interface IPlugin {
     String getName();
 
     String getDescription();
 
-    Runtime.Version getVersion();
+    ComparableVersion getVersion();
 
     String getAuthor();
+
+    void init(Injector injector);
+
+    void destroy();
 }
