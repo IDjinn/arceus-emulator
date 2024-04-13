@@ -171,8 +171,6 @@ public abstract class RoomEntity implements IRoomEntity {
             ));
 
             this.getVariablesComponent().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
-//            this.getVariablesComponent().setOrCreate("dev.path.total.nodes.size", String.valueOf(PathfinderNode.total.get()));
-//            PathfinderNode.total.set(0);
         }
 
         if (this.walkPath.isEmpty()) {

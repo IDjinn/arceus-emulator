@@ -169,7 +169,6 @@ public class Pathfinder implements IPathfinder {
             return Collections.emptyList();
         } finally {
             if (startNode != null) startNode.release();
-//            if (startPosition != null) startPosition.release();
             if (goalPosition != null) goalPosition.release();
             for (var openNode : openSet) {
                 openNode.release();
