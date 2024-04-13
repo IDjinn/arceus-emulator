@@ -10,6 +10,7 @@ import habbo.rooms.components.objects.items.floor.IFloorObject;
 import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.objects.floor.SlideObjectBundleMessageComposer;
 
 import java.util.PriorityQueue;
@@ -43,16 +44,16 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     }
 
     private Queue<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObjects = new PriorityQueue<>();
-    private SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
+    private @Nullable SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
 
     private void resetTimer() {
         var event = this.createEvent(RollerFloorItem.class.getName());
         if (event != null) {
-            event.setTotalTicks(DefaultRollerSpeed);
+            event.setTotalTicks(this.DefaultRollerSpeed);
             event.subscribeListener(this);
             this.enqueueEvent(event);
         } else {
-            logger.error("Failed to create event for RollerFloorItem");
+            this.logger.error("Failed to create event for RollerFloorItem");
         }
     }
 

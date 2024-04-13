@@ -34,7 +34,11 @@ public class AdvancedFloorItem extends DefaultFloorItem implements ICycle {
 
     public void enqueueEvent(FloorItemEvent event) {
         try {
-            this.events.add(event);
+            if (this.events.size() + 1 < this.MAX_EVENT_COUNT)
+                this.events.add(event);
+            else
+                this.logger.warn("failed to enqueue event for item {} in room {}: too many events", this.getId(),
+                        this.getRoom().getData().getId());
         } catch (Exception e) {
             this.logger.error("failed to enqueue event for item {} in room {}: {}", this.getId(), this.getRoom().getData().getId(), e.getMessage(), e);
         }

@@ -29,11 +29,11 @@ import java.util.Map;
 @Singleton
 public class RoomItemFactory implements IRoomItemFactory {
     private final Injector injector;
-    public final Map<String, Class<? extends IRoomItem>> itemDefinitionMap;
-    public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
     private final IFurnitureManager furnitureManager;
     private final IHabboManager habboManager;
     private final Logger logger = LogManager.getLogger();
+    public final Map<String, Class<? extends IRoomItem>> itemDefinitionMap;
+    public final Map<String, Constructor<? extends IRoomItem>> itemConstructorCache;
 
     @Inject
     public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager, Injector injector) {
@@ -57,14 +57,20 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     @Override
+    public IRoomItem create(IConnectionResult result, IRoom room) throws Exception {
+        var itemData = this.createItemDataFromResult(result);
+        return this.create(itemData, room);
+    }
+
+    @Override
     public IRoomItem create(IRoomItemData itemData, IRoom room) {
         var furnitureData = this.furnitureManager.get(itemData.getFurnitureId());
         if (furnitureData == null)
             throw new IllegalArgumentException(STR."Furniture data  not found for id \{itemData.getFurnitureId()}");
 
         var item = switch (furnitureData.getType()) {
-            case FLOOR -> createFloorObject(itemData, room, furnitureData);
-            case WALL -> createWallObject(itemData, room, furnitureData);
+            case FLOOR -> this.createFloorObject(itemData, room, furnitureData);
+            case WALL -> this.createWallObject(itemData, room, furnitureData);
             case null, default ->
                     throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getType().toString()} is not valid object");
         };
@@ -75,14 +81,8 @@ public class RoomItemFactory implements IRoomItemFactory {
         return item;
     }
 
-    @Override
-    public IRoomItem create(IConnectionResult result, IRoom room) throws Exception {
-        var itemData = createItemDataFromResult(result);
-        return create(itemData, room);
-    }
-
     private IFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
-        var object = createRoomObject(data, room, furnitureData);
+        var object = this.createRoomObject(data, room, furnitureData);
         if (object == null)
             throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
 
@@ -90,7 +90,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
-        var object = createRoomObject(data, room, furnitureData);
+        var object = this.createRoomObject(data, room, furnitureData);
         if (object == null)
             throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
 

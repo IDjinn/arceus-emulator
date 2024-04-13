@@ -7,7 +7,7 @@ import habbo.rooms.components.objects.items.RoomItemFactory;
 public class RoomObjectModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(IRoomObjectManager.class).to(RoomObjectManager.class);
-        bind(IRoomItemFactory.class).to(RoomItemFactory.class);
+        this.bind(IRoomObjectManager.class).to(RoomObjectManager.class);
+        this.bind(IRoomItemFactory.class).to(RoomItemFactory.class);
     }
 }
