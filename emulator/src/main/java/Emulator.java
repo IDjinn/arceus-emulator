@@ -14,6 +14,8 @@ import core.configuration.IConfigurationManager;
 import core.configuration.IEmulatorSettings;
 import core.locking.ConcurrentLock;
 import core.locking.IConcurrentLock;
+import core.plugins.IPluginManager;
+import core.plugins.PluginManager;
 import core.security.IScriptManager;
 import core.security.ScriptManager;
 import habbo.catalog.CatalogModule;
@@ -75,6 +77,9 @@ public class Emulator extends AbstractModule implements IEmulator {
     @Inject
     private IScriptManager scriptManager;
 
+    @Inject
+    private IPluginManager pluginManager;
+
     public static void main(String[] args) {
         var injector = Guice.createInjector(
                 new Emulator(),
@@ -109,6 +114,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IThreadManager.class).to(ThreadManager.class);
         this.bind(IScriptManager.class).to(ScriptManager.class);
         this.bind(IProcessHandler.class).to(ProcessHandler.class);
+        this.bind(IPluginManager.class).to(PluginManager.class);
     }
 
 
@@ -118,6 +124,7 @@ public class Emulator extends AbstractModule implements IEmulator {
 
         try {
             this.emulatorSettings.init();
+            this.pluginManager.init();
             this.networkingManager.init();
 
             this.furnitureManager.init();
