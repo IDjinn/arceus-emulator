@@ -2,7 +2,7 @@ package habbo.rooms;
 
 import core.IHotelService;
 import habbo.rooms.data.IRoomCategory;
-import habbo.rooms.data.models.IRoomModelData;
+import habbo.rooms.data.IRoomModelData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;

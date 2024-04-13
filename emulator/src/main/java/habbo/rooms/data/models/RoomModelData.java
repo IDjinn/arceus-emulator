@@ -1,5 +1,6 @@
 package habbo.rooms.data.models;
 
+import habbo.rooms.data.IRoomModelData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
