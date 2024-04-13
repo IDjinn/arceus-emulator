@@ -99,7 +99,7 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
                 this.getRoom().broadcastMessage(new SlideObjectBundleMessageComposer(
                         this.movementEntity,
                         SlideObjectBundleMessageComposer.RollerMovementType.Slide,
-                        this.getPosition(),
+                        this.movementEntity.oldPosition(),
                         this.getPosition().squareInFront(this.getRotation()),
                         this.movementObjects,
                         this.getVirtualId()
