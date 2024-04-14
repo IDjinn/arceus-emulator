@@ -12,6 +12,8 @@ import core.configuration.ConfigurationManager;
 import core.configuration.ConfigurationModule;
 import core.configuration.IConfigurationManager;
 import core.configuration.IEmulatorSettings;
+import core.events.EventHandlerManager;
+import core.events.IEventHandlerManager;
 import core.locking.ConcurrentLock;
 import core.locking.IConcurrentLock;
 import core.plugins.IPluginManager;
@@ -115,8 +117,8 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IScriptManager.class).to(ScriptManager.class);
         this.bind(IProcessHandler.class).to(ProcessHandler.class);
         this.bind(IPluginManager.class).to(PluginManager.class);
+        this.bind(IEventHandlerManager.class).to(EventHandlerManager.class);
     }
-
 
     @Override
     public void start() {

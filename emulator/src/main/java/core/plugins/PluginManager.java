@@ -2,21 +2,28 @@ package core.plugins;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import core.events.IEventHandlerManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileReader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class PluginManager implements IPluginManager {
     private final Logger logger = LogManager.getLogger();
     private final Map<Class<? extends IPlugin>, IPlugin> plugins;
-    @Inject
-    private Injector injector;
+    private final Injector injector;
+    private final IEventHandlerManager eventHandlerManager;
 
-    public PluginManager() {
+    @Inject
+    public PluginManager(Injector injector, IEventHandlerManager eventHandlerManager) {
+        this.injector = injector;
+        this.eventHandlerManager = eventHandlerManager;
         this.plugins = new HashMap<>();
     }
 
@@ -61,20 +68,44 @@ public class PluginManager implements IPluginManager {
         return true;
     }
 
+    private static List<Class<?>> getClassesInPackage(String packageName, String jarFilePath, ClassLoader loader) throws Exception {
+        final var jarFile = new JarFile(jarFilePath);
+        final var entries = jarFile.entries();
+
+        packageName = packageName.replace(".", "/");
+        final var classes = new ArrayList<Class<?>>();
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            if (!entry.getName().startsWith(packageName)) continue;
+            if (entry.getName().endsWith(".class")) {
+                String className = entry.getName().replace('/', '.').substring(0, entry.getName().length() - 6);
+                classes.add(Class.forName(className, true, loader));
+            }
+        }
+
+        return classes;
+    }
+
     @Override
     public void init() {
         final var pluginsDirectory = new File("plugins");
-        if (!pluginsDirectory.exists()) pluginsDirectory.mkdir();
+        if (!pluginsDirectory.exists())
+            pluginsDirectory.mkdir();
 
         for (final var pluginFolder : Objects.requireNonNull(pluginsDirectory.listFiles(File::isDirectory))) {
-            for (final var plugin : Arrays.stream(Objects.requireNonNull(pluginFolder.listFiles())).filter(file -> file.toPath().endsWith(".jar")).toList()) {
+            for (final var pluginFile : Arrays.stream(Objects.requireNonNull(pluginFolder.listFiles())).toList()) {
+                if (!pluginFile.getPath().endsWith(".jar") && !pluginFile.getPath().endsWith(".class")) continue;
+                
                 try {
-                    final var classLoader = URLClassLoader.newInstance(new URL[]{plugin.toURI().toURL()});
+                    final var classLoader = URLClassLoader.newInstance(new URL[]{pluginFile.toURI().toURL()},
+                            this.getClass().getClassLoader());
                     final var pluginConfiguration = new Properties();
-                    pluginConfiguration.load(classLoader.getResourceAsStream("plugin.ini"));
+                    pluginConfiguration.load(new FileReader(STR."\{pluginFile.getParent()}\\plugin.ini"));
                     final var pluginClass = classLoader.loadClass(pluginConfiguration.getProperty("plugin.entrypoint"));
                     final var pluginInstance = ((IPlugin) pluginClass.getDeclaredConstructor().newInstance());
-
+                    final var pluginClasses = getClassesInPackage(pluginClass.getPackageName(), pluginFile.getPath(),
+                            classLoader);
+                    this.eventHandlerManager.registerPluginEvents(pluginClasses);
                     this.registerPlugin(pluginInstance);
                 } catch (Exception e) {
                     this.logger.error("error while creating plugin instance", e);
@@ -82,7 +113,6 @@ public class PluginManager implements IPluginManager {
             }
         }
     }
-
     @Override
     public void destroy() {
 

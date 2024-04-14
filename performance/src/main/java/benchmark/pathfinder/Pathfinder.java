@@ -1,7 +1,9 @@
 package benchmark.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
+import habbo.rooms.components.objects.items.floor.IFloorObject;
 import habbo.rooms.components.pathfinder.PathfinderNode;
+import habbo.rooms.components.pathfinder.Position3d;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 
@@ -68,28 +70,26 @@ public class Pathfinder {
         final var path = new ArrayList<Position>();
         var current = node;
         while (current.parentNode != null) {
-            path.add(current.getPosition());
+            path.add(new Position(current.getPosition().getX(), current.getPosition().getY(), current.getPosition().getZ()));
             current = current.parentNode;
         }
         Collections.reverse(path);
         return path;
     }
 
-    private List<PathfinderNode> getNeighbors(final PathfinderNode current) {
+
+    private List<PathfinderNode> getNeighbors(
+            final IFloorObject floorObject,
+            final PathfinderNode current,
+            final Position3d goal
+    ) {
         final var neighbors = new ArrayList<PathfinderNode>();
         for (final var direction : diagonalDirections.values()) {
-            final var neighborPosition = current.getPosition().add(direction);
 
-//                if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition)) continue;
-            if (neighborPosition.getX() > maxX && neighborPosition.getY() > maxY) continue;
-
-
-            final var neighbor = new PathfinderNode(null);
-            neighbor.parentNode = current;
-            neighbors.add(neighbor);
         }
         return neighbors;
     }
+
 
     @SuppressWarnings("UnstableApiUsage")
     public SequencedCollection<Position> tracePath(final Position start, final Position goal) {
@@ -98,29 +98,29 @@ public class Pathfinder {
         final var firstNode = new PathfinderNode(null);
         openSet.add(firstNode);
 
-        var step = 0;
-        final var mapSize = 192;
-        while (!openSet.isEmpty() && step++ < mapSize) {
-            final var current = openSet.poll();
-            if (current.getPosition().equals(goal))
-                return reversePath(current);
-
-            if (closedSet.contains(goal))
-                break;
-
-            closedSet.add(current.getPosition());
-            for (final var node : this.getNeighbors(current)) {
-                if (closedSet.contains(node.position)) continue;
-
-                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
-                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
-                    node.setParentNode(current);
-                    node.setGCosts(tentativeGScore);
-                    node.setHCosts((float) node.getPosition().distanceTo(goal));
-                    openSet.add(node);
-                }
-            }
-        }
+//        var step = 0;
+//        final var mapSize = 192;
+//        while (!openSet.isEmpty() && step++ < mapSize) {
+//            final var current = openSet.poll();
+//            if (current.getPosition().equals(goal))
+//                return reversePath(current);
+//
+//            if (closedSet.contains(goal))
+//                break;
+//
+//            closedSet.add(current.getPosition());
+//            for (final var node : this.getNeighbors(current)) {
+//                if (closedSet.contains(node.position)) continue;
+//
+//                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
+//                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
+//                    node.setParentNode(current);
+//                    node.setGCosts(tentativeGScore);
+//                    node.setHCosts((float) node.getPosition().distanceTo(goal));
+//                    openSet.add(node);
+//                }
+//            }
+//        }
         return Collections.emptyList();
     }
 }
