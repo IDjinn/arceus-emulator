@@ -1,8 +1,10 @@
 package core.configuration;
 
+import core.IHotelService;
+
 import java.util.HashMap;
 
-public interface IEmulatorSettings {
+public interface IEmulatorSettings extends IHotelService {
     void init();
 
     void reload();

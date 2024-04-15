@@ -1,6 +1,9 @@
 package core.events;
 
 import core.plugins.IPlugin;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +11,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class EventHandlerManager implements IEventHandlerManager {
-
-    private final Map<Class<? extends IEvent>, List<Method>> listeners;
+    private final Logger logger = LogManager.getLogger();
+    private final Map<Class<? extends IEvent>, List<ListenerCallback>> listeners;
 
     public EventHandlerManager() {
         this.listeners = new HashMap<>();
@@ -58,6 +61,8 @@ public class EventHandlerManager implements IEventHandlerManager {
         final var listenerMethods = new ArrayList<Method>();
         for (final var clazz : classes) {
             for (final var method : clazz.getDeclaredMethods()) {
+                if (method.getParameterCount() != 1) continue;
+                
                 final var annotations = method.getDeclaredAnnotations();
                 for (final var annotation : annotations) {
                     if (annotation.annotationType().equals(EventListener.class)) {
@@ -71,17 +76,30 @@ public class EventHandlerManager implements IEventHandlerManager {
     }
 
     @Override
-    public boolean registerPluginEvents(final List<Class<?>> classes) {
+    public boolean registerPluginEvents(final List<Class<?>> classes) { // TODO PROPER ERROR HANDLING
         try {
-            for (final var listener : this.getEventListenersOf(classes)) {
-                var eventType = Arrays.stream(listener.getParameterTypes()).findFirst();
+            for (final var listenerMethod : this.getEventListenersOf(classes)) {
+                var eventType = Arrays.stream(listenerMethod.getParameterTypes()).findFirst();
                 if (eventType.isPresent() && eventType.get().isAssignableFrom(IEvent.class)) {
-                    this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(listener);
+                    final var priority =
+                            ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get()).getEventListenerPriority();
+                    this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(listenerMethod, priority));
                 }
             }
+            for (var listenerMethods : this.listeners.values()) {
+                Collections.sort(listenerMethods);
+            }
+            
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+    
+    record ListenerCallback(Method method, EventListenerPriority priority) implements Comparable<ListenerCallback> {
+        @Override
+        public int compareTo(@NotNull final EventHandlerManager.ListenerCallback o) {
+            return Integer.compare(o.priority.ordinal(), this.priority.ordinal());
         }
     }
 

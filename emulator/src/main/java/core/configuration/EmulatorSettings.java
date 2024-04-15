@@ -23,6 +23,11 @@ public class EmulatorSettings implements IEmulatorSettings {
         this.loadAllSettings(false);
     }
 
+    @Override
+    public void destroy() {
+        
+    }
+
     private void loadAllSettings(boolean forceReload) {
         if(this.isLoaded && !forceReload) return;
 

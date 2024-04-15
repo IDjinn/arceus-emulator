@@ -1,8 +1,6 @@
 package org.emulator.wireds;
+
 import com.google.inject.Injector;
-import core.events.EventListener;
-import core.events.EventListenerPriority;
-import core.events.IEvent;
 import core.plugins.IPlugin;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
@@ -36,17 +34,7 @@ public class WiredPlugin implements IPlugin {
     public void init(Injector injector) {
 
     }
-
-    @EventListener(getEventListenerPriority = EventListenerPriority.Low)
-    private void testPrivate(IEvent event) {
-
-    }
-
-    @EventListener(getEventListenerPriority = EventListenerPriority.Low)
-    public void testpublic(IEvent event) {
-
-    }
-
+    
     @Override
     public void destroy() {
 

@@ -2,10 +2,6 @@ package core;
 
 import core.concurrency.IProcessHandler;
 
-public interface IHotel  {
+public interface IHotel extends IHotelService {
     IProcessHandler getProcessHandler();
-    
-    void init();
-
-    void shutdown();
 }

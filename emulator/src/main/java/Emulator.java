@@ -21,23 +21,17 @@ import core.plugins.PluginManager;
 import core.security.IScriptManager;
 import core.security.ScriptManager;
 import habbo.catalog.CatalogModule;
-import habbo.catalog.ICatalogManager;
 import habbo.furniture.FurnitureModule;
-import habbo.furniture.IFurnitureManager;
 import habbo.habbos.HabboModule;
-import habbo.navigator.INavigatorManager;
 import habbo.navigator.NavigatorModule;
 import habbo.permissions.PermissionModule;
-import habbo.rooms.IRoomManager;
 import habbo.rooms.RoomModule;
 import habbo.rooms.components.objects.RoomObjectModule;
 import networking.INetworkingManager;
-import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.AutoBindIncomingEventsModule;
 import repositories.RepositoryModule;
-import storage.IConnection;
 
 
 @Singleton
@@ -45,39 +39,13 @@ public class Emulator extends AbstractModule implements IEmulator {
     private final Logger logger = LogManager.getLogger();
 
     @Inject
-    private IConfigurationManager configurationManager;
-    @Inject
-    IThreadManager threadManager;
-
-    @Inject
     private IEmulatorSettings emulatorSettings;
-
-    @Inject
-    private IConnection connection;
 
     @Inject
     private IHotel hotel;
 
     @Inject
     private INetworkingManager networkingManager;
-
-    @Inject
-    private IRoomManager roomManager;
-
-    @Inject
-    private IPacketManager packetManager;
-
-    @Inject
-    private IFurnitureManager furnitureManager;
-
-    @Inject
-    private ICatalogManager catalogManager;
-
-    @Inject
-    private INavigatorManager navigatorManager;
-
-    @Inject
-    private IScriptManager scriptManager;
 
     @Inject
     private IPluginManager pluginManager;
@@ -122,18 +90,12 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Override
     public void start() {
-        this.logger.info("Orion has been started!");
-
         try {
             this.emulatorSettings.init();
             this.pluginManager.init();
+            this.hotel.init();
             this.networkingManager.init();
-
-            this.furnitureManager.init();
-            this.catalogManager.init();
-
-            this.roomManager.init();
-            this.navigatorManager.init();
+            this.logger.info("Orion has been started!");
         } catch (Exception e) {
             this.logger.error(e.getMessage());
         }
@@ -141,10 +103,10 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Override
     public void shutdown() {
+        this.emulatorSettings.destroy();
+        this.pluginManager.destroy();
+        this.hotel.destroy();
         this.networkingManager.destroy();
-        this.furnitureManager.destroy();
-        this.catalogManager.destroy();
-        this.roomManager.destroy();
         this.logger.info("Orion has been shutdown!");
     }
 }
