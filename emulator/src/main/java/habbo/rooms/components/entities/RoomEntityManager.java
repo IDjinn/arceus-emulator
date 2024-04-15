@@ -5,6 +5,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.rooms.entities.PlayerEntity;
+import habbo.rooms.entities.events.RoomEntityTalkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
@@ -87,6 +88,7 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public void talk(final IRoomEntity entity, final String message, final int bubble) {
+        this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message));
         this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
     }
 

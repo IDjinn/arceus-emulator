@@ -12,8 +12,8 @@ import core.configuration.ConfigurationManager;
 import core.configuration.ConfigurationModule;
 import core.configuration.IConfigurationManager;
 import core.configuration.IEmulatorSettings;
-import core.events.EventHandlerManager;
-import core.events.IEventHandlerManager;
+import core.events.EventHandler;
+import core.events.IEventHandler;
 import core.locking.ConcurrentLock;
 import core.locking.IConcurrentLock;
 import core.plugins.IPluginManager;
@@ -85,16 +85,16 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IScriptManager.class).to(ScriptManager.class);
         this.bind(IProcessHandler.class).to(ProcessHandler.class);
         this.bind(IPluginManager.class).to(PluginManager.class);
-        this.bind(IEventHandlerManager.class).to(EventHandlerManager.class);
+        this.bind(IEventHandler.class).to(EventHandler.class);
     }
 
     @Override
     public void start() {
         try {
             this.emulatorSettings.init();
-            this.pluginManager.init();
             this.hotel.init();
             this.networkingManager.init();
+            this.pluginManager.init();
             this.logger.info("Orion has been started!");
         } catch (Exception e) {
             this.logger.error(e.getMessage());

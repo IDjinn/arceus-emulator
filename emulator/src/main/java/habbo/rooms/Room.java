@@ -3,6 +3,7 @@ package habbo.rooms;
 import com.google.inject.Inject;
 import core.concurrency.IProcessHandler;
 import core.concurrency.IThreadManager;
+import core.events.IEventHandler;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
@@ -58,6 +59,8 @@ public class Room implements IRoom {
     private IProcessHandler processesHandler;
     @Inject
     private IRoomVariablesManager variablesManager;
+    @Inject
+    private IEventHandler eventHandler;
 
 
     public Room(IConnectionResult data) {
@@ -261,7 +264,13 @@ public class Room implements IRoom {
     @Override
     public void registerCustomComponent(final Class<? extends IRoomComponent> component, IRoomComponent instance) {
         this.customComponents.put(component, instance);
+        instance.init(this);
         this.logger.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
                 instance.getClass().getName());   
+    }
+
+    @Override
+    public IEventHandler getEventHandler() {
+        return this.eventHandler;
     }
 }

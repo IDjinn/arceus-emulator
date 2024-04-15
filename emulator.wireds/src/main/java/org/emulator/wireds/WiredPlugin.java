@@ -3,9 +3,13 @@ package org.emulator.wireds;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import core.plugins.IPlugin;
+import habbo.rooms.components.objects.items.IRoomItemFactory;
 import org.apache.maven.artifact.versioning.ComparableVersion;
+import org.emulator.wireds.boxes.triggers.WiredTriggerEntitySayKeyword;
 
+@Singleton
 public class WiredPlugin extends AbstractModule implements IPlugin {
     private static final String author = "IDjinn";
     private static final ComparableVersion version = new ComparableVersion("1.0.0");
@@ -13,7 +17,10 @@ public class WiredPlugin extends AbstractModule implements IPlugin {
     private static final String name = "wireds-plugin";
     @Inject
     private Injector injector;
-    
+
+    @Inject
+    private IRoomItemFactory roomItemFactory;
+
     @Override
     public String getName() {
         return name;
@@ -36,7 +43,10 @@ public class WiredPlugin extends AbstractModule implements IPlugin {
 
     @Override
     public void init() {
-        
+        this.roomItemFactory.registerInteraction(
+                WiredTriggerEntitySayKeyword.InteractionName,
+                WiredTriggerEntitySayKeyword.class
+        );
     }
 
     

@@ -47,8 +47,8 @@ public class PluginManager implements IPluginManager {
 
         final var pluginInjector = this.injector.createChildInjector(instance);
         pluginInjector.injectMembers(instance);
-        instance.init();
         this.hotel.getEventHandlerManager().registerPluginEvents(instance, pluginClasses);
+        instance.init();
         this.plugins.put(instance.getClass(), instance);
         this.logger.info("plugin {}, made by {} at version {} was successfully registered in hotel.",
                 instance.getName(),

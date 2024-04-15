@@ -18,6 +18,7 @@ import habbo.rooms.components.objects.items.wall.DefaultWallItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 import utils.pathfinder.Position;
@@ -54,6 +55,19 @@ public class RoomItemFactory implements IRoomItemFactory {
         this.itemDefinitionMap.put(RollerFloorItem.INTERACTION_NAME, RollerFloorItem.class);
         // TODO: DETECT DUPLICATE CLASSES/INTERACTION
         this.logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
+    }
+
+    @Override
+    public boolean registerInteraction(final @NotNull String name, final Class<? extends IRoomItem> clazz) {
+        if (this.itemDefinitionMap.containsKey(name)) return false;
+
+        this.itemDefinitionMap.put(name, clazz);
+        return true;
+    }
+
+    @Override
+    public boolean unregisterInteraction(final @NotNull String name) {
+        return this.itemDefinitionMap.remove(name) != null;
     }
 
     @Override

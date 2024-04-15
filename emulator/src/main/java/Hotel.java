@@ -2,7 +2,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.IHotel;
 import core.concurrency.IProcessHandler;
-import core.events.IEventHandlerManager;
+import core.events.IEventHandler;
 import habbo.catalog.ICatalogManager;
 import habbo.furniture.IFurnitureManager;
 import habbo.navigator.INavigatorManager;
@@ -10,7 +10,7 @@ import habbo.rooms.IRoomManager;
 
 @Singleton
 public class Hotel implements IHotel {
-    private final IEventHandlerManager eventHandlerManager;
+    private final IEventHandler eventHandlerManager;
     private final IProcessHandler processHandler;
     private final IFurnitureManager furnitureManager;
     private final ICatalogManager catalogManager;
@@ -18,7 +18,7 @@ public class Hotel implements IHotel {
     private final INavigatorManager navigatorManager;
 
     @Inject
-    public Hotel(IEventHandlerManager eventHandlerManager, IProcessHandler processHandler, IFurnitureManager furnitureManager, ICatalogManager catalogManager, IRoomManager roomManager, INavigatorManager navigatorManager) {
+    public Hotel(IEventHandler eventHandlerManager, IProcessHandler processHandler, IFurnitureManager furnitureManager, ICatalogManager catalogManager, IRoomManager roomManager, INavigatorManager navigatorManager) {
         this.eventHandlerManager = eventHandlerManager;
         this.processHandler = processHandler;
         this.furnitureManager = furnitureManager;
@@ -33,7 +33,7 @@ public class Hotel implements IHotel {
     }
 
     @Override
-    public IEventHandlerManager getEventHandlerManager() {
+    public IEventHandler getEventHandlerManager() {
         return this.eventHandlerManager;
     }
 
