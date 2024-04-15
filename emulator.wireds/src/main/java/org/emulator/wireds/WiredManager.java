@@ -1,4 +1,4 @@
 package org.emulator.wireds;
 
-public class TestClass {
+public class WiredManager {
 }

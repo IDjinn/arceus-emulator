@@ -2,6 +2,7 @@ package core.plugins;
 
 import core.IHotelService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,7 +11,7 @@ public interface IPluginManager extends IHotelService {
 
     Optional<? extends IPlugin> getPlugin(Class<? extends IPlugin> pluginClass);
 
-    boolean registerPlugin(IPlugin instance);
+    boolean registerPlugin(IPlugin instance, final List<Class<?>> pluginClasses);
 
     boolean destroyPlugin(Class<IPlugin> clazz);
 }

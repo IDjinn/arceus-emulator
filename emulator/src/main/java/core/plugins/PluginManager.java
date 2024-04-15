@@ -2,7 +2,8 @@ package core.plugins;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import core.events.IEventHandlerManager;
+import core.IEmulator;
+import core.IHotel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,12 +19,14 @@ public class PluginManager implements IPluginManager {
     private final Logger logger = LogManager.getLogger();
     private final Map<Class<? extends IPlugin>, IPlugin> plugins;
     private final Injector injector;
-    private final IEventHandlerManager eventHandlerManager;
+    private final IHotel hotel;
+    private final IEmulator emulator;
 
     @Inject
-    public PluginManager(Injector injector, IEventHandlerManager eventHandlerManager) {
+    public PluginManager(Injector injector, IHotel hotel, IEmulator emulator) {
         this.injector = injector;
-        this.eventHandlerManager = eventHandlerManager;
+        this.hotel = hotel;
+        this.emulator = emulator;
         this.plugins = new HashMap<>();
     }
 
@@ -38,11 +41,14 @@ public class PluginManager implements IPluginManager {
     }
 
     @Override
-    public boolean registerPlugin(final IPlugin instance) {
+    public boolean registerPlugin(final IPlugin instance, final List<Class<?>> pluginClasses) {
         if (this.plugins.containsKey(instance.getClass()))
             return false;
 
-        instance.init(this.injector);
+        final var pluginInjector = this.injector.createChildInjector(instance);
+        pluginInjector.injectMembers(instance);
+        instance.init();
+        this.hotel.getEventHandlerManager().registerPluginEvents(instance, pluginClasses);
         this.plugins.put(instance.getClass(), instance);
         this.logger.info("plugin {}, made by {} at version {} was successfully registered in hotel.",
                 instance.getName(),
@@ -105,8 +111,7 @@ public class PluginManager implements IPluginManager {
                     final var pluginInstance = ((IPlugin) pluginClass.getDeclaredConstructor().newInstance());
                     final var pluginClasses = getClassesInPackage(pluginClass.getPackageName(), pluginFile.getPath(),
                             classLoader);
-                    this.eventHandlerManager.registerPluginEvents(pluginClasses);
-                    this.registerPlugin(pluginInstance);
+                    this.registerPlugin(pluginInstance, pluginClasses);
                 } catch (Exception e) {
                     this.logger.error("error while creating plugin instance", e);
                 }

@@ -9,6 +9,7 @@ import habbo.rooms.data.IRoomCategory;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomCategory;
 import habbo.rooms.data.models.RoomModelData;
+import habbo.rooms.events.OnRoomLoaded;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -63,6 +64,7 @@ public class RoomManager implements IRoomManager {
         if (room == null) return null;
 
         room.init();
+        this.hotel.getEventHandlerManager().onEvent(new OnRoomLoaded(room));
         return room;
     }
 

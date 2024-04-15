@@ -5,7 +5,9 @@ import core.plugins.IPlugin;
 import java.util.List;
 
 public interface IEventHandlerManager {
-    public boolean registerPluginEvents(List<Class<?>> classes);
+    boolean registerPluginEvents(final IPlugin pluginInstance, List<Class<?>> classes);
 
-    public boolean unregisterPluginEvents(IPlugin plugin);
+    boolean unregisterPluginEvents(IPlugin plugin);
+
+    void onEvent(IEvent event);
 }

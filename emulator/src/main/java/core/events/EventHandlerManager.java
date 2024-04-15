@@ -1,5 +1,7 @@
 package core.events;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import core.plugins.IPlugin;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,8 +15,11 @@ import java.util.*;
 public class EventHandlerManager implements IEventHandlerManager {
     private final Logger logger = LogManager.getLogger();
     private final Map<Class<? extends IEvent>, List<ListenerCallback>> listeners;
+    private final Injector injector;
 
-    public EventHandlerManager() {
+    @Inject
+    public EventHandlerManager(Injector injector) {
+        this.injector = injector;
         this.listeners = new HashMap<>();
     }
 
@@ -76,14 +81,15 @@ public class EventHandlerManager implements IEventHandlerManager {
     }
 
     @Override
-    public boolean registerPluginEvents(final List<Class<?>> classes) { // TODO PROPER ERROR HANDLING
+    public boolean registerPluginEvents(final IPlugin pluginInstance, final List<Class<?>> classes) { // TODO PROPER ERROR HANDLING
         try {
             for (final var listenerMethod : this.getEventListenersOf(classes)) {
                 var eventType = Arrays.stream(listenerMethod.getParameterTypes()).findFirst();
-                if (eventType.isPresent() && eventType.get().isAssignableFrom(IEvent.class)) {
+                if (eventType.isPresent() && IEvent.class.isAssignableFrom(eventType.get())) {
                     final var priority =
                             ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get()).getEventListenerPriority();
-                    this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(listenerMethod, priority));
+                    final var instance = pluginInstance.getInjector().getInstance(listenerMethod.getDeclaringClass());
+                    this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(pluginInstance, instance, listenerMethod, priority));
                 }
             }
             for (var listenerMethods : this.listeners.values()) {
@@ -95,16 +101,32 @@ public class EventHandlerManager implements IEventHandlerManager {
             return false;
         }
     }
-    
-    record ListenerCallback(Method method, EventListenerPriority priority) implements Comparable<ListenerCallback> {
-        @Override
-        public int compareTo(@NotNull final EventHandlerManager.ListenerCallback o) {
-            return Integer.compare(o.priority.ordinal(), this.priority.ordinal());
+
+    @Override
+    public void onEvent(final IEvent event) {
+        final var listeners = this.listeners.get(event.getClass());
+        if (listeners == null)
+            return;
+
+        for (final var listener : listeners) {
+            try {
+                listener.method.invoke(listener.instance, event);
+            } catch (Exception e) {
+                this.logger.error("failed to invoke event listener {}: {}", listener.method.getClass().getName(), e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public boolean unregisterPluginEvents(final IPlugin plugin) {
         return false;
+    }
+
+    record ListenerCallback(IPlugin pluginInstance, Object instance, Method method,
+                            EventListenerPriority priority) implements Comparable<ListenerCallback> {
+        @Override
+        public int compareTo(@NotNull final EventHandlerManager.ListenerCallback o) {
+            return Integer.compare(o.priority.ordinal(), this.priority.ordinal());
+        }
     }
 }
