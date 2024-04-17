@@ -11,7 +11,9 @@ import org.emulator.wireds.boxes.conditions.WiredCondition;
 import org.emulator.wireds.boxes.effects.WiredEffect;
 import org.emulator.wireds.boxes.selectors.WiredSelector;
 import org.emulator.wireds.boxes.triggers.WiredTrigger;
+import utils.pathfinder.Position;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,6 +47,7 @@ public class WiredManager implements IRoomComponent {
 
     @Override
     public void init(final IRoom room) {
+        this.injector.injectMembers(this.executionPipeline);
     }
 
     @Override
@@ -108,5 +111,25 @@ public class WiredManager implements IRoomComponent {
 
     public WiredExecutionPipeline getExecutionPipeline() {
         return executionPipeline;
+    }
+
+    public List<WiredTrigger> getTriggersAt(Position position) {
+        return this.getTriggers().values().stream().filter(trigger -> trigger.getPosition().equals(position)).toList();
+    }
+
+    public List<WiredCondition> getConditionsAt(Position position) {
+        return this.getConditions().values().stream().filter(condition -> condition.getPosition().equals(position)).toList();
+    }
+
+    public List<WiredEffect> getEffectsAt(Position position) {
+        return this.getEffects().values().stream().filter(effect -> effect.getPosition().equals(position)).toList();
+    }
+
+    public List<WiredAddon> getAddonsAt(Position position) {
+        return this.getAddons().values().stream().filter(addon -> addon.getPosition().equals(position)).toList();
+    }
+
+    public List<WiredSelector> getSelectorsAt(Position position) {
+        return this.getSelectors().values().stream().filter(selector -> selector.getPosition().equals(position)).toList();
     }
 }

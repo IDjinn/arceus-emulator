@@ -1,5 +1,7 @@
 package core.pipeline;
 
+import java.util.Optional;
+
 public interface IPipeline<T extends PipelineEvent> {
     IPipeline<T> addAfter(String key, String afterKey, Step<T> step);
 
@@ -11,5 +13,5 @@ public interface IPipeline<T extends PipelineEvent> {
 
     IPipeline<T> then(Runnable action);
 
-    IPipelineContext<T> execute(T IPipelineObject);
+    Optional<IPipelineContext<T>> execute(T IPipelineObject);
 }

@@ -14,6 +14,8 @@ import packets.outgoing.rooms.entities.chat.RoomUserTalkMessageComposer;
 import packets.outgoing.rooms.entities.chat.RoomUserWhisperMessageComposer;
 import utils.cycle.ICycle;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -88,7 +90,7 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public void talk(final IRoomEntity entity, final String message, final int bubble) {
-        this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message));
+        this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message, Timestamp.from(Instant.now())));
         this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
     }
 

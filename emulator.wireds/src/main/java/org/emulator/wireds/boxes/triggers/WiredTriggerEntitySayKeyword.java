@@ -9,6 +9,8 @@ import habbo.rooms.entities.events.RoomEntityTalkEvent;
 import org.emulator.wireds.WiredEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class WiredTriggerEntitySayKeyword extends WiredTrigger {
     public static final String InteractionName = "wf_trg_says_something";
 
@@ -19,8 +21,16 @@ public class WiredTriggerEntitySayKeyword extends WiredTrigger {
 
     @EventListener(priority = EventListenerPriority.Low)
     public void onEntityTalk(@NotNull RoomEntityTalkEvent entityTalkEvent) {
-
-        var message = entityTalkEvent.message();
-        this.executionPipeline.execute(new WiredEvent());
+        final var result = this.executionPipeline.execute(
+                new WiredEvent(
+                        entityTalkEvent,
+                        this.getPosition(),
+                        Objects.hash(
+                                entityTalkEvent.entity().getVirtualId(),
+                                InteractionName.hashCode(),
+                                this.getPosition()
+                        )
+                ).addTrigger(this)
+        );
     }
 }
