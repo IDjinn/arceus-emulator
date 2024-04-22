@@ -1,6 +1,10 @@
 package habbo.rooms.components.entities;
 
+import com.google.inject.Inject;
+import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
+import habbo.internationalization.IInternationalizationManager;
+import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
@@ -19,6 +23,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,7 +36,13 @@ public class RoomEntityManager implements IRoomEntityManager {
     private final ConcurrentHashMap<Integer, IPlayerEntity> players;
     private final AtomicInteger virtualIdCounter;
 
-    public RoomEntityManager() {
+    private final IInternationalizationManager internationalizationManager;
+    private final ICommandManager commandManager;
+
+    @Inject
+    public RoomEntityManager(IInternationalizationManager internationalizationManager, ICommandManager commandManager) {
+        this.internationalizationManager = internationalizationManager;
+        this.commandManager = commandManager;
         this.entities = new ConcurrentHashMap<>();
         this.entitiesByVirtualId = new ConcurrentHashMap<>();
         this.players = new ConcurrentHashMap<>();
@@ -89,7 +100,12 @@ public class RoomEntityManager implements IRoomEntityManager {
     }
 
     @Override
-    public void talk(final IRoomEntity entity, final String message, final int bubble) {
+    public void talk(final IRoomEntity entity, final String message, final int bubble) { // TODO MOVE THIS TO ENTITY*
+        if (entity instanceof IPlayerEntity player && this.commandManager.isCommand(message)) {
+            this.commandManager.execute(player.getHabbo(), message);
+            return;
+        }
+        
         this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message, Timestamp.from(Instant.now())));
         this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
     }
@@ -102,6 +118,23 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public void whisper(final IRoomEntity entity, final String message, final int bubble) {
         this.getRoom().broadcastMessage(new RoomUserWhisperMessageComposer(entity, message, 0, bubble));
+    }
+
+    @Override
+    public void talk(final IRoomEntity entity, final LocalizedString message, final int bubble) { // TODO: THIS USE 
+        // CLIENT LOCALE INSTEAD HARD-CODED ENGLISH
+        this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, this.internationalizationManager.getLocalizedString(message,
+                Locale.ENGLISH), 0, bubble));
+    }
+
+    @Override
+    public void shout(final IRoomEntity entity, final LocalizedString message, final int bubble) {
+        this.getRoom().broadcastMessage(new RoomUserShoutMessageComposer(entity, this.internationalizationManager.getLocalizedString(message, Locale.ENGLISH), 0, bubble));
+    }
+
+    @Override
+    public void whisper(final IRoomEntity entity, final LocalizedString message, final int bubble) {
+        this.getRoom().broadcastMessage(new RoomUserWhisperMessageComposer(entity, this.internationalizationManager.getLocalizedString(message, Locale.ENGLISH), 0, bubble));
     }
 
     @Override

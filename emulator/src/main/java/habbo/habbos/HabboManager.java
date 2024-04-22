@@ -53,6 +53,11 @@ public class HabboManager implements IHabboManager {
     }
 
     @Override
+    public Optional<IHabbo> getOnlineHabboByUsername(final String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<IHabboData> getHabboDataByUsername(String name) {
         return Optional.ofNullable(this.habboDataCacheByUsername.getIfPresent(name));
     }

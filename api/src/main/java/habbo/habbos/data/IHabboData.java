@@ -2,9 +2,13 @@ package habbo.habbos.data;
 
 import habbo.habbos.IHabboComponent;
 
+import java.util.Locale;
+
 public interface IHabboData extends IHabboComponent {
     int getId();
     int getRank();
+
+    Locale getLocale();
 
     String getUsername();
 

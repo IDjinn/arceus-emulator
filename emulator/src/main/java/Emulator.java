@@ -21,8 +21,10 @@ import core.plugins.PluginManager;
 import core.security.IScriptManager;
 import core.security.ScriptManager;
 import habbo.catalog.CatalogModule;
+import habbo.commands.CommandModule;
 import habbo.furniture.FurnitureModule;
 import habbo.habbos.HabboModule;
+import habbo.internationalization.InternationalizationModule;
 import habbo.navigator.NavigatorModule;
 import habbo.permissions.PermissionModule;
 import habbo.rooms.RoomModule;
@@ -64,7 +66,9 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new FurnitureModule(),
                 new CatalogModule(),
                 new PermissionModule(),
-                new RoomObjectModule()
+                new RoomObjectModule(),
+                new CommandModule(),
+                new InternationalizationModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);

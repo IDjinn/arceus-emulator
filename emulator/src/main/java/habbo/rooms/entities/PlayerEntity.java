@@ -73,6 +73,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         this.handleVariables();
     }
 
+
     private void handleVariables() {
         this.getEntityVariablesManager().tick();
         if (!this.getEntityVariablesManager().isNeedUpdate()) return;
@@ -80,6 +81,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesManager().getVariables()));
         this.getEntityVariablesManager().setNeedUpdate(false);
     }
+
 
     @Override
     public IEntityVariableManager getEntityVariablesManager() {

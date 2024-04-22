@@ -8,6 +8,8 @@ import storage.repositories.habbo.IHabboRepository;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
 
+import java.util.Locale;
+
 public class HabboData implements IHabboData, IFillable {
     private final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
@@ -56,6 +58,11 @@ public class HabboData implements IHabboData, IFillable {
     @Override
     public int getRank() {
         return this.rank;
+    }
+
+    @Override
+    public Locale getLocale() {
+        return Locale.ENGLISH; // TODO THIS
     }
 
     public String getUsername() {
