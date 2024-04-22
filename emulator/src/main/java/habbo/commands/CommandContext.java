@@ -12,11 +12,12 @@ import utils.StringBuilderHelper;
 import java.util.Optional;
 
 public class CommandContext implements ICommandContext {
+    @Inject
+    private ICommandHelpers commandHelpers;
+
     private final IPlayerEntity player;
     private final String commandName;
     private final String[] arguments;
-    @Inject
-    private ICommandHelpers commandHelpers;
     private int currentArg;
 
     public CommandContext(@NotNull IPlayerEntity player, @NotNull String commandName, @NotNull String[] arguments) {

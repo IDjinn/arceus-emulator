@@ -16,16 +16,16 @@ public final class LocalizedString {
         this.defaultValue = defaultValue;
     }
 
+    public @NotNull String getKey() {
+        return key;
+    }
+
     public static LocalizedString of(@NotNull String key, @Nullable String defaultValue) {
         return new LocalizedString(key, defaultValue);
     }
 
     public static LocalizedString of(@NotNull String key) {
         return new LocalizedString(key, null);
-    }
-
-    public @NotNull String getKey() {
-        return key;
     }
 
     public Optional<String> getDefaultValue() {

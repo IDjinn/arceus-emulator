@@ -21,6 +21,10 @@ public enum ArgumentType {
         this.type = type;
     }
 
+    public int getType() {
+        return type;
+    }
+
     public static ArgumentType fromType(int type) {
         return switch (type) {
             case 1 -> SubCommand;
@@ -34,9 +38,5 @@ public enum ArgumentType {
             case 9 -> TargetRoom;
             default -> Unknown;
         };
-    }
-
-    public int getType() {
-        return type;
     }
 }
