@@ -53,7 +53,12 @@ public class HabboManager implements IHabboManager {
     }
 
     @Override
-    public Optional<IHabbo> getOnlineHabboByUsername(final String name) {
+    public Optional<IHabbo> getOnlineHabboByUsername(final String name) { // TODO IGNORE CASE, CULTURE ETC
+        for (final IHabbo habbo : this.connectedHabbos.values()) {
+            if (habbo.getData().getUsername().equals(name)) {
+                return Optional.of(habbo);
+            }
+        }
         return Optional.empty();
     }
 
