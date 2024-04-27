@@ -4,8 +4,8 @@ import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
-
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import utils.result.GameError;
 
 public class Client implements IClient {
     private final ChannelHandlerContext ctx;
@@ -20,19 +20,23 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessage(OutgoingPacket packet) {
-        this.ctx.channel().write(packet);
-        this.ctx.channel().flush();
+    public void sendError(final GameError error) {
+        // TODO
     }
 
     @Override
-    public void sendMessages(List<OutgoingPacket> messages) {
-        for (var message : messages) {
-            this.ctx.channel().write(message);
+    public void sendErrors(final GameError... errors) {
+        for (final var error : errors) {
+            this.sendError(error);
         }
-
-        this.ctx.channel().flush();
     }
+
+    @Override
+    public void sendMessage(OutgoingPacket packet) {
+        this.ctx.channel().write(packet);
+        this.flush();
+    }
+
 
     @Override
     public void sendMessages(OutgoingPacket... messages) {
@@ -40,7 +44,7 @@ public class Client implements IClient {
             this.ctx.channel().write(message);
         }
 
-        this.ctx.channel().flush();
+        this.flush();
     }
 
     @Override
@@ -54,6 +58,7 @@ public class Client implements IClient {
     }
 
     @Override
+    @NotNull
     public IHabbo getHabbo() {
         return this.habbo;
     }

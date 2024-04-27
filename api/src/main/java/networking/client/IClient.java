@@ -3,15 +3,17 @@ package networking.client;
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.packets.OutgoingPacket;
-
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+import utils.result.GameError;
 
 public interface IClient {
     ChannelHandlerContext getContext();
 
-    void sendMessage(OutgoingPacket packet);
+    void sendError(GameError error);
 
-    void sendMessages(List<OutgoingPacket> messages);
+    void sendErrors(GameError... errors);
+    
+    void sendMessage(OutgoingPacket packet);
 
     void sendMessages(OutgoingPacket... messages);
 
@@ -19,6 +21,7 @@ public interface IClient {
 
     IHabbo getHabbo();
 
+    @NotNull
     void setHabbo(IHabbo habbo);
 
     void dispose();
