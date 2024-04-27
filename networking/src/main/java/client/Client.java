@@ -3,7 +3,7 @@ package client;
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import utils.result.GameError;
 
@@ -32,14 +32,14 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessage(OutgoingPacket packet) {
+    public void sendMessage(IOutgoingPacket packet) {
         this.ctx.channel().write(packet);
         this.flush();
     }
 
 
     @Override
-    public void sendMessages(OutgoingPacket... messages) {
+    public void sendMessages(IOutgoingPacket... messages) {
         for (var message : messages) {
             this.ctx.channel().write(message);
         }

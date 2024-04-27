@@ -1,7 +1,7 @@
 package packets.outgoing.session.logindata;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class NewUserIdentityComposer extends OutgoingPacket {
     public NewUserIdentityComposer() {

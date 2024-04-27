@@ -1,8 +1,8 @@
 package packets.outgoing.catalog;
 
 import habbo.catalog.items.ICatalogItem;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class PurchaseOkComposer extends OutgoingPacket {
 

@@ -1,7 +1,7 @@
 package packets.outgoing.session.wardobe;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class UserClothesComposer extends OutgoingPacket {
     public UserClothesComposer() {

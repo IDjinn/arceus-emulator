@@ -2,13 +2,13 @@ package habbo.rooms.writers;
 
 import com.google.inject.Singleton;
 import habbo.rooms.IRoom;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 @Singleton
 public abstract class RoomWriter { // TODO: Maybe make this an interface? Or add in the injector?
     public static void write(
             final IRoom room,
-            final OutgoingPacket packet
+            final IOutgoingPacket packet
     ) {
         packet.appendInt(room.getData().getId());
         packet.appendString(room.getData().getName());

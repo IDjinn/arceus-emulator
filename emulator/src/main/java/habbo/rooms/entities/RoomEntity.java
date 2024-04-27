@@ -4,6 +4,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
@@ -213,5 +214,10 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public void setNextPosition(@Nullable Position position) {
         this.nextPostion = position;
+    }
+
+    @Override
+    public void serializeStatus(final IOutgoingPacket packet) {
+
     }
 }

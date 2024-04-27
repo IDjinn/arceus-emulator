@@ -1,8 +1,8 @@
 package packets.outgoing.rooms.prepare;
 
 import habbo.rooms.RoomRightLevel;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class RoomRightsComposer extends OutgoingPacket {
     public RoomRightsComposer(RoomRightLevel level) {

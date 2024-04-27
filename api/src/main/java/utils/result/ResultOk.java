@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ResultOk<T, E> implements Result<T, E> {
     private final T value;
@@ -60,5 +61,10 @@ public class ResultOk<T, E> implements Result<T, E> {
                 return ResultOk.this.value;
             }
         };
+    }
+
+    @Override
+    public void match(final Consumer<T> onSuccess, final Consumer<E> onError) {
+        onSuccess.accept(this.value);
     }
 }

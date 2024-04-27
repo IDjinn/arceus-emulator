@@ -5,7 +5,7 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.CatalogPageType;
 import habbo.catalog.pages.ICatalogPage;
 import habbo.habbos.IHabbo;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
@@ -150,7 +150,7 @@ public abstract class CatalogPage implements ICatalogPage {
         this.enabled = result.getString("enabled").equals("1");
     }
 
-    public void serializePageData(OutgoingPacket packet) {
+    public void serializePageData(IOutgoingPacket packet) {
         packet.appendBoolean(this.isEnabled())
                 .appendInt(this.getIcon())
                 .appendInt(this.isEnabled() ? this.getId() : -1)
@@ -169,7 +169,7 @@ public abstract class CatalogPage implements ICatalogPage {
     }
 
     @Override
-    public OutgoingPacket serializeItems(OutgoingPacket packet, IHabbo habbo) {
+    public IOutgoingPacket serializeItems(IOutgoingPacket packet, IHabbo habbo) {
         packet.appendInt(this.getItems().size());
         for (var item : this.getItems().values()) {
             item.serialize(packet);
@@ -177,10 +177,10 @@ public abstract class CatalogPage implements ICatalogPage {
         return packet;
     }
 
-    @Override
-    public abstract void serialize(OutgoingPacket packet);
-
-    public void serializeExtra(OutgoingPacket packet) {
+    public void serializeExtra(IOutgoingPacket packet) {
 
     }
+
+    @Override
+    public abstract void serialize(IOutgoingPacket packet);
 }

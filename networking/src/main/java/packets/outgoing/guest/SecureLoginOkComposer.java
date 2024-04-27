@@ -1,7 +1,7 @@
 package packets.outgoing.guest;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class SecureLoginOkComposer extends OutgoingPacket {
     public SecureLoginOkComposer() {

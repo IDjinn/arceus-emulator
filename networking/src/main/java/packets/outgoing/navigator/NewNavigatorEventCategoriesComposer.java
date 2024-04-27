@@ -1,8 +1,8 @@
 package packets.outgoing.navigator;
 
 import habbo.navigator.INavigatorManager;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class NewNavigatorEventCategoriesComposer extends OutgoingPacket {
     public NewNavigatorEventCategoriesComposer(final INavigatorManager navigatorManager) {

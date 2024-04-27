@@ -2,8 +2,8 @@ package packets.outgoing.rooms.entities.chat;
 
 import com.google.common.collect.Sets;
 import habbo.rooms.entities.IRoomEntity;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.Set;
 

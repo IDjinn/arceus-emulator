@@ -2,9 +2,9 @@ package encoders;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package packets.outgoing.rooms.objects.floor;
 
 import habbo.rooms.components.objects.items.floor.IFloorItem;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class RemoveFloorItemComposer extends OutgoingPacket {
     public RemoveFloorItemComposer(IFloorItem floorItem, int pickupPlayerId, int delay) {

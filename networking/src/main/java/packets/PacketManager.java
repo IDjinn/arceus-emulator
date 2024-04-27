@@ -84,6 +84,12 @@ public class PacketManager implements IPacketManager {
             return;
         }
 
+        final var resultValidation = incomingEvent.validate(packet, client);
+        if (resultValidation.isFailure()) {
+            client.sendError(resultValidation.unwrapError());
+            return;
+        }
+        
         if (this.isParallelParsingEnabled()) {
             this.threadManager.getSoftwareThreadExecutor().execute(() -> incomingEvent.parse(packet, client));
         } else {

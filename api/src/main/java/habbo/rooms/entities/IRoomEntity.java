@@ -6,7 +6,7 @@ import habbo.rooms.components.objects.items.floor.IFloorObject;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariableManager;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
 import utils.cycle.ICycle;
@@ -27,7 +27,7 @@ public interface IRoomEntity extends ISerializable, ICycle, IFloorObject {
 
     void setName(String name);
 
-    void serializeStatus(OutgoingPacket packet);
+    void serializeStatus(IOutgoingPacket packet);
 
     @Nullable Position getNextPosition();
 
@@ -55,4 +55,8 @@ public interface IRoomEntity extends ISerializable, ICycle, IFloorObject {
     SequencedCollection<Position> getWalkPath();
 
     IEntityVariableManager getEntityVariablesManager();
+
+    boolean canWalk();
+
+    void setCanWalk(final boolean canWalk);
 }

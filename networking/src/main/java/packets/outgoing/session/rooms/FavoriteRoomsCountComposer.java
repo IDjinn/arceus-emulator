@@ -1,7 +1,7 @@
 package packets.outgoing.session.rooms;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class FavoriteRoomsCountComposer extends OutgoingPacket {
     public FavoriteRoomsCountComposer() {

@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ResultError<T, E> implements Result<T, E> {
     private final E error;
@@ -58,5 +59,10 @@ public class ResultError<T, E> implements Result<T, E> {
                 throw new ArrayIndexOutOfBoundsException();
             }
         };
+    }
+
+    @Override
+    public void match(final Consumer<T> onSuccess, final Consumer<E> onError) {
+        onError.accept(this.error);
     }
 }

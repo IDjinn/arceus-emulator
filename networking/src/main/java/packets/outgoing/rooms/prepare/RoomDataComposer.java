@@ -3,8 +3,8 @@ package packets.outgoing.rooms.prepare;
 import habbo.habbos.IHabbo;
 import habbo.rooms.IRoom;
 import habbo.rooms.writers.RoomWriter;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class RoomDataComposer extends OutgoingPacket {
     public RoomDataComposer(IRoom room, IHabbo habbo, boolean roomForward, boolean enterRoom) {

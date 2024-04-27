@@ -2,7 +2,7 @@ package habbo.furniture.extra.data;
 
 import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public abstract class ExtraData implements IExtraData {
     protected transient final int LTD_FLAG = 0xFF00;
@@ -19,7 +19,7 @@ public abstract class ExtraData implements IExtraData {
     }
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(IOutgoingPacket packet) {
         packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? this.LTD_FLAG : 0));
         this.serializeState(packet);
         if (this.getLimitedData().isLimited()) {
@@ -28,7 +28,7 @@ public abstract class ExtraData implements IExtraData {
         }
     }
 
-    public abstract void serializeState(OutgoingPacket packet);
+    public abstract void serializeState(IOutgoingPacket packet);
     
     @Override
     public ILimitedData getLimitedData() {

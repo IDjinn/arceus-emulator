@@ -1,7 +1,7 @@
 package packets.outgoing.session.calendar;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class AdventCalendarDataComposer extends OutgoingPacket {
     public AdventCalendarDataComposer() {

@@ -15,11 +15,12 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import packets.outgoing.OutgoingPacket;
 import packets.outgoing.rooms.entities.RoomEntitiesComposer;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
 import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
@@ -142,7 +143,7 @@ public class Room implements IRoom {
 
 
     @Override
-    public void write(OutgoingPacket packet) {
+    public void write(IOutgoingPacket packet) {
         RoomWriter.write(this, packet);
     }
 
@@ -190,14 +191,14 @@ public class Room implements IRoom {
     }
 
     @Override
-    public void broadcastMessage(OutgoingPacket packet) {
+    public void broadcastMessage(IOutgoingPacket packet) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
-    public void broadcastMessages(OutgoingPacket... packets) {
+    public void broadcastMessages(IOutgoingPacket... packets) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }

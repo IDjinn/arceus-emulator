@@ -1,6 +1,7 @@
 package networking.packets;
 
 import io.netty.buffer.ByteBuf;
+import networking.packets.assertions.IPacketAssertion;
 import org.jetbrains.annotations.Nullable;
 import org.jsoup.safety.Cleaner;
 
@@ -26,4 +27,6 @@ public interface IIncomingPacket {
     boolean release();
 
     String readString(short maxLength);
+
+    IPacketAssertion assertion();
 }

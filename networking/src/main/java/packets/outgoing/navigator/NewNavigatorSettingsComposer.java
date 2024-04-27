@@ -1,8 +1,8 @@
 package packets.outgoing.navigator;
 
 import habbo.habbos.data.navigator.IHabboNavigatorWindowSettings;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class NewNavigatorSettingsComposer extends OutgoingPacket {
     public NewNavigatorSettingsComposer(final IHabboNavigatorWindowSettings settings) {

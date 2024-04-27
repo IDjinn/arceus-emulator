@@ -5,7 +5,7 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import io.netty.util.internal.StringUtil;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import storage.results.IConnectionResult;
 
 public class CatalogItem implements ICatalogItem {
@@ -180,7 +180,7 @@ public class CatalogItem implements ICatalogItem {
     }
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(IOutgoingPacket packet) {
         packet.appendInt(this.getId())
                 .appendString(this.getDisplayName())
                 .appendBoolean(false, "rent") //rent

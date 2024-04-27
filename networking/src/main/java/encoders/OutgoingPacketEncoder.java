@@ -3,7 +3,7 @@ package encoders;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import networking.packets.OutgoingPacket;
+import packets.outgoing.OutgoingPacket;
 
 public class OutgoingPacketEncoder extends MessageToByteEncoder<OutgoingPacket> {
 

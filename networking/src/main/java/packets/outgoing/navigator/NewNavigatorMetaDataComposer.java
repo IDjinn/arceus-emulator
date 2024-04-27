@@ -2,8 +2,8 @@ package packets.outgoing.navigator;
 
 import habbo.habbos.data.IHabboNavigator;
 import habbo.habbos.data.navigator.IHabboNavigatorSearch;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.List;
 

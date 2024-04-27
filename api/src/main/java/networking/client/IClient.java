@@ -2,7 +2,7 @@ package networking.client;
 
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import utils.result.GameError;
 
@@ -12,10 +12,10 @@ public interface IClient {
     void sendError(GameError error);
 
     void sendErrors(GameError... errors);
-    
-    void sendMessage(OutgoingPacket packet);
 
-    void sendMessages(OutgoingPacket... messages);
+    void sendMessage(IOutgoingPacket packet);
+
+    void sendMessages(IOutgoingPacket... messages);
 
     void flush();
 

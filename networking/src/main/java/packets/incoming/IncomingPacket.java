@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import networking.packets.IIncomingPacket;
+import networking.packets.assertions.IPacketAssertion;
 import networking.util.GameNetowrkingAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -97,5 +98,10 @@ public class IncomingPacket implements IIncomingPacket {
     @Override
     public String readString(final short maxLength) {
         return this.readString(Sanitizer.PlainText, maxLength);
+    }
+
+    @Override
+    public IPacketAssertion assertion() {
+        return new PacketAssertion(this);
     }
 }

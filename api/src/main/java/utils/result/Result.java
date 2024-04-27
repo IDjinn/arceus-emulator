@@ -2,8 +2,20 @@ package utils.result;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public interface Result<T, E> extends Iterable<T> {
+    @SuppressWarnings("rawtypes")
+    static final Result sucess = new ResultOk<>(true);
+    @SuppressWarnings("rawtypes")
+    static final Result error = new ResultError<>(false);
+
+    @SuppressWarnings("unchecked")
+    static <T, E> Result<Boolean, E> of(final boolean ok) {
+        if (ok)
+            return sucess;
+        return error;
+    }
 
     static <T, E> Result<T, E> ok(final T ok) {
         return new ResultOk<T, E>(Objects.requireNonNull(ok));
@@ -26,4 +38,9 @@ public interface Result<T, E> extends Iterable<T> {
     E unwrapError();
 
 //    E expectError();
+
+    void match(
+            final Consumer<T> onSuccess,
+            final Consumer<E> onError
+    );
 }

@@ -1,6 +1,6 @@
 package habbo.furniture.extra.data;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import utils.gson.GsonHelper;
 
 
@@ -16,7 +16,7 @@ public class EmptyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeState(OutgoingPacket packet) {
+    public void serializeState(IOutgoingPacket packet) {
         
     }
 }

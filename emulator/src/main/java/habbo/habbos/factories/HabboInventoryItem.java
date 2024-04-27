@@ -8,7 +8,7 @@ import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.components.objects.items.LimitedData;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
@@ -116,7 +116,7 @@ public class HabboInventoryItem implements IHabboInventoryItem {
      */
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(IOutgoingPacket packet) {
         packet.appendInt(this.id)
                 .appendString(this.furniture.getType().toString())
                 .appendInt(this.id, "_ref")

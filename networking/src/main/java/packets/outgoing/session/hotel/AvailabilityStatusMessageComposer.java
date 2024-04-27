@@ -1,7 +1,7 @@
 package packets.outgoing.session.hotel;
 
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class AvailabilityStatusMessageComposer extends OutgoingPacket {
     public AvailabilityStatusMessageComposer() {

@@ -1,8 +1,8 @@
 package packets.outgoing.navigator.search;
 
 import habbo.navigator.data.INavigatorResultCategory;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package packets.outgoing.rooms.objects.floor;
 
 import habbo.furniture.FurnitureUsagePolicy;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class MoveOrRotateFloorItemComposer extends OutgoingPacket {
     public MoveOrRotateFloorItemComposer(IFloorItem floorItem) {

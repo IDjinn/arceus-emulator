@@ -6,6 +6,10 @@ public final class GameError {
     private final String code;
     private final @Nullable String message;
 
+    public GameError(String code) {
+        this.code = code;
+        this.message = null;
+    }
     public GameError(String code, @Nullable String message) {
         this.code = code;
         this.message = message;

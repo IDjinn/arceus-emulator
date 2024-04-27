@@ -1,7 +1,7 @@
 package networking.util;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public interface ISerializable {
-    void serialize(OutgoingPacket packet);
+    void serialize(IOutgoingPacket packet);
 }

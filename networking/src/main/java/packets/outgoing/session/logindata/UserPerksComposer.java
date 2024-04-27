@@ -1,8 +1,8 @@
 package packets.outgoing.session.logindata;
 
 import habbo.habbos.IHabbo;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class UserPerksComposer extends OutgoingPacket {
     public UserPerksComposer(IHabbo habbo) {

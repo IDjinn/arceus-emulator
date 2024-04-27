@@ -1,8 +1,8 @@
 package packets.outgoing.rooms.entities.chat;
 
 import habbo.rooms.entities.IRoomEntity;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 public class RoomUserTypingComposer extends OutgoingPacket {
     public RoomUserTypingComposer(IRoomEntity entity, boolean isTyping) {

@@ -1,6 +1,6 @@
 package habbo.variables;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,5 +28,5 @@ public interface IVariable {
 
     void setPersistent(boolean persistent);
 
-    void serialize(OutgoingPacket packet);
+    void serialize(IOutgoingPacket packet);
 }

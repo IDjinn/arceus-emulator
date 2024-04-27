@@ -5,7 +5,7 @@ import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.variables.IEntityVariableManager;
 import networking.client.IClient;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntity {
@@ -30,7 +30,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     }
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(IOutgoingPacket packet) {
         packet
                 .appendInt(this.getHabbo().getData().getId())
                 .appendString(this.getHabbo().getData().getUsername())
@@ -49,11 +49,6 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendString("")
                 .appendInt(this.getHabbo().getSettings().getAchievementScore())
                 .appendBoolean(true);
-    }
-
-    @Override
-    public void serializeStatus(OutgoingPacket packet) {
-
     }
 
     @Override
@@ -86,5 +81,15 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     @Override
     public IEntityVariableManager getEntityVariablesManager() {
         return this.entityVariableManager;
+    }
+
+    @Override
+    public boolean canWalk() {
+        return false;
+    }
+
+    @Override
+    public void setCanWalk(final boolean canWalk) {
+
     }
 }

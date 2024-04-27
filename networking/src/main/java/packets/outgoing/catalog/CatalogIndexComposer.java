@@ -2,8 +2,8 @@ package packets.outgoing.catalog;
 
 import habbo.catalog.pages.ICatalogPage;
 import habbo.habbos.IHabbo;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package packets.outgoing.rooms.entities.variables;
 
 import habbo.variables.IVariable;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.Map;
 

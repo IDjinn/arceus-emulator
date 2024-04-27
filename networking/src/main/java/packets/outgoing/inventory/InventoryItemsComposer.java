@@ -1,8 +1,8 @@
 package packets.outgoing.inventory;
 
 import habbo.habbos.inventory.IHabboInventoryItem;
-import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
+import packets.outgoing.OutgoingPacket;
 
 import java.util.List;
 
