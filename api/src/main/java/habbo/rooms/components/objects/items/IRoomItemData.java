@@ -24,7 +24,5 @@ public interface IRoomItemData {
 
     IExtraData getData();
 
-    void setData(IExtraData data);
-
-    int getIntData();
+    void setExtraData(IExtraData data);
 }

@@ -34,6 +34,9 @@ public class FurnitureManager implements IFurnitureManager {
     public void init() {
         this.logger.info("Initializing furniture's from database...");
         this.extraDataParsers.put(ExtraDataType.Empty.getType(), EmptyExtraData.class);
+        this.extraDataParsers.put(ExtraDataType.Legacy.getType(), LegacyExtraData.class);
+        this.extraDataParsers.put(ExtraDataType.Map.getType(), MapExtraData.class);
+        this.extraDataParsers.put(ExtraDataType.Number.getType(), NumberExtraData.class);
 
         this.furnitureRepository.getAllFurniture(result -> {
             if (result == null) return;

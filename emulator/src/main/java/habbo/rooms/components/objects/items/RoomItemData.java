@@ -1,7 +1,6 @@
 package habbo.rooms.components.objects.items;
 
 import habbo.furniture.extra.data.IExtraData;
-import habbo.furniture.extra.data.LegacyExtraData;
 import utils.pathfinder.Position;
 
 public class RoomItemData implements IRoomItemData {
@@ -76,14 +75,7 @@ public class RoomItemData implements IRoomItemData {
     }
 
     @Override
-    public void setData(IExtraData data) {
+    public void setExtraData(IExtraData data) {
         this.data = data;
-    }
-
-    @Override
-    public int getIntData() {
-        if (this.data instanceof LegacyExtraData legacyExtraData)
-            legacyExtraData.getStateValue();
-        return 0;
     }
 }

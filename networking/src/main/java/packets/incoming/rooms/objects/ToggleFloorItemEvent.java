@@ -26,6 +26,7 @@ public class ToggleFloorItemEvent extends IncomingEvent {
         if (!item.canUse(client.getHabbo().getPlayerEntity()) || !item.canInteract(client.getHabbo().getPlayerEntity()))
             return;
 
-        item.toggleState(state);
+//        item.toggleState(state);
+        item.onInteract(client.getHabbo().getPlayerEntity());
     }
 }

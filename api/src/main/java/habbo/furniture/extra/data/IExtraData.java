@@ -11,8 +11,12 @@ public interface IExtraData {
     ILimitedData getLimitedData();
 
     void setLimitedData(ILimitedData data);
-
     void serializeState(OutgoingPacket packet);
 
     String toJson();
+
+
+    int getState();
+
+    void setState(final int state);
 }

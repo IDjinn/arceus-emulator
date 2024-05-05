@@ -64,6 +64,8 @@ public class RoomManager implements IRoomManager {
         final var room = this.rooms.get(roomId);
         if (room == null) return null;
 
+        if (room.isFullyLoaded()) return room;
+
         this.hotel.getEventHandlerManager().onEvent(new OnRoomPreLoaded(room));
         room.init();
         this.hotel.getEventHandlerManager().onEvent(new OnRoomLoaded(room));

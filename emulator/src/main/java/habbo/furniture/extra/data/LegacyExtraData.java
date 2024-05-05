@@ -7,40 +7,32 @@ import utils.gson.GsonHelper;
 
 
 public class LegacyExtraData extends ExtraData implements IExtraData {
+    private String legacyData = "";
     public LegacyExtraData() {
         super(ExtraDataType.Legacy);
-        this.data = "";
     }
 
     public LegacyExtraData(@NotNull String data) {
         super(ExtraDataType.Legacy);
-        this.data = data;
+        this.legacyData = data;
     }
 
     public static LegacyExtraData fromLegacyString(String value) {
-        return new LegacyExtraData().setData(value);
-    }
-
-    public LegacyExtraData setData(@Nullable String data) {
-        this.data = data;
-        return this;
+        return new LegacyExtraData().setLegacyData(value);
     }
 
     @Override
-    public void serializeState(OutgoingPacket packet) {
-        packet.appendString(this.data);
+    public void serializeValue(final OutgoingPacket packet) {
+        packet.appendString(this.legacyData);
+    }
+
+    public LegacyExtraData setLegacyData(@Nullable String data) {
+        this.legacyData = data;
+        return this;
     }
 
     @Override
     public String toJson() {
         return GsonHelper.getGson().toJson(this);
-    }
-
-    public int getStateValue() {
-        try {
-            return Integer.parseInt(this.data);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 }
