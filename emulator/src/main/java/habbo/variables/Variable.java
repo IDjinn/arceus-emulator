@@ -14,6 +14,7 @@ public class Variable implements IVariable {
     private boolean isVisible = true;
     private boolean isPersistent;
     private @Nullable String icon;
+    private boolean editable;
 
     public Variable(String key) {
         this.key = key;
@@ -29,6 +30,17 @@ public class Variable implements IVariable {
         this.value = value;
         this.icon = icon;
     }
+
+    @Override
+    public boolean isEditable() {
+        return this.editable;
+    }
+
+    @Override
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+    }
+    
     @Override
     public @NotNull String getKey() {
         return this.key;
@@ -86,6 +98,7 @@ public class Variable implements IVariable {
                 .appendString(this.getValue())
                 .appendString(this.getIcon().orElse(""))
                 .appendBoolean(this.isVisible())
+                .appendBoolean(this.isEditable())
                 .appendBoolean(this.isPersistent())
                 .appendInt(this.expiresAt().isPresent() ? (int) (this.expiresAt().get().toEpochMilli() / 100L) : -1)
         ;

@@ -9,9 +9,9 @@ import networking.client.IClientFactory;
 import networking.client.IClientManager;
 import networking.packets.IIncomingPacketProvider;
 import networking.packets.IPacketManager;
+import networking.packets.IncomingEvent;
 import packets.IncomingEventAsListProvider;
 import packets.PacketManager;
-import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingPacketProvider;
 
 import java.util.List;

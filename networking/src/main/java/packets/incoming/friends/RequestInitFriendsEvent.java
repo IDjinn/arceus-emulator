@@ -3,7 +3,7 @@ package packets.incoming.friends;
 import com.google.inject.Singleton;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
-import packets.incoming.IncomingEvent;
+import networking.packets.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.friends.MessengerInitComposer;
 

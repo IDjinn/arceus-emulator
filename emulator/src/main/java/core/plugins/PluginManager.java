@@ -18,13 +18,13 @@ import java.util.jar.JarFile;
 public class PluginManager implements IPluginManager {
     private final Logger logger = LogManager.getLogger();
     private final Map<Class<? extends IPlugin>, IPlugin> plugins;
-    private final Injector injector;
+    private final Injector rootInjector;
     private final IHotel hotel;
     private final IEmulator emulator;
 
     @Inject
-    public PluginManager(Injector injector, IHotel hotel, IEmulator emulator) {
-        this.injector = injector;
+    public PluginManager(Injector rootInjector, IHotel hotel, IEmulator emulator) {
+        this.rootInjector = rootInjector;
         this.hotel = hotel;
         this.emulator = emulator;
         this.plugins = new HashMap<>();
@@ -45,7 +45,7 @@ public class PluginManager implements IPluginManager {
         if (this.plugins.containsKey(instance.getClass()))
             return false;
 
-        final var pluginInjector = this.injector.createChildInjector(instance);
+        final var pluginInjector = this.rootInjector.createChildInjector(instance);
         pluginInjector.injectMembers(instance);
         this.hotel.getEventHandlerManager().registerPluginEvents(instance, pluginClasses);
         instance.init();

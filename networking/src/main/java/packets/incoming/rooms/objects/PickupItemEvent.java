@@ -3,7 +3,7 @@ package packets.incoming.rooms.objects;
 import com.google.inject.Singleton;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
-import packets.incoming.IncomingEvent;
+import networking.packets.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
 @Singleton

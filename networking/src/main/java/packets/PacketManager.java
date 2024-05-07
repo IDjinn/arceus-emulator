@@ -10,10 +10,11 @@ import networking.client.IClient;
 import networking.client.IClientManager;
 import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
+import networking.packets.IncomingEvent;
 import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import packets.incoming.IncomingEvent;
+import utils.ReflectionHelpers;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,12 +41,18 @@ public class PacketManager implements IPacketManager {
 
         for (Class<? extends IncomingEvent> incoming : incomings) {
             if (incoming.isAnnotationPresent(NoAuth.class)) registerGuestEvent(injector.getProvider(incoming).get());
-            else registerIncomingEvent(injector.getProvider(incoming).get());
+            else this.internalRegisterIncoming(injector.getProvider(incoming).get());
         }
     }
 
-    private void registerIncomingEvent(IncomingEvent incomingEvent) {
+    private void internalRegisterIncoming(IncomingEvent incomingEvent) {
         this.incomingEvents.put(incomingEvent.getHeaderId(), incomingEvent);
+    }
+
+    @Override
+    public void registerIncoming(IncomingEvent incomingEvent) {
+        this.logger.debug(STR."register incoming \{incomingEvent.getClass().getSimpleName()} with header id \{incomingEvent.getHeaderId()} from \{ReflectionHelpers.getCallerInfo()}");
+        this.internalRegisterIncoming(incomingEvent);
     }
 
 

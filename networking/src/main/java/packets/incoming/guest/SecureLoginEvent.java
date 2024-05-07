@@ -6,8 +6,8 @@ import habbo.habbos.providers.ILoginProvider;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClientManager;
 import networking.packets.IIncomingPacket;
+import networking.packets.IncomingEvent;
 import networking.util.NoAuth;
-import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
 @Singleton

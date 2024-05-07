@@ -30,6 +30,7 @@ import habbo.permissions.PermissionModule;
 import habbo.rooms.RoomModule;
 import habbo.rooms.components.objects.RoomObjectModule;
 import networking.INetworkingManager;
+import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.AutoBindIncomingEventsModule;
@@ -51,6 +52,8 @@ public class Emulator extends AbstractModule implements IEmulator {
 
     @Inject
     private IPluginManager pluginManager;
+    @Inject
+    private IPacketManager packetManager;
 
     public static void main(String[] args) {
         var injector = Guice.createInjector(

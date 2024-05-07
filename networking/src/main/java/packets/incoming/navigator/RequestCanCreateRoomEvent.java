@@ -2,7 +2,7 @@ package packets.incoming.navigator;
 
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
-import packets.incoming.IncomingEvent;
+import networking.packets.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.navigator.CanCreateRoomComposer;
 

@@ -61,4 +61,8 @@ public class MapExtraData extends ExtraData implements IExtraData {
     public String toJson() {
         return GsonHelper.getGson().toJson(this);
     }
+
+    public Map<String, String> getValues() {
+        return this.values;
+    }
 }

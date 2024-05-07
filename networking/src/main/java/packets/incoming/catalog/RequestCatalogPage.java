@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import habbo.catalog.ICatalogManager;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
-import packets.incoming.IncomingEvent;
+import networking.packets.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.catalog.CatalogPageComposer;
 

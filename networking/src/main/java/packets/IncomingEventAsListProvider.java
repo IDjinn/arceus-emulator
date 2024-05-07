@@ -1,8 +1,8 @@
 package packets;
 
 import com.google.inject.Provider;
+import networking.packets.IncomingEvent;
 import org.reflections.Reflections;
-import packets.incoming.IncomingEvent;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class IncomingEventAsListProvider implements Provider<List<Class<? extends IncomingEvent>>> {
-    private final Reflections reflections = new Reflections(IncomingEvent.class.getPackage().getName());
+    private final Reflections reflections = new Reflections(PacketManager.class.getPackage().getName());
 
     @Override
     public List<Class<? extends IncomingEvent>> get() {

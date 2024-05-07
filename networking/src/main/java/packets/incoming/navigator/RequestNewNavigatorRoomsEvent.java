@@ -6,7 +6,7 @@ import habbo.navigator.INavigatorManager;
 import habbo.navigator.services.INavigatorSearchService;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
-import packets.incoming.IncomingEvent;
+import networking.packets.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 
 @Singleton

@@ -20,6 +20,10 @@ public interface IVariable {
 
     void setExpiresAt(@Nullable Instant instant);
 
+    boolean isEditable();
+
+    void setEditable(boolean editable);
+
     boolean isVisible();
 
     void setVisible(boolean visible);

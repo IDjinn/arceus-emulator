@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import habbo.catalog.ICatalogManager;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
+import networking.packets.IncomingEvent;
 import networking.packets.OutgoingPacket;
-import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.catalog.CatalogIndexComposer;
 

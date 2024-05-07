@@ -1,8 +1,7 @@
-package packets.incoming;
+package networking.packets;
 
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
-import networking.packets.IIncomingPacket;
 
 public abstract class IncomingEvent {
     public abstract int getHeaderId();

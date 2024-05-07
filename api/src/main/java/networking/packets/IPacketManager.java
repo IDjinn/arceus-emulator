@@ -8,6 +8,8 @@ public interface IPacketManager {
 
     boolean isLoggingEnabled();
 
+    void registerIncoming(IncomingEvent incomingEvent);
+
     String getIncomingEventName(int headerId);
 
     void parse(IIncomingPacket IIncomingPacket, IClient client);

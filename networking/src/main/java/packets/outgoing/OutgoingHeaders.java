@@ -554,4 +554,5 @@ public final class OutgoingHeaders {
     public static final int SnowStormUserRematchedComposer = 5029;
 
     public static final int EntityVariablesComposer = 8899;
+    public static final int WiredValidationError = 88899;
 }

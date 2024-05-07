@@ -5,8 +5,8 @@ import com.google.inject.Singleton;
 import habbo.rooms.IRoomManager;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
+import networking.packets.IncomingEvent;
 import org.jetbrains.annotations.Nullable;
-import packets.incoming.IncomingEvent;
 import packets.incoming.IncomingHeaders;
 import packets.outgoing.rooms.prepare.HotelViewComposer;
 
