@@ -122,10 +122,10 @@ public class CatalogManager implements ICatalogManager {
 
     @Override
     public List<ICatalogPage> getCatalogPagesForHabbo(int parentId, IHabbo habbo) {
-        var pages = new ArrayList<ICatalogPage>(this.catalogPages.size());
+        final var pages = new ArrayList<ICatalogPage>(this.catalogPages.size());
         for (var page : this.catalogPages.values()) {
             if (page.getParentId() != parentId) continue;
-            if (!page.isEnabled() || page.getMinRank() > habbo.getData().getRank())
+            if (page.getMinRank() > habbo.getData().getRank())
                 continue;
 
             pages.add(page);

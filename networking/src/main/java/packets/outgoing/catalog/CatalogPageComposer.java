@@ -8,13 +8,13 @@ import packets.outgoing.OutgoingHeaders;
 public class CatalogPageComposer extends OutgoingPacket {
     public CatalogPageComposer(ICatalogPage page, IHabbo habbo, int offerId, String mode) {
         super(OutgoingHeaders.CatalogPageComposer);
-        appendInt(page.getId());
-        appendString(mode);
+        this.appendInt(page.getId());
+        this.appendString(mode);
 
         page.serialize(this);
         page.serializeItems(this, habbo);
-        appendInt(offerId);
-        appendBoolean(false);
+        this.appendInt(offerId);
+        this.appendBoolean(false, "acceptSeasonCurrencyAsCredits");
         page.serializeExtra(this);
     }
 }

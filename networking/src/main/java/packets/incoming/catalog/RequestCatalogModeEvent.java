@@ -24,13 +24,13 @@ public class RequestCatalogModeEvent extends IncomingEvent {
 
     @Override
     public void parse(IIncomingPacket packet, IClient client) {
-        var catalogMode = "normal";// THIS MODE IS JUST FOR FLASH. DOES NOT WORK WITH NITRO packet.readString();
-        if (catalogMode == null)
-            return;
-        if (!catalogMode.equals("normal"))
-            throw new IllegalArgumentException("Invalid catalog mode");
-
+//        var catalogMode = "normal";// THIS MODE IS JUST FOR FLASH. DOES NOT WORK WITH NITRO packet.readString();
+//        if (catalogMode == null)
+//            return;
+//        if (!catalogMode.equals("normal"))
+//            throw new IllegalArgumentException("Invalid catalog mode");
         client.sendMessage(new OutgoingPacket(3828).appendInt(0));
-        client.sendMessage(new CatalogIndexComposer(client.getHabbo(), catalogMode, this.catalogManager.getCatalogPagesForHabbo(this.RootPageId, client.getHabbo())));
+        client.sendMessage(new CatalogIndexComposer(false, "normal",
+                this.catalogManager.getCatalogPagesForHabbo(this.RootPageId, client.getHabbo())));
     }
 }

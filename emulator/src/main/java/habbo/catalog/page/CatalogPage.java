@@ -25,6 +25,7 @@ public abstract class CatalogPage implements ICatalogPage {
     private int parentId;
     private String linkName;
     private int order;
+    private boolean visible;
     private boolean enabled;
     private boolean vipOnly;
     private List<String> images;
@@ -124,8 +125,6 @@ public abstract class CatalogPage implements ICatalogPage {
 
     @Override
     public void fill(IConnectionResult result) throws Exception {
-
-
         this.id = result.getInt("id");
         this.caption = result.getString("caption");
         this.icon = result.getInt("icon_image");
@@ -147,25 +146,8 @@ public abstract class CatalogPage implements ICatalogPage {
         this.texts.add(result.getString("page_text1"));
         this.texts.add(result.getString("page_text2"));
         this.texts.add(result.getString("page_text_details"));
+        this.visible = result.getString("visible").equals("1");
         this.enabled = result.getString("enabled").equals("1");
-    }
-
-    public void serializePageData(OutgoingPacket packet) {
-        packet.appendBoolean(this.isEnabled())
-                .appendInt(this.getIcon())
-                .appendInt(this.isEnabled() ? this.getId() : -1)
-                .appendString(this.getCaption())
-                .appendString(this.getCaption());
-
-        packet.appendInt(this.getOfferSize()); // TODO
-//        for (int i : getOfferSize().toArray()) {
-//            packet.appendInt(i);
-//        }
-
-        packet.appendInt(this.getChildren().size());
-        for (var page : this.getChildren()) {
-            page.serializePageData(packet);
-        }
     }
 
     @Override
@@ -182,5 +164,10 @@ public abstract class CatalogPage implements ICatalogPage {
 
     public void serializeExtra(OutgoingPacket packet) {
 
+    }
+
+    @Override
+    public boolean isVisible() {
+        return this.visible;
     }
 }

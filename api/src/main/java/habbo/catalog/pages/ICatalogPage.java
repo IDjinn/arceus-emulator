@@ -29,6 +29,8 @@ public interface ICatalogPage extends ISerializable, IFillable {
 
     boolean isEnabled();
 
+    boolean isVisible();
+
     Map<Integer, ICatalogItem> getItems();
 
     @Nullable
@@ -48,8 +50,6 @@ public interface ICatalogPage extends ISerializable, IFillable {
     int getOrder();
 
     List<ICatalogPage> getChildren();
-
-    void serializePageData(OutgoingPacket packet);
 
     OutgoingPacket serializeItems(OutgoingPacket packet, IHabbo habbo);
 
