@@ -50,4 +50,6 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
     void moveWallItemTo(IHabbo habbo, IWallItem floorItem, String coordinates);
 
     void pickupItem(final IHabbo habbo, final IRoomItem item);
+
+    void sendRelativeMap();
 }

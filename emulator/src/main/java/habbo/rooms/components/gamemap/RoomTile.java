@@ -4,6 +4,7 @@ import utils.pathfinder.Position;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class RoomTile implements IRoomTile {
     private final Position position;
@@ -42,5 +43,11 @@ public class RoomTile implements IRoomTile {
     @Override
     public List<ITileMetadata> getMetadata() {
         return this.metaData;
+    }
+
+    @Override
+    public Optional<Double> getRelativeMapHeight() {
+        final var topMetadata = this.getMetadata().getLast();
+        return topMetadata.getHeight();
     }
 }

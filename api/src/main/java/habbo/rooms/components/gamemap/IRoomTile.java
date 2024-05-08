@@ -3,6 +3,7 @@ package habbo.rooms.components.gamemap;
 import utils.pathfinder.Position;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IRoomTile {
     int getX();
@@ -16,4 +17,6 @@ public interface IRoomTile {
     TileState getState();
 
     List<ITileMetadata> getMetadata();
+
+    Optional<Double> getRelativeMapHeight();
 }

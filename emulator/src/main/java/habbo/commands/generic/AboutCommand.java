@@ -9,10 +9,11 @@ public class AboutCommand implements ICommand {
     private static final LocalizedString name = LocalizedString.of("command.about.name");
     private static final LocalizedString[] alias = new LocalizedString[]{};
     private static final LocalizedString description = LocalizedString.of("command.about.description");
+    private static final LocalizedString response = LocalizedString.of("command.about.response", "hello world!");
 
     @Override
     public void execute(final ICommandContext ctx) {
-        ctx.whisper(LocalizedString.of("command.about.response", "test whisper"));
+        ctx.whisper(response);
     }
 
     @Override
@@ -33,6 +34,5 @@ public class AboutCommand implements ICommand {
     @Override
     public Object[] getParameters() {
         return new Object[0];
-
     }
 }

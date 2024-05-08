@@ -22,6 +22,7 @@ import packets.outgoing.rooms.objects.floor.RemoveFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
 import packets.outgoing.rooms.objects.wall.RemoveWallItemComposer;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
+import packets.outgoing.rooms.prepare.RoomRelativeMapComposer;
 import storage.repositories.habbo.IHabboInventoryRepository;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.cycle.ICycle;
@@ -207,13 +208,17 @@ public class RoomObjectManager implements IRoomObjectManager {
 
             // TODO RANGE TILES & ROTATIONS
 
+            final var tile = this.getRoom().getGameMap().getTile(targetPosition);
             var topItem = this.getTopFloorItemAt(targetPosition, -1);
-            var playerCanStackHere = topItem.isEmpty() ||
-                    (topItem.get().canStack(item.getHabbo().getPlayerEntity()) &&
-                            topItem.get().getStackHeight(item.getHabbo().getPlayerEntity()).isPresent());
-            if (!playerCanStackHere)
-                return;
+            if (topItem.isPresent()) {
+                if (!topItem.get().canStack(item.getHabbo().getPlayerEntity()))
+                    return;
+            }
 
+            final var stackHeight =
+                    topItem.isEmpty() ? tile.getZ() :
+                            topItem.get().getStackHeight(item.getHabbo().getPlayerEntity()).get();
+            targetPosition.setZ(stackHeight);
             this.itemsRepository.placeFloorItemFromInventory(result -> {
                 var itemData = this.roomItemFactory.createItemData(
                         item.getId(),
@@ -223,15 +228,14 @@ public class RoomObjectManager implements IRoomObjectManager {
                         rotation,
                         item.getExtraData()
                 );
-                topItem.ifPresent(floorItem -> itemData.getPosition().setZ(floorItem.getStackHeight().get()));
-                
                 var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(floorItem);
                 habbo.getInventory().removeItem(floorItem.getId());
 
                 topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
-                this.getRoom().broadcastMessage(new AddFloorItemComposer((IFloorItem) floorItem));
-            }, this.getRoom().getData().getId(), item.getId(), x, y, z, rotation);
+                this.getRoom().broadcastMessage(new AddFloorItemComposer(floorItem));
+                this.sendRelativeMap();
+            }, this.getRoom().getData().getId(), item.getId(), targetPosition.getX(), targetPosition.getY(), targetPosition.getZ(), rotation);
         } catch (Exception e) {
             this.logger.error("failed to place item {} from inventory to floor", item.getId(), e);
         }
@@ -252,7 +256,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.addRoomItem(wallItem);
                 habbo.getInventory().removeItem(wallItem.getId());
 
-                this.getRoom().broadcastMessage(new AddWallItemComposer((IWallItem) wallItem));
+                this.getRoom().broadcastMessage(new AddWallItemComposer(wallItem));
             }, this.getRoom().getData().getId(), item.getId(), wallPosition);
         } catch (Exception e) {
             this.logger.error("failed to place item {} from inventory to floor", item.getId(), e);
@@ -268,6 +272,7 @@ public class RoomObjectManager implements IRoomObjectManager {
         item.setRotation(rotation);
         item.onMove(oldPosition);
         this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer(item));
+        this.sendRelativeMap();
     }
 
     @Override
@@ -286,6 +291,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.getRoom().broadcastMessage(new RemoveWallItemComposer(wallItem, habbo.getData().getId()));
             }
 
+            this.sendRelativeMap();
             habbo.getInventory().removeItem(item.getId());
             habbo.getInventory().sendUpdate();
             if (item.getOwnerData().isPresent()) {
@@ -306,5 +312,10 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.logger.error(e);
             }
         }
+    }
+
+    @Override
+    public void sendRelativeMap() {
+        this.getRoom().broadcastMessage(new RoomRelativeMapComposer(this.getRoom().getGameMap()));
     }
 }

@@ -128,4 +128,16 @@ public class OutgoingPacket {
         return this.channelBuffer.copy();
     }
 
+    public OutgoingPacket appendShort(final int value) {
+        return this.appendShort(value, StringEmpty);
+    }
+
+    public OutgoingPacket appendShort(final int value, final String debugContext) {
+        try {
+            this.stream.writeShort(value);
+        } catch (IOException e) {
+            logger.error(e.getLocalizedMessage(), e);
+        }
+        return this;
+    }
 }
