@@ -7,13 +7,13 @@ import packets.outgoing.OutgoingHeaders;
 public class MeMenuSettingsComposer extends OutgoingPacket { // TODO: USER CONFIGURATION SETTINGS
     public MeMenuSettingsComposer(IHabbo habbo) {
         super(OutgoingHeaders.MeMenuSettingsComposer);
-        appendInt(100);
-        appendInt(100);
-        appendInt(100);
-        appendBoolean(false);
-        appendBoolean(false);
-        appendBoolean(false);
-        appendInt(0);
-        appendInt(0);
+        this.appendInt(100);
+        this.appendInt(100);
+        this.appendInt(100);
+        this.appendBoolean(false);
+        this.appendBoolean(false);
+        this.appendBoolean(false);
+        this.appendInt(0);
+        this.appendInt(0);
     }
 }

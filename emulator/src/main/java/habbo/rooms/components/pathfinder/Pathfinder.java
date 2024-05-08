@@ -187,7 +187,7 @@ public class Pathfinder implements IPathfinder {
         final var neighbors = new ArrayList<PathfinderNode>();
         for (final var direction : diagonalDirections.values()) {
             try {
-                final var neighborPosition = positionPool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+                final var neighborPosition = this.positionPool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
                 neighborPosition.setX(current.getPosition().getX() + direction.getX());
                 neighborPosition.setY(current.getPosition().getY() + direction.getY());
                 if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition.getX(), neighborPosition.getY()))

@@ -225,11 +225,11 @@ public class Position {
     }
 
     public Position add(Position other) {
-        return new Position(other.getX() + getX(), other.getY() + getY(), other.getZ() + getZ());
+        return new Position(other.getX() + this.getX(), other.getY() + this.getY(), other.getZ() + this.getZ());
     }
 
     public Position subtract(Position other) {
-        return new Position(other.getX() - getX(), other.getY() - getY(), other.getZ() - getZ());
+        return new Position(other.getX() - this.getX(), other.getY() - this.getY(), other.getZ() - this.getZ());
     }
 
     public int getDistanceSquared(Position point) {

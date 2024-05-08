@@ -33,7 +33,7 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendRawBytes(byte[] bytes) {
-        return appendRawBytes(bytes, StringEmpty);
+        return this.appendRawBytes(bytes, StringEmpty);
     }
 
     public OutgoingPacket appendRawBytes(byte[] bytes, String debugContext) {
@@ -46,7 +46,7 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendString(String string) {
-        return appendString(string, StringEmpty);
+        return this.appendString(string, StringEmpty);
     }
 
     public OutgoingPacket appendString(String string, String debugContext) {
@@ -66,7 +66,7 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendChar(int charValue) {
-        return appendChar(charValue, StringEmpty);
+        return this.appendChar(charValue, StringEmpty);
     }
 
     public OutgoingPacket appendChar(int obj, String debugContext) {
@@ -79,7 +79,7 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendInt(Integer integer) {
-        return appendInt(integer, StringEmpty);
+        return this.appendInt(integer, StringEmpty);
     }
 
     public OutgoingPacket appendInt(Integer integer, String debugContext) {
@@ -93,7 +93,7 @@ public class OutgoingPacket {
 
 
     public OutgoingPacket appendBoolean(boolean bool) {
-        return appendBoolean(bool, StringEmpty);
+        return this.appendBoolean(bool, StringEmpty);
     }
 
     public OutgoingPacket appendBoolean(boolean bool, String debugContext) {
@@ -106,7 +106,7 @@ public class OutgoingPacket {
     }
 
     public OutgoingPacket appendDouble(double d) {
-        return appendDouble(d, StringEmpty);
+        return this.appendDouble(d, StringEmpty);
     }
 
     public OutgoingPacket appendDouble(double d, String debugContext) {

@@ -12,9 +12,9 @@ public class AddWallItemComposer extends OutgoingPacket {
         wallItem.serializeItemIdentity(this);
         wallItem.serializePosition(this);
         wallItem.getExtraData().serializeState(this);
-        appendInt(-1, "rent?");
-        appendInt(FurnitureUsagePolicy.Everyone.ordinal()); // TODO
-        appendInt(wallItem.getOwnerData().isPresent() ? wallItem.getOwnerData().get().getId() : -1);
-        appendString(wallItem.getOwnerData().isPresent() ? wallItem.getOwnerData().get().getUsername() : "");
+        this.appendInt(-1, "rent?");
+        this.appendInt(FurnitureUsagePolicy.Everyone.ordinal()); // TODO
+        this.appendInt(wallItem.getOwnerData().isPresent() ? wallItem.getOwnerData().get().getId() : -1);
+        this.appendString(wallItem.getOwnerData().isPresent() ? wallItem.getOwnerData().get().getUsername() : "");
     }
 }

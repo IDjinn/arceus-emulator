@@ -8,9 +8,9 @@ import habbo.catalog.items.ICatalogItem;
 public class CatalogModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(ICatalogManager.class).to(CatalogManager.class);
-        bind(ICatalogFactory.class).to(CatalogFactory.class);
-        bind(ICatalogItem.class).to(CatalogItem.class);
+        this.bind(ICatalogManager.class).to(CatalogManager.class);
+        this.bind(ICatalogFactory.class).to(CatalogFactory.class);
+        this.bind(ICatalogItem.class).to(CatalogItem.class);
 //         bind(ICatalogPage.class).to(CatalogPage.class);
     }
 }

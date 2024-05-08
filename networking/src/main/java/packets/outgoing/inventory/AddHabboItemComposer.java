@@ -9,11 +9,11 @@ public class AddHabboItemComposer extends OutgoingPacket {
     public AddHabboItemComposer(AddHabboItemCategory category, List<Integer> itemIds) {
         super(OutgoingHeaders.AddHabboItemComposer);
 
-        appendInt(1, "total unseen categories");
-        appendInt(category.ordinal());
-        appendInt(itemIds.size());
+        this.appendInt(1, "total unseen categories");
+        this.appendInt(category.ordinal());
+        this.appendInt(itemIds.size());
         for (int itemId : itemIds) {
-            appendInt(itemId);
+            this.appendInt(itemId);
         }
     }
 }

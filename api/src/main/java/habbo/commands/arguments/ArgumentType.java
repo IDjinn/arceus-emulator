@@ -22,7 +22,7 @@ public enum ArgumentType {
     }
 
     public int getType() {
-        return type;
+        return this.type;
     }
 
     public static ArgumentType fromType(int type) {

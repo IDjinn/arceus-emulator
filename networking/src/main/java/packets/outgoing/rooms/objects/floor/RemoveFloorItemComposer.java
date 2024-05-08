@@ -8,10 +8,10 @@ public class RemoveFloorItemComposer extends OutgoingPacket {
     public RemoveFloorItemComposer(IFloorItem floorItem, int pickupPlayerId, int delay) {
         super(OutgoingHeaders.RemoveFloorItemComposer);
 
-        appendString(String.valueOf(floorItem.getVirtualId()));
-        appendBoolean(false, "isExpired");
-        appendInt(pickupPlayerId);
-        appendInt(delay);
+        this.appendString(String.valueOf(floorItem.getVirtualId()));
+        this.appendBoolean(false, "isExpired");
+        this.appendInt(pickupPlayerId);
+        this.appendInt(delay);
     }
 
     public RemoveFloorItemComposer(IFloorItem floorItem, int pickupPlayerId) {

@@ -8,12 +8,12 @@ public class NewNavigatorEventCategoriesComposer extends OutgoingPacket {
     public NewNavigatorEventCategoriesComposer(final INavigatorManager navigatorManager) {
         super(OutgoingHeaders.NewNavigatorEventCategoriesComposer);
 
-        appendInt(navigatorManager.getEventCategories().size());
+        this.appendInt(navigatorManager.getEventCategories().size());
 
         navigatorManager.getEventCategories().forEach((_, category) -> {
-            appendInt(category.getId());
-            appendString(category.getName());
-            appendBoolean(category.isVisible());
+            this.appendInt(category.getId());
+            this.appendString(category.getName());
+            this.appendBoolean(category.isVisible());
         });
     }
 }

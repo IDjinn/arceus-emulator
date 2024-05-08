@@ -57,7 +57,7 @@ public class GcProfiler implements InternalProfiler {
 
     @Override
     public void beforeIteration(BenchmarkParams benchmarkParams, IterationParams iterationParams) {
-        if (this.stats.contains(Metric.POOLS)) installHooks();
+        if (this.stats.contains(Metric.POOLS)) this.installHooks();
 
         long gcTime = 0, gcCount = 0;
         for (GarbageCollectorMXBean bean : ManagementFactory.getGarbageCollectorMXBeans()) {
@@ -80,7 +80,7 @@ public class GcProfiler implements InternalProfiler {
         }
 
         long afterT = System.nanoTime();
-        @Nullable MyHook pool = this.stats.contains(Metric.POOLS) ? uninstallHooks() : null;
+        @Nullable MyHook pool = this.stats.contains(Metric.POOLS) ? this.uninstallHooks() : null;
         HotspotAllocationSnapshot newSnapshot = HotspotAllocationSnapshot.create();
 
         long gcTime = 0, gcCount = 0;

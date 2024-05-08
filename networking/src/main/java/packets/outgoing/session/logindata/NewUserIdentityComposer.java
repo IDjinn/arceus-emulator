@@ -6,6 +6,6 @@ import packets.outgoing.OutgoingHeaders;
 public class NewUserIdentityComposer extends OutgoingPacket {
     public NewUserIdentityComposer() {
         super(OutgoingHeaders.NewUserIdentityComposer);
-        appendInt(1);
+        this.appendInt(1);
     }
 }

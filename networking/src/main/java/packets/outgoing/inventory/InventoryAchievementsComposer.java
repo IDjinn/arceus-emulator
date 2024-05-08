@@ -6,6 +6,6 @@ import packets.outgoing.OutgoingHeaders;
 public class InventoryAchievementsComposer extends OutgoingPacket {
     public InventoryAchievementsComposer() {
         super(OutgoingHeaders.InventoryAchievementsComposer);
-        appendInt(0);
+        this.appendInt(0);
     }
 }

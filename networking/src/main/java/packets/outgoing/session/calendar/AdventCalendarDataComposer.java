@@ -6,11 +6,11 @@ import packets.outgoing.OutgoingHeaders;
 public class AdventCalendarDataComposer extends OutgoingPacket {
     public AdventCalendarDataComposer() {
         super(OutgoingHeaders.AdventCalendarDataComposer);
-        appendString("xmas14");
-        appendString("");
-        appendInt(0);
-        appendInt(0);
-        appendInt(0);
-        appendInt(0);
+        this.appendString("xmas14");
+        this.appendString("");
+        this.appendInt(0);
+        this.appendInt(0);
+        this.appendInt(0);
+        this.appendInt(0);
     }
 }

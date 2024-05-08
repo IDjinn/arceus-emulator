@@ -11,10 +11,10 @@ public class NewNavigatorSearchResultsComposer extends OutgoingPacket {
     public NewNavigatorSearchResultsComposer(String code, String query, List<INavigatorResultCategory> categories) {
         super(OutgoingHeaders.NewNavigatorSearchResultsComposer);
 
-        appendString(code);
-        appendString(query);
+        this.appendString(code);
+        this.appendString(query);
 
-        appendInt(categories.size());
+        this.appendInt(categories.size());
 
         for (final INavigatorResultCategory category : categories) {
             category.write(this);

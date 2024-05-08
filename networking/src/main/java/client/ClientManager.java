@@ -38,7 +38,7 @@ public class ClientManager implements IClientManager {
 
     @Override
     public boolean tryAddClient(ChannelHandlerContext ctx) {
-        ctx.channel().closeFuture().addListener((ChannelFutureListener) channelFuture -> disconnectGuest(ctx));
+        ctx.channel().closeFuture().addListener((ChannelFutureListener) channelFuture -> this.disconnectGuest(ctx));
         ctx.fireChannelRegistered();
 
         return this.guests.putIfAbsent(ctx.channel().id(), ctx.channel()) == null;

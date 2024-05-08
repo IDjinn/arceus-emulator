@@ -6,15 +6,15 @@ import packets.outgoing.OutgoingHeaders;
 public class RoomPromotionMessageComposer extends OutgoingPacket {
     public RoomPromotionMessageComposer() {
         super(OutgoingHeaders.RoomPromotionMessageComposer);
-        appendInt(-1);
-        appendInt(-1);
-        appendString("");
-        appendInt(0);
-        appendInt(0);
-        appendString("");
-        appendString("");
-        appendInt(0);
-        appendInt(0);
-        appendInt(0);
+        this.appendInt(-1);
+        this.appendInt(-1);
+        this.appendString("");
+        this.appendInt(0);
+        this.appendInt(0);
+        this.appendString("");
+        this.appendString("");
+        this.appendInt(0);
+        this.appendInt(0);
+        this.appendInt(0);
     }
 }

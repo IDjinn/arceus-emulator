@@ -11,11 +11,11 @@ public class AddFloorItemComposer extends OutgoingPacket {
 
         floorItem.serializeItemIdentity(this);
         floorItem.serializePosition(this);
-        appendInt(1, "gift stuff (extra data as int?)");
+        this.appendInt(1, "gift stuff (extra data as int?)");
         floorItem.getExtraData().serialize(this);
-        appendInt(-1, "expires at");
-        appendInt(FurnitureUsagePolicy.Everyone.ordinal());
-        appendInt(floorItem.getOwnerData().isPresent() ? floorItem.getOwnerData().get().getId() : 0);
-        appendString(floorItem.getRoom().getData().isPublic() || floorItem.getOwnerData().isEmpty() ? "admin" : floorItem.getOwnerData().get().getUsername());
+        this.appendInt(-1, "expires at");
+        this.appendInt(FurnitureUsagePolicy.Everyone.ordinal());
+        this.appendInt(floorItem.getOwnerData().isPresent() ? floorItem.getOwnerData().get().getId() : 0);
+        this.appendString(floorItem.getRoom().getData().isPublic() || floorItem.getOwnerData().isEmpty() ? "admin" : floorItem.getOwnerData().get().getUsername());
     }
 }

@@ -12,21 +12,21 @@ public class RoomDataComposer extends OutgoingPacket {
 
         RoomWriter.write(room, this);
 
-        appendBoolean(roomForward);
-        appendBoolean(room.getData().isStaffPicked());
-        appendBoolean(false); // TODO: Check if habbo is member of room guild
-        appendBoolean(false); // TODO: is muted
+        this.appendBoolean(roomForward);
+        this.appendBoolean(room.getData().isStaffPicked());
+        this.appendBoolean(false); // TODO: Check if habbo is member of room guild
+        this.appendBoolean(false); // TODO: is muted
 
-        appendInt(room.getData().getWhoCanMute());
-        appendInt(room.getData().getWhoCanKick());
-        appendInt(room.getData().getWhoCanBan());
+        this.appendInt(room.getData().getWhoCanMute());
+        this.appendInt(room.getData().getWhoCanKick());
+        this.appendInt(room.getData().getWhoCanBan());
 
-        appendBoolean(false); // TODO: Permissions: mute all button
+        this.appendBoolean(false); // TODO: Permissions: mute all button
 
-        appendInt(room.getData().getChatMode());
-        appendInt(room.getData().getChatWeight());
-        appendInt(room.getData().getChatSpeed());
-        appendInt(room.getData().getChatDistance());
-        appendInt(room.getData().getChatProtection());
+        this.appendInt(room.getData().getChatMode());
+        this.appendInt(room.getData().getChatWeight());
+        this.appendInt(room.getData().getChatSpeed());
+        this.appendInt(room.getData().getChatDistance());
+        this.appendInt(room.getData().getChatProtection());
     }
 }

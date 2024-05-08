@@ -8,20 +8,20 @@ public class UserDataComposer extends OutgoingPacket {
     public UserDataComposer(IHabbo habbo) {
         super(OutgoingHeaders.UserDataComposer);
 
-        appendInt(habbo.getData().getId());
-        appendString(habbo.getData().getUsername());
-        appendString(habbo.getData().getLook());
-        appendString(habbo.getData().getGender());
-        appendString(habbo.getData().getMotto());
-        appendString(habbo.getData().getUsername());
-        appendBoolean(false);
-        appendInt(habbo.getSettings().getRespectPointsReceived());
-        appendInt(habbo.getSettings().getRespectPointsGiven());
-        appendInt(habbo.getSettings().getPetRespectPointsToGive());
-        appendBoolean(false);
-        appendString("01-01-1970 00:00:00");
-        appendBoolean(habbo.getSettings().allowNameChange());
-        appendBoolean(false);
+        this.appendInt(habbo.getData().getId());
+        this.appendString(habbo.getData().getUsername());
+        this.appendString(habbo.getData().getLook());
+        this.appendString(habbo.getData().getGender());
+        this.appendString(habbo.getData().getMotto());
+        this.appendString(habbo.getData().getUsername());
+        this.appendBoolean(false);
+        this.appendInt(habbo.getSettings().getRespectPointsReceived());
+        this.appendInt(habbo.getSettings().getRespectPointsGiven());
+        this.appendInt(habbo.getSettings().getPetRespectPointsToGive());
+        this.appendBoolean(false);
+        this.appendString("01-01-1970 00:00:00");
+        this.appendBoolean(habbo.getSettings().allowNameChange());
+        this.appendBoolean(false);
 
     }
 }

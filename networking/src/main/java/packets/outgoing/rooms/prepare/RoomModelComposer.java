@@ -6,7 +6,7 @@ import packets.outgoing.OutgoingHeaders;
 public class RoomModelComposer extends OutgoingPacket {
     public RoomModelComposer(String modelName, int roomId) {
         super(OutgoingHeaders.RoomModelComposer);
-        appendString(modelName);
-        appendInt(roomId);
+        this.appendString(modelName);
+        this.appendInt(roomId);
     }
 }

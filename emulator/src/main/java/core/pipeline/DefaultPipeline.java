@@ -14,7 +14,7 @@ public class DefaultPipeline<Event extends PipelineEvent> implements IPipeline<E
 
     @Override
     public DefaultPipeline<Event> addAfter(String key, String afterKey, Step<Event> step) {
-        logger.trace("adding step {} after {}", step, afterKey);
+        this.logger.trace("adding step {} after {}", step, afterKey);
         for (int i = 0; i < this.steps.size(); i++) {
             if (this.steps.get(i).getKey().equals(afterKey)) {
                 this.steps.add(i + 1, Map.entry(key, step));
@@ -26,7 +26,7 @@ public class DefaultPipeline<Event extends PipelineEvent> implements IPipeline<E
 
     @Override
     public DefaultPipeline<Event> addBefore(String key, String beforeKey, Step<Event> step) {
-        logger.trace("adding step {} before {}", step, beforeKey);
+        this.logger.trace("adding step {} before {}", step, beforeKey);
         for (int i = 0; i < this.steps.size(); i++) {
             if (this.steps.get(i).getKey().equals(beforeKey)) {
                 this.steps.add(i, Map.entry(key, step));
@@ -38,14 +38,14 @@ public class DefaultPipeline<Event extends PipelineEvent> implements IPipeline<E
 
     @Override
     public DefaultPipeline<Event> addStep(String key, Step<Event> step) {
-        logger.trace("adding step {}", step);
+        this.logger.trace("adding step {}", step);
         this.steps.addLast(Map.entry(key, step));
         return this;
     }
 
     @Override
     public DefaultPipeline<Event> addFirst(String key, Step<Event> step) {
-        logger.trace("adding step {} at first", step);
+        this.logger.trace("adding step {} at first", step);
         this.steps.addFirst(Map.entry(key, step));
         return this;
     }
@@ -62,19 +62,19 @@ public class DefaultPipeline<Event extends PipelineEvent> implements IPipeline<E
 
     @Override
     public Optional<IPipelineContext<Event>> execute(Event event) {
-        logger.trace("executing pipeline with event {}", event);
+        this.logger.trace("executing pipeline with event {}", event);
         final var context = new DefaultPipelineContext<>(event);
         for (var step : this.steps) {
-            logger.trace("executing step {} for event {}", step.getKey(), event);
+            this.logger.trace("executing step {} for event {}", step.getKey(), event);
             step.getValue().execute(context);
             if (context.isFail()) {
-                logger.warn("pipeline failed at step {} for event {}", step.getKey(), event);
+                this.logger.warn("pipeline failed at step {} for event {}", step.getKey(), event);
                 break;
             }
 
-            logger.trace("pipeline finished step {} for event {}", step.getKey(), event);
+            this.logger.trace("pipeline finished step {} for event {}", step.getKey(), event);
         }
-        logger.trace("pipeline finished for event {}", event);
+        this.logger.trace("pipeline finished for event {}", event);
         return Optional.of(context);
     }
 }

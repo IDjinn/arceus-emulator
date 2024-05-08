@@ -18,14 +18,14 @@ public class NewNavigatorMetaDataComposer extends OutgoingPacket {
     public NewNavigatorMetaDataComposer(final IHabboNavigator navigator) {
         super(OutgoingHeaders.NewNavigatorMetaDataComposer);
 
-        appendInt(this.tabs.length);
+        this.appendInt(this.tabs.length);
 
         for (String tabName : this.tabs) {
-            appendString(tabName);
+            this.appendString(tabName);
 
             final List<IHabboNavigatorSearch> savedSearches = navigator.getNavigatorSearchForTab(tabName);
 
-            appendInt(savedSearches.size());
+            this.appendInt(savedSearches.size());
 
             for (final IHabboNavigatorSearch search : savedSearches) {
                 search.write(this);

@@ -10,13 +10,13 @@ public class NewNavigatorSavedSearchesComposer extends OutgoingPacket {
     public NewNavigatorSavedSearchesComposer(final List<IHabboNavigatorSearch> searches) {
         super(OutgoingHeaders.NewNavigatorSavedSearchesComposer);
 
-        appendInt(searches.size());
+        this.appendInt(searches.size());
 
         for (final IHabboNavigatorSearch search : searches) {
-            appendInt(search.getId());
-            appendString(search.getSearchCode());
-            appendString(search.getFilter());
-            appendString("");
+            this.appendInt(search.getId());
+            this.appendString(search.getSearchCode());
+            this.appendString(search.getFilter());
+            this.appendString("");
         }
     }
 }

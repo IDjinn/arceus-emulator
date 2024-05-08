@@ -6,7 +6,7 @@ import packets.outgoing.OutgoingHeaders;
 public class UserClothesComposer extends OutgoingPacket {
     public UserClothesComposer() {
         super(OutgoingHeaders.UserClothesComposer);
-        appendInt(0);
-        appendInt(0);
+        this.appendInt(0);
+        this.appendInt(0);
     }
 }

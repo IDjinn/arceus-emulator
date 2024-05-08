@@ -6,6 +6,6 @@ import packets.outgoing.OutgoingHeaders;
 public class IsFirstLoginOfDayComposer extends OutgoingPacket {
     public IsFirstLoginOfDayComposer() {
         super(OutgoingHeaders.IsFirstLoginOfDayComposer);
-        appendBoolean(true);
+        this.appendBoolean(true);
     }
 }

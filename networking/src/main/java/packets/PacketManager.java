@@ -40,7 +40,8 @@ public class PacketManager implements IPacketManager {
         this.threadManager = threadManager;
 
         for (Class<? extends IncomingEvent> incoming : incomings) {
-            if (incoming.isAnnotationPresent(NoAuth.class)) registerGuestEvent(injector.getProvider(incoming).get());
+            if (incoming.isAnnotationPresent(NoAuth.class))
+                this.registerGuestEvent(injector.getProvider(incoming).get());
             else this.internalRegisterIncoming(injector.getProvider(incoming).get());
         }
     }

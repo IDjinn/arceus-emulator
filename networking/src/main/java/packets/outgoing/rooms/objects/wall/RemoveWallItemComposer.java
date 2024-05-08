@@ -8,7 +8,7 @@ public class RemoveWallItemComposer extends OutgoingPacket {
 
     public RemoveWallItemComposer(IWallItem wallItem, int pickupPlayerId) {
         super(OutgoingHeaders.RemoveWallItemComposer);
-        appendString(String.valueOf(wallItem.getVirtualId()));
-        appendInt(pickupPlayerId);
+        this.appendString(String.valueOf(wallItem.getVirtualId()));
+        this.appendInt(pickupPlayerId);
     }
 }

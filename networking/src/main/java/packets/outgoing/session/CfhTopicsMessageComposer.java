@@ -6,6 +6,6 @@ import packets.outgoing.OutgoingHeaders;
 public class CfhTopicsMessageComposer extends OutgoingPacket {
     public CfhTopicsMessageComposer() {
         super(OutgoingHeaders.CfhTopicsMessageComposer);
-        appendInt(0);
+        this.appendInt(0);
     }
 }

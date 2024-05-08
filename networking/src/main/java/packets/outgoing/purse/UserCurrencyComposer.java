@@ -8,10 +8,10 @@ public class UserCurrencyComposer extends OutgoingPacket {
     public UserCurrencyComposer(IHabbo habbo) {
         super(OutgoingHeaders.UserCurrencyComposer);
 
-        appendInt(habbo.getWallet().getWalletCurrencies().size());
+        this.appendInt(habbo.getWallet().getWalletCurrencies().size());
         for (var currency : habbo.getWallet().getWalletCurrencies().values()) {
-            appendInt(currency.getCurrencyType());
-            appendInt(currency.getAmount());
+            this.appendInt(currency.getCurrencyType());
+            this.appendInt(currency.getAmount());
         }
     }
 }

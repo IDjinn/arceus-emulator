@@ -28,7 +28,7 @@ public class CommandContext implements ICommandContext {
 
     @Override
     public int getCurrentArg() {
-        return currentArg;
+        return this.currentArg;
     }
 
     @Override

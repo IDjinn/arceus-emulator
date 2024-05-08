@@ -10,25 +10,25 @@ import java.util.Collection;
 public class RoomUserStatusComposer extends OutgoingPacket {
     public RoomUserStatusComposer(IRoomEntity entity) {
         super(OutgoingHeaders.RoomUserStatusComposer);
-        appendInt(1);
-        serializeEntity(entity);
+        this.appendInt(1);
+        this.serializeEntity(entity);
     }
 
     public RoomUserStatusComposer(Collection<IRoomEntity> entities) {
         super(OutgoingHeaders.RoomUserStatusComposer);
-        appendInt(entities.size());
+        this.appendInt(entities.size());
         for (var entity : entities)
-            serializeEntity(entity);
+            this.serializeEntity(entity);
     }
 
     private void serializeEntity(IRoomEntity entity) {
-        appendInt(entity.getVirtualId());
-        appendInt(entity.getPosition().getX());
-        appendInt(entity.getPosition().getY());
-        appendString(String.valueOf(entity.getPosition().getZ()));
+        this.appendInt(entity.getVirtualId());
+        this.appendInt(entity.getPosition().getX());
+        this.appendInt(entity.getPosition().getY());
+        this.appendString(String.valueOf(entity.getPosition().getZ()));
 
-        appendInt((int) entity.getDirection().ordinal());
-        appendInt((int) entity.getDirection().ordinal()); // TODO: HEAD|BODY ROTATION & STATUS
+        this.appendInt((int) entity.getDirection().ordinal());
+        this.appendInt((int) entity.getDirection().ordinal()); // TODO: HEAD|BODY ROTATION & STATUS
 
         final var entityStatus = StringBuilderHelper.getBuilder().append('/');
         for (var entry : entity.getStatus().entrySet()) {
@@ -42,7 +42,7 @@ public class RoomUserStatusComposer extends OutgoingPacket {
             entityStatus.append('/');
         }
 
-        appendString(entityStatus.toString());
+        this.appendString(entityStatus.toString());
     }
 
 }

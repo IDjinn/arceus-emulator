@@ -95,7 +95,7 @@ public class NavigatorSearchService implements INavigatorSearchService {
 
         final List<INavigatorResultCategory> categories = new ArrayList<>() {
             {
-                add(new NavigatorResultCategory(0, tabName, query, NavigatorListAction.NONE, NavigatorDisplayMode.LIST, NavigatorLayoutDisplay.DEFAULT, rooms, false, false, NavigatorDisplayOrder.ACTIVITY, -1));
+                this.add(new NavigatorResultCategory(0, tabName, query, NavigatorListAction.NONE, NavigatorDisplayMode.LIST, NavigatorLayoutDisplay.DEFAULT, rooms, false, false, NavigatorDisplayOrder.ACTIVITY, -1));
             }
         };
 

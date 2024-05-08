@@ -11,25 +11,25 @@ import java.util.List;
 public class RoomWallItemsComposer extends OutgoingPacket {
     public RoomWallItemsComposer(List<String> owners, Collection<IWallItem> allItems) {
         super(OutgoingHeaders.RoomWallItemsComposer);
-        appendInt(owners.size());
+        this.appendInt(owners.size());
         for (var i = 0; i < owners.size(); i++) {
-            appendInt(i);
-            appendString(owners.get(i));
+            this.appendInt(i);
+            this.appendString(owners.get(i));
         }
 
-        appendInt(allItems.size());
+        this.appendInt(allItems.size());
         for (var item : allItems) {
             item.serializeItemIdentity(this);
             item.serializePosition(this);
             item.getExtraData().serializeState(this);
-            appendInt(-1, "expiration timeout");
-            appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
+            this.appendInt(-1, "expiration timeout");
+            this.appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
 
             if (item.getOwnerData() != null && item.getOwnerData().isPresent()) {
                 var owner = item.getOwnerData().get();
-                appendInt(owner.getId());
+                this.appendInt(owner.getId());
             } else {
-                appendInt(0);
+                this.appendInt(0);
             }
         }
     }

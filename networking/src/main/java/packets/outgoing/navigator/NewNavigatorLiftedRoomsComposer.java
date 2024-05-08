@@ -7,6 +7,6 @@ public class NewNavigatorLiftedRoomsComposer extends OutgoingPacket {
     public NewNavigatorLiftedRoomsComposer() {
         super(OutgoingHeaders.NewNavigatorLiftedRoomsComposer);
 
-        appendInt(0);
+        this.appendInt(0);
     }
 }

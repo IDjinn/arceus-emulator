@@ -6,8 +6,8 @@ import packets.outgoing.OutgoingHeaders;
 public class UserPermissionsComposer extends OutgoingPacket {
     public UserPermissionsComposer() {
         super(OutgoingHeaders.UserPermissionsComposer);
-        appendInt(2);
-        appendInt(1);
-        appendBoolean(false);
+        this.appendInt(2);
+        this.appendInt(1);
+        this.appendBoolean(false);
     }
 }

@@ -9,13 +9,13 @@ import java.util.List;
 public class RoomEntitiesComposer extends OutgoingPacket {
     public RoomEntitiesComposer(IRoomEntity entity) {
         super(OutgoingHeaders.RoomEntitiesComposer);
-        appendInt(1);
+        this.appendInt(1);
         entity.serialize(this);
     }
 
     public RoomEntitiesComposer(List<IRoomEntity> entities) {
         super(OutgoingHeaders.RoomEntitiesComposer);
-        appendInt(entities.size());
+        this.appendInt(entities.size());
         for (IRoomEntity entity : entities) {
             entity.serialize(this);
         }

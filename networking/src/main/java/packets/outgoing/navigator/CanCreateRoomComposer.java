@@ -8,7 +8,7 @@ public class CanCreateRoomComposer extends OutgoingPacket {
         super(OutgoingHeaders.CanCreateRoomComposer);
 
         // TODO
-        appendInt(0); // 0 = can create room, 1 = room limit reached
-        appendInt(50); // room limit
+        this.appendInt(0); // 0 = can create room, 1 = room limit reached
+        this.appendInt(50); // room limit
     }
 }

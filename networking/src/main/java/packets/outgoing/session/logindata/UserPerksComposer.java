@@ -7,67 +7,67 @@ import packets.outgoing.OutgoingHeaders;
 public class UserPerksComposer extends OutgoingPacket {
     public UserPerksComposer(IHabbo habbo) {
         super(OutgoingHeaders.UserPerksComposer);
-        appendInt(15);
+        this.appendInt(15);
 
-        appendString("USE_GUIDE_TOOL");
-        appendString("requirement.unfulfilled.helper_level_4");
-        appendBoolean(false);
+        this.appendString("USE_GUIDE_TOOL");
+        this.appendString("requirement.unfulfilled.helper_level_4");
+        this.appendBoolean(false);
 
-        appendString("GIVE_GUIDE_TOURS");
-        appendString("");
-        appendBoolean(false);
+        this.appendString("GIVE_GUIDE_TOURS");
+        this.appendString("");
+        this.appendBoolean(false);
 
-        appendString("JUDGE_CHAT_REVIEWS");
-        appendString("requirement.unfulfilled.helper_level_6");
-        appendBoolean(false);
+        this.appendString("JUDGE_CHAT_REVIEWS");
+        this.appendString("requirement.unfulfilled.helper_level_6");
+        this.appendBoolean(false);
 
-        appendString("VOTE_IN_COMPETITIONS");
-        appendString("requirement.unfulfilled.helper_level_2");
-        appendBoolean(true);
+        this.appendString("VOTE_IN_COMPETITIONS");
+        this.appendString("requirement.unfulfilled.helper_level_2");
+        this.appendBoolean(true);
 
-        appendString("CALL_ON_HELPERS");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("CALL_ON_HELPERS");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("CITIZEN");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("CITIZEN");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("TRADE");
-        appendString("requirement.unfulfilled.no_trade_lock");
-        appendBoolean(true);
+        this.appendString("TRADE");
+        this.appendString("requirement.unfulfilled.no_trade_lock");
+        this.appendBoolean(true);
 
-        appendString("HEIGHTMAP_EDITOR_BETA");
-        appendString("requirement.unfulfilled.feature_disabled");
-        appendBoolean(true);
+        this.appendString("HEIGHTMAP_EDITOR_BETA");
+        this.appendString("requirement.unfulfilled.feature_disabled");
+        this.appendBoolean(true);
 
-        appendString("BUILDER_AT_WORK");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("BUILDER_AT_WORK");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("CALL_ON_HELPERS");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("CALL_ON_HELPERS");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("CAMERA");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("CAMERA");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("NAVIGATOR_PHASE_TWO_2014");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("NAVIGATOR_PHASE_TWO_2014");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("MOUSE_ZOOM");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("MOUSE_ZOOM");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("NAVIGATOR_ROOM_THUMBNAIL_CAMERA");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("NAVIGATOR_ROOM_THUMBNAIL_CAMERA");
+        this.appendString("");
+        this.appendBoolean(true);
 
-        appendString("HABBO_CLUB_OFFER_BETA");
-        appendString("");
-        appendBoolean(true);
+        this.appendString("HABBO_CLUB_OFFER_BETA");
+        this.appendString("");
+        this.appendBoolean(true);
 
     }
 }

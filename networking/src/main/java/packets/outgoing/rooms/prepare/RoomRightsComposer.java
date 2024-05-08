@@ -7,6 +7,6 @@ import packets.outgoing.OutgoingHeaders;
 public class RoomRightsComposer extends OutgoingPacket {
     public RoomRightsComposer(RoomRightLevel level) {
         super(OutgoingHeaders.RoomRightsComposer);
-        appendInt(level.ordinal());
+        this.appendInt(level.ordinal());
     }
 }

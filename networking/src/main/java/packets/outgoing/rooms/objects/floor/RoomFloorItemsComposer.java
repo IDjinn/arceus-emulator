@@ -11,28 +11,28 @@ import java.util.List;
 public class RoomFloorItemsComposer extends OutgoingPacket {
     public RoomFloorItemsComposer(List<String> owners, Collection<IFloorItem> allItems) {
         super(OutgoingHeaders.RoomFloorItemsComposer);
-        appendInt(owners.size());
+        this.appendInt(owners.size());
         for (var i = 0; i < owners.size(); i++) {
-            appendInt(i);
-            appendString(owners.get(i));
+            this.appendInt(i);
+            this.appendString(owners.get(i));
         }
 
-        appendInt(allItems.size());
+        this.appendInt(allItems.size());
         for (var item : allItems) {
             item.serializeItemIdentity(this);
             item.serializePosition(this);
 
-            appendInt(1, "gift, song or something. It seems to be the extraData state (integer) of legacy data"); // TODO
+            this.appendInt(1, "gift, song or something. It seems to be the extraData state (integer) of legacy data"); // TODO
 
             item.getExtraData().serialize(this);
-            appendInt(-1, "expiration timeout");
-            appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
+            this.appendInt(-1, "expiration timeout");
+            this.appendInt(FurnitureUsagePolicy.Controller.ordinal()); // TODO:FURNITURE USAGE
 
             if (item.getOwnerData() != null && item.getOwnerData().isPresent()) {
                 var owner = item.getOwnerData().get();
-                appendInt(owner.getId());
+                this.appendInt(owner.getId());
             } else {
-                appendInt(0);
+                this.appendInt(0);
             }
         }
     }

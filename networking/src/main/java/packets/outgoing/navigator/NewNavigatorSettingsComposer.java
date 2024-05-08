@@ -8,11 +8,11 @@ public class NewNavigatorSettingsComposer extends OutgoingPacket {
     public NewNavigatorSettingsComposer(final IHabboNavigatorWindowSettings settings) {
         super(OutgoingHeaders.NewNavigatorSettingsComposer);
 
-        appendInt(settings.getWindowX());
-        appendInt(settings.getWindowY());
-        appendInt(settings.getWindowWidth());
-        appendInt(settings.getWindowHeight());
-        appendBoolean(settings.isLeftPanelCollapsed());
-        appendInt(settings.getResultsMode());
+        this.appendInt(settings.getWindowX());
+        this.appendInt(settings.getWindowY());
+        this.appendInt(settings.getWindowWidth());
+        this.appendInt(settings.getWindowHeight());
+        this.appendBoolean(settings.isLeftPanelCollapsed());
+        this.appendInt(settings.getResultsMode());
     }
 }

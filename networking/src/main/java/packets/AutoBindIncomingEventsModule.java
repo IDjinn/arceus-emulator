@@ -12,7 +12,7 @@ public class AutoBindIncomingEventsModule extends AbstractModule {
         Reflections reflections = new Reflections(IncomingEvent.class.getPackage().getName());
         for (Class<?> clazz : reflections.getSubTypesOf(IncomingEvent.class)) {
             if (Modifier.isAbstract(clazz.getModifiers())) continue;
-            bind((Class<? extends IncomingEvent>) clazz);
+            this.bind((Class<? extends IncomingEvent>) clazz);
         }
     }
 }

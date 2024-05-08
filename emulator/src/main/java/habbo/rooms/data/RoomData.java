@@ -298,7 +298,7 @@ public class RoomData implements IRoomData, IFillable {
 
     @Override
     public PathfinderMode getPathfinderMode() {
-        return pathfinderMode;
+        return this.pathfinderMode;
     }
 
     @Override

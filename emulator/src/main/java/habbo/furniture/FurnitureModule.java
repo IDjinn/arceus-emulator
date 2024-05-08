@@ -6,8 +6,8 @@ import habbo.furniture.factory.FurnitureFactory;
 public class FurnitureModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(IFurnitureManager.class).to(FurnitureManager.class);
-        bind(IFurnitureFactory.class).to(FurnitureFactory.class);
-        bind(IFurnitureManager.class).to(FurnitureManager.class);
+        this.bind(IFurnitureManager.class).to(FurnitureManager.class);
+        this.bind(IFurnitureFactory.class).to(FurnitureFactory.class);
+        this.bind(IFurnitureManager.class).to(FurnitureManager.class);
     }
 }

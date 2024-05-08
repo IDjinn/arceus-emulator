@@ -7,6 +7,6 @@ import packets.outgoing.OutgoingHeaders;
 public class AchievementListComposer extends OutgoingPacket {
     public AchievementListComposer(IHabbo habbo) {
         super(OutgoingHeaders.AchievementListComposer);
-        appendInt(0);
+        this.appendInt(0);
     }
 }

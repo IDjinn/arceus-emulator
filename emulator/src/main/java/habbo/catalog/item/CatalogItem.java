@@ -129,7 +129,7 @@ public class CatalogItem implements ICatalogItem {
 
     @Override
     public boolean isBadgeOnly() {
-        return hasBadge() && this.items.isEmpty();
+        return this.hasBadge() && this.items.isEmpty();
     }
 
     @Override
@@ -193,10 +193,10 @@ public class CatalogItem implements ICatalogItem {
         {
             packet.appendString(this.getFurniture().getType().toString())
                     .appendInt(this.getFurniture().getSpriteId())
-                    .appendString(getPresetData(), "extraData")
+                    .appendString(this.getPresetData(), "extraData")
                     .appendInt(this.getAmount(), "itemAmount")
-                    .appendBoolean(getLimitedTotal() > 0, "isLimited");
-            if (getLimitedTotal() > 0) {
+                    .appendBoolean(this.getLimitedTotal() > 0, "isLimited");
+            if (this.getLimitedTotal() > 0) {
                 packet.appendInt(this.getLimitedTotal());
                 packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
             }

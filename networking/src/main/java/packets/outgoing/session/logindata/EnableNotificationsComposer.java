@@ -6,6 +6,6 @@ import packets.outgoing.OutgoingHeaders;
 public class EnableNotificationsComposer extends OutgoingPacket {
     public EnableNotificationsComposer() {
         super(OutgoingHeaders.EnableNotificationsComposer);
-        appendBoolean(true);
+        this.appendBoolean(true);
     }
 }

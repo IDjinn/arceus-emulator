@@ -20,7 +20,7 @@ public class Position3d implements Poolable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y, z);
+        return Objects.hash(this.x, this.y, this.z);
     }
 
     @Override

@@ -6,7 +6,7 @@ import packets.outgoing.OutgoingHeaders;
 public class UserHomeRoomComposer extends OutgoingPacket {
     public UserHomeRoomComposer(int homeRoom, int roomToEnter) {
         super(OutgoingHeaders.UserHomeRoomComposer);
-        appendInt(homeRoom);
-        appendInt(roomToEnter);
+        this.appendInt(homeRoom);
+        this.appendInt(roomToEnter);
     }
 }

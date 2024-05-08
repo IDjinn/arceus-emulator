@@ -15,12 +15,12 @@ import habbo.rooms.components.variables.RoomVariablesManager;
 public class RoomModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(IRoomFactory.class).to(RoomFactory.class);
-        bind(IRoomManager.class).to(RoomManager.class);
-        bind(IPathfinder.class).to(Pathfinder.class);
-        bind(IRoomGameMap.class).to(RoomGameMap.class);
-        bind(IRoomEntityManager.class).to(RoomEntityManager.class);
-        bind(IRoomRightsManager.class).to(RoomRightsManager.class);
-        bind(IRoomVariablesManager.class).to(RoomVariablesManager.class);
+        this.bind(IRoomFactory.class).to(RoomFactory.class);
+        this.bind(IRoomManager.class).to(RoomManager.class);
+        this.bind(IPathfinder.class).to(Pathfinder.class);
+        this.bind(IRoomGameMap.class).to(RoomGameMap.class);
+        this.bind(IRoomEntityManager.class).to(RoomEntityManager.class);
+        this.bind(IRoomRightsManager.class).to(RoomRightsManager.class);
+        this.bind(IRoomVariablesManager.class).to(RoomVariablesManager.class);
     }
 }

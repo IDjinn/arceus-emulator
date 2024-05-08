@@ -81,7 +81,7 @@ public class IncomingPacket implements IIncomingPacket {
 
     @Override
     public String readString() {
-        return readString(Sanitizer.PlainText, (short) DEFAULT_MAX_STRING_LENGTH);
+        return this.readString(Sanitizer.PlainText, (short) DEFAULT_MAX_STRING_LENGTH);
     }
 
     @Override

@@ -6,7 +6,7 @@ import packets.outgoing.OutgoingHeaders;
 public class FavoriteRoomsCountComposer extends OutgoingPacket {
     public FavoriteRoomsCountComposer() {
         super(OutgoingHeaders.FavoriteRoomsCountComposer);
-        appendInt(30);
-        appendInt(0);
+        this.appendInt(30);
+        this.appendInt(0);
     }
 }

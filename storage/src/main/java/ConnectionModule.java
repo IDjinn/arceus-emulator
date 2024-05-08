@@ -9,9 +9,9 @@ import storage.providers.IConnectionProvider;
 public class ConnectionModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(IConnector.class).to(HikariConnector.class);
-        bind(IConnectionProvider.class).to(ConnectionProvider.class);
-        bind(IConnectionContext.class).to(ConnectionContext.class);
-        bind(IConnection.class).to(Connection.class);
+        this.bind(IConnector.class).to(HikariConnector.class);
+        this.bind(IConnectionProvider.class).to(ConnectionProvider.class);
+        this.bind(IConnectionContext.class).to(ConnectionContext.class);
+        this.bind(IConnection.class).to(Connection.class);
     }
 }

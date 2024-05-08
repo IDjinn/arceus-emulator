@@ -6,8 +6,8 @@ import packets.outgoing.OutgoingHeaders;
 public class AvailabilityStatusMessageComposer extends OutgoingPacket {
     public AvailabilityStatusMessageComposer() {
         super(OutgoingHeaders.AvailabilityStatusMessageComposer);
-        appendBoolean(true);
-        appendBoolean(false);
-        appendBoolean(true);
+        this.appendBoolean(true);
+        this.appendBoolean(false);
+        this.appendBoolean(true);
     }
 }

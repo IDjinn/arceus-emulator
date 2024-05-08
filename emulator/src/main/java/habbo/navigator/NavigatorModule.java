@@ -7,8 +7,8 @@ import habbo.navigator.services.NavigatorSearchService;
 public class NavigatorModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(INavigatorManager.class).to(NavigatorManager.class);
-        bind(INavigatorSearchService.class).to(NavigatorSearchService.class);
-        bind(INavigatorRoomsProvider.class).to(NavigatorRoomsProvider.class);
+        this.bind(INavigatorManager.class).to(NavigatorManager.class);
+        this.bind(INavigatorSearchService.class).to(NavigatorSearchService.class);
+        this.bind(INavigatorRoomsProvider.class).to(NavigatorRoomsProvider.class);
     }
 }
