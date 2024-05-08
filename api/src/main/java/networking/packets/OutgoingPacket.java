@@ -1,5 +1,6 @@
 package networking.packets;
 
+import habbo.internationalization.LocalizedString;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
@@ -45,6 +46,9 @@ public class OutgoingPacket {
         return this;
     }
 
+    public OutgoingPacket appendString(LocalizedString localizedString) {
+        return this.appendString(localizedString.getKey(), StringEmpty);
+    }
     public OutgoingPacket appendString(String string) {
         return this.appendString(string, StringEmpty);
     }

@@ -1,6 +1,6 @@
 package habbo.commands;
 
-import habbo.commands.arguments.ICommandArgument;
+import habbo.commands.parameters.ICommandParameter;
 import habbo.internationalization.LocalizedString;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ public interface ICommand {
 
     @NotNull LocalizedString getDescription();
 
-    default List<ICommandArgument> getParameters() {
+    default List<ICommandParameter> getParameters() {
         return List.of();
     }
 

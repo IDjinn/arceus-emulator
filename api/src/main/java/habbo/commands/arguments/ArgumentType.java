@@ -9,21 +9,22 @@ public enum ArgumentType {
     Double(4),
     String(5),
 
-    TargetHabbo(7),
-    TargetEntity(8),
-    TargetRoom(9),
+    TargetHabbo(6),
+    TargetEntity(7),
+    TargetRoom(8),
+    TargetItem(9),
 
     Custom(10),
     ;
 
-    private final int type;
+    private final int code;
 
-    ArgumentType(final int type) {
-        this.type = type;
+    ArgumentType(final int code) {
+        this.code = code;
     }
 
-    public int getType() {
-        return this.type;
+    public int getCode() {
+        return this.code;
     }
 
     public static ArgumentType fromType(int type) {
