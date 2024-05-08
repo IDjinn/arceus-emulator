@@ -21,4 +21,6 @@ public interface IVariableManager {
     void removeVariable(@NotNull String key);
 
     void tick();
+
+    IVariableMessageFactory getFormatter();
 }

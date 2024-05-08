@@ -1,19 +1,26 @@
 package habbo.commands.generic;
 
+import com.google.inject.Inject;
 import habbo.commands.ICommand;
 import habbo.commands.ICommandContext;
+import habbo.habbos.IHabboManager;
 import habbo.internationalization.LocalizedString;
+import habbo.variables.Variable;
 import org.jetbrains.annotations.NotNull;
 
 public class AboutCommand implements ICommand {
+    @Inject
+    private IHabboManager habboManager;
+    
     private static final LocalizedString name = LocalizedString.of("command.about.name");
     private static final LocalizedString[] alias = new LocalizedString[]{};
     private static final LocalizedString description = LocalizedString.of("command.about.description");
-    private static final LocalizedString response = LocalizedString.of("command.about.response", "hello world!");
 
     @Override
     public void execute(final ICommandContext ctx) {
-        ctx.whisper(response);
+        ctx.whisper(LocalizedString.of("command.about.response",
+                new Variable("hotel.users.count", String.valueOf(this.habboManager.onlineUsersCount())))
+        );
     }
 
     @Override
@@ -29,10 +36,5 @@ public class AboutCommand implements ICommand {
     @Override
     public @NotNull LocalizedString getDescription() {
         return description;
-    }
-
-    @Override
-    public Object[] getParameters() {
-        return new Object[0];
     }
 }

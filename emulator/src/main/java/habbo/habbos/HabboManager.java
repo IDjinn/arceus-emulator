@@ -128,4 +128,9 @@ public class HabboManager implements IHabboManager {
             this.connectedHabbosByUsername.remove(habbo.getData().getUsername());
         }
     }
+
+    @Override
+    public int onlineUsersCount() {
+        return this.connectedHabbos.size();
+    }
 }

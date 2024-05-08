@@ -42,6 +42,7 @@ public class CommandManager implements ICommandManager {
 
     @Override
     public void registerCommand(@NotNull final ICommand command) {
+        this.injector.injectMembers(command);
         for (final String localizedName : this.internationalizationManager.getAllLocalizedStrings(command.getName())) {
             this.commands.putIfAbsent(localizedName, command);
         }

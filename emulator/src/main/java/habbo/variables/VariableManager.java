@@ -1,5 +1,6 @@
 package habbo.variables;
 
+import com.google.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,11 +10,14 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class VariableManager implements IVariableManager {
+    private final VariableMessageFactory messageFormatter;
     private final Map<String, IVariable> variables;
     private boolean needUpdate;
 
+    @Inject
     public VariableManager() {
         this.variables = new ConcurrentHashMap<>();
+        this.messageFormatter = new VariableMessageFactory();
     }
 
 
@@ -69,5 +73,10 @@ public class VariableManager implements IVariableManager {
                 this.removeVariable(variable.getKey());
             }
         }
+    }
+
+    @Override
+    public IVariableMessageFactory getFormatter() {
+        return this.messageFormatter;
     }
 }

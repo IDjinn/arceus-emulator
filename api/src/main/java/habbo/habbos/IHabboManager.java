@@ -26,4 +26,6 @@ public interface IHabboManager {
     void onLogin(final IHabbo habbo);
 
     void onLogoff(final IHabbo habbo);
+
+    int onlineUsersCount();
 }

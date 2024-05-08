@@ -1,5 +1,5 @@
 package habbo.commands.arguments;
 
-public interface IOptionArgument {
+public interface IOptionArgument extends ICommandArgument {
     ArgumentType getOptionType();
 }

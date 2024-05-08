@@ -29,6 +29,10 @@ import habbo.navigator.NavigatorModule;
 import habbo.permissions.PermissionModule;
 import habbo.rooms.RoomModule;
 import habbo.rooms.components.objects.RoomObjectModule;
+import habbo.variables.IVariableManager;
+import habbo.variables.IVariableMessageFactory;
+import habbo.variables.VariableManager;
+import habbo.variables.VariableMessageFactory;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
@@ -93,6 +97,8 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IProcessHandler.class).to(ProcessHandler.class);
         this.bind(IPluginManager.class).to(PluginManager.class);
         this.bind(IEventHandler.class).to(EventHandler.class);
+        this.bind(IVariableManager.class).to(VariableManager.class);
+        this.bind(IVariableMessageFactory.class).to(VariableMessageFactory.class);
     }
 
     @Override
