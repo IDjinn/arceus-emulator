@@ -11,9 +11,9 @@ import habbo.habbos.providers.ILoginProvider;
 public class HabboModule extends AbstractModule {
     @Override
     protected void configure() {
-        bind(IHabboManager.class).to(HabboManager.class);
-        bind(ILoginProvider.class).to(HabboLoginProvider.class);
-        bind(IHabboFactory.class).to(HabboFactory.class);
-        bind(IHabboInventoryItemFactory.class).to(HabboInventoryItemFactory.class);
+        this.bind(IHabboManager.class).to(HabboManager.class);
+        this.bind(ILoginProvider.class).to(HabboLoginProvider.class);
+        this.bind(IHabboFactory.class).to(HabboFactory.class);
+        this.bind(IHabboInventoryItemFactory.class).to(HabboInventoryItemFactory.class);
     }
 }

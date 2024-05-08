@@ -12,4 +12,12 @@ public interface IHabboComponent {
     }
 
     IHabbo getHabbo();
+
+    void requestFriendship(IHabbo habbo);
+    
+    void removeFriendship(IHabbo habbo);
+
+    void acceptFriendship(IHabbo habbo);
+
+    boolean friendHasRequestedFriendship(IHabbo habbo);
 }
