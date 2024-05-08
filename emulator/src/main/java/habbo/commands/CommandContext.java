@@ -1,6 +1,7 @@
 package habbo.commands;
 
 import com.google.inject.Inject;
+import habbo.commands.arguments.ArgumentType;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
@@ -19,6 +20,7 @@ public class CommandContext implements ICommandContext {
     private final String commandName;
     private final String[] arguments;
     private int currentArg;
+    private boolean isError;
 
     public CommandContext(@NotNull IPlayerEntity player, @NotNull String commandName, @NotNull String[] arguments) {
         this.player = player;
@@ -100,5 +102,22 @@ public class CommandContext implements ICommandContext {
     @Override
     public void talk(final LocalizedString message) {
         this.player.getRoom().getEntityManager().talk(this.player, message, 0);
+    }
+
+    @Override
+    public Optional<Object> error(final LocalizedString message) {
+        this.whisper(message);
+        this.isError = true;
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Object> error(final ArgumentType type, final LocalizedString message) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean isError() {
+        return this.isError;
     }
 }

@@ -3,6 +3,7 @@ package habbo.commands;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import habbo.commands.generic.AboutCommand;
+import habbo.commands.user.currencies.PayCommand;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.internationalization.LocalizedString;
@@ -28,6 +29,7 @@ public class CommandManager implements ICommandManager {
         this.commands = new HashMap<>();
 
         this.registerCommand(new AboutCommand());
+        this.registerCommand(new PayCommand());
     }
 
     @Override

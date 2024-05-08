@@ -1,5 +1,6 @@
 package habbo.commands;
 
+import habbo.commands.arguments.ArgumentType;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
@@ -34,4 +35,10 @@ public interface ICommandContext {
     void shout(LocalizedString message);
 
     void talk(LocalizedString message);
+
+    Optional<Object> error(LocalizedString message);
+
+    Optional<Object> error(ArgumentType type, LocalizedString message);
+
+    boolean isError();
 }

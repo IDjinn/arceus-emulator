@@ -1,5 +1,7 @@
 package habbo.commands.arguments;
 
+import java.util.List;
+
 public interface IChoiceArguments extends ICommandArgument {
-    ArgumentType[] getChoices();
+    List<ICommandArgument> getChoices();
 }

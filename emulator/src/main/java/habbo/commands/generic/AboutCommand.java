@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 public class AboutCommand implements ICommand {
     @Inject
     private IHabboManager habboManager;
-    
-    private static final LocalizedString name = LocalizedString.of("command.about.name");
+
+    private static final LocalizedString name = LocalizedString.of("command.generic.about.name");
     private static final LocalizedString[] alias = new LocalizedString[]{};
-    private static final LocalizedString description = LocalizedString.of("command.about.description");
+    private static final LocalizedString description = LocalizedString.of("command.generic.about.description");
 
     @Override
     public void execute(final ICommandContext ctx) {
-        ctx.whisper(LocalizedString.of("command.about.response",
+        ctx.whisper(LocalizedString.of("command.generic.about.response",
                 new Variable("hotel.users.count", String.valueOf(this.habboManager.onlineUsersCount())))
         );
     }
