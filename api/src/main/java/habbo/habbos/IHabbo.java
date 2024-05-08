@@ -4,6 +4,7 @@ import habbo.habbos.data.IHabboData;
 import habbo.habbos.data.IHabboNavigator;
 import habbo.habbos.data.IHabboRooms;
 import habbo.habbos.data.IHabboSettings;
+import habbo.habbos.data.badges.IHabboBadgesComponent;
 import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
@@ -45,4 +46,6 @@ public interface IHabbo {
     IHabboRooms getRooms();
 
     IHabboWallet getWallet();
+
+    IHabboBadgesComponent getBadgesComponent();
 }

@@ -4,6 +4,6 @@ import habbo.habbos.IHabbo;
 import habbo.habbos.IHabboComponent;
 import habbo.variables.IVariableManager;
 
-public interface IHabboVariablesManager extends IVariableManager, IHabboComponent {
+public interface IHabboVariablesComponent extends IVariableManager, IHabboComponent {
     IHabbo getHabbo();
 }

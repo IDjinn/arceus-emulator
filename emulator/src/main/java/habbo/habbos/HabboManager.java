@@ -22,11 +22,13 @@ public class HabboManager implements IHabboManager {
     private final Cache<Integer, IHabboData> habboDataCache;
     private final Cache<String, IHabboData> habboDataCacheByUsername;
     private final Map<Integer, IHabbo> connectedHabbos;
+    private final Map<String, IHabbo> connectedHabbosByUsername;
 
     @Inject
     public HabboManager(IHotel hotel) {
         this.hotel = hotel;
         this.connectedHabbos = new ConcurrentHashMap<>();
+        this.connectedHabbosByUsername = new ConcurrentHashMap<>();
 
         this.hotel.getProcessHandler().registerProcess(HabboManager.class.getSimpleName(), this::updateHabbos, 5, 5,
                 TimeUnit.MINUTES);
@@ -54,12 +56,7 @@ public class HabboManager implements IHabboManager {
 
     @Override
     public Optional<IHabbo> getOnlineHabboByUsername(final String name) { // TODO IGNORE CASE, CULTURE ETC
-        for (final IHabbo habbo : this.connectedHabbos.values()) {
-            if (habbo.getData().getUsername().equals(name)) {
-                return Optional.of(habbo);
-            }
-        }
-        return Optional.empty();
+        return Optional.ofNullable(this.connectedHabbosByUsername.get(name));
     }
 
     @Override
@@ -69,6 +66,26 @@ public class HabboManager implements IHabboManager {
 
     public Optional<IHabboData> getHabboData(int id) {
         return Optional.ofNullable(this.habboDataCache.getIfPresent(id));
+    }
+
+    @Override
+    public Optional<IHabbo> getOnlineHabbo(final int id) {
+        return Optional.ofNullable(this.connectedHabbos.get(id));
+    }
+
+    @Override
+    public Optional<IHabbo> getOnlineHabbo(final String name) {
+        return Optional.ofNullable(this.connectedHabbosByUsername.get(name));
+    }
+
+    @Override
+    public boolean isOnline(final String name) {
+        return this.connectedHabbosByUsername.containsKey(name);
+    }
+
+    @Override
+    public boolean isOnline(final int id) {
+        return this.connectedHabbos.containsKey(id);
     }
 
     @Override
@@ -87,6 +104,7 @@ public class HabboManager implements IHabboManager {
     @Override
     public void onLogin(final IHabbo habbo) {
         this.connectedHabbos.put(habbo.getData().getId(), habbo);
+        this.connectedHabbosByUsername.put(habbo.getData().getUsername(), habbo);
         this.cache(habbo.getData());
         habbo.onLoaded();
     }
@@ -107,6 +125,7 @@ public class HabboManager implements IHabboManager {
         } finally {
             this.invalidateCache(habbo.getData().getId());
             this.connectedHabbos.remove(habbo.getData().getId());
+            this.connectedHabbosByUsername.remove(habbo.getData().getUsername());
         }
     }
 }

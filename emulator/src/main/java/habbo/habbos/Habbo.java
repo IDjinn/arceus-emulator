@@ -2,6 +2,8 @@ package habbo.habbos;
 
 import com.google.inject.Injector;
 import habbo.habbos.data.*;
+import habbo.habbos.data.badges.HabboBadgesComponent;
+import habbo.habbos.data.badges.IHabboBadgesComponent;
 import habbo.habbos.data.wallet.HabboWallet;
 import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
@@ -27,6 +29,7 @@ public class Habbo implements IHabbo {
 
     private final IHabboRooms rooms;
     private final IHabboWallet wallet;
+    private final IHabboBadgesComponent badgesComponent;
 
     public Habbo(final Injector injector, IClient client, IConnectionResult result) {
         this.client = client;
@@ -37,6 +40,7 @@ public class Habbo implements IHabbo {
         this.navigator = new HabboNavigator(this, result);
         this.rooms = new HabboRooms(this);
         this.wallet = new HabboWallet(this);
+        this.badgesComponent = new HabboBadgesComponent(this);
 
         this.injectDependenciesOnComponents(injector);
     }
@@ -48,6 +52,7 @@ public class Habbo implements IHabbo {
         injector.injectMembers(this.navigator);
         injector.injectMembers(this.rooms);
         injector.injectMembers(this.wallet);
+        injector.injectMembers(this.badgesComponent);
     }
 
     @Override
@@ -58,6 +63,7 @@ public class Habbo implements IHabbo {
         this.navigator.init();
         this.rooms.init();
         this.wallet.init();
+        this.badgesComponent.init();
     }
 
     @Override
@@ -73,6 +79,7 @@ public class Habbo implements IHabbo {
         this.navigator.update();
         this.rooms.update();
         this.wallet.update();
+        this.badgesComponent.update();
     }
 
     @Override
@@ -85,6 +92,7 @@ public class Habbo implements IHabbo {
         this.navigator.destory();
         this.rooms.destory();
         this.wallet.destory();
+        this.badgesComponent.destory();
     }
 
 
@@ -142,6 +150,11 @@ public class Habbo implements IHabbo {
     @Override
     public IHabboWallet getWallet() {
         return this.wallet;
+    }
+
+    @Override
+    public IHabboBadgesComponent getBadgesComponent() {
+        return this.badgesComponent;
     }
 }
 
