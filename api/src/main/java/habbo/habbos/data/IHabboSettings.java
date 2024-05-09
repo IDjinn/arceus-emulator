@@ -3,6 +3,8 @@ package habbo.habbos.data;
 import habbo.habbos.IHabboComponent;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Optional;
+
 public interface IHabboSettings extends IHabboComponent {
     Logger getLogger();
 
@@ -81,4 +83,6 @@ public interface IHabboSettings extends IHabboComponent {
     int getLastHCPayday();
 
     int getHcGiftsClaimed();
+
+    Optional<String> getBanner();
 }

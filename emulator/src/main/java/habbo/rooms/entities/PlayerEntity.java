@@ -4,6 +4,7 @@ import habbo.habbos.IHabbo;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.variables.IEntityVariableManager;
+import habbo.variables.IVariable;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
@@ -41,14 +42,23 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendInt(this.getPosition().getY())
                 .appendString(String.valueOf(this.getPosition().getZ()))
                 .appendInt(this.getDirection().ordinal())
-                .appendInt(1) // 1 == habbo type
-                .appendString("M")
-                .appendInt(-1)
-                .appendInt(-1)
-                .appendString("") // guild name
-                .appendString("")
+                .appendInt(1, "habbo type")
+                .appendString(this.getHabbo().getData().getGender())
+                .appendInt(-1, "group id")
+                .appendInt(-1, "group status")
+                .appendString("", "guild name")
+                .appendString("", "swim figure")
                 .appendInt(this.getHabbo().getSettings().getAchievementScore())
-                .appendBoolean(true);
+                .appendBoolean(true, "is moderator")
+                .appendString(this.getHabbo().getSettings().getBanner().orElse(""))
+        ;
+
+        final var visibleVariables =
+                this.getEntityVariablesManager().getVariables().values().stream().filter(IVariable::isVisible).toList();
+        packet.appendInt(visibleVariables.size());
+        for (final var variable : visibleVariables) {
+            variable.serialize(packet);
+        }
     }
 
     @Override

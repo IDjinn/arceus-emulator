@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
 
+import java.util.Optional;
+
 public class HabboSettings implements IHabboSettings, IFillable {
     private static final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
@@ -212,6 +214,11 @@ public class HabboSettings implements IHabboSettings, IFillable {
 
     public int getHcGiftsClaimed() {
         return this.hcGiftsClaimed;
+    }
+
+    @Override
+    public Optional<String> getBanner() {
+        return Optional.of("https://i.redd.it/8kpckawsj7j11.gif");
     }
 
     @Override
