@@ -1,4 +1,4 @@
-package habbo.commands.parameters;
+package habbo.commands.helpers.parameters;
 
 public enum CommandParameterType {
     Required(0),

@@ -1,8 +1,8 @@
-package habbo.commands.arguments;
+package habbo.commands.helpers.arguments;
 
 import habbo.commands.ICommandContext;
-import habbo.commands.parameters.CommandParameterType;
-import habbo.commands.parameters.ICommandParameter;
+import habbo.commands.helpers.parameters.CommandParameterType;
+import habbo.commands.helpers.parameters.ICommandParameter;
 import networking.packets.OutgoingPacket;
 
 import java.util.Optional;

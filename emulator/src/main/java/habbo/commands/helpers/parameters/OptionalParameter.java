@@ -1,21 +1,21 @@
-package habbo.commands.parameters;
+package habbo.commands.helpers.parameters;
 
 import networking.packets.OutgoingPacket;
 
-public class RequiredParameter implements ICommandParameter {
+public class OptionalParameter implements ICommandParameter {
     private final ICommandParameter parameter;
 
-    public RequiredParameter(final ICommandParameter parameter) {
+    public OptionalParameter(final ICommandParameter parameter) {
         this.parameter = parameter;
     }
 
-    public static RequiredParameter of(final ICommandParameter parameter) {
-        return new RequiredParameter(parameter);
+    public static OptionalParameter of(final ICommandParameter parameter) {
+        return new OptionalParameter(parameter);
     }
 
     @Override
     public CommandParameterType getParameterType() {
-        return CommandParameterType.Required;
+        return CommandParameterType.Optional;
     }
 
     @Override

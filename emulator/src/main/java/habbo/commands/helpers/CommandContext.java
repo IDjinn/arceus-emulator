@@ -1,8 +1,10 @@
-package habbo.commands;
+package habbo.commands.helpers;
 
 import com.google.inject.Inject;
-import habbo.commands.arguments.ArgumentType;
-import habbo.commands.arguments.ICommandArgument;
+import habbo.commands.ICommandContext;
+import habbo.commands.ICommandHelpers;
+import habbo.commands.helpers.arguments.ArgumentType;
+import habbo.commands.helpers.arguments.ICommandArgument;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;

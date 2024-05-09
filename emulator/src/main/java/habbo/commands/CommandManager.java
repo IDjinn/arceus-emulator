@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import habbo.commands.generic.AboutCommand;
 import habbo.commands.generic.LayCommand;
 import habbo.commands.generic.SitCommand;
+import habbo.commands.helpers.CommandContext;
 import habbo.commands.user.currencies.PayCommand;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;

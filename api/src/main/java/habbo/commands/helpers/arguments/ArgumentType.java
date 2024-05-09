@@ -1,4 +1,4 @@
-package habbo.commands.arguments;
+package habbo.commands.helpers.arguments;
 
 public enum ArgumentType {
     Unknown(-1),

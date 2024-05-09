@@ -1,6 +1,6 @@
 package habbo.commands;
 
-import habbo.commands.parameters.ICommandParameter;
+import habbo.commands.helpers.parameters.ICommandParameter;
 import habbo.internationalization.LocalizedString;
 import org.jetbrains.annotations.NotNull;
 

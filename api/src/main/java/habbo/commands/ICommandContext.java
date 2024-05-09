@@ -1,7 +1,7 @@
 package habbo.commands;
 
-import habbo.commands.arguments.ArgumentType;
-import habbo.commands.arguments.ICommandArgument;
+import habbo.commands.helpers.arguments.ArgumentType;
+import habbo.commands.helpers.arguments.ICommandArgument;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
