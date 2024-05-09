@@ -3,12 +3,17 @@ package habbo.rooms.entities;
 import com.google.inject.Inject;
 import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
+import habbo.rooms.RoomRightLevel;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
+import habbo.rooms.entities.status.RoomEntityStatus;
+import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariableManager;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
+
+import java.util.Objects;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     public static final double PLAYER_HEIGHT = 2d;
@@ -22,6 +27,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
         this.entityVariableManager = new EntityVariablesManager(this);
+        this.setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, "0"));
     }
 
     @Override
@@ -32,6 +38,11 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     @Override
     public IClient getClient() {
         return this.getHabbo().getClient();
+    }
+
+    @Override
+    public boolean hasRights() {
+        return Integer.parseInt(Objects.requireNonNull(this.getStatus().get(RoomEntityStatus.FLAT_CONTROL).getValue())) > RoomRightLevel.None.ordinal();
     }
 
     @Override

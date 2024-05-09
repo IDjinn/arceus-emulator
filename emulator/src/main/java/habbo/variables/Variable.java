@@ -7,9 +7,9 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Instant;
 import java.util.Optional;
 
-public class Variable implements IVariable {
+public class Variable<T> implements IVariable<T> {
     private final String key;
-    private @Nullable String value;
+    private T value;
     private @Nullable Instant expiresAt;
     private boolean isVisible = true;
     private boolean isPersistent;
@@ -20,12 +20,12 @@ public class Variable implements IVariable {
         this.key = key;
     }
 
-    public Variable(String key, @Nullable final String value) {
+    public Variable(String key, final T value) {
         this.key = key;
         this.value = value;
     }
 
-    public Variable(String key, @Nullable final String value, @NotNull String icon) {
+    public Variable(String key, final T value, @NotNull String icon) {
         this.key = key;
         this.value = value;
         this.icon = icon;
@@ -47,12 +47,12 @@ public class Variable implements IVariable {
     }
 
     @Override
-    public @Nullable String getValue() {
+    public T getValue() {
         return this.value;
     }
 
     @Override
-    public void setValue(@Nullable final String value) {
+    public void setValue(final T value) {
         this.value = value;
     }
 
@@ -95,7 +95,7 @@ public class Variable implements IVariable {
     public void serialize(final OutgoingPacket packet) {
         packet
                 .appendString(this.getKey())
-                .appendString(this.getValue())
+                .appendString(String.valueOf(this.getValue()))
                 .appendString(this.getIcon().orElse(""))
                 .appendBoolean(this.isVisible())
                 .appendBoolean(this.isEditable())

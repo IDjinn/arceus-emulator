@@ -36,7 +36,7 @@ public final class MessageWithVariables implements Message {
             final var variable = this.variables.get(variableName);
             if (variable == null || variable.getValue() == null) continue;
 
-            matcher.appendReplacement(sb, variable.getValue());
+            matcher.appendReplacement(sb, String.valueOf(variable.getValue()));
         }
         return matcher.appendTail(sb).toString();
     }

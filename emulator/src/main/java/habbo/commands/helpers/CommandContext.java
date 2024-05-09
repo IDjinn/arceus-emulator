@@ -10,6 +10,7 @@ import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
+import networking.client.IClient;
 import org.jetbrains.annotations.NotNull;
 import utils.StringBuilderHelper;
 
@@ -35,6 +36,11 @@ public class CommandContext implements ICommandContext {
     @Override
     public IPlayerEntity getPlayerEntity() {
         return this.player;
+    }
+
+    @Override
+    public IClient getClient() {
+        return this.getHabbo().getClient();
     }
 
     @Override

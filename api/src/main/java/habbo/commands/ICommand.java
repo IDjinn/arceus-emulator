@@ -22,5 +22,7 @@ public interface ICommand {
         return Optional.of(ctx);
     }
 
-    Optional<ICommandContext> execute(final ICommandContext ctx);
+    default Optional<ICommandContext> execute(final ICommandContext ctx) {
+        return Optional.of(ctx);
+    }
 }

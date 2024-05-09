@@ -7,6 +7,7 @@ import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
+import networking.client.IClient;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -18,6 +19,8 @@ public interface ICommandContext {
 
     IPlayerEntity getPlayerEntity();
 
+    IClient getClient();
+    
     IHabbo getHabbo();
 
     IRoom getRoom();

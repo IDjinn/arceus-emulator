@@ -7,4 +7,6 @@ public interface IPlayerEntity extends IRoomEntity {
     IHabbo getHabbo();
 
     IClient getClient();
+
+    boolean hasRights();
 }

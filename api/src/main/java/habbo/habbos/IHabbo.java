@@ -27,10 +27,8 @@ public interface IHabbo {
 
     void setRoom(@Nullable IRoom room);
 
-    @Nullable
     IRoom getRoom();
 
-    @Nullable
     IPlayerEntity getPlayerEntity();
 
     void setPlayerEntity(@Nullable IPlayerEntity entity);
