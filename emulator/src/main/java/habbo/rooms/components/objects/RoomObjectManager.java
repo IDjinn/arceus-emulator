@@ -276,6 +276,8 @@ public class RoomObjectManager implements IRoomObjectManager {
         item.setPosition(position);
         item.setRotation(rotation);
         item.onMove(oldPosition);
+        this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(position));
+        this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(oldPosition));
         this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer(item));
         this.sendRelativeMap();
     }
@@ -291,6 +293,7 @@ public class RoomObjectManager implements IRoomObjectManager {
         this.inventoryRepository.pickupItem(result -> {
             item.onRemove(habbo);
             if (item instanceof IFloorItem floorItem) {
+                this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(floorItem.getPosition()));
                 this.getRoom().broadcastMessage(new RemoveFloorItemComposer(floorItem, habbo.getData().getId()));
             } else if (item instanceof IWallItem wallItem) {
                 this.getRoom().broadcastMessage(new RemoveWallItemComposer(wallItem, habbo.getData().getId()));
