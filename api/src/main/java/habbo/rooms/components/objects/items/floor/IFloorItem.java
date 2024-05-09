@@ -91,7 +91,7 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
         if (!this.canStack(entity))
             return Optional.empty();
 
-        return Optional.of(this.getFurniture().getStackHeight());
+        return Optional.of(this.getFurniture().getStackHeight() + this.getPosition().getZ());
     }
 
     default Optional<Double> getStackHeight() {

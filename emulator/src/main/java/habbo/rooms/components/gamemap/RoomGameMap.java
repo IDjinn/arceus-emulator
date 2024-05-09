@@ -110,11 +110,13 @@ public class RoomGameMap implements IRoomGameMap {
         }
     }
 
-    private void updateTile(final IRoomTile tile) {
+    @Override
+    public void updateTile(final IRoomTile tile) {
         for (var metadata : tile.getMetadata()) {
             metadata.release();
         }
 
+        tile.getMetadata().clear();
         try {
             var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
             metadata.setRoomTile(tile);

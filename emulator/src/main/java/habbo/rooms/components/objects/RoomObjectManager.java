@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import packets.outgoing.inventory.AddHabboItemCategory;
 import packets.outgoing.inventory.AddHabboItemComposer;
+import packets.outgoing.inventory.RemoveHabboItemComposer;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.RemoveFloorItemComposer;
@@ -74,6 +75,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 this.logger.error(e);
             }
         });
+
         this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
     }
 
@@ -230,10 +232,12 @@ public class RoomObjectManager implements IRoomObjectManager {
                 );
                 var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(floorItem);
+                this.getRoom().getGameMap().updateTile(tile);
                 habbo.getInventory().removeItem(floorItem.getId());
 
                 topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
                 this.getRoom().broadcastMessage(new AddFloorItemComposer(floorItem));
+                habbo.getClient().sendMessage(new RemoveHabboItemComposer(floorItem.getId()));
                 this.sendRelativeMap();
             }, this.getRoom().getData().getId(), item.getId(), targetPosition.getX(), targetPosition.getY(), targetPosition.getZ(), rotation);
         } catch (Exception e) {
@@ -257,6 +261,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                 habbo.getInventory().removeItem(wallItem.getId());
 
                 this.getRoom().broadcastMessage(new AddWallItemComposer(wallItem));
+                habbo.getClient().sendMessage(new RemoveHabboItemComposer(wallItem.getId()));
             }, this.getRoom().getData().getId(), item.getId(), wallPosition);
         } catch (Exception e) {
             this.logger.error("failed to place item {} from inventory to floor", item.getId(), e);
