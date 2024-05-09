@@ -1,5 +1,7 @@
 package habbo.rooms.entities;
 
+import com.google.inject.Inject;
+import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
@@ -12,6 +14,9 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     public static final double PLAYER_HEIGHT = 2d;
     private final IHabbo habbo;
     private final IEntityVariableManager entityVariableManager;
+
+    @Inject
+    private IConfigurationManager configurationManager;
 
     public PlayerEntity(IHabbo habbo) {
         super(habbo.getRoom(), habbo.getData().getId());
@@ -49,6 +54,18 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendString("")
                 .appendInt(this.getHabbo().getSettings().getAchievementScore())
                 .appendBoolean(true);
+
+        packet.appendString(
+                this.configurationManager.getBool("variables.entities.enabled")
+                        ? ""
+                        : ""
+        );
+
+        if (!this.configurationManager.getBool("variables.entities.enabled")) {
+            packet.appendInt(0);
+            return;
+        }
+        
     }
 
     @Override
@@ -86,5 +103,12 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     @Override
     public IEntityVariableManager getEntityVariablesManager() {
         return this.entityVariableManager;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof IPlayerEntity otherPlayer)
+            return this.getHabbo().getData().getId() == otherPlayer.getHabbo().getData().getId();
+        return false;
     }
 }

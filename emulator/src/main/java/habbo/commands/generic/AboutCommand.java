@@ -8,6 +8,8 @@ import habbo.internationalization.LocalizedString;
 import habbo.variables.Variable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 public class AboutCommand implements ICommand {
     @Inject
     private IHabboManager habboManager;
@@ -17,10 +19,11 @@ public class AboutCommand implements ICommand {
     private static final LocalizedString description = LocalizedString.of("command.generic.about.description");
 
     @Override
-    public void execute(final ICommandContext ctx) {
+    public Optional<ICommandContext> execute(final ICommandContext ctx) {
         ctx.whisper(LocalizedString.of("command.generic.about.response",
                 new Variable("hotel.users.count", String.valueOf(this.habboManager.onlineUsersCount())))
         );
+        return null;
     }
 
     @Override

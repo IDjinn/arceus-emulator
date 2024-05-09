@@ -9,26 +9,22 @@ import habbo.commands.arguments.ChoiceArguments;
 import habbo.commands.arguments.RangeArgument;
 import habbo.commands.arguments.RequiredArgument;
 import habbo.commands.parameters.ICommandParameter;
-import habbo.commands.parameters.MultipleParameters;
+import habbo.commands.parameters.OptionalParameter;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.internationalization.LocalizedString;
 import org.jetbrains.annotations.NotNull;
-import packets.outgoing.rooms.entities.chat.CommandListComposer;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class PayCommand implements ICommand {
     private static final List<ICommandParameter> parameters = List.of(
             RequiredArgument.of("target", ArgumentType.TargetHabbo),
-            MultipleParameters.of(
-                    RangeArgument.of("value", ArgumentType.Integer, 0, Integer.MAX_VALUE),
-                    ChoiceArguments.of("currency-name", ArgumentType.String, List.of(
-                            LocalizedString.of("command.user.currencies.pay.currency.test"),
-                            LocalizedString.of("command.user.currencies.pay.currency.other-test2")
-                    ))
-            )
+            OptionalParameter.of(ChoiceArguments.of("currency-name", ArgumentType.String, List.of(
+                    LocalizedString.of("command.user.currencies.pay.currency.test"),
+                    LocalizedString.of("command.user.currencies.pay.currency.other-test2")
+            ))),
+            RangeArgument.of("value", ArgumentType.Integer, 0, Integer.MAX_VALUE)
     );
     @Inject
     private ICommandManager commandManager;
@@ -60,17 +56,33 @@ public class PayCommand implements ICommand {
     }
 
     @Override
-    public Optional<LocalizedString> validate(final ICommandContext ctx) {
+    public Optional<ICommandContext> validate(final ICommandContext ctx) {
         return ICommand.super.validate(ctx);
     }
 
+    //
+//        ctx.getPlayerEntity().getClient().sendMessage(new CommandListComposer(
+//            this.commandManager.getCommands().values().stream().toList(),
+//                this.internationalizationManager,
+//    Locale.ENGLISH
+//        ));
     @Override
-    public void execute(final ICommandContext ctx) {
-        ctx.getPlayer().getClient().sendMessage(new CommandListComposer(
-                this.commandManager.getCommands().values().stream().toList(),
-                this.internationalizationManager,
-                Locale.ENGLISH
-        ));
-        ctx.whisper(LocalizedString.of("none", "hey"));
+    public Optional<ICommandContext> execute(final ICommandContext ctx) {
+        final var target = ctx.popPlayerEntity("target");
+        if (target.isEmpty())
+            return ctx.error(LocalizedString.of("command.user.currencies.pay.error.target-not-found"));
+
+        if (target.get().equals(ctx.getPlayerEntity()))
+            return ctx.error(LocalizedString.of("command.user.currencies.pay.error.target-is-self"));
+
+        final Optional<String> currency = ctx.optional("currency-name", ArgumentType.String, ChoiceArguments.class);
+        if (currency.isEmpty())
+            return ctx.error(LocalizedString.of("command.user.currencies.pay.error.missing-value"));
+
+        final var value = ctx.required("value", ArgumentType.Integer);
+        if (value.isEmpty())
+            return ctx.error(LocalizedString.of("command.user.currencies.pay.error.missing-value"));
+
+        return ctx.whisper(LocalizedString.of("none", "hey"));
     }
 }

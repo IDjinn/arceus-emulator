@@ -18,9 +18,9 @@ public interface ICommand {
         return List.of();
     }
 
-    default Optional<LocalizedString> validate(ICommandContext ctx) {
-        return Optional.empty();
+    default Optional<ICommandContext> validate(ICommandContext ctx) {
+        return Optional.of(ctx);
     }
 
-    void execute(final ICommandContext ctx);
+    Optional<ICommandContext> execute(final ICommandContext ctx);
 }
