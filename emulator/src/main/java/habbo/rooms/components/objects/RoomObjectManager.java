@@ -76,6 +76,7 @@ public class RoomObjectManager implements IRoomObjectManager {
             }
         });
 
+        this.getRoom().getGameMap().updateTiles();
         this.logger.info("loaded total of {} items for room = {}", this.items.size(), this.getRoom().getData().getId());
     }
 

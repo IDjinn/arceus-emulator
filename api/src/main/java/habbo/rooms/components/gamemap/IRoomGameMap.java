@@ -33,4 +33,6 @@ public interface IRoomGameMap extends IRoomComponent {
     List<ITileMetadata> getMetadataAt(final int x, final int y, double objectHeight);
 
     void updateTile(final IRoomTile tile);
+
+    void updateTiles();
 }

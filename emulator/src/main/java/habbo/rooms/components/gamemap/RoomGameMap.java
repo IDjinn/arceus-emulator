@@ -103,11 +103,6 @@ public class RoomGameMap implements IRoomGameMap {
 
     @Override
     public void onRoomLoaded() {
-        for (final var mapRow : this.getMap()) {
-            for (final var tile : mapRow) {
-                this.updateTile(tile);
-            }
-        }
     }
 
     @Override
@@ -142,6 +137,15 @@ public class RoomGameMap implements IRoomGameMap {
             } catch (Exception e) {
                 this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
                         tile.getX(), tile.getY(), e);
+            }
+        }
+    }
+
+    @Override
+    public void updateTiles() {
+        for (final var mapRow : this.getMap()) {
+            for (final var tile : mapRow) {
+                this.updateTile(tile);
             }
         }
     }
