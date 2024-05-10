@@ -165,12 +165,12 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public Collection<IFloorItem> getAllFloorItemsAt(final Position position) {
-        return this.getAllFloorItemsAt(position, -1);
+    public List<IFloorItem> getAllFloorItemsSortedAt(final Position position) {
+        return this.getAllFloorItemsSortedAt(position, -1);
     }
 
     @Override
-    public Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId) { // TODO POOLING
+    public List<IFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId) { // TODO POOLING
         final var itemsAt = new HashSet<IFloorItem>();
         final var realId = ignoreId & ~GameConstants.FurnitureVirtualIdMask;
         for (var item : this.floorItems.values()) {
@@ -180,7 +180,7 @@ public class RoomObjectManager implements IRoomObjectManager {
             itemsAt.add(item);
         }
 
-        return itemsAt;
+        return itemsAt.stream().sorted().toList();
     }
 
     @Override

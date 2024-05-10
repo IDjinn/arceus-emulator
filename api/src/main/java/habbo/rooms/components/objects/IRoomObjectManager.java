@@ -29,9 +29,9 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
     @Nullable
     IRoomItem getItem(int itemId);
 
-    Collection<IFloorItem> getAllFloorItemsAt(final Position position);
+    List<IFloorItem> getAllFloorItemsSortedAt(final Position position);
 
-    Collection<IFloorItem> getAllFloorItemsAt(final Position position, int ignoreId);
+    List<IFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId);
 
     Optional<IFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
 

@@ -1,7 +1,6 @@
 package habbo.rooms.entities;
 
 import habbo.habbos.IHabbo;
-import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.variables.IEntityVariableManager;
 import habbo.variables.IVariable;
@@ -71,10 +70,6 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         return PLAYER_HEIGHT;
     }
 
-    @Override
-    public boolean canSlideTo(final ITileMetadata metadata) {
-        return metadata.getEntityHeight().isPresent();
-    }
 
     @Override
     public synchronized void tick() {

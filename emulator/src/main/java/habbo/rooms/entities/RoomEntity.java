@@ -1,6 +1,7 @@
 package habbo.rooms.entities;
 
 import habbo.rooms.IRoom;
+import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
@@ -123,6 +124,11 @@ public abstract class RoomEntity implements IRoomEntity {
     public synchronized void tick() {
         this.handleStatus();
         this.handleWalking();
+    }
+
+    @Override
+    public boolean canSlideTo(final ITileMetadata metadata) {
+        return metadata.getEntityHeight().isPresent();
     }
 
     private void handleWalking() {

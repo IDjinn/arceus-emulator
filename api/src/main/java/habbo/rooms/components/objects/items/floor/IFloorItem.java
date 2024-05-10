@@ -70,21 +70,21 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
         if (!this.canSit(entity))
             return Optional.empty();
 
-        return Optional.of(this.getFurniture().getStackHeight());
+        return Optional.of(this.getFurniture().getStackHeight() + this.getPosition().getZ());
     }
 
     default Optional<Double> getWalkableHeight() {
         if (!this.canWalk())
             return Optional.empty();
 
-        return Optional.of(this.getFurniture().getStackHeight());
+        return Optional.of(this.getFurniture().getStackHeight() + this.getPosition().getZ());
     }
 
     default Optional<Double> getWalkableHeight(IRoomEntity entity) {
         if (!this.canWalk(entity))
             return Optional.empty();
 
-        return Optional.of(this.getFurniture().getStackHeight());
+        return Optional.of(this.getFurniture().getStackHeight() + this.getPosition().getZ());
     }
 
     default Optional<Double> getStackHeight(IRoomEntity entity) {

@@ -107,39 +107,35 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public void updateTile(final IRoomTile tile) {
-        for (var metadata : tile.getMetadata()) {
-            metadata.release();
-        }
+    public List<ITileMetadata> getMetadataAt(final int x, final int y, final double objectHeight) {
+        final var tile = this.getTile(x, y);
+        final var result = new LinkedList<ITileMetadata>();
+        // sort is 0 -> infinity
+        for (int i = 0; i < tile.getMetadata().size(); i++) {
+            var currentMetadata = tile.getMetadata().get(i);
+            if (currentMetadata.getHeight().isEmpty())
+                continue;
 
-        tile.getMetadata().clear();
-        try {
-            var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
-            metadata.setRoomTile(tile);
-            metadata.setWalkableHeight(tile.getPosition().getZ());
-            tile.getMetadata().add(metadata);
-        } catch (Exception e) {
-            this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
-                    tile.getX(), tile.getY(), e);
-        }
-        
-        final var itemsAt = this.getRoom().getObjectManager().getAllFloorItemsAt(tile.getPosition());
-        for (final var item : itemsAt) {
-            try {
-                var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
-                metadata.setRoomTile(tile);
-                metadata.setItem(item);
+            final var currentTopZ = currentMetadata.getHeight().get();
+            if (currentTopZ == Short.MAX_VALUE)
+                continue;
 
-                item.getWalkableHeight().ifPresent(metadata::setWalkableHeight);
-                item.getSitHeight().ifPresent(metadata::setSitHeight);
-                item.getLayHeight().ifPresent(metadata::setLayHeight);
-                item.getStackHeight().ifPresent(metadata::setStackHeight);
-                tile.getMetadata().add(metadata);
-            } catch (Exception e) {
-                this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
-                        tile.getX(), tile.getY(), e);
+            var bottomMetadata = i - 1 >= 0 ? tile.getMetadata().get(i - 1) : null;
+            var topMetadata = tile.getMetadata().size() > i + 1 ? tile.getMetadata().get(i + 1) : null;
+            if (topMetadata == null || topMetadata.getHeight().isEmpty()) {
+                result.add(currentMetadata);
+                return result;
+            }
+
+            var nextBottomZ = topMetadata.getHeight().get();
+
+            if (currentTopZ + objectHeight <= nextBottomZ) {
+                result.add(currentMetadata);
             }
         }
+
+
+        return tile.getMetadata();
     }
 
     @Override
@@ -239,30 +235,38 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public List<ITileMetadata> getMetadataAt(final int x, final int y, final double objectHeight) {
-        final var tile = this.getTile(x, y);
-        final var result = new LinkedList<ITileMetadata>();
-        for (int i = 0; i < tile.getMetadata().size(); i++) {
-            var current = tile.getMetadata().get(i);
-            var next = tile.getMetadata().size() > i + 1 ? tile.getMetadata().get(i + 1) : null;
-
-            if (current.getHeight().isEmpty()) continue;
-            if (next == null || next.getHeight().isEmpty()) {
-                result.add(current);
-                return result;
-            }
-
-            var currentTopZ = current.getHeight().get(); // TODO CHECK TILE.Z + ITEM.Z = CURRENT.HEIGHT
-            if (currentTopZ == Short.MAX_VALUE)
-                continue;
-            var nextBottomZ = next.getHeight().get();
-
-            if (currentTopZ + objectHeight <= nextBottomZ) {
-                result.add(current);
-            }
+    public void updateTile(final IRoomTile tile) {
+        for (var metadata : tile.getMetadata()) {
+            metadata.release();
         }
 
+        tile.getMetadata().clear();
+        try {
+            var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
+            metadata.setRoomTile(tile);
+            metadata.setWalkableHeight(tile.getPosition().getZ());
+            tile.getMetadata().add(metadata);
+        } catch (Exception e) {
+            this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
+                    tile.getX(), tile.getY(), e);
+        }
 
-        return tile.getMetadata();
+        final var itemsAt = this.getRoom().getObjectManager().getAllFloorItemsSortedAt(tile.getPosition());
+        for (final var item : itemsAt) {
+            try {
+                var metadata = this.tileMetadataPool.claim(new Timeout(1, TimeUnit.SECONDS));
+                metadata.setRoomTile(tile);
+                metadata.setItem(item);
+
+                item.getWalkableHeight().ifPresent(metadata::setWalkableHeight);
+                item.getSitHeight().ifPresent(metadata::setSitHeight);
+                item.getLayHeight().ifPresent(metadata::setLayHeight);
+                item.getStackHeight().ifPresent(metadata::setStackHeight);
+                tile.getMetadata().add(metadata);
+            } catch (Exception e) {
+                this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
+                        tile.getX(), tile.getY(), e);
+            }
+        }
     }
 }
