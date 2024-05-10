@@ -270,7 +270,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return STR."\{STR."\{"(" + this.getX() + ", " + this.getY()}, " + this.getZ()})";
+        return STR."(\{this.getX()}, \{this.getY()}, \{this.getZ()})";
     }
 
     public int getX() {

@@ -35,4 +35,10 @@ public interface IRoomGameMap extends IRoomComponent {
     void updateTile(final IRoomTile tile);
 
     void updateTiles();
+
+    void updateTiles(final IRoomTile... tiles);
+
+    void sendUpdate(final IRoomTile tile);
+
+    void sendUpdate(final IRoomTile... tiles);
 }

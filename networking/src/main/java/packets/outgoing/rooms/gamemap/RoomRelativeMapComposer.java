@@ -1,6 +1,7 @@
-package packets.outgoing.rooms.prepare;
+package packets.outgoing.rooms.gamemap;
 
 import habbo.rooms.components.gamemap.IRoomGameMap;
+import habbo.rooms.components.gamemap.IRoomTile;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
@@ -17,17 +18,21 @@ public class RoomRelativeMapComposer extends OutgoingPacket {
         for (int y = 0; y < gameMap.getMaxY(); y++) {
             for (int x = 0; x < gameMap.getMaxX(); x++) {
                 final var tile = gameMap.getTile(x, y);
-                final var relativeMapHeight = tile.getRelativeMapHeight();
-                if (relativeMapHeight.isPresent()) {
-                    this.appendShort(encodeTileHeight(relativeMapHeight.get()));
-                } else {
-                    this.appendShort(tile.getZ() | STACKING_BLOCKED_FLAG);
-                }
+                serializeTileHeight(this, tile);
             }
         }
     }
-    
+
     private static int encodeTileHeight(double height) {
         return (int) (height * ENCODE_HEIGHT_FLAG);
+    }
+
+    public static void serializeTileHeight(final OutgoingPacket packet, final IRoomTile tile) {
+        final var relativeMapHeight = tile.getRelativeMapHeight();
+        if (relativeMapHeight.isPresent()) {
+            packet.appendShort(encodeTileHeight(relativeMapHeight.get()));
+        } else {
+            packet.appendShort(tile.getZ() | STACKING_BLOCKED_FLAG);
+        }
     }
 }

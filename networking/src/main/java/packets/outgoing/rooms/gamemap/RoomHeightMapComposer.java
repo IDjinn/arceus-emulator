@@ -1,4 +1,4 @@
-package packets.outgoing.rooms.prepare;
+package packets.outgoing.rooms.gamemap;
 
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import networking.packets.OutgoingPacket;

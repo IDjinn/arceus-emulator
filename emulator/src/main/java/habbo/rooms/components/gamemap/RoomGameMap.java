@@ -6,6 +6,7 @@ import habbo.rooms.IRoomManager;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.outgoing.rooms.gamemap.UpdateStackHeightComposer;
 import stormpot.Pool;
 import stormpot.Timeout;
 import utils.pathfinder.Position;
@@ -142,6 +143,13 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
+    public void updateTiles(final IRoomTile... tiles) {
+        for (final var tile : tiles) {
+            this.updateTile(tile);
+        }
+    }
+
+    @Override
     public void updateTiles() {
         for (final var mapRow : this.getMap()) {
             for (final var tile : mapRow) {
@@ -150,6 +158,15 @@ public class RoomGameMap implements IRoomGameMap {
         }
     }
 
+    @Override
+    public void sendUpdate(final IRoomTile tile) {
+        this.getRoom().broadcastMessage(new UpdateStackHeightComposer(tile));
+    }
+
+    @Override
+    public void sendUpdate(final IRoomTile... tiles) {
+        this.getRoom().broadcastMessage(new UpdateStackHeightComposer(List.of(tiles)));
+    }
 
     @Override
     public void destroy() {

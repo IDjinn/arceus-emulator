@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.entities.RoomEntitiesComposer;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
+import packets.outgoing.rooms.gamemap.RoomHeightMapComposer;
+import packets.outgoing.rooms.gamemap.RoomRelativeMapComposer;
 import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
 import packets.outgoing.rooms.objects.wall.RoomWallItemsComposer;
 import packets.outgoing.rooms.prepare.*;

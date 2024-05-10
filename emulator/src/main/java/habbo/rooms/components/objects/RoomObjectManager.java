@@ -17,13 +17,13 @@ import org.jetbrains.annotations.Nullable;
 import packets.outgoing.inventory.AddHabboItemCategory;
 import packets.outgoing.inventory.AddHabboItemComposer;
 import packets.outgoing.inventory.RemoveHabboItemComposer;
+import packets.outgoing.rooms.gamemap.RoomRelativeMapComposer;
 import packets.outgoing.rooms.objects.floor.AddFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.MoveOrRotateFloorItemComposer;
 import packets.outgoing.rooms.objects.floor.RemoveFloorItemComposer;
 import packets.outgoing.rooms.objects.wall.AddWallItemComposer;
 import packets.outgoing.rooms.objects.wall.RemoveWallItemComposer;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
-import packets.outgoing.rooms.prepare.RoomRelativeMapComposer;
 import storage.repositories.habbo.IHabboInventoryRepository;
 import storage.repositories.rooms.IRoomItemsRepository;
 import utils.cycle.ICycle;
@@ -233,12 +233,13 @@ public class RoomObjectManager implements IRoomObjectManager {
                 );
                 var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(floorItem);
-                this.getRoom().getGameMap().updateTile(tile);
                 habbo.getInventory().removeItem(floorItem.getId());
-
-                topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
-                this.getRoom().broadcastMessage(new AddFloorItemComposer(floorItem));
                 habbo.getClient().sendMessage(new RemoveHabboItemComposer(floorItem.getId()));
+
+                this.getRoom().getGameMap().updateTile(tile);
+                this.getRoom().getGameMap().sendUpdate(tile);
+                this.getRoom().broadcastMessage(new AddFloorItemComposer(floorItem));
+                topItem.ifPresent(iFloorItem -> iFloorItem.onStackInItem(floorItem));
                 this.sendRelativeMap();
             }, this.getRoom().getData().getId(), item.getId(), targetPosition.getX(), targetPosition.getY(), targetPosition.getZ(), rotation);
         } catch (Exception e) {
@@ -273,12 +274,16 @@ public class RoomObjectManager implements IRoomObjectManager {
     public void moveFloorItemTo(final IHabbo habbo, final IFloorItem item, final Position position, final Integer rotation) {
         if (!this.getRoom().getGameMap().isValidCoordinate(position)) return;
 
-        var oldPosition = position.copy();
+        final var oldPosition = position.copy();
+        final var oldTile = this.getRoom().getGameMap().getTile(oldPosition);
+        
         item.setPosition(position);
         item.setRotation(rotation);
         item.onMove(oldPosition);
-        this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(position));
-        this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(oldPosition));
+
+        final var newTile = this.getRoom().getGameMap().getTile(position);
+        this.getRoom().getGameMap().updateTiles(oldTile, newTile);
+        this.getRoom().getGameMap().sendUpdate(oldTile, newTile);
         this.getRoom().broadcastMessage(new MoveOrRotateFloorItemComposer(item));
         this.sendRelativeMap();
     }
@@ -294,7 +299,9 @@ public class RoomObjectManager implements IRoomObjectManager {
         this.inventoryRepository.pickupItem(result -> {
             item.onRemove(habbo);
             if (item instanceof IFloorItem floorItem) {
-                this.getRoom().getGameMap().updateTile(this.getRoom().getGameMap().getTile(floorItem.getPosition()));
+                final var tile = this.getRoom().getGameMap().getTile(floorItem.getPosition());
+                this.getRoom().getGameMap().updateTile(tile);
+                this.getRoom().getGameMap().sendUpdate(tile);
                 this.getRoom().broadcastMessage(new RemoveFloorItemComposer(floorItem, habbo.getData().getId()));
             } else if (item instanceof IWallItem wallItem) {
                 this.getRoom().broadcastMessage(new RemoveWallItemComposer(wallItem, habbo.getData().getId()));

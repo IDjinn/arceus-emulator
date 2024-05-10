@@ -136,6 +136,7 @@ public abstract class RoomEntity implements IRoomEntity {
             }
             
             this.setPosition(this.getNextPosition());
+            this.getEntityVariablesManager().setOrCreate("dev.coordinates", this.position.toString());
             final var topItem =
                     this.getRoom().getObjectManager().getTopFloorItemAt(this.getPosition(), -1);
             if (topItem.isPresent()) {
