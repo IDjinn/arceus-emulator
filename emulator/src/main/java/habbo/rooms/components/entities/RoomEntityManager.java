@@ -107,7 +107,7 @@ public class RoomEntityManager implements IRoomEntityManager {
         }
         
         this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message, Timestamp.from(Instant.now())));
-        this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
+        //this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
     }
 
     @Override
