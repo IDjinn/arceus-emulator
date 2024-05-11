@@ -152,23 +152,32 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IRoomItemData createItemDataFromResult(IConnectionResult result) throws Exception {
-        var id = result.getInt("id");
-        var itemId = result.getInt("item_id");
-        var ownerId = result.getInt("user_id");
-        var x = result.getInt("x");
-        var y = result.getInt("y");
-        var z = result.getDouble("z");
-        var rotation = result.getInt("rot");
-        var wallPosition = result.getString("wall_pos");
+        final var id = result.getInt("id");
+        final var itemId = result.getInt("item_id");
+        final var ownerId = result.getInt("user_id");
+        final var x = result.getInt("x");
+        final var y = result.getInt("y");
+        final var z = result.getDouble("z");
+        final var rotation = result.getInt("rot");
+        final var wallPosition = result.getString("wall_pos");
+        final var wiredData = result.getString("wired_data");
 
-        var extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
+        final var extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
         extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
 
-        return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition);
+        return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition, wiredData);
     }
 
     @Override
-    public IRoomItemData createItemData(int id, int furnitureId, int ownerId, Position position, int rotation, IExtraData extraData) {
+    public IRoomItemData createItemData(
+            final int id,
+            final int furnitureId,
+            final int ownerId,
+            final Position position,
+            final int rotation,
+            final IExtraData extraData,
+            final String wiredData
+    ) {
         return new RoomItemData(
                 id,
                 furnitureId,
@@ -176,7 +185,8 @@ public class RoomItemFactory implements IRoomItemFactory {
                 position,
                 rotation,
                 extraData,
-                ""
+                "",
+                wiredData
         );
     }
 
@@ -189,7 +199,8 @@ public class RoomItemFactory implements IRoomItemFactory {
                 new Position(-1, -1, 0d),
                 0,
                 extraData,
-                wallPosition
+                wallPosition,
+                ""
         );
     }
 }
