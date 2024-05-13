@@ -7,12 +7,16 @@ import java.util.Map;
 
 public interface IVariableManager {
     Map<String, IVariable> getVariables();
-    
-    void setOrCreate(IVariable variable);
 
-    void setOrCreate(String variable, @Nullable String value);
+    <T> IVariable<T> getOrCreate(IVariable<T> variable);
 
-    @Nullable IVariable get(@NotNull String key);
+    <T> IVariable<T> getOrCreate(String variable, @Nullable String value);
+
+    <T> IVariable<T> setOrCreate(IVariable<T> variable);
+
+    <T> IVariable<T> setOrCreate(String variable, @Nullable String value);
+
+    <T> @Nullable IVariable<T> get(@NotNull String key);
 
     boolean isNeedUpdate();
 

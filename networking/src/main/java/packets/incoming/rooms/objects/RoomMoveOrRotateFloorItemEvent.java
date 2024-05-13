@@ -19,7 +19,7 @@ public class RoomMoveOrRotateFloorItemEvent extends IncomingEvent {
     public void parse(final IIncomingPacket packet, final IClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
-        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+        if (!client.getHabbo().getPlayerEntity().hasRights())
             return;
         
         final var itemId = packet.readInt();

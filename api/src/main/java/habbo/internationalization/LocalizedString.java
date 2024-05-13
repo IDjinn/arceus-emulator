@@ -53,4 +53,9 @@ public final class LocalizedString {
     public List<IVariable> getVariables() {
         return this.variables;
     }
+
+    @Override
+    public String toString() {
+        return this.key;
+    }
 }

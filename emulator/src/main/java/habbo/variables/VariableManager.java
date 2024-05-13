@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,13 +26,27 @@ public class VariableManager implements IVariableManager {
     }
 
     @Override
-    public void setOrCreate(final IVariable variable) {
-        var oldValue = this.variables.put(variable.getKey(), variable);
-        this.setNeedUpdate(oldValue == null || !Objects.equals(oldValue.getValue(), variable.getValue()));
+    public IVariable getOrCreate(final IVariable variable) {
+        if (!this.variables.containsKey(variable.getKey()))
+            this.variables.put(variable.getKey(), variable);
+
+        return this.variables.get(variable.getKey());
     }
 
     @Override
-    public void setOrCreate(final String variable, @Nullable final String value) {
+    public IVariable getOrCreate(final String variable, @Nullable final String value) {
+        return null;
+    }
+
+    @Override
+    public IVariable setOrCreate(final IVariable variable) {
+        var oldValue = this.variables.put(variable.getKey(), variable);
+        this.setNeedUpdate(oldValue == null || !Objects.equals(oldValue.getValue(), variable.getValue()));
+        return this.variables.get(variable.getKey());
+    }
+
+    @Override
+    public IVariable setOrCreate(final String variable, @Nullable final String value) {
         var var = this.get(variable);
         if (var != null) {
             this.setNeedUpdate(!Objects.equals(var.getValue(), value));
@@ -42,6 +55,7 @@ public class VariableManager implements IVariableManager {
             this.setOrCreate(new Variable(variable, value));
             this.setNeedUpdate(true);
         }
+        return this.variables.get(variable);
     }
 
     @Override
@@ -69,9 +83,9 @@ public class VariableManager implements IVariableManager {
     public void tick() {
         for (final var variable : this.getVariables().values()) {
             if (variable.expiresAt().isEmpty()) continue;
-            if (variable.expiresAt().get().isBefore(Instant.now())) {
-                this.removeVariable(variable.getKey());
-            }
+//   TODO          if (variable.expiresAt().get().isBefore(Instant.now())) {
+//                this.removeVariable(variable.getKey());
+//            }
         }
     }
 

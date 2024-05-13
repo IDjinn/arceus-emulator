@@ -1,6 +1,7 @@
 package habbo.rooms.components.entities;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
@@ -38,11 +39,13 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     private final IInternationalizationManager internationalizationManager;
     private final ICommandManager commandManager;
+    private final Injector injector;
 
     @Inject
-    public RoomEntityManager(IInternationalizationManager internationalizationManager, ICommandManager commandManager) {
+    public RoomEntityManager(IInternationalizationManager internationalizationManager, ICommandManager commandManager, final Injector injector) {
         this.internationalizationManager = internationalizationManager;
         this.commandManager = commandManager;
+        this.injector = injector;
         this.entities = new ConcurrentHashMap<>();
         this.entitiesByVirtualId = new ConcurrentHashMap<>();
         this.players = new ConcurrentHashMap<>();
@@ -57,7 +60,7 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public IPlayerEntity createHabboEntity(IHabbo habbo) {
         var entity = new PlayerEntity(habbo);
-
+        this.injector.injectMembers(entity);
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
         return entity;

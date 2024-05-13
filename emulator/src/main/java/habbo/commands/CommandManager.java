@@ -3,6 +3,11 @@ package habbo.commands;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import habbo.commands.generic.AboutCommand;
+import habbo.commands.generic.LayCommand;
+import habbo.commands.generic.SitCommand;
+import habbo.commands.helpers.CommandContext;
+import habbo.commands.rooms.building.BuilderCommand;
+import habbo.commands.user.currencies.PayCommand;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.internationalization.LocalizedString;
@@ -28,6 +33,10 @@ public class CommandManager implements ICommandManager {
         this.commands = new HashMap<>();
 
         this.registerCommand(new AboutCommand());
+        this.registerCommand(new PayCommand());
+        this.registerCommand(new SitCommand());
+        this.registerCommand(new LayCommand());
+        this.registerCommand(new BuilderCommand());
     }
 
     @Override

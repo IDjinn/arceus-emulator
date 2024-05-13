@@ -1,6 +1,7 @@
 package habbo.commands;
 
 import com.google.inject.AbstractModule;
+import habbo.commands.helpers.CommandHelpers;
 
 public class CommandModule extends AbstractModule {
     @Override

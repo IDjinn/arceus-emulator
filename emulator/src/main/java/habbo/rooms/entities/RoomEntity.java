@@ -110,7 +110,7 @@ public abstract class RoomEntity implements IRoomEntity {
     public void setStatus(StatusBucket bucket) {
         if (this.statusBuckets.containsKey(bucket.getStatus())) {
             var currentBucket = this.statusBuckets.get(bucket.getStatus());
-            currentBucket.setTicks(bucket.getTicks());
+            bucket.getTicks().ifPresent(currentBucket::setTicks);
             currentBucket.setValue(bucket.getValue());
         } else {
             this.statusBuckets.put(bucket.getStatus(), bucket);
@@ -176,15 +176,28 @@ public abstract class RoomEntity implements IRoomEntity {
                 this.getNextPosition().getX(),
                 this.getNextPosition().getY()
         ));
+
+        this.removeStatus(RoomEntityStatus.SIT);
+        this.removeStatus(RoomEntityStatus.LAY);
         this.setStatus(new StatusBucket(RoomEntityStatus.MOVE, STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
         this.setNeedUpdateStatus(true);
     }
 
     private void handleStatus() {
         synchronized (this.statusBuckets) {
-            for (StatusBucket bucket : this.statusBuckets.values()) {
-                if (bucket.getTicks() <= 0) {
-                    this.removeStatus(bucket.getStatus());
+            final boolean isWalking = this.statusBuckets.containsKey(RoomEntityStatus.MOVE);
+            final var bucketIterator = this.statusBuckets.values().iterator();
+            while (bucketIterator.hasNext()) {
+                final var bucket = bucketIterator.next();
+                if (bucket.getStatus().removeWhenWalking && isWalking) {
+                    bucketIterator.remove();
+                    this.setNeedUpdateStatus(true);
+                }
+
+                if (bucket.getTicks().isEmpty()) continue;
+                if (bucket.getTicks().get() <= 0) {
+                    bucketIterator.remove();
+                    this.setNeedUpdateStatus(true);
                 }
                 bucket.decrementTick();
             }
