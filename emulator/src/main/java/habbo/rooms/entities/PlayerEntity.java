@@ -12,7 +12,6 @@ import habbo.rooms.entities.variables.IEntityVariableManager;
 import habbo.variables.IVariable;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
-import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
 import java.util.Objects;
 
@@ -28,7 +27,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
         this.entityVariableManager = new EntityVariablesManager(this);
-        this.setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, "0"));
+        this.setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.Moderator.ordinal())));
     }
 
     @Override
@@ -109,7 +108,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         this.getEntityVariablesManager().tick();
         if (!this.getEntityVariablesManager().isNeedUpdate()) return;
 
-        this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesManager().getVariables()));
+//        this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesManager().getVariables()));
         this.getEntityVariablesManager().setNeedUpdate(false);
     }
 
