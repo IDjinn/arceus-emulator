@@ -12,6 +12,8 @@ public interface IVariable<T> {
 
     T getValue();
 
+    T getValue(T defaultValue);
+
     void setValue(T value);
 
     Optional<String> getIcon();

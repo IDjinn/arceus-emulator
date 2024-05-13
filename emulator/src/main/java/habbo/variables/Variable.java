@@ -52,6 +52,11 @@ public class Variable<T> implements IVariable<T> {
     }
 
     @Override
+    public T getValue(final T defaultValue) {
+        return this.value != null ? this.value : defaultValue;
+    }
+
+    @Override
     public void setValue(final T value) {
         this.value = value;
     }
