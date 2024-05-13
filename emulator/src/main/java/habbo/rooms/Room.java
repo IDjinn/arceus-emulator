@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import core.concurrency.IProcessHandler;
 import core.concurrency.IThreadManager;
 import core.events.IEventHandler;
+import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
@@ -63,6 +64,8 @@ public class Room implements IRoom {
     private IRoomVariablesManager variablesManager;
     @Inject
     private IEventHandler eventHandler;
+    @Inject
+    private ICommandManager commandManager;
 
 
     public Room(IConnectionResult data) {
@@ -83,6 +86,7 @@ public class Room implements IRoom {
         this.entityManager.init(this);
         this.pathfinder.init(this);
         this.objectManager.init(this);
+        this.commandManager.init(this);
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.init(this);
@@ -99,6 +103,7 @@ public class Room implements IRoom {
         this.entityManager.update();
         this.pathfinder.update();
         this.gameMap.update();
+        this.commandManager.update();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.update();
@@ -113,6 +118,7 @@ public class Room implements IRoom {
         this.entityManager.destroy();
         this.pathfinder.destroy();
         this.gameMap.destroy();
+        this.commandManager.destroy();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.destroy();
@@ -129,6 +135,7 @@ public class Room implements IRoom {
         this.pathfinder.onRoomLoaded();
         this.objectManager.onRoomLoaded();
         this.rightsManager.onRoomLoaded();
+        this.commandManager.onRoomLoaded();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.onRoomLoaded();
@@ -274,5 +281,10 @@ public class Room implements IRoom {
     @Override
     public IEventHandler getEventHandler() {
         return this.eventHandler;
+    }
+
+    @Override
+    public ICommandManager getCommandManager() {
+        return this.commandManager;
     }
 }

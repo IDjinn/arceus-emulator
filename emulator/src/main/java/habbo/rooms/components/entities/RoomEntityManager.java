@@ -21,23 +21,20 @@ import utils.cycle.ICycle;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
-    private final Logger logger = LogManager.getLogger();
-    private IRoom room;
-    private final ConcurrentHashMap<Integer, IRoomEntity> entitiesByVirtualId;
-    private final ConcurrentHashMap<Integer, IRoomEntity> entities;
-    private final ConcurrentHashMap<Integer, IPlayerEntity> players;
+    private static final Logger logger = LogManager.getLogger();
+    private final Map<Integer, IRoomEntity> entitiesByVirtualId;
+    private final Map<Integer, IRoomEntity> entities;
+    private final Map<Integer, IPlayerEntity> players;
     private final AtomicInteger virtualIdCounter;
-
     private final IInternationalizationManager internationalizationManager;
+
+    private IRoom room;
     private final ICommandManager commandManager;
     private final Injector injector;
 
@@ -104,13 +101,23 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public void talk(final IRoomEntity entity, final String message, final int bubble) { // TODO MOVE THIS TO ENTITY*
-        if (entity instanceof IPlayerEntity player && this.commandManager.isCommand(message)) {
-            this.commandManager.execute(player.getHabbo(), message);
-            return;
-        }
-        
-        this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(entity, message, Timestamp.from(Instant.now())));
-        this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(entity, message, 0, bubble));
+        final var emotion = 0;
+        final var event = this.getRoom().getEventHandler().onEvent(new RoomEntityTalkEvent(
+                entity,
+                message,
+                emotion,
+                bubble,
+                Timestamp.from(Instant.now()))
+        );
+
+        if (event.isCancelled()) return;
+
+        this.getRoom().broadcastMessage(new RoomUserTalkMessageComposer(
+                entity,
+                event.message(),
+                event.emotion(),
+                event.bubble()
+        )); 
     }
 
     @Override

@@ -2,6 +2,7 @@ package habbo.rooms;
 
 import core.concurrency.IProcessHandler;
 import core.events.IEventHandler;
+import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
@@ -59,4 +60,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     void registerCustomComponent(Class<? extends IRoomComponent> component, IRoomComponent instance);
 
     IEventHandler getEventHandler();
+
+    ICommandManager getCommandManager();
 }

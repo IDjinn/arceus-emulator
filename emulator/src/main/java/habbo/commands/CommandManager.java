@@ -2,6 +2,8 @@ package habbo.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import core.events.EventListener;
+import core.events.EventListenerPriority;
 import habbo.commands.generic.AboutCommand;
 import habbo.commands.generic.LayCommand;
 import habbo.commands.generic.SitCommand;
@@ -11,6 +13,9 @@ import habbo.commands.user.currencies.PayCommand;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.internationalization.LocalizedString;
+import habbo.rooms.IRoom;
+import habbo.rooms.entities.IPlayerEntity;
+import habbo.rooms.entities.events.RoomEntityTalkEvent;
 import io.netty.util.internal.StringUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,13 +26,17 @@ import java.util.Map;
 
 public class CommandManager implements ICommandManager {
     private static final Logger logger = LogManager.getLogger();
-    private final String Prefix = ":";
+    private final String prefix = ":";
     private final Map<String, ICommand> commands;
     private final IInternationalizationManager internationalizationManager;
     private final Injector injector;
+    private IRoom room;
 
     @Inject
-    public CommandManager(IInternationalizationManager internationalizationManager, Injector injector) {
+    public CommandManager(
+            final IInternationalizationManager internationalizationManager,
+            final Injector injector
+    ) {
         this.internationalizationManager = internationalizationManager;
         this.injector = injector;
         this.commands = new HashMap<>();
@@ -46,7 +55,7 @@ public class CommandManager implements ICommandManager {
 
     @Override
     public boolean isCommand(@NotNull final String message) {
-        return !StringUtil.isNullOrEmpty(message) && message.startsWith(this.Prefix);
+        return !StringUtil.isNullOrEmpty(message) && message.startsWith(this.prefix);
     }
 
     @Override
@@ -77,7 +86,7 @@ public class CommandManager implements ICommandManager {
             return;
 
         final var split = message.split(" ");
-        final var commandName = split[0].substring(this.Prefix.length());
+        final var commandName = split[0].substring(this.prefix.length());
         final var command = this.commands.get(commandName);
         if (command == null) return; // TODO: COMMAND NOT FOUND?
 
@@ -91,5 +100,32 @@ public class CommandManager implements ICommandManager {
         } catch (Exception e) {
             logger.error("error while executing command {}", command.getName(), e);
         }
+    }
+
+    @EventListener(priority = EventListenerPriority.High, listenCancelled = false)
+    public void onEntityTalkEvent(RoomEntityTalkEvent entityTalkEvent) {
+        if (!(entityTalkEvent.entity() instanceof IPlayerEntity player)) return;
+
+        if (this.getRoom().getCommandManager().isCommand(entityTalkEvent.message())) {
+            this.getRoom().getCommandManager().execute(player.getHabbo(), entityTalkEvent.message());
+            entityTalkEvent.setCancelled(true);
+        }
+    }
+
+    @Override
+    public IRoom getRoom() {
+        return this.room;
+    }
+
+    @Override
+    public void init(final IRoom room) {
+        this.room = room;
+
+        this.getRoom().getEventHandler().subscribe(this);
+    }
+
+    @Override
+    public void destroy() {
+        this.getRoom().getEventHandler().unsubscribe(this);
     }
 }

@@ -40,4 +40,14 @@ public class RoomItemsRepository extends ConnectionRepository implements IRoomIt
                                  final IConnectionResultConsumer resultConsumer) {
         this.updateBatch(RoomItemsQuery.UPDATE_ITEM.get(), statementConsumer, resultConsumer);
     }
+
+    @Override
+    public void updateBatch(final String query, final IConnectionStatementConsumer statementConsumer, final IConnectionResultConsumer resultConsumer) {
+        super.updateBatch(query, statementConsumer, resultConsumer);
+    }
+
+    @Override
+    public void update(final String query, final IConnectionBooleanResultConsumer consumer, final Object... parameters) {
+        super.update(query, consumer, parameters);
+    }
 }

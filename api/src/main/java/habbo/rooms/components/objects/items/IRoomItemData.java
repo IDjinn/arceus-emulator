@@ -25,4 +25,8 @@ public interface IRoomItemData {
     IExtraData getData();
 
     void setExtraData(IExtraData data);
+
+    String getWiredData();
+
+    void setWiredData(final String wiredData);
 }

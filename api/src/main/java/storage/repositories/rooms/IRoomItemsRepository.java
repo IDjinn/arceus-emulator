@@ -15,4 +15,9 @@ public interface IRoomItemsRepository {
 
     void updateItemsBatch(final IConnectionStatementConsumer statementConsumer,
                           final IConnectionResultConsumer resultConsumer);
+
+    void updateBatch(final String query, final IConnectionStatementConsumer statementConsumer,
+                     final IConnectionResultConsumer resultConsumer);
+
+    void update(final String query, final IConnectionBooleanResultConsumer consumer, final Object... parameters);
 }
