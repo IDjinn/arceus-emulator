@@ -15,7 +15,7 @@ import java.util.*;
 
 public class EventHandler implements IEventHandler {
     private final Logger logger = LogManager.getLogger();
-    private final Map<Class<? extends IEvent>, List<ListenerCallback>> listeners;
+    private final Map<Class<? extends Event>, List<ListenerCallback>> listeners;
     private final Injector injector;
 
     @Inject
@@ -92,11 +92,16 @@ public class EventHandler implements IEventHandler {
             for (final var listenerMethod : this.getEventListenersOf(classes)) {
                 try {
                     var eventType = Arrays.stream(listenerMethod.getParameterTypes()).findFirst();
-                    if (eventType.isPresent() && IEvent.class.isAssignableFrom(eventType.get())) {
-                        final var priority =
-                                ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get()).priority();
+                    if (eventType.isPresent() && Event.class.isAssignableFrom(eventType.get())) {
+                        final var listenerAnnotation =
+                                ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get());
+                        final var priority = listenerAnnotation
+                                .priority();
+                        final var listenCancelled = listenerAnnotation.listenCancelled(); 
                         final var instance = pluginInstance.getInjector().getInstance(listenerMethod.getDeclaringClass());
-                        this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(pluginInstance, instance, listenerMethod, priority));
+                        this.listeners.computeIfAbsent((Class<? extends Event>) eventType.get(),
+                                k -> new ArrayList<>()).add(new ListenerCallback(pluginInstance, instance,
+                                listenerMethod, priority, listenCancelled));
                     }
                 } catch (Exception ignore) {
                     continue;
@@ -117,10 +122,13 @@ public class EventHandler implements IEventHandler {
         try {
             for (final var listenerMethod : this.getEventListenersOf(classes)) {
                 var eventType = Arrays.stream(listenerMethod.getParameterTypes()).findFirst();
-                if (eventType.isPresent() && IEvent.class.isAssignableFrom(eventType.get())) {
-                    final var priority =
-                            ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get()).priority();
-                    this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(null, null, listenerMethod, priority));
+                if (eventType.isPresent() && Event.class.isAssignableFrom(eventType.get())) {
+                    final var listenerAnnotation =
+                            ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get());
+                    final var priority = listenerAnnotation
+                            .priority();
+                    final var listenCancelled = listenerAnnotation.listenCancelled();
+                    this.listeners.computeIfAbsent((Class<? extends Event>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(null, null, listenerMethod, priority, listenCancelled));
                 }
             }
             for (var listenerMethods : this.listeners.values()) {
@@ -143,10 +151,13 @@ public class EventHandler implements IEventHandler {
         final var listenerMethods = this.getEventListenersOf(listenerInstance.getClass());
         for (final var listenerMethod : listenerMethods) {
             var eventType = Arrays.stream(listenerMethod.getParameterTypes()).findFirst();
-            if (eventType.isPresent() && IEvent.class.isAssignableFrom(eventType.get())) {
-                final var priority =
-                        ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get()).priority();
-                this.listeners.computeIfAbsent((Class<? extends IEvent>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(null, listenerInstance, listenerMethod, priority));
+            if (eventType.isPresent() && Event.class.isAssignableFrom(eventType.get())) {
+                final var listenerAnnotation =
+                        ((EventListener) Arrays.stream(listenerMethod.getDeclaredAnnotations()).filter(a -> a.annotationType().equals(EventListener.class)).findFirst().get());
+                final var priority = listenerAnnotation
+                        .priority();
+                final var listenCancelled = listenerAnnotation.listenCancelled();
+                this.listeners.computeIfAbsent((Class<? extends Event>) eventType.get(), k -> new ArrayList<>()).add(new ListenerCallback(null, listenerInstance, listenerMethod, priority, listenCancelled));
             }
         }
 
@@ -157,20 +168,52 @@ public class EventHandler implements IEventHandler {
     }
 
     @Override
-    public void onEvent(final IEvent event) {
+    public <TListener> void unsubscribe(final TListener tListener) {
+
+    }
+
+    @Override
+    public <TEvent extends Event> TEvent onEvent(final TEvent event) {
         final var listeners = this.listeners.get(event.getClass());
         if (listeners == null)
-            return;
+            return event;
 
+        this.logger.trace("onEvent {} with value {}", event.getClass().getSimpleName(), event.toString());
         for (final var listener : listeners) {
+            final var ignored = event instanceof Cancellable cancellableEvent && cancellableEvent.isCancelled();
+            if (ignored) {
+                this.logger.trace("event listener {} was ignored because event {} was cancelled",
+                        listener.method.getClass().getName(),
+                        event.getClass().getSimpleName()
+                );
+                continue;
+            }
+
             try {
+                final var oldHashCode = event.hashCode();
+                final var oldValue = event.toString();
                 listener.method.invoke(listener.instance, event);
+                if (event.hashCode() != oldHashCode) {
+                    this.logger.trace("event listener {} changed value of event {} from {} to {}",
+                            listener.method.getClass().getName(),
+                            event.getClass().getSimpleName(),
+                            oldValue.toString(),
+                            event.toString()
+                    );
+                    continue;
+                }
+
+                this.logger.trace("event listener {} listened event {}",
+                        listener.method.getClass().getName(),
+                        event.getClass().getSimpleName()
+                );
             } catch (Exception e) {
                 this.logger.error("failed to invoke event listener {}: {}", listener.method.getClass().getName(), e.getMessage(), e);
             }
         }
 
         this.logger.debug("event {} triggered total of {} listeners", event.getClass().getSimpleName(), listeners.size());
+        return event;
     }
 
     @Override
@@ -178,8 +221,13 @@ public class EventHandler implements IEventHandler {
         return false;
     }
 
-    record ListenerCallback(@Nullable IPlugin pluginInstance, @Nullable Object instance, Method method,
-                            EventListenerPriority priority) implements Comparable<ListenerCallback> {
+    record ListenerCallback(
+            @Nullable IPlugin pluginInstance,
+            @Nullable Object instance,
+            Method method,
+            EventListenerPriority priority,
+            boolean listenCancelled
+    ) implements Comparable<ListenerCallback> {
         @Override
         public int compareTo(@NotNull final EventHandler.ListenerCallback o) {
             return Integer.compare(o.priority.ordinal(), this.priority.ordinal());

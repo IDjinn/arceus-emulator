@@ -35,7 +35,7 @@ public class ConfigurationManager implements IConfigurationManager {
 
     @Override
     public boolean getBool(@NotNull String key) {
-            return this.properties.getProperty(key).equals("1");
+        return this.properties.getProperty(key).equals("1") || this.properties.getProperty(key).equals("true");
     }
 
     @Override

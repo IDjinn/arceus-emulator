@@ -18,7 +18,7 @@ public class PickupItemEvent extends IncomingEvent {
         if (client.getHabbo().getRoom() == null) return;
 
         // TODO ITEM OWNER
-        if (!client.getHabbo().getRoom().getRightsManager().hasRights(client.getHabbo()))
+        if (!client.getHabbo().getPlayerEntity().hasRights())
             return;
         
         var isFloorItem = packet.readInt() == 2;

@@ -1,7 +1,8 @@
-package habbo.commands;
+package habbo.commands.helpers;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import habbo.commands.ICommandHelpers;
 import habbo.habbos.IHabbo;
 import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;

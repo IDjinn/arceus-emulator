@@ -1,4 +1,4 @@
-package habbo.commands.arguments;
+package habbo.commands.helpers.arguments;
 
 public enum ArgumentType {
     Unknown(-1),
@@ -8,21 +8,23 @@ public enum ArgumentType {
     Integer(3),
     Double(4),
     String(5),
-    Text(6),
 
-    TargetHabbo(7),
-    TargetEntity(8),
-    TargetRoom(9),
+    TargetHabbo(6),
+    TargetEntity(7),
+    TargetRoom(8),
+    TargetItem(9),
+
+    Custom(10),
     ;
 
-    private final int type;
+    private final int code;
 
-    ArgumentType(final int type) {
-        this.type = type;
+    ArgumentType(final int code) {
+        this.code = code;
     }
 
-    public int getType() {
-        return this.type;
+    public int getCode() {
+        return this.code;
     }
 
     public static ArgumentType fromType(int type) {
@@ -32,7 +34,6 @@ public enum ArgumentType {
             case 3 -> Integer;
             case 4 -> Double;
             case 5 -> String;
-            case 6 -> Text;
             case 7 -> TargetHabbo;
             case 8 -> TargetEntity;
             case 9 -> TargetRoom;

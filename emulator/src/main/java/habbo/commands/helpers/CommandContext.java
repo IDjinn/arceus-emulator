@@ -1,15 +1,21 @@
-package habbo.commands;
+package habbo.commands.helpers;
 
 import com.google.inject.Inject;
+import habbo.commands.ICommandContext;
+import habbo.commands.ICommandHelpers;
+import habbo.commands.helpers.arguments.ArgumentType;
+import habbo.commands.helpers.arguments.ICommandArgument;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.LocalizedString;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
+import networking.client.IClient;
 import org.jetbrains.annotations.NotNull;
 import utils.StringBuilderHelper;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 public class CommandContext implements ICommandContext {
     @Inject
@@ -19,11 +25,42 @@ public class CommandContext implements ICommandContext {
     private final String commandName;
     private final String[] arguments;
     private int currentArg;
+    private boolean isError;
 
     public CommandContext(@NotNull IPlayerEntity player, @NotNull String commandName, @NotNull String[] arguments) {
         this.player = player;
         this.commandName = commandName;
         this.arguments = arguments;
+    }
+
+    @Override
+    public IPlayerEntity getPlayerEntity() {
+        return this.player;
+    }
+
+    @Override
+    public IClient getClient() {
+        return this.getHabbo().getClient();
+    }
+
+    @Override
+    public IHabbo getHabbo() {
+        return this.getPlayerEntity().getHabbo();
+    }
+
+    @Override
+    public IRoom getRoom() {
+        return this.getPlayerEntity().getRoom();
+    }
+
+    @Override
+    public Optional<ICommandArgument> required(final String parameterName, final ArgumentType argumentType) {
+        return Optional.empty();
+    }
+
+    @Override
+    public <T extends ICommandArgument, TResult> Optional<TResult> optional(final String parameterName, final ArgumentType argumentType, final Class<T> argument) {
+        return Optional.empty();
     }
 
     @Override
@@ -37,8 +74,8 @@ public class CommandContext implements ICommandContext {
     }
 
     @Override
-    public IPlayerEntity getPlayer() {
-        return this.player;
+    public Optional<Object> match(final ArgumentType argumentType, final Function<ICommandArgument, Optional<Object>> callback) {
+        return Optional.empty();
     }
 
     @Override
@@ -67,6 +104,14 @@ public class CommandContext implements ICommandContext {
     }
 
     @Override
+    public Optional<IPlayerEntity> popPlayerEntity(final String parameterName) {
+        final var entity = this.popEntity();
+        if (entity.isPresent() && entity.get() instanceof IPlayerEntity)
+            return Optional.of((IPlayerEntity) entity.get());
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<IRoom> popRoom() {
         return this.popArg().flatMap(this.commandHelpers::resolveRoom);
     }
@@ -88,8 +133,9 @@ public class CommandContext implements ICommandContext {
     }
 
     @Override
-    public void whisper(final LocalizedString message) {
+    public Optional<ICommandContext> whisper(final LocalizedString message) {
         this.player.getRoom().getEntityManager().whisper(this.player, message, 0);
+        return Optional.of(this);
     }
 
     @Override
@@ -100,5 +146,22 @@ public class CommandContext implements ICommandContext {
     @Override
     public void talk(final LocalizedString message) {
         this.player.getRoom().getEntityManager().talk(this.player, message, 0);
+    }
+
+    @Override
+    public Optional<ICommandContext> error(final LocalizedString message) {
+        this.whisper(message);
+        this.isError = true;
+        return Optional.of(this);
+    }
+
+    @Override
+    public Optional<Object> error(final ArgumentType type, final LocalizedString message) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean isError() {
+        return this.isError;
     }
 }

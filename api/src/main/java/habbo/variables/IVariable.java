@@ -7,12 +7,14 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Instant;
 import java.util.Optional;
 
-public interface IVariable {
+public interface IVariable<T> {
     @NotNull String getKey();
 
-    @Nullable String getValue();
+    T getValue();
 
-    void setValue(@Nullable String value);
+    T getValue(T defaultValue);
+
+    void setValue(T value);
 
     Optional<String> getIcon();
 

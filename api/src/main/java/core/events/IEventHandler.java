@@ -19,5 +19,7 @@ public interface IEventHandler {
 
     <TListener> boolean subscribe(TListener listener);
 
-    void onEvent(IEvent event);
+    <TListener> void unsubscribe(TListener listener);
+
+    <TEvent extends Event> TEvent onEvent(TEvent event);
 }

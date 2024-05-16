@@ -40,7 +40,6 @@ public enum RoomItemsQuery {
                 `wall_pos` = ?,
                 `extra_data` = ?,
                 `limited_data` = ?,
-                `wired_data` = ?,
                 `user_id` = ?,
                 `guild_id` = ?
             WHERE `id` = ?;

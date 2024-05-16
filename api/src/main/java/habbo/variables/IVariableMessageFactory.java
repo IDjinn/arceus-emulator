@@ -7,5 +7,5 @@ import java.util.List;
 public interface IVariableMessageFactory extends MessageFactory {
     String format(final String message);
 
-    String format(final String message, final List<IVariable> variables);
+    String format(final String message, final List<IVariable<?>> variables);
 }

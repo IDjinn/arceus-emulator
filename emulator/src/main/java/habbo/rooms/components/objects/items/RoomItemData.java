@@ -11,9 +11,18 @@ public class RoomItemData implements IRoomItemData {
     private int rotation;
     private Position floorPosition;
     private String wallPosition;
+    private String wiredData;
 
-    public RoomItemData(int id, int itemId, int ownerId, Position position, int rotation, IExtraData data,
-                        String wallPosition) {
+    public RoomItemData(
+            final int id,
+            final int itemId,
+            final int ownerId,
+            final Position position,
+            final int rotation,
+            final IExtraData data,
+            final String wallPosition,
+            final String wiredData
+    ) {
         this.id = id;
         this.itemId = itemId;
         this.ownerId = ownerId;
@@ -24,6 +33,7 @@ public class RoomItemData implements IRoomItemData {
 
         this.wallPosition = wallPosition;
 
+        this.wiredData = wiredData;
     }
 
     public int getId() {
@@ -77,5 +87,13 @@ public class RoomItemData implements IRoomItemData {
     @Override
     public void setExtraData(IExtraData data) {
         this.data = data;
+    }
+
+    public String getWiredData() {
+        return this.wiredData;
+    }
+
+    public void setWiredData(final String wiredData) {
+        this.wiredData = wiredData;
     }
 }

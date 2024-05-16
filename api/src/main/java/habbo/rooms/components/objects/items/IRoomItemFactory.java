@@ -17,12 +17,13 @@ public interface IRoomItemFactory {
     IRoomItem create(IRoomItemData itemData, IRoom room);
 
     IRoomItemData createItemData(
-            int id,
-            int furnitureId,
-            int ownerId,
-            Position position,
-            int rotation,
-            IExtraData extraData
+            final int id,
+            final int furnitureId,
+            final int ownerId,
+            final Position position,
+            final int rotation,
+            final IExtraData extraData,
+            final String wiredData
     );
 
     IRoomItemData createItemData(
