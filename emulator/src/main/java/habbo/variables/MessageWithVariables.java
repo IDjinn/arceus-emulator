@@ -12,14 +12,14 @@ public final class MessageWithVariables implements Message {
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\$\\{([^}]*)\\}",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
     private final String messageTemplate;
-    private final Map<String, IVariable> variables;
+    private final Map<String, IVariable<?>> variables;
 
     public MessageWithVariables(final String messageTemplate) {
         this.messageTemplate = messageTemplate;
         this.variables = new HashMap<>();
     }
 
-    public MessageWithVariables(final String messageTemplate, final List<IVariable> variables) {
+    public MessageWithVariables(final String messageTemplate, final List<IVariable<?>> variables) {
         this.messageTemplate = messageTemplate;
         this.variables = new HashMap<>();
         for (final var variable : variables) {

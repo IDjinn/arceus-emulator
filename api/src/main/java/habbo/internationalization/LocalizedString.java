@@ -14,15 +14,15 @@ public final class LocalizedString {
     @Nullable
     private final String defaultValue;
 
-    private final List<IVariable> variables;
+    private final List<IVariable<?>> variables;
 
-    public LocalizedString(@NotNull String key, @Nullable String defaultValue, List<IVariable> variables) {
+    public LocalizedString(@NotNull String key, @Nullable String defaultValue, List<IVariable<?>> variables) {
         this.key = key;
         this.defaultValue = defaultValue;
         this.variables = variables;
     }
 
-    public static LocalizedString of(@NotNull String key, @Nullable String defaultValue, List<IVariable> variables) {
+    public static LocalizedString of(@NotNull String key, @Nullable String defaultValue, List<IVariable<?>> variables) {
         return new LocalizedString(key, defaultValue, variables);
     }
 
@@ -30,11 +30,11 @@ public final class LocalizedString {
         return new LocalizedString(key, defaultValue, new ArrayList<>());
     }
 
-    public static LocalizedString of(@NotNull String key, IVariable... variables) {
+    public static LocalizedString of(@NotNull String key, IVariable<?>... variables) {
         return new LocalizedString(key, null, List.of(variables));
     }
 
-    public static LocalizedString of(@NotNull String key, List<IVariable> variables) {
+    public static LocalizedString of(@NotNull String key, List<IVariable<?>> variables) {
         return new LocalizedString(key, null, variables);
     }
 
@@ -50,7 +50,7 @@ public final class LocalizedString {
         return Optional.ofNullable(this.defaultValue);
     }
 
-    public List<IVariable> getVariables() {
+    public List<IVariable<?>> getVariables() {
         return this.variables;
     }
 

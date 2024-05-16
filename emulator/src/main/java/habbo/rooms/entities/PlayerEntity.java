@@ -3,6 +3,7 @@ package habbo.rooms.entities;
 import com.google.inject.Inject;
 import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
+import habbo.internationalization.IInternationalizationManager;
 import habbo.rooms.RoomRightLevel;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
@@ -23,9 +24,12 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     @Inject
     private IConfigurationManager configurationManager;
 
-    public PlayerEntity(IHabbo habbo) {
+    private final IInternationalizationManager internationalizationManager;
+
+    public PlayerEntity(IHabbo habbo, final IInternationalizationManager internationalizationManager) {
         super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
+        this.internationalizationManager = internationalizationManager;
         this.entityVariableManager = new EntityVariablesManager(this);
         this.setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.Moderator.ordinal())));
     }

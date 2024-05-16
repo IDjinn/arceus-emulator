@@ -6,6 +6,7 @@ import core.concurrency.IThreadManager;
 import core.events.IEventHandler;
 import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
+import habbo.internationalization.IInternationalizationManager;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import packets.outgoing.rooms.entities.RoomEntitiesComposer;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
+import packets.outgoing.rooms.entities.chat.CommandListComposer;
 import packets.outgoing.rooms.gamemap.RoomHeightMapComposer;
 import packets.outgoing.rooms.gamemap.RoomRelativeMapComposer;
 import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
@@ -66,6 +68,8 @@ public class Room implements IRoom {
     private IEventHandler eventHandler;
     @Inject
     private ICommandManager commandManager;
+    @Inject
+    private IInternationalizationManager internationalizationManager;
 
 
     public Room(IConnectionResult data) {
@@ -189,9 +193,13 @@ public class Room implements IRoom {
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
-                new OutgoingPacket(2402).appendInt(0)
+                new OutgoingPacket(2402).appendInt(0),
+                new CommandListComposer(
+                        this.getCommandManager().getCommands().values().stream().toList(),
+                        this.internationalizationManager,
+                        habbo.getData().getLocale()
+                )
         );
-
         this.broadcastMessages(
                 new RoomEntitiesComposer(this.getEntityManager().getEntities()),
                 new RoomUserStatusComposer(this.getEntityManager().getEntities())

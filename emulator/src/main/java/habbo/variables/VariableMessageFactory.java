@@ -15,7 +15,7 @@ public final class VariableMessageFactory extends MessageFormatMessageFactory im
         return new MessageWithVariables(message).getFormattedMessage();
     }
 
-    public String format(String message, List<IVariable> variables) {
+    public String format(String message, List<IVariable<?>> variables) {
         return new MessageWithVariables(message, variables).getFormattedMessage();
     }
 }

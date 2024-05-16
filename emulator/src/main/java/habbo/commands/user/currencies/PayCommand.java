@@ -9,7 +9,6 @@ import habbo.commands.helpers.arguments.ChoiceArguments;
 import habbo.commands.helpers.arguments.RangeArgument;
 import habbo.commands.helpers.arguments.RequiredArgument;
 import habbo.commands.helpers.parameters.ICommandParameter;
-import habbo.commands.helpers.parameters.OptionalParameter;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.internationalization.LocalizedString;
 import org.jetbrains.annotations.NotNull;
@@ -20,10 +19,10 @@ import java.util.Optional;
 public class PayCommand implements ICommand {
     private static final List<ICommandParameter> parameters = List.of(
             RequiredArgument.of("target", ArgumentType.TargetHabbo),
-            OptionalParameter.of(ChoiceArguments.of("currency-name", ArgumentType.String, List.of(
-                    LocalizedString.of("command.user.currencies.pay.currency.test"),
-                    LocalizedString.of("command.user.currencies.pay.currency.other-test2")
-            ))),
+//            OptionalParameter.of(ChoiceArguments.of("currency-name", ArgumentType.String, List.of(
+//                    LocalizedString.of("command.user.currencies.pay.currency.test"),
+//                    LocalizedString.of("command.user.currencies.pay.currency.other-test2")
+//            ))),
             RangeArgument.of("value", ArgumentType.Integer, 0, Integer.MAX_VALUE)
     );
     @Inject
@@ -60,12 +59,6 @@ public class PayCommand implements ICommand {
         return ICommand.super.validate(ctx);
     }
 
-    //
-//        ctx.getPlayerEntity().getClient().sendMessage(new CommandListComposer(
-//            this.commandManager.getCommands().values().stream().toList(),
-//                this.internationalizationManager,
-//    Locale.ENGLISH
-//        ));
     @Override
     public Optional<ICommandContext> execute(final ICommandContext ctx) {
         final var target = ctx.popPlayerEntity("target");

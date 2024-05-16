@@ -56,7 +56,7 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public IPlayerEntity createHabboEntity(IHabbo habbo) {
-        var entity = new PlayerEntity(habbo);
+        var entity = new PlayerEntity(habbo, this.internationalizationManager);
         this.injector.injectMembers(entity);
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
