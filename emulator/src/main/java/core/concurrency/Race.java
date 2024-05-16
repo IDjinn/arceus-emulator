@@ -16,6 +16,8 @@ import java.util.concurrent.TimeoutException;
 public final class Race implements IRace {
     private static final Logger LOGGER = LogManager.getLogger();
     private final IThreadManager threadManager;
+    private final boolean isDebugging = java.lang.management.ManagementFactory.getRuntimeMXBean().
+            getInputArguments().toString().contains("-agentlib:jdwp");
 
     @Inject
     public Race(final IThreadManager threadManager) {
@@ -23,15 +25,16 @@ public final class Race implements IRace {
     }
 
     @Override
-    public <T> Optional<T> futureWithTimeout(final Callable<T> future, final Timeout timeout) {
+    public <T> Optional<T> futureWithTimeout(final Callable<T> callable, final Timeout timeout) {
         try {
-            return Optional.of(
-                    this.threadManager.getSoftwareThreadExecutor().submit(future)
-                            .get(timeout.getTimeoutInBaseUnit(), timeout.getBaseUnit())
-            );
+            final var future = this.threadManager.getSoftwareThreadExecutor().submit(callable);
+            if (this.isDebugging)
+                return Optional.of(future.get());
+
+            return Optional.of(future.get(timeout.getTimeoutInBaseUnit(), timeout.getBaseUnit()));
         } catch (TimeoutException | InterruptedException | ExecutionException timeoutException) {
             LOGGER.trace("Timeout exception occurred while running {} from {}: {}",
-                    future,
+                    callable,
                     ReflectionHelpers.getCallerInfo(),
                     timeoutException.getMessage(),
                     timeoutException);
@@ -42,8 +45,11 @@ public final class Race implements IRace {
     @Override
     public <T> void runnableWithTimeout(final Runnable runnable, final Timeout timeout) {
         try {
-            this.threadManager.getSoftwareThreadExecutor().submit(runnable).get(timeout.getTimeoutInBaseUnit(),
-                    timeout.getBaseUnit());
+            final var future = this.threadManager.getSoftwareThreadExecutor().submit(runnable);
+            if (this.isDebugging)
+                future.get();
+            else
+                future.get(timeout.getTimeoutInBaseUnit(), timeout.getBaseUnit());
         } catch (TimeoutException | InterruptedException | ExecutionException timeoutException) {
             LOGGER.trace("Timeout exception occurred while running {} from {}: {}",
                     runnable,
