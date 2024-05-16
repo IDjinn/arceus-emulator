@@ -7,7 +7,7 @@ import packets.outgoing.OutgoingHeaders;
 import java.util.Map;
 
 public class EntityVariablesComposer extends OutgoingPacket {
-    public EntityVariablesComposer(Map<String, IVariable> variables) {
+    public EntityVariablesComposer(Map<String, IVariable<?>> variables) {
         super(OutgoingHeaders.EntityVariablesComposer);
 
         final var visible = variables.values().stream().filter(IVariable::isVisible).toList();

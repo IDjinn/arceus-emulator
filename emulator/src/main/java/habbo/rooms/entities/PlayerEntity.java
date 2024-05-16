@@ -5,7 +5,6 @@ import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.rooms.RoomRightLevel;
-import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
@@ -13,6 +12,7 @@ import habbo.rooms.entities.variables.IEntityVariableManager;
 import habbo.variables.IVariable;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
+import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
 import java.util.Objects;
 
