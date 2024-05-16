@@ -4,10 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import core.IEmulator;
 import core.IHotel;
-import core.concurrency.IProcessHandler;
-import core.concurrency.IThreadManager;
-import core.concurrency.ProcessHandler;
-import core.concurrency.ThreadManager;
+import core.concurrency.*;
 import core.configuration.ConfigurationManager;
 import core.configuration.ConfigurationModule;
 import core.configuration.IConfigurationManager;
@@ -99,6 +96,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IEventHandler.class).to(EventHandler.class);
         this.bind(IVariableManager.class).to(VariableManager.class);
         this.bind(IVariableMessageFactory.class).to(VariableMessageFactory.class);
+        this.bind(IRace.class).to(Race.class);
     }
 
     @Override

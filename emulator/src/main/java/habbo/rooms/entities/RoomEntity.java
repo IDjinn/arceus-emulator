@@ -1,17 +1,21 @@
 package habbo.rooms.entities;
 
+import com.google.inject.Inject;
+import core.concurrency.IRace;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import org.jetbrains.annotations.Nullable;
+import stormpot.Timeout;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 
 import java.util.ArrayList;
 import java.util.SequencedCollection;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public abstract class RoomEntity implements IRoomEntity {
     private final ConcurrentHashMap<RoomEntityStatus, StatusBucket> statusBuckets;
@@ -25,6 +29,9 @@ public abstract class RoomEntity implements IRoomEntity {
     private final SequencedCollection<Position> walkPath;
     private @Nullable Position nextPostion;
     private @Nullable IFloorItem onItem;
+
+    private static final Timeout PATHFINDER_DEFAULT_TIMEOUT = new Timeout(100, TimeUnit.MILLISECONDS);
+    private @Inject IRace race;
 
 
     public RoomEntity(IRoom room, int virtualId) {
@@ -158,13 +165,18 @@ public abstract class RoomEntity implements IRoomEntity {
         }
 
         if (this.walkPath.isEmpty() && this.getGoal() != null) {
-            this.walkPath.addAll(this.getRoom().getPathfinder().tracePath(
+            final var path = this.race.futureWithTimeout(() -> this.getRoom().getPathfinder().tracePath(
                     this,
                     this.getPosition(),
                     this.getGoal()
-            ));
+            ), PATHFINDER_DEFAULT_TIMEOUT);
 
-            this.getEntityVariablesManager().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
+            if (path.isPresent()) {
+                this.walkPath.addAll(path.get());
+                this.getEntityVariablesManager().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
+            } else {
+                this.getEntityVariablesManager().setOrCreate("dev.path.size", "none - execution timeout");
+            }
         }
 
         if (this.walkPath.isEmpty()) {
