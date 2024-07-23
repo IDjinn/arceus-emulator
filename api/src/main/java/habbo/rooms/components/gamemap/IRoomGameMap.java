@@ -28,13 +28,13 @@ public interface IRoomGameMap extends IRoomComponent {
 
     IRoomTile getTile(final Position position);
 
-    List<ITileMetadata> getMetadataAt(final Position position, double objectHeight);
-
-    List<ITileMetadata> getMetadataAt(final int x, final int y, double objectHeight);
+    List<ITileMetadata> getMetadataAt(Position position, double objectHeight);
 
     void updateTile(final IRoomTile tile);
 
     void updateTiles();
+
+    List<ITileMetadata> getMetadataAt(int x, int y, double objectHeight);
 
     void updateTiles(final IRoomTile... tiles);
 

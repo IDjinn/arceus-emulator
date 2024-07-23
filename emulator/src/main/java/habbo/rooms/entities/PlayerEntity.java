@@ -9,7 +9,6 @@ import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariableManager;
-import habbo.variables.IVariable;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
@@ -31,7 +30,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
         this.habbo = habbo;
         this.internationalizationManager = internationalizationManager;
         this.entityVariableManager = new EntityVariablesManager(this);
-        this.setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.Moderator.ordinal())));
+        this.getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.Moderator.ordinal())));
     }
 
     @Override
@@ -46,7 +45,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
 
     @Override
     public boolean hasRights() {
-        return Integer.parseInt(Objects.requireNonNull(this.getStatus().get(RoomEntityStatus.FLAT_CONTROL).getValue())) > RoomRightLevel.None.ordinal();
+        return Integer.parseInt(Objects.requireNonNull(this.getStatusComponent().getStatus().get(RoomEntityStatus.FLAT_CONTROL).getValue())) > RoomRightLevel.None.ordinal();
     }
 
     @Override
@@ -71,24 +70,8 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendBoolean(true, "is moderator")
                 .appendString(this.getHabbo().getSettings().getBanner().orElse(""))
         ;
-
-        if (!this.configurationManager.getBool("variables.entities.enabled")) {
-            packet.appendInt(0);
-            return;
-        }
-        
-        final var visibleVariables =
-                this.getEntityVariablesManager().getVariables().values().stream().filter(IVariable::isVisible).toList();
-        packet.appendInt(visibleVariables.size());
-        for (final var variable : visibleVariables) {
-            variable.serialize(packet);
-        }
     }
 
-    @Override
-    public void serializeStatus(OutgoingPacket packet) {
-
-    }
 
     @Override
     public double getHeight() {

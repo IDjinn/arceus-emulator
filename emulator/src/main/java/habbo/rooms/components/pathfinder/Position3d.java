@@ -1,12 +1,13 @@
 package habbo.rooms.components.pathfinder;
 
+import org.jetbrains.annotations.NotNull;
 import stormpot.Poolable;
 import stormpot.Slot;
 import utils.pathfinder.Position;
 
 import java.util.Objects;
 
-public class Position3d implements Poolable {
+public class Position3d implements Poolable, Comparable<Position3d> {
 
     private final Slot slot;
     private int x;
@@ -33,6 +34,11 @@ public class Position3d implements Poolable {
 
     public boolean tileEquals(final Position3d other) {
         return this.getX() == other.getX() && this.getY() == other.getY();
+    }
+
+    @Override
+    public int compareTo(@NotNull final Position3d o) {
+        return Float.compare(this.getZ(), o.getZ());
     }
 
     @Override

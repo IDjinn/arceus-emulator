@@ -3,7 +3,6 @@ package packets.outgoing.rooms.entities;
 import habbo.rooms.entities.IRoomEntity;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
-import utils.StringBuilderHelper;
 
 import java.util.Collection;
 
@@ -27,22 +26,9 @@ public class RoomUserStatusComposer extends OutgoingPacket {
         this.appendInt(entity.getPosition().getY());
         this.appendString(String.valueOf(entity.getPosition().getZ()));
 
-        this.appendInt((int) entity.getDirection().ordinal());
-        this.appendInt((int) entity.getDirection().ordinal()); // TODO: HEAD|BODY ROTATION & STATUS
+        this.appendInt(entity.getDirection().ordinal());
+        this.appendInt(entity.getDirection().ordinal()); // TODO: HEAD|BODY ROTATION & STATUS
 
-        final var entityStatus = StringBuilderHelper.getBuilder().append('/');
-        for (var entry : entity.getStatus().entrySet()) {
-            var status = entry.getKey();
-            var bucket = entry.getValue();
-
-            entityStatus.append(status.toString());
-            entityStatus.append(' ');
-            if (bucket.getValue() != null)
-                entityStatus.append(bucket.getValue());
-            entityStatus.append('/');
-        }
-
-        this.appendString(entityStatus.toString());
+        entity.getStatusComponent().serialize(this);
     }
-
 }

@@ -2,6 +2,7 @@ package habbo.rooms.components.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
+import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.floor.IFloorObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class Pathfinder implements IPathfinder {
     private IRoom room;
 
-    private static final int VerticalBasicCost = 22;
-    private static final int DiagonalCost = 14;
-    private static final int BasicCost = 10;
+    private static final int COST_BASE_VERTICAL = 22;
+    private static final int COST_BASE_DIAGONAL = 14;
+    private static final int COST_BASE = 10;
+    private static final double PLAYER_CLIMB_MAX_HEIGHT = 1.5d;
+    private static final double MIN_WALKABLE_HEIGHT_BETWEEN_TILES = 2.0d;
+    
     private static final HashMap<Direction, Position> adjacentDirections = new HashMap<>();
     private static final HashMap<Direction, Position> diagonalDirections = new HashMap<>();
 
@@ -85,8 +89,8 @@ public class Pathfinder implements IPathfinder {
             final Position nextPosition,
             final double objectHeight) {
         var dz = Math.abs(currentPosition.getZ() - nextPosition.getZ());
-        var horizontalCost = isDiagonal(currentPosition, nextPosition) ? DiagonalCost : BasicCost;
-        var verticalCost = dz == 0 ? VerticalBasicCost : dz;
+        var horizontalCost = isDiagonal(currentPosition, nextPosition) ? COST_BASE_DIAGONAL : COST_BASE;
+        var verticalCost = dz == 0 ? COST_BASE_VERTICAL : dz;
         return horizontalCost + verticalCost;
     }
 
@@ -98,7 +102,7 @@ public class Pathfinder implements IPathfinder {
     ) {
         var dx = Math.abs(currentPosition.getX() - nextPosition.getX());
         var dy = Math.abs(currentPosition.getY() - nextPosition.getY());
-        return BasicCost * (dx + dy) + (DiagonalCost - 2 * BasicCost) * Math.min(dx, dy);
+        return COST_BASE_VERTICAL * (dx + dy) + (COST_BASE_DIAGONAL - 2 * COST_BASE) * Math.min(dx, dy);
     }
 
     private List<Position> reversePath(final PathfinderNode node) {
@@ -181,36 +185,81 @@ public class Pathfinder implements IPathfinder {
 
     private List<PathfinderNode> getNeighbors(
             final IFloorObject floorObject,
-            final PathfinderNode current,
+            final PathfinderNode from,
             final Position3d goal
     ) {
         final var neighbors = new ArrayList<PathfinderNode>();
         for (final var direction : diagonalDirections.values()) {
             try {
-                final var neighborPosition = this.positionPool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
-                neighborPosition.setX(current.getPosition().getX() + direction.getX());
-                neighborPosition.setY(current.getPosition().getY() + direction.getY());
-                if (!this.getRoom().getGameMap().isValidCoordinate(neighborPosition.getX(), neighborPosition.getY()))
+                final var to = this.positionPool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+                to.setX(from.getPosition().getX() + direction.getX());
+                to.setY(from.getPosition().getY() + direction.getY());
+                if (!this.getRoom().getGameMap().isValidCoordinate(to.getX(), to.getY())) {
+                    to.release();
                     continue;
-
-                for (var metadata : this.getRoom().getGameMap().getMetadataAt(neighborPosition.getX(), neighborPosition.getY(), floorObject.getHeight())) {
-                    if (metadata.getHeight().isEmpty()) continue;
-                    if (!floorObject.canSlideTo(metadata)) continue;
-
-                    final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
-                    neighborPosition.setZ(metadata.getHeight().get().floatValue()); // TODO MAYBE FLOOR_OBJECT METHOD?
-                    neighbor.setPosition(neighborPosition);
-                    neighbor.parentNode = current;
-                    neighbor.setHCosts(Float.POSITIVE_INFINITY);
-                    neighbors.add(neighbor);
-                    break;
                 }
+
+                final var targetTile = this.getRoom().getGameMap().getTile(to.getX(), to.getY());
+                final var tileMetadataList = targetTile.getMetadata()
+                        .stream()
+                        .sorted(Comparator.comparingDouble(m -> m.getHeight().isEmpty() ? Float.POSITIVE_INFINITY : m.getHeight().get() - from.getPosition().getZ()))
+                        .toList();
+
+                if (tileMetadataList.isEmpty()) {
+                    to.release();
+                    continue;
+                }
+
+                if (tileMetadataList.size() == 1) {
+                    final var metadata = tileMetadataList.getFirst();
+                    if (metadata.getHeight().isEmpty()) {
+                        to.release();
+                        continue;
+                    }
+
+                    final var neighbor = this.createNode(to, metadata);
+                    neighbor.parentNode = from;
+                    neighbors.add(neighbor);
+                    continue;
+                }
+
+                final var isGoal =
+                        targetTile.getPosition().getX() == goal.getX() && targetTile.getPosition().getY() == goal.getY();
+                var release = true;
+                for (int i = tileMetadataList.size() - 1; i >= 0; i--) {
+                    final var metadata = tileMetadataList.get(i);
+                    if (metadata.getHeight().isEmpty()) continue;
+
+                    final var bottomMetadata = i - 1 >= 0 ? tileMetadataList.get(i) : null;
+                    final var topMetadata = i + 1 < tileMetadataList.size() ? tileMetadataList.get(i) : null;
+
+                    final var tooHighToClimb = topMetadata != null && topMetadata.getHeight().isPresent()
+                            && topMetadata.getHeight().get() + from.getPosition().getZ() > PLAYER_CLIMB_MAX_HEIGHT;
+                    final var tooLowToFall = bottomMetadata == null || bottomMetadata.getHeight().isPresent()
+                            && bottomMetadata.getHeight().get() < to.getZ() - MIN_WALKABLE_HEIGHT_BETWEEN_TILES;
+                    if (tooHighToClimb || tooLowToFall) continue;
+
+                    final var neighbor = this.createNode(to, metadata);
+                    neighbor.parentNode = from;
+                    neighbors.add(neighbor);
+                    release = false;
+                }
+
+                if (release) to.release();
             } catch (Exception e) {
                 this.logger.error("error while getting neighbors for room {}",
                         this.getRoom().getData().getId(), e);
             }
         }
         return neighbors;
+    }
+
+    private PathfinderNode createNode(final Position3d position3d, final ITileMetadata tileMetadata) throws InterruptedException {
+        final var neighbor = this.nodePool.claim(new Timeout(500, TimeUnit.MILLISECONDS));
+        position3d.setZ(tileMetadata.getHeight().get().floatValue()); // TODO MAYBE FLOOR_OBJECT METHOD?
+        neighbor.setPosition(position3d);
+        neighbor.setHCosts(Float.POSITIVE_INFINITY);
+        return neighbor;
     }
 
     private class PathfinderNodeAllocator implements Allocator<PathfinderNode> {

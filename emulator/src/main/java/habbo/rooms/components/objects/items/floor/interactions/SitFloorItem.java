@@ -22,7 +22,7 @@ public class SitFloorItem extends DefaultFloorItem {
         final var position = entity.getPosition().copy();
         position.setZ(this.getPosition().getZ());
         entity.setPosition(position);
-        entity.setStatus(new StatusBucket(RoomEntityStatus.SIT, STR."\{(this.getPosition().getZ() + 1D)}"));
-        entity.setNeedUpdateStatus(true);
+        entity.getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.SIT, STR."\{(this.getPosition().getZ() + 1D)}"));
+        entity.getStatusComponent().setNeedUpdateStatus(true);
     }
 }

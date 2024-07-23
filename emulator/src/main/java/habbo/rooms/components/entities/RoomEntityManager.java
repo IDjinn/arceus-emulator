@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RoomEntityManager implements IRoomEntityManager {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Map<Integer, IRoomEntity> entitiesByVirtualId;
     private final Map<Integer, IRoomEntity> entities;
     private final Map<Integer, IPlayerEntity> players;
@@ -153,16 +153,16 @@ public class RoomEntityManager implements IRoomEntityManager {
             this.entitiesUpdated.clear();
             for (var entity : this.entities.values()) {
                 entity.tick();
-                if (entity.isNeedUpdate()) {
+                if (entity.getStatusComponent().isNeedUpdate()) {
                     this.entitiesUpdated.add(entity);
-                    entity.setNeedUpdateStatus(false);
+                    entity.getStatusComponent().setNeedUpdateStatus(false);
                 }
             }
 
             if (!this.entitiesUpdated.isEmpty())
                 this.getRoom().broadcastMessage(new RoomUserStatusComposer(this.entitiesUpdated));
         } catch (Exception e) {
-            this.logger.error(e);
+            LOGGER.error("error while running tick entity manager for room {}", this.getRoom().getData().getId(), e);
         }
     }
 }

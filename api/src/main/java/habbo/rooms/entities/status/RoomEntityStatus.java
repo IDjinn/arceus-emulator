@@ -1,14 +1,27 @@
 package habbo.rooms.entities.status;
 
-public enum RoomEntityStatus {
-    MOVE("mv", true),
+import java.util.EnumSet;
+import java.util.Set;
+
+public enum RoomEntityStatus implements RequiresStatus, ExcludesStatus {
+    MOVE("mv"),
 
     SIT_IN("sit-in"),
-    SIT("sit", true),
+    SIT("sit") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     SIT_OUT("sit-out"),
 
     LAY_IN("lay-in"),
-    LAY("lay", true),
+    LAY("lay") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     LAY_OUT("lay-out"),
 
     FLAT_CONTROL("flatctrl"),
@@ -23,24 +36,49 @@ public enum RoomEntityStatus {
     EAT("eat"),
     EAT_OUT("eat-out"),
 
-    BEG("beg", true),
+    BEG("beg") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
 
     DEAD_IN("ded-in"),
-    DEAD("ded", true),
+    DEAD("ded") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     DEAD_OUT("ded-out"),
 
     JUMP_IN("jmp-in"),
-    JUMP("jmp", true),
+    JUMP("jmp") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     JUMP_OUT("jmp-out"),
 
     PLAY_IN("pla-in"),
-    PLAY("pla", true),
+    PLAY("pla") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     PLAY_OUT("pla-out"),
 
     SPEAK("spk"),
     CROAK("crk"),
     RELAX("rlx"),
-    WINGS("wng", true),
+    WINGS("wng") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     FLAME("flm"),
     RIP("rip"),
     GROW("grw"),
@@ -63,20 +101,18 @@ public enum RoomEntityStatus {
     SRP_IN("srp-in"),
 
     SLEEP_IN("slp-in"),
-    SLEEP("slp", true),
+    SLEEP("slp") {
+        @Override
+        public Set<RoomEntityStatus> getExcludes() {
+            return EnumSet.of(MOVE);
+        }
+    },
     SLEEP_OUT("slp-out");
 
     public final String key;
-    public final boolean removeWhenWalking;
 
     RoomEntityStatus(String key) {
         this.key = key;
-        this.removeWhenWalking = false;
-    }
-
-    RoomEntityStatus(String key, boolean removeWhenWalking) {
-        this.key = key;
-        this.removeWhenWalking = removeWhenWalking;
     }
 
     public static RoomEntityStatus fromString(String key) {

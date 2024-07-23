@@ -1,11 +1,17 @@
 package habbo.rooms.entities;
 
-public interface IEntityComponent {
-    void init();
+import utils.cycle.ICycle;
+
+public interface IEntityComponent extends ICycle {
+    default void init() {
+
+    }
 
     default void onLoaded() {
 
     }
 
-    void destroy();
+    default void destroy() {
+
+    }
 }

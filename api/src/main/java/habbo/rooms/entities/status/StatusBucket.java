@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class StatusBucket {
+public final class StatusBucket {
     private final RoomEntityStatus status;
     @Nullable
     private String value;

@@ -50,11 +50,11 @@ public class BuilderCommand implements ICommand {
         builderVariable.setValue(!builderVariable.getValue());
         if (builderVariable.getValue()) {
             final var rightLevel = ctx.getRoom().getRightsManager().getRightLevelFor(ctx.getHabbo());
-            ctx.getPlayerEntity().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(rightLevel.ordinal())));
+            ctx.getPlayerEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(rightLevel.ordinal())));
             ctx.getClient().sendMessage(new RoomRightsComposer(rightLevel));
         } else {
             ctx.getClient().sendMessage(new RoomRightsComposer(RoomRightLevel.None));
-            ctx.getPlayerEntity().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.None.ordinal())));
+            ctx.getPlayerEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.None.ordinal())));
         }
 
         ctx.whisper(LocalizedString.of("command.rooms.building.builder.success", builderVariable));
