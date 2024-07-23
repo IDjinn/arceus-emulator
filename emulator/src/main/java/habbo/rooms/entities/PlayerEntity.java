@@ -1,7 +1,5 @@
 package habbo.rooms.entities;
 
-import com.google.inject.Inject;
-import core.configuration.IConfigurationManager;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
 import habbo.rooms.RoomRightLevel;
@@ -19,9 +17,6 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     public static final double PLAYER_HEIGHT = 2d;
     private final IHabbo habbo;
     private final IEntityVariableManager entityVariableManager;
-
-    @Inject
-    private IConfigurationManager configurationManager;
 
     private final IInternationalizationManager internationalizationManager;
 
@@ -70,6 +65,8 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendBoolean(true, "is moderator")
                 .appendString(this.getHabbo().getSettings().getBanner().orElse(""))
         ;
+
+        this.getEntityVariablesManager().serialize(packet);
     }
 
 
