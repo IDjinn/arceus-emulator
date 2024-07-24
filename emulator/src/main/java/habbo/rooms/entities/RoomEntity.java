@@ -1,6 +1,7 @@
 package habbo.rooms.entities;
 
 import com.google.inject.Inject;
+import core.events.IEventHandler;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.position.IEntityPositionComponent;
 import habbo.rooms.entities.status.IEntityStatusComponent;
@@ -12,6 +13,7 @@ public abstract class RoomEntity implements IRoomEntity {
 
     private @Inject IEntityStatusComponent statusComponent;
     private @Inject IEntityPositionComponent positionComponent;
+    private @Inject IEventHandler eventHandler;
 
     public RoomEntity(IRoom room, int virtualId) {
         this.room = room;
@@ -47,5 +49,10 @@ public abstract class RoomEntity implements IRoomEntity {
     @Override
     public IEntityPositionComponent getPositionComponent() {
         return positionComponent;
+    }
+
+    @Override
+    public IEventHandler getEventHandler() {
+        return eventHandler;
     }
 }

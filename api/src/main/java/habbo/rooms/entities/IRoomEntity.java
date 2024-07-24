@@ -1,5 +1,6 @@
 package habbo.rooms.entities;
 
+import core.events.IEventHandler;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.position.IEntityPositionComponent;
 import habbo.rooms.entities.status.IEntityStatusComponent;
@@ -15,6 +16,8 @@ public interface IRoomEntity extends ISerializable, ICycle {
     String getName();
 
     void setName(String name);
+
+    IEventHandler getEventHandler();
 
     IEntityVariablesComponent getEntityVariablesComponent();
 
