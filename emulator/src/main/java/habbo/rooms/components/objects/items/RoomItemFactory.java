@@ -10,7 +10,7 @@ import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.IHabboManager;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import habbo.rooms.components.objects.items.floor.interactions.LayFloorItem;
 import habbo.rooms.components.objects.items.floor.interactions.RollerFloorItem;
 import habbo.rooms.components.objects.items.floor.interactions.SitFloorItem;
@@ -95,12 +95,12 @@ public class RoomItemFactory implements IRoomItemFactory {
         return item;
     }
 
-    private IFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
+    private IFloorFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         var object = this.createRoomObject(data, room, furnitureData);
         if (object == null)
             throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
 
-        return (IFloorItem) object;
+        return (IFloorFloorItem) object;
     }
 
     private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {

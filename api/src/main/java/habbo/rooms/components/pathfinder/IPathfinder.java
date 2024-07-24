@@ -1,7 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
 import habbo.rooms.IRoomComponent;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.IFloorObject;
 import utils.pathfinder.Direction;
 import utils.pathfinder.Position;
 

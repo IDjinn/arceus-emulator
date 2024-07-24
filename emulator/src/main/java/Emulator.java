@@ -26,6 +26,7 @@ import habbo.navigator.NavigatorModule;
 import habbo.permissions.PermissionModule;
 import habbo.rooms.RoomModule;
 import habbo.rooms.components.objects.RoomObjectModule;
+import habbo.rooms.entities.RoomEntityModule;
 import habbo.variables.IVariableManager;
 import habbo.variables.IVariableMessageFactory;
 import habbo.variables.VariableManager;
@@ -72,7 +73,8 @@ public class Emulator extends AbstractModule implements IEmulator {
                 new PermissionModule(),
                 new RoomObjectModule(),
                 new CommandModule(),
-                new InternationalizationModule()
+                new InternationalizationModule(),
+                new RoomEntityModule()
         );
 
         var emulator = injector.getInstance(IEmulator.class);

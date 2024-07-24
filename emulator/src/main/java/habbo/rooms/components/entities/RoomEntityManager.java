@@ -56,7 +56,7 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public IPlayerEntity createHabboEntity(IHabbo habbo) {
-        var entity = new PlayerEntity(habbo, this.internationalizationManager);
+        var entity = new PlayerEntity(habbo);
         this.injector.injectMembers(entity);
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
@@ -70,8 +70,7 @@ public class RoomEntityManager implements IRoomEntityManager {
     
     @Override
     public void onRoomLoaded() {
-        this.getRoom().getProcessHandler().registerProcess(RoomEntityManager.class.getSimpleName(), this::tick,
-                ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
+        this.getRoom().getProcessHandler().registerProcess(RoomEntityManager.class.getSimpleName(), this::tick, ICycle.DEFAULT_CYCLE_INTERVAL_MILLISECONDS, TimeUnit.MILLISECONDS);
     }
 
     @Override

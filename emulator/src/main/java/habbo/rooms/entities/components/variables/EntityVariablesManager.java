@@ -7,12 +7,13 @@ import habbo.rooms.entities.variables.IEntityVariableManager;
 import habbo.variables.IVariable;
 import habbo.variables.VariableManager;
 import networking.packets.OutgoingPacket;
+import org.jetbrains.annotations.NotNull;
 
 public class EntityVariablesManager extends VariableManager implements IEntityVariableManager {
-    private final IRoomEntity entity;
+    private @NotNull IRoomEntity entity;
     private @Inject ConfigurationManager configurationManager;
 
-    public EntityVariablesManager(IRoomEntity entity) {
+    public void init(final IRoomEntity entity) {
         this.entity = entity;
     }
 

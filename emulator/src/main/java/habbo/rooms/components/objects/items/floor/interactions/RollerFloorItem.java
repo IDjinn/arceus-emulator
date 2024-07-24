@@ -2,11 +2,11 @@ package habbo.rooms.components.objects.items.floor.interactions;
 
 import habbo.furniture.IFurniture;
 import habbo.rooms.IRoom;
+import habbo.rooms.components.objects.items.IFloorObject;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.floor.AdvancedFloorItem;
 import habbo.rooms.components.objects.items.floor.FloorItemEvent;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,9 +18,10 @@ import java.util.Queue;
 
 public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent.IEventListener {
     public static final String INTERACTION_NAME = "roller";
+    private static final Logger LOGGER = LogManager.getLogger();
+    
     private final Queue<IFloorObject> objectsOnRoller;
     private final int DefaultRollerSpeed = 2;
-    private Logger logger = LogManager.getLogger();
 
     public RollerFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         super(itemData, room, furniture);
@@ -32,19 +33,33 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     @Override
     public void onStepIn(final IRoomEntity entity) {
         synchronized (this.objectsOnRoller) {
-            this.objectsOnRoller.add(entity);
+            this.objectsOnRoller.add(entity.getPositionComponent());
         }
     }
 
     @Override
     public void onStepOut(final IRoomEntity entity) {
         synchronized (this.objectsOnRoller) {
-            this.objectsOnRoller.remove(entity);
+            this.objectsOnRoller.remove(entity.getPositionComponent());
         }
     }
 
     private Queue<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObjects = new PriorityQueue<>();
     private @Nullable SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
+
+    @Override
+    public void onStackInItem(final IFloorFloorItem floorItem) {
+        synchronized (this.objectsOnRoller) {
+            this.objectsOnRoller.add(floorItem);
+        }
+    }
+
+    @Override
+    public void onStackOutItem(final IFloorFloorItem floorItem) {
+        synchronized (this.objectsOnRoller) {
+            this.objectsOnRoller.remove(floorItem);
+        }
+    }
 
     private void resetTimer() {
         var event = this.createEvent(RollerFloorItem.class.getName());
@@ -53,21 +68,7 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
             event.subscribeListener(this);
             this.enqueueEvent(event);
         } else {
-            this.logger.error("Failed to create event for RollerFloorItem");
-        }
-    }
-
-    @Override
-    public void onStackInItem(final IFloorItem floorItem) {
-        synchronized (this.objectsOnRoller) {
-            this.objectsOnRoller.add(floorItem);
-        }
-    }
-
-    @Override
-    public void onStackOutItem(final IFloorItem floorItem) {
-        synchronized (this.objectsOnRoller) {
-            this.objectsOnRoller.remove(floorItem);
+            this.LOGGER.error("Failed to create event for RollerFloorItem");
         }
     }
 

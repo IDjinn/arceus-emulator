@@ -1,7 +1,7 @@
 package packets.incoming.rooms.objects;
 
 import com.google.inject.Singleton;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import networking.client.IClient;
 import networking.packets.IIncomingPacket;
 import networking.packets.IncomingEvent;
@@ -24,7 +24,7 @@ public class RoomMoveOrRotateFloorItemEvent extends IncomingEvent {
         
         final var itemId = packet.readInt();
         var item = client.getHabbo().getRoom().getObjectManager().getItem(itemId);
-        if (!(item instanceof IFloorItem floorItem)) return;
+        if (!(item instanceof IFloorFloorItem floorItem)) return;
 
         final var x = packet.readInt();
         final var y = packet.readInt();

@@ -1,7 +1,7 @@
 package packets.outgoing.rooms.objects.floor;
 
 import habbo.furniture.FurnitureUsagePolicy;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class RoomFloorItemsComposer extends OutgoingPacket {
-    public RoomFloorItemsComposer(List<String> owners, Collection<IFloorItem> allItems) {
+    public RoomFloorItemsComposer(List<String> owners, Collection<IFloorFloorItem> allItems) {
         super(OutgoingHeaders.RoomFloorItemsComposer);
         this.appendInt(owners.size());
         for (var i = 0; i < owners.size(); i++) {

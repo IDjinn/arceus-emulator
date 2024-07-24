@@ -1,6 +1,6 @@
 package habbo.rooms.components.gamemap;
 
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import org.jetbrains.annotations.NotNull;
 import stormpot.Slot;
 
@@ -16,7 +16,7 @@ public class TileMetadata implements ITileMetadata {
     private @Nullable Double sitHeight;
     private @Nullable Double layHeight;
     private @Nullable Double stackHeight;
-    private @Nullable IFloorItem item;
+    private @Nullable IFloorFloorItem item;
 
     public TileMetadata(Slot slot) {
         this.slot = slot;
@@ -87,12 +87,12 @@ public class TileMetadata implements ITileMetadata {
     }
 
     @Override
-    public Optional<IFloorItem> getItem() {
+    public Optional<IFloorFloorItem> getItem() {
         return Optional.ofNullable(this.item);
     }
 
     @Override
-    public void setItem(@Nullable final IFloorItem item) {
+    public void setItem(@Nullable final IFloorFloorItem item) {
         this.item = item;
     }
 

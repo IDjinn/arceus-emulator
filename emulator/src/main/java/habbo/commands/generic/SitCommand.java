@@ -32,7 +32,7 @@ public class SitCommand implements ICommand {
     @Override
     public Optional<ICommandContext> execute(final ICommandContext ctx) {
         ctx.getPlayerEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.SIT,
-                String.valueOf(ctx.getPlayerEntity().getPosition().getZ() + 0.5d)));
+                String.valueOf(ctx.getPlayerEntity().getPositionComponent().getPosition().getZ() + 0.5d)));
         ctx.getPlayerEntity().getStatusComponent().setNeedUpdateStatus(true);
         return null;
     }

@@ -9,7 +9,7 @@ import networking.packets.OutgoingPacket;
 import packets.outgoing.rooms.objects.floor.FloorItemUpdateComposer;
 import utils.pathfinder.Position;
 
-public class DefaultFloorItem extends RoomItem implements IFloorItem {
+public class DefaultFloorItem extends RoomItem implements IFloorFloorItem {
     public static final String INTERACTION_NAME = "default_floor";
 
     public DefaultFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {

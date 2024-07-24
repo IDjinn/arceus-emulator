@@ -1,12 +1,12 @@
 package packets.outgoing.rooms.objects.floor;
 
 import habbo.furniture.FurnitureUsagePolicy;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.OutgoingHeaders;
 
 public class FloorItemUpdateComposer extends OutgoingPacket {
-    public FloorItemUpdateComposer(IFloorItem floorItem) {
+    public FloorItemUpdateComposer(IFloorFloorItem floorItem) {
         super(OutgoingHeaders.FloorItemUpdateComposer);
 
         floorItem.serializeItemIdentity(this);

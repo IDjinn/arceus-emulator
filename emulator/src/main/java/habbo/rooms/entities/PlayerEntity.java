@@ -1,9 +1,8 @@
 package habbo.rooms.entities;
 
+import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
-import habbo.internationalization.IInternationalizationManager;
 import habbo.rooms.RoomRightLevel;
-import habbo.rooms.entities.components.variables.EntityVariablesManager;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariableManager;
@@ -14,17 +13,12 @@ import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 import java.util.Objects;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntity {
-    public static final double PLAYER_HEIGHT = 2d;
     private final IHabbo habbo;
-    private final IEntityVariableManager entityVariableManager;
+    private @Inject IEntityVariableManager entityVariableManager;
 
-    private final IInternationalizationManager internationalizationManager;
-
-    public PlayerEntity(IHabbo habbo, final IInternationalizationManager internationalizationManager) {
+    public PlayerEntity(IHabbo habbo) {
         super(habbo.getRoom(), habbo.getData().getId());
         this.habbo = habbo;
-        this.internationalizationManager = internationalizationManager;
-        this.entityVariableManager = new EntityVariablesManager(this);
         this.getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.FLAT_CONTROL, String.valueOf(RoomRightLevel.Moderator.ordinal())));
     }
 
@@ -51,10 +45,10 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendString(this.getHabbo().getData().getMotto())
                 .appendString(this.getHabbo().getData().getLook())
                 .appendInt(this.getVirtualId())
-                .appendInt(this.getPosition().getX())
-                .appendInt(this.getPosition().getY())
-                .appendString(String.valueOf(this.getPosition().getZ()))
-                .appendInt(this.getDirection().ordinal())
+                .appendInt(this.getPositionComponent().getPosition().getX())
+                .appendInt(this.getPositionComponent().getPosition().getY())
+                .appendString(String.valueOf(this.getPositionComponent().getPosition().getZ()))
+                .appendInt(this.getPositionComponent().getDirection().ordinal())
                 .appendInt(1, "habbo type")
                 .appendString(this.getHabbo().getData().getGender())
                 .appendInt(-1, "group id")
@@ -71,15 +65,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
 
 
     @Override
-    public double getHeight() {
-        return PLAYER_HEIGHT;
-    }
-
-
-    @Override
     public synchronized void tick() {
-        super.tick();
-
         this.handleVariables();
     }
 

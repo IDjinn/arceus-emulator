@@ -18,10 +18,10 @@ public class SitFloorItem extends DefaultFloorItem {
 
     @Override
     public void onStepIn(final IRoomEntity entity) {
-        entity.setDirection(Direction.get(this.getRotation() % 8));
-        final var position = entity.getPosition().copy();
+        entity.getPositionComponent().setDirection(Direction.get(this.getRotation() % 8));
+        final var position = entity.getPositionComponent().getPosition().copy();
         position.setZ(this.getPosition().getZ());
-        entity.setPosition(position);
+        entity.getPositionComponent().setPosition(position);
         entity.getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.SIT, STR."\{(this.getPosition().getZ() + 1D)}"));
         entity.getStatusComponent().setNeedUpdateStatus(true);
     }

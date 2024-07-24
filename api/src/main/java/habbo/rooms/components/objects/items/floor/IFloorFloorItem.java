@@ -1,12 +1,14 @@
 package habbo.rooms.components.objects.items.floor;
 
+import habbo.rooms.components.objects.IRoomObject;
+import habbo.rooms.components.objects.items.IFloorObject;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.entities.IRoomEntity;
 import utils.pathfinder.Position;
 
 import java.util.Optional;
 
-public interface IFloorItem extends IRoomItem, IFloorObject {
+public interface IFloorFloorItem extends IRoomItem, IRoomObject, IFloorObject {
     boolean isAtDoor();
 
     int getRotation();
@@ -110,11 +112,11 @@ public interface IFloorItem extends IRoomItem, IFloorObject {
     }
 
 
-    default void onStackInItem(IFloorItem floorItem) {
+    default void onStackInItem(IFloorFloorItem floorItem) {
 
     }
 
-    default void onStackOutItem(IFloorItem floorItem) {
+    default void onStackOutItem(IFloorFloorItem floorItem) {
 
     }
 

@@ -2,6 +2,7 @@ package utils.pathfinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Position {
@@ -14,19 +15,13 @@ public class Position {
     public static final int WEST = 6;
     public static final int NORTH_WEST = 7;
 
-    public static final int[] COLLIDE_TILES = new int[]{
-            NORTH, EAST, SOUTH, WEST
-    };
-
-    public static final int[] DIAG_TILES = new int[]{
-            NORTH_EAST, SOUTH_EAST, SOUTH_WEST, NORTH_WEST
-    };
     private int x;
     private int y;
     private double z;
     private int flag = -1;
     private int prevX;
     private int prevY;
+
     public Position(int x, int y, double z) {
         this.x = x;
         this.y = y;
@@ -51,31 +46,6 @@ public class Position {
         this.z = 0d;
     }
 
-    public static String validateWallPosition(String position) {
-        try {
-            String[] data = position.split(" ");
-            if (data[2].equals("l") || data[2].equals("r")) {
-                String[] width = data[0].substring(3).split(",");
-                int widthX = Integer.parseInt(width[0]);
-                int widthY = Integer.parseInt(width[1]);
-//                if (widthX < 0 || widthY < 0 || widthX > 200 || widthY > 200)
-//                    return null;
-
-                String[] length = data[1].substring(2).split(",");
-                int lengthX = Integer.parseInt(length[0]);
-                int lengthY = Integer.parseInt(length[1]);
-//                if (lengthX < 0 || lengthY < 0 || lengthX > 200 || lengthY > 200)
-//                    return null;
-
-                return STR."\{STR."\{STR."\{STR."\{":w=" + widthX + "," + widthY} "}l=" + lengthX}," + lengthY} " + data[2];
-            }
-        } catch (Exception ignored) {
-
-        }
-
-        return null;
-    }
-
     public static int calculateRotation(Position from, Position to) {
         return calculateRotation(from.x, from.y, to.x, to.y, false);
     }
@@ -83,29 +53,26 @@ public class Position {
     public static int calculateRotation(int x, int y, int newX, int newY, boolean reversed) {
         int rotation = 0;
 
-        if (x > newX && y > newY)
+        if (x > newX && y > newY) {
             rotation = 7;
-        else if (x < newX && y < newY)
+        } else if (x < newX && y < newY) {
             rotation = 3;
-        else if (x > newX && y < newY)
+        } else if (x > newX && y < newY) {
             rotation = 5;
-        else if (x < newX && y > newY)
+        } else if (x < newX && y > newY) {
             rotation = 1;
-        else if (x > newX)
+        } else if (x > newX) {
             rotation = 6;
-        else if (x < newX)
+        } else if (x < newX) {
             rotation = 2;
-        else if (y < newY)
+        } else if (y < newY) {
             rotation = 4;
-        else if (y > newY)
+        } else if (y > newY) {
             rotation = 0;
+        }
 
         if (reversed) {
-            if (rotation > 3) {
-                rotation = rotation - 4;
-            } else {
-                rotation = rotation + 4;
-            }
+            rotation = (rotation + 4) % 8;
         }
 
         return rotation;
@@ -123,81 +90,34 @@ public class Position {
             case WEST -> EAST;
             default -> currentRotation;
         };
-
     }
 
     public static Position calculatePosition(int x, int y, int angle, boolean isReversed, int distance) {
+        var newX = x;
+        var newY = y;
         switch (angle) {
-            case 0:
-                if (!isReversed)
-                    y -= distance;
-                else
-                    y += distance;
-                break;
-
-            case 1:
-                if (!isReversed) {
-                    x += distance;
-                    y -= distance;
-                } else {
-                    x -= distance;
-                    y += distance;
-                }
-                break;
-
-            case 2:
-                if (!isReversed)
-                    x += distance;
-                else
-                    x -= distance;
-                break;
-
-            case 3:
-                if (!isReversed) {
-                    x += distance;
-                    y += distance;
-                } else {
-                    x -= distance;
-                    y -= distance;
-                }
-                break;
-
-            case 4:
-                if (!isReversed)
-                    y += distance;
-                else
-                    y -= distance;
-                break;
-
-            case 5:
-                if (!isReversed) {
-                    x -= distance;
-                    y += distance;
-                } else {
-                    x++;
-                    y--;
-                }
-                break;
-
-            case 6:
-                if (!isReversed)
-                    x -= distance;
-                else
-                    x += distance;
-                break;
-
-            case 7:
-                if (!isReversed) {
-                    x -= distance;
-                    y -= distance;
-                } else {
-                    x += distance;
-                    y += distance;
-                }
-                break;
+            case NORTH -> newY += isReversed ? distance : -distance;
+            case NORTH_EAST -> {
+                newX += isReversed ? -distance : distance;
+                newY += isReversed ? distance : -distance;
+            }
+            case EAST -> newX += isReversed ? -distance : distance;
+            case SOUTH_EAST -> {
+                newX += isReversed ? -distance : distance;
+                newY += isReversed ? -distance : distance;
+            }
+            case SOUTH -> newY += isReversed ? -distance : distance;
+            case SOUTH_WEST -> {
+                newX += isReversed ? distance : -distance;
+                newY += isReversed ? -distance : distance;
+            }
+            case WEST -> newX += isReversed ? distance : -distance;
+            case NORTH_WEST -> {
+                newX += isReversed ? distance : -distance;
+                newY += isReversed ? distance : -distance;
+            }
         }
-
-        return new Position(x, y);
+        return new Position(newX, newY);
     }
 
     public static List<Position> makeSquareInclusive(Position p1, Position p2) {
@@ -205,7 +125,7 @@ public class Position {
         final int lowerY = Math.min(p1.getY(), p2.getY());
         final int higherX = Math.max(p1.getX(), p2.getX());
         final int higherY = Math.max(p1.getY(), p2.getY());
-        final List<Position> positions = new ArrayList<>((higherX - lowerX) * (higherY - lowerY));
+        final List<Position> positions = new ArrayList<>((higherX - lowerX + 1) * (higherY - lowerY + 1));
 
         for (int x = lowerX; x <= higherX; x++) {
             for (int y = lowerY; y <= higherY; y++) {
@@ -216,27 +136,23 @@ public class Position {
         return positions;
     }
 
-    public final int getLocalCost(Position start, Position goal) {
-        if (this.x == start.getX() && this.y == start.getY()) {
-            return 999999;
-        }
-
+    public int getLocalCost(Position start, Position goal) {
+        if (this.x == start.getX() && this.y == start.getY()) return Integer.MAX_VALUE;
         return Math.abs(this.x - goal.x) + Math.abs(this.y - goal.y);
     }
 
     public Position add(Position other) {
-        return new Position(other.getX() + this.getX(), other.getY() + this.getY(), other.getZ() + this.getZ());
+        return new Position(this.x + other.x, this.y + other.y, this.z + other.z);
     }
 
     public Position subtract(Position other) {
-        return new Position(other.getX() - this.getX(), other.getY() - this.getY(), other.getZ() - this.getZ());
+        return new Position(this.x - other.x, this.y - other.y, this.z - other.z);
     }
 
     public int getDistanceSquared(Position point) {
-        int dx = this.getX() - point.getX();
-        int dy = this.getY() - point.getY();
-
-        return Math.abs(this.x - point.getX()) + Math.abs(this.y - point.getY());
+        int dx = this.x - point.x;
+        int dy = this.y - point.y;
+        return dx * dx + dy * dy;
     }
 
     public Position squareInFront(int angle) {
@@ -252,16 +168,13 @@ public class Position {
     }
 
     public double distanceTo(Position pos) {
-        return Math.sqrt(Math.pow((this.getX() - pos.getX()), 2) + Math.pow((this.getY() - pos.getY()), 2));
+        return Math.sqrt(Math.pow(this.x - pos.x, 2) + Math.pow(this.y - pos.y, 2));
     }
 
     public boolean touching(Position pos) {
-        if (!(Math.abs(this.getX() - pos.getX()) > 1 || Math.abs(this.getY() - pos.getY()) > 1)) {
-            return true;
-        }
-
-        return this.getX() == pos.getX() && this.getY() == pos.getY();
-
+        int dx = Math.abs(this.x - pos.x);
+        int dy = Math.abs(this.y - pos.y);
+        return dx <= 1 && dy <= 1;
     }
 
     public Position copy() {
@@ -269,8 +182,12 @@ public class Position {
     }
 
     @Override
-    public String toString() {
-        return STR."(\{this.getX()}, \{this.getY()}, \{this.getZ()})";
+    public boolean equals(Object o) {
+        if (o instanceof Position) {
+            Position other = (Position) o;
+            return this.x == other.x && this.y == other.y;
+        }
+        return false;
     }
 
     public int getX() {
@@ -291,7 +208,6 @@ public class Position {
     }
 
     public void setY(int y) {
-
         this.prevY = this.y;
         this.y = y;
     }
@@ -317,12 +233,8 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof Position) {
-            return ((Position) o).getX() == this.getX() && ((Position) o).getY() == this.getY();
-        }
-
-        return false;
+    public String toString() {
+        return String.format(Locale.US, "(%d, %d, %.2f)", this.x, this.y, this.z);
     }
 
     @Override

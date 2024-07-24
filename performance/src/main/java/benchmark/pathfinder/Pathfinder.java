@@ -1,7 +1,7 @@
 package benchmark.pathfinder;
 
 import com.google.common.collect.MinMaxPriorityQueue;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.IFloorObject;
 import habbo.rooms.components.pathfinder.PathfinderNode;
 import habbo.rooms.components.pathfinder.Position3d;
 import utils.pathfinder.Direction;

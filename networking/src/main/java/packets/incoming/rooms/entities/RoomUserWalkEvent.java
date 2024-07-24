@@ -21,7 +21,7 @@ public class RoomUserWalkEvent extends IncomingEvent {
         final IRoomTile tileGoal = client.getHabbo().getRoom().getGameMap().getTile(goal);
         
         var player = client.getHabbo().getPlayerEntity();
-        player.getWalkPath().clear();
-        player.setGoal(goal);
+        player.getPositionComponent().getWalkPath().clear();
+        player.getPositionComponent().setGoal(goal);
     }
 }

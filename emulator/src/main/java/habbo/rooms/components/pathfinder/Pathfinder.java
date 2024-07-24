@@ -3,7 +3,7 @@ package habbo.rooms.components.pathfinder;
 import com.google.common.collect.MinMaxPriorityQueue;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.ITileMetadata;
-import habbo.rooms.components.objects.items.floor.IFloorObject;
+import habbo.rooms.components.objects.items.IFloorObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import stormpot.Allocator;
@@ -262,7 +262,7 @@ public class Pathfinder implements IPathfinder {
         return neighbor;
     }
 
-    private class PathfinderNodeAllocator implements Allocator<PathfinderNode> {
+    private static class PathfinderNodeAllocator implements Allocator<PathfinderNode> {
 
         @Override
         public PathfinderNode allocate(final Slot slot) throws Exception {
@@ -275,7 +275,7 @@ public class Pathfinder implements IPathfinder {
         }
     }
 
-    private class Position3dAllocator implements Allocator<Position3d> {
+    private static class Position3dAllocator implements Allocator<Position3d> {
         @Override
         public Position3d allocate(final Slot slot) throws Exception {
             return new Position3d(slot);

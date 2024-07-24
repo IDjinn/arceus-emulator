@@ -4,7 +4,7 @@ import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoomComponent;
 import habbo.rooms.components.objects.items.IRoomItem;
-import habbo.rooms.components.objects.items.floor.IFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import utils.cycle.ICycle;
 import utils.pathfinder.Position;
@@ -21,19 +21,19 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     Collection<IRoomItem> getAllItems();
 
-    Collection<IFloorItem> getAllFloorItems();
+    Collection<IFloorFloorItem> getAllFloorItems();
 
     @Nullable
-    IFloorItem getFloorItem(int itemId);
+    IFloorFloorItem getFloorItem(int itemId);
 
     @Nullable
     IRoomItem getItem(int itemId);
 
-    List<IFloorItem> getAllFloorItemsSortedAt(final Position position);
+    List<IFloorFloorItem> getAllFloorItemsSortedAt(final Position position);
 
-    List<IFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId);
+    List<IFloorFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId);
 
-    Optional<IFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
+    Optional<IFloorFloorItem> getTopFloorItemAt(final Position position, long ignoreId);
 
     Collection<IWallItem> getAllWallItems();
 
@@ -45,7 +45,7 @@ public interface IRoomObjectManager extends IRoomComponent, ICycle {
 
     void placeWallItem(final IHabbo habbo, IHabboInventoryItem item, String wallPosition);
 
-    void moveFloorItemTo(IHabbo habbo, IFloorItem item, Position position, Integer rotation);
+    void moveFloorItemTo(IHabbo habbo, IFloorFloorItem item, Position position, Integer rotation);
 
     void moveWallItemTo(IHabbo habbo, IWallItem floorItem, String coordinates);
 
