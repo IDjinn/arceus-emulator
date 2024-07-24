@@ -114,29 +114,4 @@ public class HabboInventoryItem implements IHabboInventoryItem {
     public static FIGURE_PURCHASABLE_SET: number = 23;
 }
      */
-
-    @Override
-    public void serialize(OutgoingPacket<U> packet) {
-        packet.appendInt(this.id)
-                .appendString(this.furniture.getType().toString())
-                .appendInt(this.id, "_ref")
-                .appendInt(this.furniture.getSpriteId())
-                .appendInt(1, "category"); // TODO THIS, USED TO SELECTOR WIREDS
-
-        this.getExtraData().serialize(packet);
-
-        packet.appendBoolean(false, "_isRecyclable") // TODO 
-                .appendBoolean(true, "_tradable")
-                .appendBoolean(!this.getExtraData().getLimitedData().isLimited(), "_isGroupable (inventory stack?)")
-                .appendBoolean(false, "_sellable")
-
-                .appendInt(-1, "_secondsToExpiration")
-                .appendBoolean(false, "_hasRentPeriodStarted")
-                .appendInt(-1, "_flatId"); // TODO
-
-        if (this.furniture.getType().equals(FurnitureType.FLOOR)) {
-            packet.appendString("", "_slotId");
-            packet.appendInt(-1, "_extra");
-        }
-    }
 }

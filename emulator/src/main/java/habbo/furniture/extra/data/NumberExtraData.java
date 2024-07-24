@@ -1,6 +1,6 @@
 package habbo.furniture.extra.data;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IPacketWriter;
 import utils.gson.GsonHelper;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class NumberExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket<U> packet) {
+    public void serializeValue(final IPacketWriter packet) {
         final int additionalKeys = 1;
         packet.appendInt(this.integers.size() + additionalKeys);
         packet.appendInt(this.getState());

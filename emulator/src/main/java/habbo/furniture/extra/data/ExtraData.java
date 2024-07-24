@@ -2,7 +2,7 @@ package habbo.furniture.extra.data;
 
 import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
-import networking.packets.OutgoingPacket;
+import networking.packets.IPacketWriter;
 
 @SuppressWarnings("UnnecessaryModifier")
 public abstract class ExtraData implements IExtraData {
@@ -20,11 +20,11 @@ public abstract class ExtraData implements IExtraData {
     }
 
     @Override
-    public void serialize(OutgoingPacket<U> packet) {
-        packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? LTD_FLAG : 0));
-        this.serializeValue(packet);
+    public void serialize(IPacketWriter writer) {
+        writer.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? LTD_FLAG : 0));
+        this.serializeValue(writer);
         if (this.getLimitedData().isLimited()) {
-            packet.appendInt(this.getLimitedData().limitedRare())
+            writer.appendInt(this.getLimitedData().limitedRare())
                     .appendInt(this.getLimitedData().limitedRareTotal());
         }
     }
@@ -35,8 +35,8 @@ public abstract class ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeState(final OutgoingPacket<U> packet) {
-        packet.appendString(String.valueOf(this.state));
+    public void serializeState(IPacketWriter writer) {
+        writer.appendString(String.valueOf(this.state));
     }
 
     @Override
@@ -57,7 +57,7 @@ public abstract class ExtraData implements IExtraData {
         this.state = state;
     }
 
-    public abstract void serializeValue(final OutgoingPacket<U> packet);
+    public abstract void serializeValue(final IPacketWriter packet);
 
     public final class ExtraDataReader {
         public final int type;

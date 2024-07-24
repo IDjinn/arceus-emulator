@@ -1,6 +1,6 @@
 package habbo.furniture.extra.data;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IPacketWriter;
 import utils.gson.GsonHelper;
 
 import java.util.HashMap;
@@ -39,7 +39,7 @@ public class MapExtraData extends ExtraData implements IExtraData {
 
 
     @Override
-    public void serializeValue(OutgoingPacket<U> packet) {
+    public void serializeValue(IPacketWriter packet) {
         final int additionalKeys = 2;
         packet.appendInt(this.values.size() + additionalKeys);
         for (Map.Entry<String, String> entry : this.values.entrySet()) {

@@ -1,6 +1,6 @@
 package habbo.furniture.extra.data;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IPacketWriter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import utils.gson.GsonHelper;
@@ -22,7 +22,7 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket<U> packet) {
+    public void serializeValue(final IPacketWriter packet) {
         packet.appendString(this.legacyData);
     }
 

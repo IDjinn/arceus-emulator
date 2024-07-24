@@ -1,5 +1,6 @@
 package habbo.furniture.extra.data;
 
+import networking.packets.IPacketWriter;
 import networking.packets.OutgoingPacket;
 import utils.gson.GsonHelper;
 
@@ -9,14 +10,13 @@ public class EmptyExtraData extends ExtraData implements IExtraData {
         super(ExtraDataType.Empty);
     }
 
-
     @Override
     public String toJson() {
         return GsonHelper.getGson().toJson(this);
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket<U> packet) {
+    public void serializeValue(final IPacketWriter packet) {
         packet.appendString("");
     }
 }

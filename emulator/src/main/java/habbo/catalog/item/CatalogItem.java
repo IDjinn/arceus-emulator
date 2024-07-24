@@ -178,33 +178,4 @@ public class CatalogItem implements ICatalogItem {
         this.pageId = result.getInt("page_id");
         this.orderNum = result.getInt("order_number");
     }
-
-    @Override
-    public void serialize(OutgoingPacket<U> packet) {
-        packet.appendInt(this.getId())
-                .appendString(this.getDisplayName())
-                .appendBoolean(false, "rent") //rent
-                .appendInt(this.getCostCredits())
-                .appendInt(0, "_priceActivityPoints") // TODO OTHER CURRENCY TYPE
-                .appendInt(0, "_priceActivityPointsType")
-                .appendBoolean(false, "_giftable");// TODO GIFT
-
-        packet.appendInt(1, "bundle items?");
-        {
-            packet.appendString(this.getFurniture().getType().toString())
-                    .appendInt(this.getFurniture().getSpriteId())
-                    .appendString(this.getPresetData(), "extraData")
-                    .appendInt(this.getAmount(), "itemAmount")
-                    .appendBoolean(this.getLimitedTotal() > 0, "isLimited");
-            if (this.getLimitedTotal() > 0) {
-                packet.appendInt(this.getLimitedTotal());
-                packet.appendInt(this.getLimitedTotal() - this.getLimitedSells());
-            }
-        }
-
-        packet.appendInt(0)// TODO clubOnly
-                .appendBoolean(this.allowOffer(), "_bundlePurchaseAllowed") // TODO
-                .appendBoolean(false, "_isPet")
-                .appendString(STR."\{this.getDisplayName()}.png");
-    }
 }

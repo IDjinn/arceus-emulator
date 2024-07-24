@@ -20,6 +20,8 @@ public interface IClient {
     <T extends IPacketDTO> void sendMessage(Class<OutgoingPacket<T>> type, Objects... parameters);
 
     <T extends IPacketDTO> void sendMessage(int header, T payload);
+
+    void sendMessages(IPacketDTO... payloads);
     
     void flush();
 
