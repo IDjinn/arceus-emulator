@@ -1,0 +1,6 @@
+[submodule "plugins/nitro-revision"]
+	path = plugins/nitro-revision
+	url = git@github.com:IDjinn/arceus-emulator-plugin-nitro-revision.git
+[submodule "plugins/wireds"]
+	path = plugins/wireds
+	url = git@github.com:IDjinn/arceus-emulator-wireds-plugin.git
