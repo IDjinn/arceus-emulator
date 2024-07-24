@@ -1,7 +1,9 @@
 package habbo.rooms;
 
 import com.google.inject.AbstractModule;
+import habbo.rooms.components.entities.IRoomChatComponent;
 import habbo.rooms.components.entities.IRoomEntityManager;
+import habbo.rooms.components.entities.RoomChatComponent;
 import habbo.rooms.components.entities.RoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.gamemap.RoomGameMap;
@@ -20,6 +22,7 @@ public class RoomModule extends AbstractModule {
         this.bind(IPathfinder.class).to(Pathfinder.class);
         this.bind(IRoomGameMap.class).to(RoomGameMap.class);
         this.bind(IRoomEntityManager.class).to(RoomEntityManager.class);
+        this.bind(IRoomChatComponent.class).to(RoomChatComponent.class);
         this.bind(IRoomRightsManager.class).to(RoomRightsManager.class);
         this.bind(IRoomVariablesManager.class).to(RoomVariablesManager.class);
     }

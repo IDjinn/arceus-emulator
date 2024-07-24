@@ -134,18 +134,18 @@ public class CommandContext implements ICommandContext {
 
     @Override
     public Optional<ICommandContext> whisper(final LocalizedString message) {
-        this.player.getRoom().getEntityManager().whisper(this.player, message, 0);
+        this.player.getRoom().getChatComponent().whisper(this.player, message, 0);
         return Optional.of(this);
     }
 
     @Override
     public void shout(final LocalizedString message) {
-        this.player.getRoom().getEntityManager().shout(this.player, message, 0);
+        this.player.getRoom().getChatComponent().shout(this.player, message, 0);
     }
 
     @Override
     public void talk(final LocalizedString message) {
-        this.player.getRoom().getEntityManager().talk(this.player, message, 0);
+        this.player.getRoom().getChatComponent().talk(this.player, message, 0);
     }
 
     @Override

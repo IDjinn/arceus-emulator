@@ -4,6 +4,7 @@ import core.concurrency.IProcessHandler;
 import core.events.IEventHandler;
 import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
+import habbo.rooms.components.entities.IRoomChatComponent;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
@@ -62,4 +63,6 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
     IEventHandler getEventHandler();
 
     ICommandManager getCommandManager();
+
+    IRoomChatComponent getChatComponent();
 }

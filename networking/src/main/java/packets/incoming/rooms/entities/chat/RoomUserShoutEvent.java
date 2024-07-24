@@ -23,7 +23,7 @@ public class RoomUserShoutEvent extends IncomingEvent {
         final var message = packet.readString(); // TODO MESSAGE LENGTH LIMIT / FILTERING
         final var bubble = packet.readInt(); // TODO VERIFY THIS
 
-        client.getHabbo().getRoom().getEntityManager().shout(
+        client.getHabbo().getRoom().getChatComponent().shout(
                 client.getHabbo().getPlayerEntity(),
                 message,
                 bubble

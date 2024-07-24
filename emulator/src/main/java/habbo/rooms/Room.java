@@ -7,6 +7,7 @@ import core.events.IEventHandler;
 import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
+import habbo.rooms.components.entities.IRoomChatComponent;
 import habbo.rooms.components.entities.IRoomEntityManager;
 import habbo.rooms.components.gamemap.IRoomGameMap;
 import habbo.rooms.components.objects.IRoomObjectManager;
@@ -70,6 +71,8 @@ public class Room implements IRoom {
     private ICommandManager commandManager;
     @Inject
     private IInternationalizationManager internationalizationManager;
+    @Inject
+    private IRoomChatComponent chatComponent;
 
 
     public Room(IConnectionResult data) {
@@ -91,6 +94,7 @@ public class Room implements IRoom {
         this.pathfinder.init(this);
         this.objectManager.init(this);
         this.commandManager.init(this);
+        this.chatComponent.init(this);
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.init(this);
@@ -108,6 +112,7 @@ public class Room implements IRoom {
         this.pathfinder.update();
         this.gameMap.update();
         this.commandManager.update();
+        this.chatComponent.update();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.update();
@@ -123,6 +128,7 @@ public class Room implements IRoom {
         this.pathfinder.destroy();
         this.gameMap.destroy();
         this.commandManager.destroy();
+        this.chatComponent.destroy();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.destroy();
@@ -140,6 +146,7 @@ public class Room implements IRoom {
         this.objectManager.onRoomLoaded();
         this.rightsManager.onRoomLoaded();
         this.commandManager.onRoomLoaded();
+        this.chatComponent.onRoomLoaded();
 
         for (var customComponent : this.customComponents.values()) {
             customComponent.onRoomLoaded();
@@ -294,5 +301,10 @@ public class Room implements IRoom {
     @Override
     public ICommandManager getCommandManager() {
         return this.commandManager;
+    }
+
+    @Override
+    public IRoomChatComponent getChatComponent() {
+        return this.chatComponent;
     }
 }
