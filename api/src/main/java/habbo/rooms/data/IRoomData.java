@@ -1,6 +1,7 @@
 package habbo.rooms.data;
 
 import habbo.rooms.enums.RoomAccessState;
+import networking.packets.IPacketDTO;
 
 import java.util.List;
 
