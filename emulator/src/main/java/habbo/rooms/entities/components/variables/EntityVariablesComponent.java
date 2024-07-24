@@ -3,13 +3,12 @@ package habbo.rooms.entities.components.variables;
 import com.google.inject.Inject;
 import core.configuration.ConfigurationManager;
 import habbo.rooms.entities.IRoomEntity;
-import habbo.rooms.entities.variables.IEntityVariableManager;
 import habbo.variables.IVariable;
 import habbo.variables.VariableManager;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityVariablesManager extends VariableManager implements IEntityVariableManager {
+public class EntityVariablesComponent extends VariableManager implements habbo.rooms.entities.variables.IEntityVariablesComponent {
     private @NotNull IRoomEntity entity;
     private @Inject ConfigurationManager configurationManager;
 

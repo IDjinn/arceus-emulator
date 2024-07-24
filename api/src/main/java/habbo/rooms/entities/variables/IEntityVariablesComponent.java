@@ -5,6 +5,6 @@ import habbo.rooms.entities.IRoomEntity;
 import habbo.variables.IVariableManager;
 import networking.util.ISerializable;
 
-public interface IEntityVariableManager extends IVariableManager, IEntityComponent, ISerializable {
+public interface IEntityVariablesComponent extends IVariableManager, IEntityComponent, ISerializable {
     public IRoomEntity getEntity();
 }

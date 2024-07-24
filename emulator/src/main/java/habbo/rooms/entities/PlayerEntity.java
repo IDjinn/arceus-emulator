@@ -5,7 +5,7 @@ import habbo.habbos.IHabbo;
 import habbo.rooms.RoomRightLevel;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
-import habbo.rooms.entities.variables.IEntityVariableManager;
+import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     private final IHabbo habbo;
-    private @Inject IEntityVariableManager entityVariableManager;
+    private @Inject IEntityVariablesComponent entityVariableManager;
 
     public PlayerEntity(IHabbo habbo) {
         super(habbo.getRoom(), habbo.getData().getId());
@@ -60,7 +60,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
                 .appendString(this.getHabbo().getSettings().getBanner().orElse(""))
         ;
 
-        this.getEntityVariablesManager().serialize(packet);
+        this.getEntityVariablesComponent().serialize(packet);
     }
 
 
@@ -71,16 +71,16 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
 
 
     private void handleVariables() {
-        this.getEntityVariablesManager().tick();
-        if (!this.getEntityVariablesManager().isNeedUpdate()) return;
+        this.getEntityVariablesComponent().tick();
+        if (!this.getEntityVariablesComponent().isNeedUpdate()) return;
 
-        this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesManager().getVariables()));
-        this.getEntityVariablesManager().setNeedUpdate(false);
+        this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesComponent().getVariables()));
+        this.getEntityVariablesComponent().setNeedUpdate(false);
     }
 
 
     @Override
-    public IEntityVariableManager getEntityVariablesManager() {
+    public IEntityVariablesComponent getEntityVariablesComponent() {
         return this.entityVariableManager;
     }
 

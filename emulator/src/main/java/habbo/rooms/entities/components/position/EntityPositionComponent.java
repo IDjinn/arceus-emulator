@@ -134,7 +134,7 @@ public class EntityPositionComponent implements IEntityPositionComponent {
             }
 
             this.setPosition(this.getNextPosition());
-            this.getEntity().getEntityVariablesManager().setOrCreate("dev.coordinates", this.position.toString());
+            this.getEntity().getEntityVariablesComponent().setOrCreate("dev.coordinates", this.position.toString());
             final var topItem =
                     this.getEntity().getRoom().getObjectManager().getTopFloorItemAt(this.getPosition(), -1);
             if (topItem.isPresent()) {
@@ -158,9 +158,9 @@ public class EntityPositionComponent implements IEntityPositionComponent {
 
             if (path.isPresent()) {
                 this.walkPath.addAll(path.get());
-                this.getEntity().getEntityVariablesManager().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
+                this.getEntity().getEntityVariablesComponent().setOrCreate("dev.path.size", String.valueOf(this.walkPath.size()));
             } else {
-                this.getEntity().getEntityVariablesManager().setOrCreate("dev.path.size", "none - execution timeout");
+                this.getEntity().getEntityVariablesComponent().setOrCreate("dev.path.size", "none - execution timeout");
             }
         }
 
