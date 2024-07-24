@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class EventHandler implements IEventHandler {
-    private final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Map<Class<? extends Event>, List<ListenerCallback>> listeners;
     private final Injector injector;
 
@@ -78,7 +78,7 @@ public class EventHandler implements IEventHandler {
         return listenerMethods;
     }
 
-    private List<Method> getEventListenersOf(List<Class<?>> classes) throws IOException, ClassNotFoundException {
+    private List<Method> getEventListenersOf(List<Class<?>> classes) {
         final var listenerMethods = new ArrayList<Method>();
         for (final var clazz : classes) {
             listenerMethods.addAll(this.getEventListenersOf(clazz));
@@ -177,11 +177,11 @@ public class EventHandler implements IEventHandler {
         if (listeners == null)
             return event;
 
-        this.logger.trace("onEvent {} with value {}", event.getClass().getSimpleName(), event.toString());
+        LOGGER.trace("onEvent {} with value {}", event.getClass().getSimpleName(), event.toString());
         for (final var listener : listeners) {
             final var ignored = event instanceof Cancellable cancellableEvent && cancellableEvent.isCancelled();
             if (ignored) {
-                this.logger.trace("event listener {} was ignored because event {} was cancelled",
+                LOGGER.trace("event listener {} was ignored because event {} was cancelled",
                         listener.method.getClass().getName(),
                         event.getClass().getSimpleName()
                 );
@@ -193,7 +193,7 @@ public class EventHandler implements IEventHandler {
                 final var oldValue = event.toString();
                 listener.method.invoke(listener.instance, event);
                 if (event.hashCode() != oldHashCode) {
-                    this.logger.trace("event listener {} changed value of event {} from {} to {}",
+                    LOGGER.trace("event listener {} changed value of event {} from {} to {}",
                             listener.method.getClass().getName(),
                             event.getClass().getSimpleName(),
                             oldValue.toString(),
@@ -202,16 +202,16 @@ public class EventHandler implements IEventHandler {
                     continue;
                 }
 
-                this.logger.trace("event listener {} listened event {}",
+                LOGGER.trace("event listener {} listened event {}",
                         listener.method.getClass().getName(),
                         event.getClass().getSimpleName()
                 );
             } catch (Exception e) {
-                this.logger.error("failed to invoke event listener {}: {}", listener.method.getClass().getName(), e.getMessage(), e);
+                LOGGER.error("failed to invoke event listener {}: {}", listener.method.getClass().getName(), e.getMessage(), e);
             }
         }
 
-        this.logger.debug("event {} triggered total of {} listeners", event.getClass().getSimpleName(), listeners.size());
+        LOGGER.debug("event {} triggered total of {} listeners", event.getClass().getSimpleName(), listeners.size());
         return event;
     }
 

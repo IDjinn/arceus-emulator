@@ -46,7 +46,8 @@ public final class Race implements IRace {
     public <T> void runnableWithTimeout(final Runnable runnable, final Timeout timeout) {
         try {
             final var future = this.threadManager.getSoftwareThreadExecutor().submit(runnable);
-            if (this.isDebugging)
+            if (this.isDebugging) // we need get result here if is debugging because if there is some breaking point 
+                // can cause timeout in our task
                 future.get();
             else
                 future.get(timeout.getTimeoutInBaseUnit(), timeout.getBaseUnit());
