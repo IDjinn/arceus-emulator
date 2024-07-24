@@ -1,6 +1,8 @@
 package habbo.habbos.data.navigator;
 
-public interface IHabboNavigatorWindowSettings {
+import networking.packets.IPacketDTO;
+
+public interface IHabboNavigatorWindowSettings extends IPacketDTO {
     int getWindowX();
 
     int getWindowY();
