@@ -34,24 +34,6 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public void onRoomLoaded() {
-
-        IRoomItem.super.onRoomLoaded();
-    }
-
-    @Override
-    public void init() {
-
-        IRoomItem.super.init();
-    }
-
-    @Override
-    public void destroy() {
-
-        IRoomItem.super.destroy();
-    }
-
-    @Override
     public int getId() {
         return this.getItemData().getId();
     }
@@ -84,14 +66,6 @@ public abstract class RoomItem implements IRoomItem {
     @Override
     public IFurniture getFurniture() {
         return this.furniture;
-    }
-
-
-    @Override
-    public void serializeItemIdentity(IOutgoingPacket<U> packet) {
-        packet
-                .appendInt(this.getVirtualId())
-                .appendInt(this.getFurniture().getSpriteId());
     }
 
     @Override

@@ -5,11 +5,10 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
-import networking.packets.IOutgoingPacket;
 import packets.outgoing.rooms.objects.floor.FloorItemUpdateComposer;
 import utils.pathfinder.Position;
 
-public class DefaultFloorItem extends RoomItem implements IFloorFloorItem {
+public class DefaultFloorItem extends RoomItem implements IFloorItem {
     public static final String INTERACTION_NAME = "default_floor";
 
     public DefaultFloorItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
@@ -36,16 +35,6 @@ public class DefaultFloorItem extends RoomItem implements IFloorFloorItem {
     @Override
     public void setRotation(final int rotation) {
         this.getItemData().setRotation(rotation);
-    }
-
-    @Override
-    public IOutgoingPacket<U> serializePosition(IOutgoingPacket<U> packet) {
-        return packet
-                .appendInt(this.getPosition().getX())
-                .appendInt(this.getPosition().getY())
-                .appendInt(this.getRotation())
-                .appendString(Double.toString(this.getPosition().getZ()))
-                .appendString(Double.toString(this.getFurniture().getStackHeight()));
     }
 
     @Override

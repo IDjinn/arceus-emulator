@@ -9,7 +9,7 @@ import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItem;
 import habbo.rooms.components.objects.items.IRoomItemFactory;
-import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.components.objects.items.wall.IWallItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
     private final HashMap<Integer, IRoomItem> items;
-    private final HashMap<Integer, IFloorFloorItem> floorItems;
+    private final HashMap<Integer, IFloorItem> floorItems;
     private final HashMap<Integer, IWallItem> wallItems;
     private final Logger logger = LogManager.getLogger();
     private IRoom room;
@@ -93,7 +93,7 @@ public class RoomObjectManager implements IRoomObjectManager {
             for (var item : this.items.values()) {
                 if (!item.needSave()) continue;
 
-                if (item instanceof IFloorFloorItem floorItem) {
+                if (item instanceof IFloorItem floorItem) {
                 } else if (item instanceof IWallItem wallItem) {
                     statement.setInt(1, wallItem.getRoom().getData().getId());
                     statement.setInt(2, 0);
@@ -126,7 +126,7 @@ public class RoomObjectManager implements IRoomObjectManager {
         synchronized (this.items) {
             this.items.put(roomItem.getId(), roomItem);
             if (roomItem.getFurniture().getType().equals(FurnitureType.FLOOR))
-                this.floorItems.put(roomItem.getId(), (IFloorFloorItem) roomItem);
+                this.floorItems.put(roomItem.getId(), (IFloorItem) roomItem);
             else if (roomItem.getFurniture().getType().equals(FurnitureType.WALL))
                 this.wallItems.put(roomItem.getId(), (IWallItem) roomItem);
         }
@@ -138,13 +138,13 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public Collection<IFloorFloorItem> getAllFloorItems() {
+    public Collection<IFloorItem> getAllFloorItems() {
         return this.floorItems.values();
     }
 
     @Nullable
     @Override
-    public IFloorFloorItem getFloorItem(final int itemId) {
+    public IFloorItem getFloorItem(final int itemId) {
         final var realId = itemId & ~GameConstants.FurnitureVirtualIdMask;
         return this.floorItems.get(realId);
     }
@@ -157,13 +157,13 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public List<IFloorFloorItem> getAllFloorItemsSortedAt(final Position position) {
+    public List<IFloorItem> getAllFloorItemsSortedAt(final Position position) {
         return this.getAllFloorItemsSortedAt(position, -1);
     }
 
     @Override
-    public List<IFloorFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId) { // TODO POOLING
-        final var itemsAt = new HashSet<IFloorFloorItem>();
+    public List<IFloorItem> getAllFloorItemsSortedAt(final Position position, int ignoreId) { // TODO POOLING
+        final var itemsAt = new HashSet<IFloorItem>();
         final var realId = ignoreId & ~GameConstants.FurnitureVirtualIdMask;
         for (var item : this.floorItems.values()) {
             if (item.getId() == realId) continue;
@@ -176,7 +176,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public Optional<IFloorFloorItem> getTopFloorItemAt(final Position position, final long ignoreId) {
+    public Optional<IFloorItem> getTopFloorItemAt(final Position position, final long ignoreId) {
         return this.floorItems.values().stream().filter(i -> i.getPosition().equals(position)).filter(i -> i.getId() != ignoreId).findFirst();
     }
 
@@ -224,7 +224,7 @@ public class RoomObjectManager implements IRoomObjectManager {
                         item.getExtraData(),
                         ""
                 );
-                var floorItem = (IFloorFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
+                var floorItem = (IFloorItem) this.roomItemFactory.create(itemData, this.getRoom());
                 this.addRoomItem(floorItem);
                 habbo.getInventory().removeItem(floorItem.getId());
                 habbo.getClient().sendMessage(new RemoveHabboItemComposer(floorItem.getId()));
@@ -264,7 +264,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     }
 
     @Override
-    public void moveFloorItemTo(final IHabbo habbo, final IFloorFloorItem item, final Position position, final Integer rotation) {
+    public void moveFloorItemTo(final IHabbo habbo, final IFloorItem item, final Position position, final Integer rotation) {
         if (!this.getRoom().getGameMap().isValidCoordinate(position)) return;
 
         final var oldPosition = position.copy();
@@ -291,7 +291,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     public void pickupItem(final IHabbo habbo, final IRoomItem item) {
         this.inventoryRepository.pickupItem(result -> {
             item.onRemove(habbo);
-            if (item instanceof IFloorFloorItem floorItem) {
+            if (item instanceof IFloorItem floorItem) {
                 final var tile = this.getRoom().getGameMap().getTile(floorItem.getPosition());
                 this.getRoom().getGameMap().updateTile(tile);
                 this.getRoom().getGameMap().sendUpdate(tile);

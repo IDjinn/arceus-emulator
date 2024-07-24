@@ -1,6 +1,6 @@
 package habbo.rooms.components.gamemap;
 
-import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import stormpot.Poolable;
 
 import javax.annotation.Nullable;
@@ -29,9 +29,9 @@ public interface ITileMetadata extends Poolable, Comparable<ITileMetadata> {
 
     Optional<Double> getStackableHeight();
 
-    Optional<IFloorFloorItem> getItem();
+    Optional<IFloorItem> getItem();
 
-    void setItem(@Nullable final IFloorFloorItem item);
+    void setItem(@Nullable final IFloorItem item);
 
     void setStackHeight(@Nullable final Double stackHeight);
 }

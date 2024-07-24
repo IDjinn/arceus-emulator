@@ -6,7 +6,7 @@ import habbo.rooms.components.objects.items.IFloorObject;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.floor.AdvancedFloorItem;
 import habbo.rooms.components.objects.items.floor.FloorItemEvent;
-import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.entities.IRoomEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,14 +48,14 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
     private @Nullable SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
 
     @Override
-    public void onStackInItem(final IFloorFloorItem floorItem) {
+    public void onStackInItem(final IFloorItem floorItem) {
         synchronized (this.objectsOnRoller) {
             this.objectsOnRoller.add(floorItem);
         }
     }
 
     @Override
-    public void onStackOutItem(final IFloorFloorItem floorItem) {
+    public void onStackOutItem(final IFloorItem floorItem) {
         synchronized (this.objectsOnRoller) {
             this.objectsOnRoller.remove(floorItem);
         }

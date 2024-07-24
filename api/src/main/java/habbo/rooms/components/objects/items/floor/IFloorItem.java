@@ -8,7 +8,7 @@ import utils.pathfinder.Position;
 
 import java.util.Optional;
 
-public interface IFloorFloorItem extends IRoomItem, IRoomObject, IFloorObject {
+public interface IFloorItem extends IRoomItem, IRoomObject, IFloorObject {
     boolean isAtDoor();
 
     int getRotation();
@@ -112,11 +112,11 @@ public interface IFloorFloorItem extends IRoomItem, IRoomObject, IFloorObject {
     }
 
 
-    default void onStackInItem(IFloorFloorItem floorItem) {
+    default void onStackInItem(IFloorItem floorItem) {
 
     }
 
-    default void onStackOutItem(IFloorFloorItem floorItem) {
+    default void onStackOutItem(IFloorItem floorItem) {
 
     }
 

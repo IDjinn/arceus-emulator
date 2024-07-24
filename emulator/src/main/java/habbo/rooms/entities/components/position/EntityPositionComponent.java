@@ -3,7 +3,7 @@ package habbo.rooms.entities.components.position;
 import com.google.inject.Inject;
 import core.concurrency.IRace;
 import habbo.rooms.components.gamemap.ITileMetadata;
-import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
+import habbo.rooms.components.objects.items.floor.IFloorItem;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.rooms.entities.position.IEntityPositionComponent;
 import habbo.rooms.entities.status.RoomEntityStatus;
@@ -25,7 +25,7 @@ public class EntityPositionComponent implements IEntityPositionComponent {
 
     private @Nullable Position goal;
     private @Nullable Position nextPosition;
-    private @Nullable IFloorFloorItem onItem;
+    private @Nullable IFloorItem onItem;
     private @Inject IRace race;
 
     private Position position;
@@ -88,7 +88,7 @@ public class EntityPositionComponent implements IEntityPositionComponent {
 
 
     @Override
-    public @Nullable IFloorFloorItem getOnItem() {
+    public @Nullable IFloorItem getOnItem() {
         return this.onItem;
     }
 
