@@ -2,10 +2,11 @@ package habbo.variables;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import utils.cycle.ICycle;
 
 import java.util.Map;
 
-public interface IVariableManager {
+public interface IVariableManager extends ICycle {
     Map<String, IVariable<?>> getVariables();
 
     <T> IVariable<T> getOrCreate(final IVariable<T> variable);
@@ -25,8 +26,6 @@ public interface IVariableManager {
     void setNeedUpdate(boolean needUpdate);
 
     void deleteVariable(@NotNull String key);
-
-    void tick();
 
     IVariableMessageFactory getFormatter();
 }

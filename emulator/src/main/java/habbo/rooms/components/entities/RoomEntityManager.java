@@ -60,6 +60,7 @@ public class RoomEntityManager implements IRoomEntityManager {
         this.injector.injectMembers(entity);
         this.entities.put(entity.getVirtualId(), entity);
         this.players.put(entity.getVirtualId(), entity);
+        entity.init();
         return entity;
     }
 

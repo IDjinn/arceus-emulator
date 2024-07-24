@@ -2,11 +2,13 @@ package habbo.rooms.entities.components.variables;
 
 import com.google.inject.Inject;
 import core.configuration.ConfigurationManager;
+import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.variables.IVariable;
 import habbo.variables.VariableManager;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.NotNull;
+import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
 public class EntityVariablesComponent extends VariableManager implements habbo.rooms.entities.variables.IEntityVariablesComponent {
     private @NotNull IRoomEntity entity;
@@ -19,6 +21,16 @@ public class EntityVariablesComponent extends VariableManager implements habbo.r
     @Override
     public IRoomEntity getEntity() {
         return this.entity;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (!this.isNeedUpdate()) return;
+
+        this.setNeedUpdate(false);
+        if (this.getEntity() instanceof IPlayerEntity player) // TODO: ROOM USERS VARIABLES ?
+            player.getClient().sendMessage(new EntityVariablesComposer(this.getVariables()));
     }
 
     @Override

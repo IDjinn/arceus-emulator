@@ -8,7 +8,6 @@ import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import networking.client.IClient;
 import networking.packets.OutgoingPacket;
-import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
 import java.util.Objects;
 
@@ -66,18 +65,8 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
 
     @Override
     public synchronized void tick() {
-        this.handleVariables();
-    }
-
-
-    private void handleVariables() {
         this.getEntityVariablesComponent().tick();
-        if (!this.getEntityVariablesComponent().isNeedUpdate()) return;
-
-        this.getClient().sendMessage(new EntityVariablesComposer(this.getEntityVariablesComponent().getVariables()));
-        this.getEntityVariablesComponent().setNeedUpdate(false);
     }
-
 
     @Override
     public IEntityVariablesComponent getEntityVariablesComponent() {
