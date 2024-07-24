@@ -3,7 +3,7 @@ package habbo.commands.helpers.arguments;
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
 import habbo.internationalization.LocalizedString;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeArgument(final OutgoingPacket<U> packet) {
+    public void serializeArgument(final IOutgoingPacket<U> packet) {
         packet.appendInt(this.value.size());
         for (final var value : this.value) {
             packet.appendInt(this.argumentType.getCode());
@@ -32,7 +32,7 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeParameter(final OutgoingPacket<U> packet) {
+    public void serializeParameter(final IOutgoingPacket<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.serializeArgument(packet);
     }

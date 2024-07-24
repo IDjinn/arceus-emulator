@@ -4,7 +4,7 @@ import habbo.furniture.IFurniture;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 
 public class DefaultWallItem extends RoomItem implements IWallItem {
@@ -15,14 +15,14 @@ public class DefaultWallItem extends RoomItem implements IWallItem {
     }
 
     @Override
-    public void serializeItemIdentity(OutgoingPacket<U> packet) {
+    public void serializeItemIdentity(IOutgoingPacket<U> packet) {
         packet
                 .appendString(String.valueOf(this.getVirtualId()))
                 .appendInt(this.getFurniture().getSpriteId());
     }
 
     @Override
-    public OutgoingPacket<U> serializePosition(OutgoingPacket<U> packet) {
+    public IOutgoingPacket<U> serializePosition(IOutgoingPacket<U> packet) {
         return packet.appendString(this.getWallPosition());
     }
 

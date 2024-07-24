@@ -1,9 +1,9 @@
 package habbo.commands.helpers.parameters;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public interface ICommandParameter {
     CommandParameterType getParameterType();
 
-    void serializeParameter(final OutgoingPacket<U> packet);
+    void serializeParameter(final IOutgoingPacket<U> packet);
 }

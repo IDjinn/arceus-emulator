@@ -2,18 +2,18 @@ package encoders;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class OutgoingPacketLogger extends MessageToMessageEncoder<OutgoingPacket<U>> {
+public class OutgoingPacketLogger extends MessageToMessageEncoder<IOutgoingPacket<U>> {
 
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, OutgoingPacket<U> message, List<Object> out) {
+    protected void encode(ChannelHandlerContext ctx, IOutgoingPacket<U> message, List<Object> out) {
         try {
             logger.debug("[-> outgoing] {} packet {} [{}",
                     message.getHeader(),

@@ -4,7 +4,7 @@ import habbo.rooms.entities.IRoomEntity;
 import habbo.rooms.entities.status.IEntityStatusComponent;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import utils.StringBuilderHelper;
 
@@ -81,7 +81,7 @@ public final class EntityStatusComponent implements IEntityStatusComponent {
     }
 
     @Override
-    public void serialize(final OutgoingPacket<U> packet) {
+    public void serialize(final IOutgoingPacket<U> packet) {
         final var entityStatus = StringBuilderHelper.getBuilder().append('/');
         for (var bucket : this.getStatus().values()) {
             entityStatus.append(bucket.getStatus().toString());

@@ -1,7 +1,7 @@
 package utils.interfaces;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public interface IWriteable {
-    void write(OutgoingPacket<U> packet);
+    void write(IOutgoingPacket<U> packet);
 }

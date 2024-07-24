@@ -2,7 +2,6 @@ package habbo.furniture.extra.data;
 
 import habbo.rooms.components.objects.items.ILimitedData;
 import networking.packets.IPacketWriter;
-import networking.packets.OutgoingPacket;
 
 public interface IExtraData {
     ExtraDataType getExtraDataType();

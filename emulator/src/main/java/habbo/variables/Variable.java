@@ -1,6 +1,6 @@
 package habbo.variables;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -97,7 +97,7 @@ public class Variable<T> implements IVariable<T> {
     }
 
     @Override
-    public void serialize(final OutgoingPacket<U> packet) {
+    public void serialize(final IOutgoingPacket<U> packet) {
         packet
                 .appendString(this.getKey())
                 .appendString(String.valueOf(this.getValue()))

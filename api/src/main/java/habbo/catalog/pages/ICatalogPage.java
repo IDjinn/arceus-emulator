@@ -2,7 +2,7 @@ package habbo.catalog.pages;
 
 import habbo.catalog.items.ICatalogItem;
 import habbo.habbos.IHabbo;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IFillable;
 
@@ -50,7 +50,7 @@ public interface ICatalogPage extends IFillable {
 
     List<ICatalogPage> getChildren();
 
-    OutgoingPacket<U> serializeItems(OutgoingPacket<U> packet, IHabbo habbo);
+    IOutgoingPacket<U> serializeItems(IOutgoingPacket<U> packet, IHabbo habbo);
 
-    void serializeExtra(OutgoingPacket<U> packet);
+    void serializeExtra(IOutgoingPacket<U> packet);
 }

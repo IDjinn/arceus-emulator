@@ -5,7 +5,7 @@ import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -88,7 +88,7 @@ public abstract class RoomItem implements IRoomItem {
 
 
     @Override
-    public void serializeItemIdentity(OutgoingPacket<U> packet) {
+    public void serializeItemIdentity(IOutgoingPacket<U> packet) {
         packet
                 .appendInt(this.getVirtualId())
                 .appendInt(this.getFurniture().getSpriteId());

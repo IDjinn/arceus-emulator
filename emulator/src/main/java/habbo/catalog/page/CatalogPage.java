@@ -5,7 +5,7 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.CatalogPageType;
 import habbo.catalog.pages.ICatalogPage;
 import habbo.habbos.IHabbo;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
@@ -151,7 +151,7 @@ public abstract class CatalogPage implements ICatalogPage {
     }
 
     @Override
-    public OutgoingPacket<U> serializeItems(OutgoingPacket<U> packet, IHabbo habbo) {
+    public IOutgoingPacket<U> serializeItems(IOutgoingPacket<U> packet, IHabbo habbo) {
         packet.appendInt(this.getItems().size());
         for (var item : this.getItems().values()) {
             item.serialize(packet);
@@ -159,12 +159,12 @@ public abstract class CatalogPage implements ICatalogPage {
         return packet;
     }
 
-    public void serializeExtra(OutgoingPacket<U> packet) {
+    public void serializeExtra(IOutgoingPacket<U> packet) {
 
     }
 
     @Override
-    public abstract void serialize(OutgoingPacket<U> packet);
+    public abstract void serialize(IOutgoingPacket<U> packet);
 
     @Override
     public boolean isVisible() {

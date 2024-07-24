@@ -1,7 +1,7 @@
 package habbo.habbos.data.navigator;
 
 import habbo.habbos.writers.HabboNavigatorSearchWriter;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
@@ -36,7 +36,7 @@ public class HabboNavigatorSearch implements IHabboNavigatorSearch {
         return this.id;
     }
 
-    public void write(OutgoingPacket<U> packet) {
+    public void write(IOutgoingPacket<U> packet) {
         HabboNavigatorSearchWriter.write(this, packet);
     }
 

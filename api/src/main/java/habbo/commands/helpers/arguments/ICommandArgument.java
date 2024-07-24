@@ -1,11 +1,11 @@
 package habbo.commands.helpers.arguments;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public interface ICommandArgument {
     String key();
 
     ArgumentType argumentType();
 
-    void serializeArgument(final OutgoingPacket<U> packet);
+    void serializeArgument(final IOutgoingPacket<U> packet);
 }

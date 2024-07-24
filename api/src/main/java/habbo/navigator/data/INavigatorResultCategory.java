@@ -1,9 +1,9 @@
 package habbo.navigator.data;
 
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 
 public interface INavigatorResultCategory {
-    void write(OutgoingPacket<U> packet);
+    void write(IOutgoingPacket<U> packet);
 
     boolean filterRooms(INavigatorFilterType type, String search);
 }

@@ -5,7 +5,6 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import io.netty.util.internal.StringUtil;
-import networking.packets.OutgoingPacket;
 import storage.results.IConnectionResult;
 
 public class CatalogItem implements ICatalogItem {

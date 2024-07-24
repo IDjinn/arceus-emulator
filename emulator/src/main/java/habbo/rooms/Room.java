@@ -18,7 +18,7 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -162,7 +162,7 @@ public class Room implements IRoom {
 
 
     @Override
-    public void write(OutgoingPacket<U> packet) {
+    public void write(IOutgoingPacket<U> packet) {
         RoomWriter.write(this, packet);
     }
 
@@ -203,7 +203,7 @@ public class Room implements IRoom {
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
-                new OutgoingPacket<U>(2402).appendInt(0),
+                new IOutgoingPacket<U>(2402).appendInt(0),
                 new CommandListComposer(
                         this.getCommandManager().getCommands().values().stream().toList(),
                         this.internationalizationManager,
@@ -217,14 +217,14 @@ public class Room implements IRoom {
     }
 
     @Override
-    public void broadcastMessage(OutgoingPacket<U> packet) {
+    public void broadcastMessage(IOutgoingPacket<U> packet) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
-    public void broadcastMessages(OutgoingPacket<U>... packets) {
+    public void broadcastMessages(IOutgoingPacket<U>... packets) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }

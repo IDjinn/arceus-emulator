@@ -1,14 +1,12 @@
 package habbo.habbos.factories;
 
 import com.google.inject.Inject;
-import habbo.furniture.FurnitureType;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.components.objects.items.LimitedData;
-import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 

@@ -5,7 +5,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.gamemap.ITileMetadata;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
-import networking.packets.OutgoingPacket;
+import networking.packets.IOutgoingPacket;
 import packets.outgoing.rooms.objects.floor.FloorItemUpdateComposer;
 import utils.pathfinder.Position;
 
@@ -39,7 +39,7 @@ public class DefaultFloorItem extends RoomItem implements IFloorFloorItem {
     }
 
     @Override
-    public OutgoingPacket<U> serializePosition(OutgoingPacket<U> packet) {
+    public IOutgoingPacket<U> serializePosition(IOutgoingPacket<U> packet) {
         return packet
                 .appendInt(this.getPosition().getX())
                 .appendInt(this.getPosition().getY())

@@ -1,7 +1,6 @@
 package habbo.furniture.extra.data;
 
 import networking.packets.IPacketWriter;
-import networking.packets.OutgoingPacket;
 import utils.gson.GsonHelper;
 
 
