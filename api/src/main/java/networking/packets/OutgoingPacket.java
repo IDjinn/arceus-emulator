@@ -1,7 +1,7 @@
 package networking.packets;
 
-public interface OutgoingPacket<DTO extends PacketDTO> {
-    void compose(final PacketWriter writer, final DTO dto);
+public interface OutgoingPacket<DTO extends IPacketDTO> {
+    void compose(final IPacketWriter writer, final DTO dto);
 
     int getHeaderId();
 }

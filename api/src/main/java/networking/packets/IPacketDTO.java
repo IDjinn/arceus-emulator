@@ -1,4 +1,4 @@
 package networking.packets;
 
-public interface PacketDTO {
+public interface IPacketDTO {
 }

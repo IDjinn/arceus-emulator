@@ -1,15 +1,16 @@
-package networking.packets;
+package packets;
 
 import habbo.internationalization.LocalizedString;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import networking.packets.IPacketWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-public class PacketWriter {
+public class PacketWriter implements IPacketWriter {
     private static final String STRING_EMPTY = "";
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -21,11 +22,13 @@ public class PacketWriter {
         this.stream = new ByteBufOutputStream(this.channelBuffer);
     }
 
-    public PacketWriter appendRawBytes(byte[] bytes) {
+    @Override
+    public IPacketWriter appendRawBytes(byte[] bytes) {
         return this.appendRawBytes(bytes, STRING_EMPTY);
     }
 
-    public PacketWriter appendRawBytes(byte[] bytes, String debugContext) {
+    @Override
+    public IPacketWriter appendRawBytes(byte[] bytes, String debugContext) {
         try {
             this.stream.write(bytes);
         } catch (IOException e) {
@@ -34,15 +37,18 @@ public class PacketWriter {
         return this;
     }
 
-    public PacketWriter appendString(LocalizedString localizedString) {
+    @Override
+    public IPacketWriter appendString(LocalizedString localizedString) {
         return this.appendString(localizedString.getKey(), STRING_EMPTY);
     }
 
-    public PacketWriter appendString(String string) {
+    @Override
+    public IPacketWriter appendString(String string) {
         return this.appendString(string, STRING_EMPTY);
     }
 
-    public PacketWriter appendString(String string, String debugContext) {
+    @Override
+    public IPacketWriter appendString(String string, String debugContext) {
         if (string == null) {
             this.appendString(STRING_EMPTY);
             return this;
@@ -58,11 +64,13 @@ public class PacketWriter {
         return this;
     }
 
-    public PacketWriter appendChar(int charValue) {
+    @Override
+    public IPacketWriter appendChar(int charValue) {
         return this.appendChar(charValue, STRING_EMPTY);
     }
 
-    public PacketWriter appendChar(int obj, String debugContext) {
+    @Override
+    public IPacketWriter appendChar(int obj, String debugContext) {
         try {
             this.stream.writeChar(obj);
         } catch (IOException e) {
@@ -71,11 +79,13 @@ public class PacketWriter {
         return this;
     }
 
-    public PacketWriter appendInt(Integer integer) {
+    @Override
+    public IPacketWriter appendInt(Integer integer) {
         return this.appendInt(integer, STRING_EMPTY);
     }
 
-    public PacketWriter appendInt(Integer integer, String debugContext) {
+    @Override
+    public IPacketWriter appendInt(Integer integer, String debugContext) {
         try {
             this.stream.writeInt(integer);
         } catch (IOException e) {
@@ -85,11 +95,13 @@ public class PacketWriter {
     }
 
 
-    public PacketWriter appendBoolean(boolean bool) {
+    @Override
+    public IPacketWriter appendBoolean(boolean bool) {
         return this.appendBoolean(bool, STRING_EMPTY);
     }
 
-    public PacketWriter appendBoolean(boolean bool, String debugContext) {
+    @Override
+    public IPacketWriter appendBoolean(boolean bool, String debugContext) {
         try {
             this.stream.writeBoolean(bool);
         } catch (IOException e) {
@@ -98,11 +110,13 @@ public class PacketWriter {
         return this;
     }
 
-    public PacketWriter appendDouble(double d) {
+    @Override
+    public IPacketWriter appendDouble(double d) {
         return this.appendDouble(d, STRING_EMPTY);
     }
 
-    public PacketWriter appendDouble(double d, String debugContext) {
+    @Override
+    public IPacketWriter appendDouble(double d, String debugContext) {
         try {
             this.stream.writeDouble(d);
         } catch (IOException e) {
@@ -111,17 +125,20 @@ public class PacketWriter {
         return this;
     }
 
+    @Override
     public ByteBuf getBuffer() {
         this.channelBuffer.setInt(0, this.channelBuffer.writerIndex() - 4);
 
         return this.channelBuffer.copy();
     }
 
-    public PacketWriter appendShort(final int value) {
+    @Override
+    public IPacketWriter appendShort(final int value) {
         return this.appendShort(value, STRING_EMPTY);
     }
 
-    public PacketWriter appendShort(final int value, final String debugContext) {
+    @Override
+    public IPacketWriter appendShort(final int value, final String debugContext) {
         try {
             this.stream.writeShort(value);
         } catch (IOException e) {
