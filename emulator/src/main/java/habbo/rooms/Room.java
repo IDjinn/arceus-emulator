@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Room implements IRoom {
-    private final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final IRoomData data;
 
     private final Map<Class<? extends IRoomComponent>, IRoomComponent> customComponents;
@@ -166,6 +166,7 @@ public class Room implements IRoom {
         RoomWriter.write(this, packet);
     }
 
+    // TODO MOVE ME
     @Override
     public void prepareForHabbo(IHabbo habbo, String password) {
         // TODO: IN ROOM CHECKS
@@ -289,7 +290,7 @@ public class Room implements IRoom {
     public void registerCustomComponent(final Class<? extends IRoomComponent> component, IRoomComponent instance) {
         this.customComponents.put(component, instance);
         instance.init(this);
-        this.logger.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
+        this.LOGGER.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
                 instance.getClass().getName());   
     }
 
