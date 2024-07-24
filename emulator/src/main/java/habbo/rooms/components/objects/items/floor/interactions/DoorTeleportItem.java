@@ -38,12 +38,12 @@ public class DoorTeleportItem extends DefaultFloorItem {
             });
         }
 
-        if (this.pairId <= InvalidPair) return false;
-        return true;
+        return this.pairId > InvalidPair;
     }
 
     @Override
     public void onInteract(final IRoomEntity entity) {
-        if (!this.isValidTeleport()) return;
+        if (!this.isValidTeleport()) {
+        }
     }
 }

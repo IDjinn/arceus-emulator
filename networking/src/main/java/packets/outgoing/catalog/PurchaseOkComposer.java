@@ -14,7 +14,7 @@ public class PurchaseOkComposer extends OutgoingPacket {
         this.appendInt(item.getCostCredits());
         this.appendInt(item.getCostActivityPoints());
         this.appendInt(0); // points type
-        this.appendBoolean(false); // is gift
+        this.appendBoolean(false); // is gifted
 
         this.appendInt(1); // total items
         {

@@ -17,14 +17,6 @@ public class RoomVariablesManager extends VariableManager implements IRoomVariab
     }
 
     @Override
-    public void update() {
-    }
-
-    @Override
-    public void onRoomLoaded() {
-    }
-
-    @Override
     public void destroy() {
 
     }

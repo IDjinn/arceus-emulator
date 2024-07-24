@@ -13,7 +13,7 @@ public class RoomUserStatusComposer extends OutgoingPacket {
         this.serializeEntity(entity);
     }
 
-    public RoomUserStatusComposer(Collection<IRoomEntity> entities) {
+    public RoomUserStatusComposer(Collection<? extends IRoomEntity> entities) {
         super(OutgoingHeaders.RoomUserStatusComposer);
         this.appendInt(entities.size());
         for (var entity : entities)

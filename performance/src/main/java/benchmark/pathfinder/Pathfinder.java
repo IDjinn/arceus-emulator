@@ -98,29 +98,6 @@ public class Pathfinder {
         final var firstNode = new PathfinderNode(null);
         openSet.add(firstNode);
 
-//        var step = 0;
-//        final var mapSize = 192;
-//        while (!openSet.isEmpty() && step++ < mapSize) {
-//            final var current = openSet.poll();
-//            if (current.getPosition().equals(goal))
-//                return reversePath(current);
-//
-//            if (closedSet.contains(goal))
-//                break;
-//
-//            closedSet.add(current.getPosition());
-//            for (final var node : this.getNeighbors(current)) {
-//                if (closedSet.contains(node.position)) continue;
-//
-//                final var tentativeGScore = (float) getGCost(current.getGCosts(), current.position, node.position);
-//                if (tentativeGScore < node.getGCosts() || !openSet.contains(node)) {
-//                    node.setParentNode(current);
-//                    node.setGCosts(tentativeGScore);
-//                    node.setHCosts((float) node.getPosition().distanceTo(goal));
-//                    openSet.add(node);
-//                }
-//            }
-//        }
         return Collections.emptyList();
     }
 }

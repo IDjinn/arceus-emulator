@@ -53,11 +53,6 @@ public class PacketParser extends ChannelInboundHandlerAdapter {
         }
     }
 
-//    @Override
-//    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-//        this.clientManager.onDisconnect(ctx);
-//    }
-
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         this.clientManager.onDisconnect(ctx);

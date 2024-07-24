@@ -117,17 +117,17 @@ public class GcProfiler implements InternalProfiler {
                 double rate = afterT == this.beforeT ? NaN :
                         1.0 * pool.usedDiffByPool.count(space) * SECONDS.toNanos(1) / (afterT - this.beforeT) / 1024 / 1024;
                 double norm = 1.0 * pool.usedDiffByPool.count(space) / iResult.getMetadata().getAllOps();
-                results.add(new ScalarResult(STR."\{PREFIX + "pool." + name}.rate", rate, "MB/sec", AVG));
-                results.add(new ScalarResult(STR."\{PREFIX + "pool." + name}.norm", norm, "B/op", AVG));
+                results.add(new ScalarResult(STR."\{STR."\{PREFIX}pool." + name}.rate", rate, "MB/sec", AVG));
+                results.add(new ScalarResult(STR."\{STR."\{PREFIX}pool." + name}.norm", norm, "B/op", AVG));
             }
             if (!pool.usedAfterGc.isEmpty()) {
                 Collections.sort(pool.usedAfterGc);
-                long maxUag = pool.usedAfterGc.get(pool.usedAfterGc.size() - 1);
+                long maxUag = pool.usedAfterGc.getLast();
                 results.add(new ScalarResult(STR."\{PREFIX}pool.all.maxUsed", maxUag, "bytes", MAX));
             }
             if (!pool.committedAfterGc.isEmpty()) {
                 Collections.sort(pool.committedAfterGc);
-                long maxCag = pool.committedAfterGc.get(pool.committedAfterGc.size() - 1);
+                long maxCag = pool.committedAfterGc.getLast();
                 results.add(new ScalarResult(STR."\{PREFIX}pool.all.maxCommitted", maxCag, "bytes", MAX));
             }
         }

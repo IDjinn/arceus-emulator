@@ -29,32 +29,32 @@ public enum Direction {
 
             // NorthEast
             case 1:
-                this.modX = +1;
+                this.modX = 1;
                 this.modY = -1;
                 break;
 
             // East
             case 2:
-                this.modX = +1;
+                this.modX = 1;
                 this.modY = 0;
                 break;
 
             // SouthEast
             case 3:
-                this.modX = +1;
-                this.modY = +1;
+                this.modX = 1;
+                this.modY = 1;
                 break;
 
             // South
             case 4:
                 this.modX = 0;
-                this.modY = +1;
+                this.modY = 1;
                 break;
 
             // SouthWest
             case 5:
                 this.modX = -1;
-                this.modY = +1;
+                this.modY = 1;
                 break;
 
             // West

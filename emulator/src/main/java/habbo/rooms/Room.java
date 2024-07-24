@@ -290,7 +290,7 @@ public class Room implements IRoom {
     public void registerCustomComponent(final Class<? extends IRoomComponent> component, IRoomComponent instance) {
         this.customComponents.put(component, instance);
         instance.init(this);
-        this.LOGGER.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
+        LOGGER.debug("registered a custom room component for room {} with name {}", this.getData().getId(),
                 instance.getClass().getName());   
     }
 

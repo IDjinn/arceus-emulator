@@ -20,11 +20,6 @@ public class RoomRightsManager implements IRoomRightsManager {
     }
 
     @Override
-    public void onRoomLoaded() {
-
-    }
-
-    @Override
     public void destroy() {
 
     }

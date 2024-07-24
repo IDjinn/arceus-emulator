@@ -269,16 +269,6 @@ public class HabboSettings implements IHabboSettings, IFillable {
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void destory() {
-
-    }
-
-    @Override
     public IHabbo getHabbo() {
         return this.habbo;
     }

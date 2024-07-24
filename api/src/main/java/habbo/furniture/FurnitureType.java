@@ -17,7 +17,6 @@ public enum FurnitureType {
 
     public static FurnitureType fromString(String code) {
         return switch (code.toUpperCase()) {
-            case "S" -> FLOOR;
             case "I" -> WALL;
             case "E" -> EFFECT;
             case "B" -> BADGE;

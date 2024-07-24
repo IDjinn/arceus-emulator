@@ -151,11 +151,6 @@ public class HabboData implements IHabboData, IFillable {
     }
 
     @Override
-    public void destory() {
-
-    }
-
-    @Override
     public IHabbo getHabbo() {
         return this.habbo;
     }

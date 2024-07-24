@@ -33,6 +33,6 @@ public class LayCommand implements ICommand {
     public Optional<ICommandContext> execute(final ICommandContext ctx) {
         ctx.getPlayerEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.LAY));
         ctx.getPlayerEntity().getStatusComponent().setNeedUpdateStatus(true);
-        return null;
+        return Optional.empty();
     }
 }

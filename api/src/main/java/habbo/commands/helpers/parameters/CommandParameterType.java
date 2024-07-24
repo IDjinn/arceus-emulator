@@ -24,6 +24,6 @@ public enum CommandParameterType {
     }
 
     public int getCode() {
-        return code;
+        return this.code;
     }
 }

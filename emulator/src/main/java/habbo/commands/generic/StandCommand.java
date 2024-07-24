@@ -29,6 +29,6 @@ public class StandCommand implements ICommand {
 
     @Override
     public Optional<ICommandContext> execute(final ICommandContext ctx) {
-        return null;
+        return Optional.empty();
     }
 }

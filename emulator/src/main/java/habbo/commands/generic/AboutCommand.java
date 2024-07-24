@@ -23,7 +23,7 @@ public class AboutCommand implements ICommand {
         ctx.whisper(LocalizedString.of("command.generic.about.response",
                 new Variable("hotel.users.count", String.valueOf(this.habboManager.onlineUsersCount())))
         );
-        return null;
+        return Optional.empty();
     }
 
     @Override

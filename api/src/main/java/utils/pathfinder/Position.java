@@ -183,8 +183,7 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Position) {
-            Position other = (Position) o;
+        if (o instanceof final Position other) {
             return this.x == other.x && this.y == other.y;
         }
         return false;

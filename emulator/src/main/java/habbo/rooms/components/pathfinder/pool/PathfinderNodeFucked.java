@@ -75,12 +75,6 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
 
     @Override
     public int compareTo(@NotNull PathfinderNodeFucked otherNode) {
-        if (this.getFCosts() < otherNode.getFCosts()) {
-            return -1;
-        } else if (this.getFCosts() > otherNode.getFCosts()) {
-            return 1;
-        } else {
-            return 0;
-        }
+        return Float.compare(this.getFCosts(), otherNode.getFCosts());
     }
 }

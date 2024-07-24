@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import java.time.Instant;
 
-public class GsonHelper {
+public final class GsonHelper {
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
             .create();

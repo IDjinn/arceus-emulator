@@ -44,7 +44,7 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
         }
     }
 
-    private Queue<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObjects = new PriorityQueue<>();
+    private final Queue<SlideObjectBundleMessageComposer.SlideObjectEntry> movementObjects = new PriorityQueue<>();
     private @Nullable SlideObjectBundleMessageComposer.SlideObjectEntry movementEntity = null;
 
     @Override
@@ -68,7 +68,7 @@ public class RollerFloorItem extends AdvancedFloorItem implements FloorItemEvent
             event.subscribeListener(this);
             this.enqueueEvent(event);
         } else {
-            this.LOGGER.error("Failed to create event for RollerFloorItem");
+            LOGGER.error("Failed to create event for RollerFloorItem");
         }
     }
 

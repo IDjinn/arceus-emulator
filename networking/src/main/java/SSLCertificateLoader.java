@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-public class SSLCertificateLoader {
+public final class SSLCertificateLoader {
     private static final String filePath = "ssl";
     private static final Logger logger = LogManager.getLogger();
 

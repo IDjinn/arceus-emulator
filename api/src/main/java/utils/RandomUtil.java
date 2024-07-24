@@ -3,7 +3,7 @@ package utils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class RandomUtil {
+public final class RandomUtil {
     public static int getRandomInt(int min, int max) {
         return ThreadLocalRandom.current().nextInt((max - min) + 1) + min;
     }

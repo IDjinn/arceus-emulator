@@ -15,7 +15,7 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
     private int windowWidth = 425;
     private int windowHeight = 535;
     private boolean leftPanelCollapsed = false;
-    public int resultsMode = 0;
+    public final int resultsMode = 0;
 
     @Inject
     public HabboNavigatorWindowSettings(IConnectionResult result) {

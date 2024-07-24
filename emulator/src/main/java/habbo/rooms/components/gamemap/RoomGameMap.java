@@ -103,10 +103,6 @@ public class RoomGameMap implements IRoomGameMap {
     }
 
     @Override
-    public void onRoomLoaded() {
-    }
-
-    @Override
     public List<ITileMetadata> getMetadataAt(final int x, final int y, final double objectHeight) {
         final var tile = this.getTile(x, y);
         final var result = new LinkedList<ITileMetadata>();

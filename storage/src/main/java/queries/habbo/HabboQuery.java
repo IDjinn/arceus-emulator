@@ -47,7 +47,7 @@ public enum HabboQuery {
                 machine_id = ?,
                 home_room = ?
             WHERE id = ?;
-            """);;
+            """);
 
     private final String query;
 

@@ -5,19 +5,10 @@ import networking.packets.OutgoingPacket;
 import java.util.Arrays;
 import java.util.List;
 
-public final class MultipleParameters implements ICommandParameter {
-    private final List<ICommandParameter> choices;
-
-    public MultipleParameters(final List<ICommandParameter> choices) {
-        this.choices = choices;
-    }
+public record MultipleParameters(List<ICommandParameter> choices) implements ICommandParameter {
 
     public static MultipleParameters of(ICommandParameter... arguments) {
         return new MultipleParameters(Arrays.stream(arguments).toList());
-    }
-
-    public List<ICommandParameter> getChoices() {
-        return this.choices;
     }
 
     @Override

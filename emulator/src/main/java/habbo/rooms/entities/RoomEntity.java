@@ -118,16 +118,16 @@ public abstract class RoomEntity implements IRoomEntity {
 
     @Override
     public IEntityStatusComponent getStatusComponent() {
-        return statusComponent;
+        return this.statusComponent;
     }
 
     @Override
     public IEntityPositionComponent getPositionComponent() {
-        return positionComponent;
+        return this.positionComponent;
     }
 
     @Override
     public IEventHandler getEventHandler() {
-        return eventHandler;
+        return this.eventHandler;
     }
 }

@@ -13,7 +13,7 @@ public class RoomEntitiesComposer extends OutgoingPacket {
         entity.serialize(this);
     }
 
-    public RoomEntitiesComposer(List<IRoomEntity> entities) {
+    public RoomEntitiesComposer(List<? extends IRoomEntity> entities) {
         super(OutgoingHeaders.RoomEntitiesComposer);
         this.appendInt(entities.size());
         for (IRoomEntity entity : entities) {

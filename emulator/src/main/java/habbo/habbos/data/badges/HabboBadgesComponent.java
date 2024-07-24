@@ -40,7 +40,7 @@ public class HabboBadgesComponent implements IHabboBadgesComponent {
     }
 
     @Override
-    public void addBadges(final List<IHabboBadge> badge) {
+    public void addBadges(final List<? extends IHabboBadge> badge) {
         for (final IHabboBadge habboBadge : badge) {
             this.addBadge(habboBadge);
         }

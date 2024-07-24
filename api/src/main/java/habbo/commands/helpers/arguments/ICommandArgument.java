@@ -3,9 +3,9 @@ package habbo.commands.helpers.arguments;
 import networking.packets.OutgoingPacket;
 
 public interface ICommandArgument {
-    String getKey();
+    String key();
 
-    ArgumentType getArgumentType();
+    ArgumentType argumentType();
 
     void serializeArgument(final OutgoingPacket packet);
 }

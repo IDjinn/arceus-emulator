@@ -42,7 +42,7 @@ public class BuilderCommand implements ICommand {
 
     @Override
     public Optional<ICommandContext> execute(final ICommandContext ctx) {
-        final var builderVariable = ctx.getPlayerEntity().getEntityVariablesComponent().getOrCreate(new Variable<Boolean>(
+        final var builderVariable = ctx.getPlayerEntity().getEntityVariablesComponent().getOrCreate(new Variable<>(
                 "user.command.builder.enabled",
                 false
         ));

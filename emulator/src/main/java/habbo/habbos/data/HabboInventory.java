@@ -63,16 +63,6 @@ public class HabboInventory implements IHabboInventory {
     }
 
     @Override
-    public void update() {
-
-    }
-
-    @Override
-    public void destory() {
-
-    }
-
-    @Override
     public IHabbo getHabbo() {
         return this.habbo;
     }

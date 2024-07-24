@@ -3,7 +3,7 @@ package networking.util;
 import io.netty.util.AttributeKey;
 import networking.client.IClient;
 
-public class GameNetowrkingAttributes {
+public final class GameNetowrkingAttributes {
 
     public static final AttributeKey<IClient> CLIENT = AttributeKey.valueOf("NitroClient");
 

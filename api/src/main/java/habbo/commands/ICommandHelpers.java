@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 
 public interface ICommandHelpers {
-    public Optional<IHabbo> resolveHabbo(@NotNull String resolvable);
+    Optional<IHabbo> resolveHabbo(@NotNull String resolvable);
 
-    public Optional<IRoomEntity> resolveEntity(@NotNull final IRoom room, @NotNull String resolvable);
+    Optional<IRoomEntity> resolveEntity(@NotNull final IRoom room, @NotNull String resolvable);
 
-    public Optional<IRoom> resolveRoom(@NotNull String resolvable);
+    Optional<IRoom> resolveRoom(@NotNull String resolvable);
 }

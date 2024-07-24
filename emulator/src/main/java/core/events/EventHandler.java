@@ -104,7 +104,6 @@ public class EventHandler implements IEventHandler {
                                 listenerMethod, priority, listenCancelled));
                     }
                 } catch (Exception ignore) {
-                    continue;
                 }
             }
             for (var listenerMethods : this.listeners.values()) {

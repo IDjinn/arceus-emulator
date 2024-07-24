@@ -34,6 +34,6 @@ public class SitCommand implements ICommand {
         ctx.getPlayerEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.SIT,
                 String.valueOf(ctx.getPlayerEntity().getPositionComponent().getPosition().getZ() + 0.5d)));
         ctx.getPlayerEntity().getStatusComponent().setNeedUpdateStatus(true);
-        return null;
+        return Optional.empty();
     }
 }

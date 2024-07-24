@@ -44,7 +44,7 @@ public class RequestInventoryBadgesEvent extends IncomingEvent {
         }
 
         // TODO IMPLEMENTATION ELSEWHERE TO CACHING ETC
-        final Map<Integer, String> equippedBadges = new HashMap<Integer, String>();
+        final Map<Integer, String> equippedBadges = new HashMap<>();
         this.badgesRepository.getEquippedBadges(result -> {
             if (result == null) return;
 

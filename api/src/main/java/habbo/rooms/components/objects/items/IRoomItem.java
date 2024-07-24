@@ -49,7 +49,7 @@ public interface IRoomItem extends IRoomObject {
     void sendUpdate();
 
     /**
-     * entity triggered interaction (click, double click etc)
+     * entity triggered interaction (click, double click etc.)
      *
      * @param entity entity requesting interaction
      */

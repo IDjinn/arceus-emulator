@@ -20,7 +20,7 @@ public class ConnectionRepository implements IConnectionRepository {
     @Inject
     private IConnection connection;
 
-    protected Logger logger = LogManager.getLogger();
+    protected final Logger logger = LogManager.getLogger();
 
     public void select(String query, IConnectionResultConsumer resultConsumer, Object... parameters) {
         Connection connection = null;

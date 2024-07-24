@@ -54,11 +54,6 @@ public class Pathfinder implements IPathfinder {
     }
 
     @Override
-    public void onRoomLoaded() {
-
-    }
-
-    @Override
     public void destroy() {
 
     }

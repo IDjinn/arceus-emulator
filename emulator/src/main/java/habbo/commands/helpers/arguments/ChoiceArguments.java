@@ -7,31 +7,11 @@ import networking.packets.OutgoingPacket;
 
 import java.util.List;
 
-public final class ChoiceArguments<T> implements ICommandArgument, ICommandParameter {
-    private final String key;
-    private final ArgumentType argumentType;
-    private final List<T> value;
-
-    public ChoiceArguments(final String key, final ArgumentType argumentType, final List<T> value) {
-        this.key = key;
-        this.argumentType = argumentType;
-        this.value = value;
-    }
+public record ChoiceArguments<T>(String key, ArgumentType argumentType,
+                                 List<T> value) implements ICommandArgument, ICommandParameter {
 
     public static <T> ChoiceArguments<T> of(final String key, final ArgumentType argumentType, final List<T> value) {
         return new ChoiceArguments<T>(key, argumentType, value);
-    }
-
-    public String getKey() {
-        return this.key;
-    }
-
-    public List<T> getValue() {
-        return this.value;
-    }
-
-    public ArgumentType getArgumentType() {
-        return this.argumentType;
     }
 
     @Override

@@ -23,11 +23,5 @@ public class RoomUserWhisperEvent extends IncomingEvent {
         final var message = packet.readString();
         var username = "dfinn";
         final var bubble = packet.readInt(); // TODO WHISPER
-//        
-//        client.getHabbo().getRoom().getEntityManager().shout(
-//                client.getHabbo().getPlayerEntity(),
-//                message,
-//                bubble
-//        );
     }
 }

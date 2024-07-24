@@ -28,40 +28,33 @@ public final class RangeArgument implements ICustomArgument, ICommandParameter {
 
     @Override
     public Function<ICommandContext, Optional<Object>> getHandler() {
-        switch (argumentType) {
-            case Integer:
-                return ctx -> ctx.popInt().flatMap(
-                        value -> value > this.start && value < this.end
-                                ? Optional.of(value)
-                                : Optional.empty()
-                );
-
-            case Double:
-                return ctx -> ctx.popDouble().flatMap(
-                        value -> value > this.start && value < this.end
-                                ? Optional.of(value)
-                                : Optional.empty()
-                );
-
-            case String:
-                return ctx -> ctx.popArg().flatMap(
-                        value -> value.length() > this.start && value.length() < this.end
-                                ? Optional.of(value)
-                                : Optional.empty()
-                );
-
-            default:
-                return ctx -> Optional.empty();
-        }
+        return switch (this.argumentType) {
+            case Integer -> ctx -> ctx.popInt().flatMap(
+                    value -> value > this.start && value < this.end
+                            ? Optional.of(value)
+                            : Optional.empty()
+            );
+            case Double -> ctx -> ctx.popDouble().flatMap(
+                    value -> value > this.start && value < this.end
+                            ? Optional.of(value)
+                            : Optional.empty()
+            );
+            case String -> ctx -> ctx.popArg().flatMap(
+                    value -> value.length() > this.start && value.length() < this.end
+                            ? Optional.of(value)
+                            : Optional.empty()
+            );
+            default -> ctx -> Optional.empty();
+        };
     }
 
     @Override
-    public String getKey() {
+    public String key() {
         return this.key;
     }
 
     @Override
-    public ArgumentType getArgumentType() {
+    public ArgumentType argumentType() {
         return this.argumentType;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class CommandListComposer extends OutgoingPacket {
-    public CommandListComposer(final List<ICommand> commandList,
+    public CommandListComposer(final List<? extends ICommand> commandList,
                                final IInternationalizationManager internationalizationManager,
                                final Locale locale) {
         super(1234);

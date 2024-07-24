@@ -1,6 +1,6 @@
 package utils;
 
-public class StringBuilderHelper {
+public final class StringBuilderHelper {
     private static final ThreadLocal<StringBuilder> stringBuilderLocal = ThreadLocal.withInitial(() -> new StringBuilder(1024));
 
     public static StringBuilder getBuilder() {

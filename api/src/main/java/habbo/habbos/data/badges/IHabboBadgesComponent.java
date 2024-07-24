@@ -14,7 +14,7 @@ public interface IHabboBadgesComponent extends IHabboComponent {
 
     void addBadge(IHabboBadge badge);
 
-    void addBadges(List<IHabboBadge> badge);
+    void addBadges(List<? extends IHabboBadge> badge);
 
     void removeBadge(String badgeCode);
 

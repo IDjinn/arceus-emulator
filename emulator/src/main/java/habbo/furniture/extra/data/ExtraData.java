@@ -4,6 +4,7 @@ import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
 import networking.packets.OutgoingPacket;
 
+@SuppressWarnings("UnnecessaryModifier")
 public abstract class ExtraData implements IExtraData {
     public static transient final int LTD_FLAG = 0xFF00;
     public static transient final int DATA_MASK = 0xFF;
@@ -20,7 +21,7 @@ public abstract class ExtraData implements IExtraData {
 
     @Override
     public void serialize(OutgoingPacket packet) {
-        packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? this.LTD_FLAG : 0));
+        packet.appendInt(this.getExtraDataType().getType() | (this.getLimitedData().isLimited() ? LTD_FLAG : 0));
         this.serializeValue(packet);
         if (this.getLimitedData().isLimited()) {
             packet.appendInt(this.getLimitedData().limitedRare())

@@ -36,7 +36,7 @@ public class NavigatorRoomsProvider implements INavigatorRoomsProvider {
             case "with_friends" -> new ArrayList<>(); // TODO: Implement friends
             case "highest_score" -> rooms.addAll(this.getTopRatedRooms());
             default -> new ArrayList<>();
-        };
+        }
 
         return rooms;
     }

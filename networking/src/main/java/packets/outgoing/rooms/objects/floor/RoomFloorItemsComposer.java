@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class RoomFloorItemsComposer extends OutgoingPacket {
-    public RoomFloorItemsComposer(List<String> owners, Collection<IFloorFloorItem> allItems) {
+    public RoomFloorItemsComposer(List<String> owners, Collection<? extends IFloorFloorItem> allItems) {
         super(OutgoingHeaders.RoomFloorItemsComposer);
         this.appendInt(owners.size());
         for (var i = 0; i < owners.size(); i++) {

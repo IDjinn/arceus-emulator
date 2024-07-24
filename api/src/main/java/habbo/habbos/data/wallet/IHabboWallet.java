@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 
 public interface IHabboWallet extends IHabboComponent {
-    public Map<Integer, IWalletValue> getWalletCurrencies();
+    Map<Integer, IWalletValue> getWalletCurrencies();
 
     @Nullable
-    public IWalletValue getWalletCurrency(int currencyType);
+    IWalletValue getWalletCurrency(int currencyType);
 }

@@ -28,7 +28,7 @@ public class CatalogFactory implements ICatalogFactory {
     }
 
     @Override
-    public ICatalogPage createCatalogPage(IConnectionResult result, List<ICatalogItem> items) throws Exception {
+    public ICatalogPage createCatalogPage(IConnectionResult result, List<? extends ICatalogItem> items) throws Exception {
         var page = new DefaultCatalogPage();
         page.fill(result);
         for (var item : items) {
