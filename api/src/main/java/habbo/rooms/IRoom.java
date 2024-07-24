@@ -32,9 +32,9 @@ public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
 
     void join(IHabbo habbo);
 
-    void broadcastMessage(OutgoingPacket packet);
+    void broadcastMessage(OutgoingPacket<?> packet);
 
-    void broadcastMessages(OutgoingPacket... packets);
+    void broadcastMessages(OutgoingPacket<?>... packets);
 
     IRoomEntityManager getEntityManager();
 

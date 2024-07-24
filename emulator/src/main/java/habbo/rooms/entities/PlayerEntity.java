@@ -37,7 +37,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     }
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(OutgoingPacket<U> packet) {
         packet
                 .appendInt(this.getHabbo().getData().getId())
                 .appendString(this.getHabbo().getData().getUsername())

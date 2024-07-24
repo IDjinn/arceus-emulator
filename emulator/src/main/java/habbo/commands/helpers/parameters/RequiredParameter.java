@@ -19,7 +19,7 @@ public class RequiredParameter implements ICommandParameter {
     }
 
     @Override
-    public void serializeParameter(final OutgoingPacket packet) {
+    public void serializeParameter(final OutgoingPacket<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.parameter.serializeParameter(packet);
     }

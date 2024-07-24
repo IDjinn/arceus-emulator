@@ -97,7 +97,7 @@ public class Variable<T> implements IVariable<T> {
     }
 
     @Override
-    public void serialize(final OutgoingPacket packet) {
+    public void serialize(final OutgoingPacket<U> packet) {
         packet
                 .appendString(this.getKey())
                 .appendString(String.valueOf(this.getValue()))

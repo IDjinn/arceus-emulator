@@ -39,7 +39,7 @@ public class DefaultFloorItem extends RoomItem implements IFloorFloorItem {
     }
 
     @Override
-    public OutgoingPacket serializePosition(OutgoingPacket packet) {
+    public OutgoingPacket<U> serializePosition(OutgoingPacket<U> packet) {
         return packet
                 .appendInt(this.getPosition().getX())
                 .appendInt(this.getPosition().getY())

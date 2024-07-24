@@ -7,7 +7,6 @@ import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.IRoomObject;
 import habbo.rooms.entities.IRoomEntity;
-import networking.packets.OutgoingPacket;
 
 import java.util.Optional;
 
@@ -28,13 +27,6 @@ public interface IRoomItem extends IRoomObject {
 
 
     IExtraData getExtraData();
-
-    /**
-     * write item id and sprite id to packet
-     */
-    void serializeItemIdentity(OutgoingPacket packet);
-
-    OutgoingPacket serializePosition(OutgoingPacket packet);
 
     boolean needSave();
 

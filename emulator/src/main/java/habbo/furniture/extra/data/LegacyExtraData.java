@@ -22,7 +22,7 @@ public class LegacyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket packet) {
+    public void serializeValue(final OutgoingPacket<U> packet) {
         packet.appendString(this.legacyData);
     }
 

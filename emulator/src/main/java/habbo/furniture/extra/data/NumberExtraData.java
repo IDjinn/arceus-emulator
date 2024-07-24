@@ -24,7 +24,7 @@ public class NumberExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket packet) {
+    public void serializeValue(final OutgoingPacket<U> packet) {
         final int additionalKeys = 1;
         packet.appendInt(this.integers.size() + additionalKeys);
         packet.appendInt(this.getState());

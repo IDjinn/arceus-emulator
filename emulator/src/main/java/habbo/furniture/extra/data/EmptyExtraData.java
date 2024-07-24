@@ -16,7 +16,7 @@ public class EmptyExtraData extends ExtraData implements IExtraData {
     }
 
     @Override
-    public void serializeValue(final OutgoingPacket packet) {
+    public void serializeValue(final OutgoingPacket<U> packet) {
         packet.appendString("");
     }
 }

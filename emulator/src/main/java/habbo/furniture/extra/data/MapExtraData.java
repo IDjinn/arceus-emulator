@@ -39,7 +39,7 @@ public class MapExtraData extends ExtraData implements IExtraData {
 
 
     @Override
-    public void serializeValue(OutgoingPacket packet) {
+    public void serializeValue(OutgoingPacket<U> packet) {
         final int additionalKeys = 2;
         packet.appendInt(this.values.size() + additionalKeys);
         for (Map.Entry<String, String> entry : this.values.entrySet()) {

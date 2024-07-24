@@ -1,10 +1,9 @@
 package habbo.catalog.items;
 
 import habbo.furniture.IFurniture;
-import networking.util.ISerializable;
 import utils.interfaces.IFillable;
 
-public interface ICatalogItem extends IFillable, ISerializable {
+public interface ICatalogItem extends IFillable {
 
     int getId();
 

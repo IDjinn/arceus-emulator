@@ -36,7 +36,7 @@ public class HabboNavigatorSearch implements IHabboNavigatorSearch {
         return this.id;
     }
 
-    public void write(OutgoingPacket packet) {
+    public void write(OutgoingPacket<U> packet) {
         HabboNavigatorSearchWriter.write(this, packet);
     }
 

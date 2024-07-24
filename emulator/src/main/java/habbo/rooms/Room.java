@@ -162,7 +162,7 @@ public class Room implements IRoom {
 
 
     @Override
-    public void write(OutgoingPacket packet) {
+    public void write(OutgoingPacket<U> packet) {
         RoomWriter.write(this, packet);
     }
 
@@ -174,6 +174,8 @@ public class Room implements IRoom {
         var entity = this.getEntityManager().createHabboEntity(habbo);
 
         habbo.setPlayerEntity(entity);
+
+        habbo.getClient().sendMessage(RoomScoreComposer.class, 1, 2, 34, 45);
 
         habbo.getClient().sendMessages(
                 new HideDoorbellComposer(),
@@ -201,7 +203,7 @@ public class Room implements IRoom {
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
-                new OutgoingPacket(2402).appendInt(0),
+                new OutgoingPacket<U>(2402).appendInt(0),
                 new CommandListComposer(
                         this.getCommandManager().getCommands().values().stream().toList(),
                         this.internationalizationManager,
@@ -215,14 +217,14 @@ public class Room implements IRoom {
     }
 
     @Override
-    public void broadcastMessage(OutgoingPacket packet) {
+    public void broadcastMessage(OutgoingPacket<U> packet) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
-    public void broadcastMessages(OutgoingPacket... packets) {
+    public void broadcastMessages(OutgoingPacket<U>... packets) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }

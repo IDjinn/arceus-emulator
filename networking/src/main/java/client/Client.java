@@ -20,13 +20,13 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessage(OutgoingPacket packet) {
+    public void sendMessage(OutgoingPacket<U> packet) {
         this.ctx.channel().write(packet);
         this.ctx.channel().flush();
     }
 
     @Override
-    public void sendMessages(List<OutgoingPacket> messages) {
+    public void sendMessages(List<OutgoingPacket<U>> messages) {
         for (var message : messages) {
             this.ctx.channel().write(message);
         }
@@ -35,7 +35,7 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessages(OutgoingPacket... messages) {
+    public void sendMessages(OutgoingPacket<U>... messages) {
         for (var message : messages) {
             this.ctx.channel().write(message);
         }

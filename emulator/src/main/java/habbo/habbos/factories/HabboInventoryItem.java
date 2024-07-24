@@ -116,7 +116,7 @@ public class HabboInventoryItem implements IHabboInventoryItem {
      */
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(OutgoingPacket<U> packet) {
         packet.appendInt(this.id)
                 .appendString(this.furniture.getType().toString())
                 .appendInt(this.id, "_ref")

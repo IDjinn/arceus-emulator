@@ -24,7 +24,7 @@ public record NavigatorResultCategory(
         NavigatorDisplayOrder displayOrder,
         int categoryOrder
 ) implements INavigatorResultCategory, Comparable<NavigatorResultCategory> {
-    public void write(OutgoingPacket packet) {
+    public void write(OutgoingPacket<U> packet) {
         packet.appendString(this.category);
         packet.appendString(this.search);
         packet.appendInt(this.action.get());

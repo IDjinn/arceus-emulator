@@ -180,7 +180,7 @@ public class CatalogItem implements ICatalogItem {
     }
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(OutgoingPacket<U> packet) {
         packet.appendInt(this.getId())
                 .appendString(this.getDisplayName())
                 .appendBoolean(false, "rent") //rent

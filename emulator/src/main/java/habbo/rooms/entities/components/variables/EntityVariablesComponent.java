@@ -34,7 +34,7 @@ public class EntityVariablesComponent extends VariableManager implements habbo.r
     }
 
     @Override
-    public void serialize(final OutgoingPacket packet) {
+    public void serialize(final OutgoingPacket<U> packet) {
         if (!this.configurationManager.getBool("variables.entities.enabled")) {
             packet.appendInt(0);
             return;

@@ -151,7 +151,7 @@ public abstract class CatalogPage implements ICatalogPage {
     }
 
     @Override
-    public OutgoingPacket serializeItems(OutgoingPacket packet, IHabbo habbo) {
+    public OutgoingPacket<U> serializeItems(OutgoingPacket<U> packet, IHabbo habbo) {
         packet.appendInt(this.getItems().size());
         for (var item : this.getItems().values()) {
             item.serialize(packet);
@@ -159,12 +159,12 @@ public abstract class CatalogPage implements ICatalogPage {
         return packet;
     }
 
-    @Override
-    public abstract void serialize(OutgoingPacket packet);
-
-    public void serializeExtra(OutgoingPacket packet) {
+    public void serializeExtra(OutgoingPacket<U> packet) {
 
     }
+
+    @Override
+    public abstract void serialize(OutgoingPacket<U> packet);
 
     @Override
     public boolean isVisible() {

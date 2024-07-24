@@ -88,7 +88,7 @@ public abstract class RoomItem implements IRoomItem {
 
 
     @Override
-    public void serializeItemIdentity(OutgoingPacket packet) {
+    public void serializeItemIdentity(OutgoingPacket<U> packet) {
         packet
                 .appendInt(this.getVirtualId())
                 .appendInt(this.getFurniture().getSpriteId());

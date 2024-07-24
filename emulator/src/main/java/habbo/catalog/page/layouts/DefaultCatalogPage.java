@@ -6,7 +6,7 @@ import networking.packets.OutgoingPacket;
 public class DefaultCatalogPage extends CatalogPage {
 
     @Override
-    public void serialize(OutgoingPacket packet) {
+    public void serialize(OutgoingPacket<U> packet) {
         packet.appendString("default_3x3");
 
         packet.appendInt(this.getImages().size());

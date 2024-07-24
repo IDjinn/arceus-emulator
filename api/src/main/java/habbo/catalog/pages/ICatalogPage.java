@@ -3,14 +3,13 @@ package habbo.catalog.pages;
 import habbo.catalog.items.ICatalogItem;
 import habbo.habbos.IHabbo;
 import networking.packets.OutgoingPacket;
-import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IFillable;
 
 import java.util.List;
 import java.util.Map;
 
-public interface ICatalogPage extends ISerializable, IFillable {
+public interface ICatalogPage extends IFillable {
     int getOfferSize();
 
     int getId();
@@ -51,7 +50,7 @@ public interface ICatalogPage extends ISerializable, IFillable {
 
     List<ICatalogPage> getChildren();
 
-    OutgoingPacket serializeItems(OutgoingPacket packet, IHabbo habbo);
+    OutgoingPacket<U> serializeItems(OutgoingPacket<U> packet, IHabbo habbo);
 
-    void serializeExtra(OutgoingPacket packet);
+    void serializeExtra(OutgoingPacket<U> packet);
 }

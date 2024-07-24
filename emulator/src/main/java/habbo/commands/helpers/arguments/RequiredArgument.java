@@ -16,13 +16,13 @@ public record RequiredArgument(String key, ArgumentType argumentType) implements
     }
 
     @Override
-    public void serializeParameter(final OutgoingPacket packet) {
+    public void serializeParameter(final OutgoingPacket<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.serializeArgument(packet);
     }
 
     @Override
-    public void serializeArgument(final OutgoingPacket packet) {
+    public void serializeArgument(final OutgoingPacket<U> packet) {
         packet.appendString(this.key);
         packet.appendInt(this.argumentType.getCode());
     }

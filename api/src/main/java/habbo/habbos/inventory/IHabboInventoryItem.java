@@ -3,11 +3,10 @@ package habbo.habbos.inventory;
 import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.IHabbo;
-import networking.util.ISerializable;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IFillable;
 
-public interface IHabboInventoryItem extends IFillable, ISerializable {
+public interface IHabboInventoryItem extends IFillable {
     int getId();
 
     IHabbo getHabbo();

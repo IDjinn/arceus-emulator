@@ -7,5 +7,5 @@ public interface ICommandArgument {
 
     ArgumentType argumentType();
 
-    void serializeArgument(final OutgoingPacket packet);
+    void serializeArgument(final OutgoingPacket<U> packet);
 }

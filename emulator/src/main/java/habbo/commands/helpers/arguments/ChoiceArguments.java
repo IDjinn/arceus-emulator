@@ -15,7 +15,7 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeArgument(final OutgoingPacket packet) {
+    public void serializeArgument(final OutgoingPacket<U> packet) {
         packet.appendInt(this.value.size());
         for (final var value : this.value) {
             packet.appendInt(this.argumentType.getCode());
@@ -32,7 +32,7 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeParameter(final OutgoingPacket packet) {
+    public void serializeParameter(final OutgoingPacket<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.serializeArgument(packet);
     }

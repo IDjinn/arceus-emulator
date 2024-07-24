@@ -15,14 +15,14 @@ public class DefaultWallItem extends RoomItem implements IWallItem {
     }
 
     @Override
-    public void serializeItemIdentity(OutgoingPacket packet) {
+    public void serializeItemIdentity(OutgoingPacket<U> packet) {
         packet
                 .appendString(String.valueOf(this.getVirtualId()))
                 .appendInt(this.getFurniture().getSpriteId());
     }
 
     @Override
-    public OutgoingPacket serializePosition(OutgoingPacket packet) {
+    public OutgoingPacket<U> serializePosition(OutgoingPacket<U> packet) {
         return packet.appendString(this.getWallPosition());
     }
 

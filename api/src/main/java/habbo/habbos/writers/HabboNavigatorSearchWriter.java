@@ -6,7 +6,7 @@ import networking.packets.OutgoingPacket;
 public abstract class HabboNavigatorSearchWriter {
     public static void write(
             IHabboNavigatorSearch search,
-            OutgoingPacket packet
+            OutgoingPacket<U> packet
     ) {
         packet.appendInt(search.getId());
         packet.appendString(search.getSearchCode());

@@ -17,7 +17,7 @@ public record MultipleParameters(List<ICommandParameter> choices) implements ICo
     }
 
     @Override
-    public void serializeParameter(final OutgoingPacket packet) {
+    public void serializeParameter(final OutgoingPacket<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         packet.appendInt(this.choices.size());
         for (final var parameter : this.choices) {
