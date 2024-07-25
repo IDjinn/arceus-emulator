@@ -150,21 +150,9 @@ public abstract class CatalogPage implements ICatalogPage {
         this.enabled = result.getString("enabled").equals("1");
     }
 
-    @Override
-    public IOutgoingPacket<U> serializeItems(IOutgoingPacket<U> packet, IHabbo habbo) {
-        packet.appendInt(this.getItems().size());
-        for (var item : this.getItems().values()) {
-            item.serialize(packet);
-        }
-        return packet;
-    }
-
     public void serializeExtra(IOutgoingPacket<U> packet) {
 
     }
-
-    @Override
-    public abstract void serialize(IOutgoingPacket<U> packet);
 
     @Override
     public boolean isVisible() {

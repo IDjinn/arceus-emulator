@@ -16,9 +16,8 @@ import habbo.rooms.data.IRoomModelData;
 import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IDisposable;
-import utils.interfaces.IWriteable;
 
-public interface IRoom extends Comparable<IRoom>, IDisposable, IWriteable {
+public interface IRoom extends Comparable<IRoom>, IDisposable {
     IRoomData getData();
 
     void init();

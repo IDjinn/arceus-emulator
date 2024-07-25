@@ -49,8 +49,4 @@ public interface ICatalogPage extends IFillable {
     int getOrder();
 
     List<ICatalogPage> getChildren();
-
-    IOutgoingPacket<U> serializeItems(IOutgoingPacket<U> packet, IHabbo habbo);
-
-    void serializeExtra(IOutgoingPacket<U> packet);
 }
