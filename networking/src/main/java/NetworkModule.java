@@ -9,7 +9,6 @@ import networking.client.IClientManager;
 import networking.packets.incoming.IIncomingPacketProvider;
 import networking.packets.IPacketManager;
 import networking.packets.IPacketWriter;
-import networking.packets.IncomingEvent;
 import packets.IncomingPacketProvider;
 import packets.PacketManager;
 import packets.PacketWriter;
