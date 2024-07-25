@@ -1,6 +1,7 @@
 package packets.outgoing.rooms.objects.floor;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.room.items.floor.AddFloorItemComposerDTO;
 
-public interface IAddFloorItemComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO>{
+public interface IAddFloorItemComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<AddFloorItemComposerDTO>{
 }
