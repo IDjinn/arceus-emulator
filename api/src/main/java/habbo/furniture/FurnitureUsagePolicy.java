@@ -6,5 +6,4 @@ public enum FurnitureUsagePolicy { // TODO:FURNITURE USAGE
     Everyone,
 
 
-    ;
 }

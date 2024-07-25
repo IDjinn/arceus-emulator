@@ -79,7 +79,7 @@ public class Position3d implements Poolable, Comparable<Position3d> {
     public void setFromPosition(final Position3d position) {
         this.x = position.getX();
         this.y = position.getY();
-        this.z = (float) position.getZ();
+        this.z = position.getZ();
     }
 
     public double distanceTo(Position pos) {

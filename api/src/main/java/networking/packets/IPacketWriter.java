@@ -3,6 +3,10 @@ package networking.packets;
 import habbo.internationalization.LocalizedString;
 import io.netty.buffer.ByteBuf;
 
+import java.util.Collection;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 public interface IPacketWriter {
     IPacketWriter appendRawBytes(byte[] bytes);
 
@@ -35,4 +39,6 @@ public interface IPacketWriter {
     IPacketWriter appendShort(int value);
 
     IPacketWriter appendShort(int value, String debugContext);
+
+    <T> IPacketWriter appendList(Collection<T> values, BiConsumer<IPacketWriter, T> consumer);
 }

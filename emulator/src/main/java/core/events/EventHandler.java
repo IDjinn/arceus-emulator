@@ -196,7 +196,7 @@ public class EventHandler implements IEventHandler {
                     LOGGER.trace("event listener {} changed value of event {} from {} to {}",
                             listener.method.getClass().getName(),
                             event.getClass().getSimpleName(),
-                            oldValue.toString(),
+                            oldValue,
                             event.toString()
                     );
                     continue;

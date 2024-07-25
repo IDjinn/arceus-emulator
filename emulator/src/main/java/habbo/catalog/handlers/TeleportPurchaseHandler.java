@@ -63,7 +63,7 @@ public class TeleportPurchaseHandler implements ICatalogPurchaseHandler {
                 if (result == null)
                     this.logger.error("error while creating teleport link for player {} with items ({}, {})", habbo.getData().getId(),
                             first, second);
-            }, (Integer) first, (Integer) second);
+            }, first, second);
         }
 
         habbo.getClient().sendMessages(
