@@ -81,20 +81,6 @@ public final class EntityStatusComponent implements IEntityStatusComponent {
     }
 
     @Override
-    public void serialize(final IOutgoingPacket<U> packet) {
-        final var entityStatus = StringBuilderHelper.getBuilder().append('/');
-        for (var bucket : this.getStatus().values()) {
-            entityStatus.append(bucket.getStatus().toString());
-            entityStatus.append(' ');
-            if (bucket.getValue() != null)
-                entityStatus.append(bucket.getValue());
-            entityStatus.append('/');
-        }
-
-        packet.appendString(entityStatus.toString());
-    }
-
-    @Override
     public IRoomEntity getEntity() {
         return this.entity;
     }

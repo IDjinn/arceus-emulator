@@ -15,18 +15,6 @@ public class DefaultWallItem extends RoomItem implements IWallItem {
     }
 
     @Override
-    public void serializeItemIdentity(IOutgoingPacket<U> packet) {
-        packet
-                .appendString(String.valueOf(this.getVirtualId()))
-                .appendInt(this.getFurniture().getSpriteId());
-    }
-
-    @Override
-    public IOutgoingPacket<U> serializePosition(IOutgoingPacket<U> packet) {
-        return packet.appendString(this.getWallPosition());
-    }
-
-    @Override
     public void sendUpdate() {
         this.getRoom().broadcastMessage(new WallItemUpdateComposer(this));
         super.setNeedSave(true);
