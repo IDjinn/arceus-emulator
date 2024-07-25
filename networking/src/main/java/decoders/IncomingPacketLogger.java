@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import networking.packets.IIncomingPacket;
+import networking.packets.incoming.IIncomingPacket;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

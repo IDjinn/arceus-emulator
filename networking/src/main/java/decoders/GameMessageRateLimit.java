@@ -2,7 +2,7 @@ package decoders;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import networking.packets.IIncomingPacket;
+import networking.packets.incoming.IIncomingPacket;
 import networking.util.GameNetowrkingAttributes;
 
 import java.util.List;

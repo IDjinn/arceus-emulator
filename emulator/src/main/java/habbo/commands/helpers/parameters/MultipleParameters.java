@@ -1,6 +1,6 @@
 package habbo.commands.helpers.parameters;
 
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ public record MultipleParameters(List<ICommandParameter> choices) implements ICo
     }
 
     @Override
-    public void serializeParameter(final IOutgoingPacket<U> packet) {
+    public void serializeParameter(final IOutgoingDTOSerializer<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         packet.appendInt(this.choices.size());
         for (final var parameter : this.choices) {

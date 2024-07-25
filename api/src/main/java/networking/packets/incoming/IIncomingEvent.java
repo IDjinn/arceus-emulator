@@ -1,4 +1,4 @@
-package networking.packets;
+package networking.packets.incoming;
 
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;

@@ -1,8 +1,6 @@
 package habbo.catalog.pages;
 
 import habbo.catalog.items.ICatalogItem;
-import habbo.habbos.IHabbo;
-import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IFillable;
 

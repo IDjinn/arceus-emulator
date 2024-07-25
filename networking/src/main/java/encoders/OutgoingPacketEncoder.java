@@ -3,9 +3,9 @@ package encoders;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
-public class OutgoingPacketEncoder extends MessageToByteEncoder<IOutgoingPacket<U>> {
+public class OutgoingPacketEncoder extends MessageToByteEncoder<IOutgoingDTOSerializer<U>> {
 
     @Override
     public boolean acceptOutboundMessage(Object msg) throws Exception {
@@ -13,7 +13,7 @@ public class OutgoingPacketEncoder extends MessageToByteEncoder<IOutgoingPacket<
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, IOutgoingPacket<U> message, ByteBuf out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, IOutgoingDTOSerializer<U> message, ByteBuf out) throws Exception {
         var buf = message.getBuffer();
 
         try {

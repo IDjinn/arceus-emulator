@@ -7,7 +7,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import networking.client.IClient;
 import networking.client.IClientManager;
-import networking.packets.IIncomingPacket;
+import networking.packets.incoming.IIncomingPacket;
 import networking.packets.IPacketManager;
 import networking.util.GameNetowrkingAttributes;
 import org.apache.logging.log4j.LogManager;

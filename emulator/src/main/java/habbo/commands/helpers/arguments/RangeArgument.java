@@ -3,7 +3,7 @@ package habbo.commands.helpers.arguments;
 import habbo.commands.ICommandContext;
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -59,7 +59,7 @@ public final class RangeArgument implements ICustomArgument, ICommandParameter {
     }
 
     @Override
-    public void serializeArgument(final IOutgoingPacket<U> packet) {
+    public void serializeArgument(final IOutgoingDTOSerializer<U> packet) {
         packet.appendString(this.key);
         packet.appendInt(this.argumentType.getCode());
         packet.appendInt(this.end);
@@ -72,7 +72,7 @@ public final class RangeArgument implements ICustomArgument, ICommandParameter {
     }
 
     @Override
-    public void serializeParameter(final IOutgoingPacket<U> packet) {
+    public void serializeParameter(final IOutgoingDTOSerializer<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.serializeArgument(packet);
     }

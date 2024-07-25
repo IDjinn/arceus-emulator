@@ -5,7 +5,6 @@ import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
-import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;

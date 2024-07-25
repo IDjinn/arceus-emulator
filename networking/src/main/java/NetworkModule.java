@@ -6,7 +6,7 @@ import decoders.PacketParser;
 import networking.INetworkingManager;
 import networking.client.IClientFactory;
 import networking.client.IClientManager;
-import networking.packets.IIncomingPacketProvider;
+import networking.packets.incoming.IIncomingPacketProvider;
 import networking.packets.IPacketManager;
 import networking.packets.IPacketWriter;
 import networking.packets.IncomingEvent;

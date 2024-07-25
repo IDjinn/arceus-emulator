@@ -4,7 +4,6 @@ import habbo.furniture.IFurniture;
 import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.RoomItem;
-import networking.packets.IOutgoingPacket;
 import packets.outgoing.rooms.objects.wall.WallItemUpdateComposer;
 
 public class DefaultWallItem extends RoomItem implements IWallItem {

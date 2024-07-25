@@ -1,6 +1,6 @@
 package habbo.commands.helpers.parameters;
 
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public class RequiredParameter implements ICommandParameter {
     private final ICommandParameter parameter;
@@ -19,7 +19,7 @@ public class RequiredParameter implements ICommandParameter {
     }
 
     @Override
-    public void serializeParameter(final IOutgoingPacket<U> packet) {
+    public void serializeParameter(final IOutgoingDTOSerializer<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.parameter.serializeParameter(packet);
     }

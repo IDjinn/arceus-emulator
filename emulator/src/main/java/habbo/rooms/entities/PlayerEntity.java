@@ -7,7 +7,7 @@ import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import networking.client.IClient;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.Objects;
 
@@ -37,7 +37,7 @@ public class PlayerEntity extends RoomEntity implements IPlayerEntity {
     }
 
     @Override
-    public void serialize(IOutgoingPacket<U> packet) {
+    public void serialize(IOutgoingDTOSerializer<U> packet) {
         packet
                 .appendInt(this.getHabbo().getData().getId())
                 .appendString(this.getHabbo().getData().getUsername())

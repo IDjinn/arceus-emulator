@@ -13,7 +13,7 @@ import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.components.variables.IRoomVariablesManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IDisposable;
 
@@ -31,9 +31,9 @@ public interface IRoom extends Comparable<IRoom>, IDisposable {
 
     void join(IHabbo habbo);
 
-    void broadcastMessage(IOutgoingPacket<?> packet);
+    void broadcastMessage(IOutgoingDTOSerializer<?> packet);
 
-    void broadcastMessages(IOutgoingPacket<?>... packets);
+    void broadcastMessages(IOutgoingDTOSerializer<?>... packets);
 
     IRoomEntityManager getEntityManager();
 

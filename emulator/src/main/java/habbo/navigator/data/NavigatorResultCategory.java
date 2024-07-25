@@ -6,7 +6,7 @@ import habbo.navigator.enums.NavigatorLayoutDisplay;
 import habbo.navigator.enums.NavigatorListAction;
 import habbo.rooms.IRoom;
 import habbo.rooms.enums.RoomAccessState;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public record NavigatorResultCategory(
         NavigatorDisplayOrder displayOrder,
         int categoryOrder
 ) implements INavigatorResultCategory, Comparable<NavigatorResultCategory> {
-    public void write(IOutgoingPacket<U> packet) {
+    public void write(IOutgoingDTOSerializer<U> packet) {
         packet.appendString(this.category);
         packet.appendString(this.search);
         packet.appendInt(this.action.get());

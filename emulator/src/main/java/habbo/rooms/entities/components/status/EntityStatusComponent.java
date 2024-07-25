@@ -4,9 +4,7 @@ import habbo.rooms.entities.IRoomEntity;
 import habbo.rooms.entities.status.IEntityStatusComponent;
 import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
-import networking.packets.IOutgoingPacket;
 import org.jetbrains.annotations.NotNull;
-import utils.StringBuilderHelper;
 
 import java.util.HashSet;
 import java.util.Map;

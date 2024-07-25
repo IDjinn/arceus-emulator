@@ -1,6 +1,6 @@
 package habbo.habbos.data.navigator;
 
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
@@ -35,7 +35,7 @@ public class HabboNavigatorSearch implements IHabboNavigatorSearch {
         return this.id;
     }
 
-    public void write(IOutgoingPacket<U> packet) {
+    public void write(IOutgoingDTOSerializer<U> packet) {
         packet.appendInt(search.getId());
         packet.appendString(search.getSearchCode());
         packet.appendString(search.getFilter());

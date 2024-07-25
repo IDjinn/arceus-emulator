@@ -5,7 +5,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import networking.packets.IIncomingPacketProvider;
+import networking.packets.incoming.IIncomingPacketProvider;
 
 import java.util.List;
 

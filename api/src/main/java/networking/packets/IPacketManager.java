@@ -2,6 +2,8 @@ package networking.packets;
 
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
+import networking.packets.incoming.IIncomingEvent;
+import networking.packets.incoming.IIncomingPacket;
 
 public interface IPacketManager {
     boolean isParallelParsingEnabled();

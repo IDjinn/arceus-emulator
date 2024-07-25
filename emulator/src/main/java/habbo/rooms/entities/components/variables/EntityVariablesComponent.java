@@ -6,7 +6,7 @@ import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.variables.IVariable;
 import habbo.variables.VariableManager;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 
@@ -34,7 +34,7 @@ public class EntityVariablesComponent extends VariableManager implements habbo.r
     }
 
     @Override
-    public void serialize(final IOutgoingPacket<U> packet) {
+    public void serialize(final IOutgoingDTOSerializer<U> packet) {
         if (!this.configurationManager.getBool("variables.entities.enabled")) {
             packet.appendInt(0);
             return;

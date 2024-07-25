@@ -6,7 +6,7 @@ import core.security.SecurityBreachLevel;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import networking.packets.IIncomingPacket;
+import networking.packets.incoming.IIncomingPacket;
 import networking.util.GameNetowrkingAttributes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

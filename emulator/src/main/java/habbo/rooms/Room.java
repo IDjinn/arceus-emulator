@@ -18,7 +18,7 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,6 @@ import packets.outgoing.rooms.gamemap.RoomHeightMapComposer;
 import packets.outgoing.rooms.gamemap.RoomRelativeMapComposer;
 import packets.outgoing.rooms.objects.floor.RoomFloorItemsComposer;
 import packets.outgoing.rooms.objects.wall.RoomWallItemsComposer;
-import packets.outgoing.rooms.prepare.*;
 import storage.results.IConnectionResult;
 
 import java.util.Map;
@@ -162,7 +161,7 @@ public class Room implements IRoom {
 
 
     @Override
-    public void write(IOutgoingPacket<U> packet) {
+    public void write(IOutgoingDTOSerializer<U> packet) {
         RoomWriter.write(this, packet);
     }
 
@@ -203,7 +202,7 @@ public class Room implements IRoom {
                 new RoomDataComposer(this, habbo, false, true),
                 new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
                 new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
-                new IOutgoingPacket<U>(2402).appendInt(0),
+                new IOutgoingDTOSerializer<U>(2402).appendInt(0),
                 new CommandListComposer(
                         this.getCommandManager().getCommands().values().stream().toList(),
                         this.internationalizationManager,
@@ -217,14 +216,14 @@ public class Room implements IRoom {
     }
 
     @Override
-    public void broadcastMessage(IOutgoingPacket<U> packet) {
+    public void broadcastMessage(IOutgoingDTOSerializer<U> packet) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessage(packet);
         }
     }
 
     @Override
-    public void broadcastMessages(IOutgoingPacket<U>... packets) {
+    public void broadcastMessages(IOutgoingDTOSerializer<U>... packets) {
         for (var player : this.getEntityManager().getPlayers()) {
             player.getClient().sendMessages(packets);
         }

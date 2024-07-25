@@ -4,8 +4,7 @@ import com.google.common.collect.Lists;
 import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.CatalogPageType;
 import habbo.catalog.pages.ICatalogPage;
-import habbo.habbos.IHabbo;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
@@ -150,7 +149,7 @@ public abstract class CatalogPage implements ICatalogPage {
         this.enabled = result.getString("enabled").equals("1");
     }
 
-    public void serializeExtra(IOutgoingPacket<U> packet) {
+    public void serializeExtra(IOutgoingDTOSerializer<U> packet) {
 
     }
 

@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import networking.packets.IIncomingPacket;
-import networking.packets.IIncomingPacketProvider;
+import networking.packets.incoming.IIncomingPacket;
+import networking.packets.incoming.IIncomingPacketProvider;
 
 public class IncomingPacketProvider implements IIncomingPacketProvider {
     @Inject

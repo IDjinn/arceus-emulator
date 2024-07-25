@@ -1,12 +1,12 @@
 package habbo.catalog.page.layouts;
 
 import habbo.catalog.page.CatalogPage;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public class DefaultCatalogPage extends CatalogPage {
 
     @Override
-    public void serialize(IOutgoingPacket<U> packet) {
+    public void serialize(IOutgoingDTOSerializer<U> packet) {
         packet.appendString("default_3x3");
 
         packet.appendInt(this.getImages().size());

@@ -2,7 +2,7 @@ package habbo.commands.helpers.arguments;
 
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
-import networking.packets.IOutgoingPacket;
+import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public record RequiredArgument(String key, ArgumentType argumentType) implements ICommandParameter, ICommandArgument {
 
@@ -16,13 +16,13 @@ public record RequiredArgument(String key, ArgumentType argumentType) implements
     }
 
     @Override
-    public void serializeParameter(final IOutgoingPacket<U> packet) {
+    public void serializeParameter(final IOutgoingDTOSerializer<U> packet) {
         packet.appendInt(this.getParameterType().getCode());
         this.serializeArgument(packet);
     }
 
     @Override
-    public void serializeArgument(final IOutgoingPacket<U> packet) {
+    public void serializeArgument(final IOutgoingDTOSerializer<U> packet) {
         packet.appendString(this.key);
         packet.appendInt(this.argumentType.getCode());
     }
