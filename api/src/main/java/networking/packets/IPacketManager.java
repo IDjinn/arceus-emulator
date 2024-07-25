@@ -8,7 +8,7 @@ public interface IPacketManager {
 
     boolean isLoggingEnabled();
 
-    void registerIncoming(IncomingEvent incomingEvent);
+    void registerIncoming(IIncomingEvent IIncomingEvent);
 
     String getIncomingEventName(int headerId);
 

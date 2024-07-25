@@ -35,7 +35,6 @@ import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import packets.AutoBindIncomingEventsModule;
 import repositories.RepositoryModule;
 
 
@@ -61,7 +60,6 @@ public class Emulator extends AbstractModule implements IEmulator {
         var injector = Guice.createInjector(
                 new Emulator(),
                 new RepositoryModule(),
-                new AutoBindIncomingEventsModule(),
                 new NetworkModule(),
                 new RoomModule(),
                 new ConnectionModule(),

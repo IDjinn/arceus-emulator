@@ -8,9 +8,9 @@ import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
 import networking.client.IClientManager;
+import networking.packets.IIncomingEvent;
 import networking.packets.IIncomingPacket;
 import networking.packets.IPacketManager;
-import networking.packets.IncomingEvent;
 import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,34 +30,34 @@ public class PacketManager implements IPacketManager {
     private final IConfigurationManager configuration;
     private final IThreadManager threadManager;
 
-    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<>();
-    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<>();
+    private final HashMap<Integer, IIncomingEvent> incomingEvents = new HashMap<>();
+    private final HashMap<Integer, IIncomingEvent> guestEvents = new HashMap<>();
 
     @Inject
-    public PacketManager(IClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
+    public PacketManager(IClientManager clientManager, List<Class<? extends IIncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
         this.clientManager = clientManager;
         this.configuration = configuration;
         this.threadManager = threadManager;
 
-        for (Class<? extends IncomingEvent> incoming : incomings) {
+        for (Class<? extends IIncomingEvent> incoming : incomings) {
             if (incoming.isAnnotationPresent(NoAuth.class))
                 this.registerGuestEvent(injector.getProvider(incoming).get());
             else this.internalRegisterIncoming(injector.getProvider(incoming).get());
         }
     }
 
-    private void internalRegisterIncoming(IncomingEvent incomingEvent) {
-        this.incomingEvents.put(incomingEvent.getHeaderId(), incomingEvent);
+    private void internalRegisterIncoming(IIncomingEvent IIncomingEvent) {
+        this.incomingEvents.put(IIncomingEvent.getHeaderId(), IIncomingEvent);
     }
 
     @Override
-    public void registerIncoming(IncomingEvent incomingEvent) {
-        this.logger.debug(STR."register incoming \{incomingEvent.getClass().getSimpleName()} with header id \{incomingEvent.getHeaderId()} from \{ReflectionHelpers.getCallerInfo()}");
-        this.internalRegisterIncoming(incomingEvent);
+    public void registerIncoming(IIncomingEvent IIncomingEvent) {
+        this.logger.debug(STR."register incoming \{IIncomingEvent.getClass().getSimpleName()} with header id \{IIncomingEvent.getHeaderId()} from \{ReflectionHelpers.getCallerInfo()}");
+        this.internalRegisterIncoming(IIncomingEvent);
     }
 
 
-    private void registerGuestEvent(IncomingEvent event) {
+    private void registerGuestEvent(IIncomingEvent event) {
         this.guestEvents.put(event.getHeaderId(), event);
     }
 
