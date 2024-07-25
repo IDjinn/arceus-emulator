@@ -1,6 +1,7 @@
 package packets.outgoing.navigator;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.navigator.CanCreateRoomComposerDTO;
 
-public interface ICanCreateRoomComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO> {
+public interface ICanCreateRoomComposer extends IOutgoingEvent<CanCreateRoomComposerDTO> {
 }

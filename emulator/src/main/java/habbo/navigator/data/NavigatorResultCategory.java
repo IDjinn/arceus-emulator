@@ -6,7 +6,6 @@ import habbo.navigator.enums.NavigatorLayoutDisplay;
 import habbo.navigator.enums.NavigatorListAction;
 import habbo.rooms.IRoom;
 import habbo.rooms.enums.RoomAccessState;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

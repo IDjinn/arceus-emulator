@@ -1,7 +1,7 @@
 package packets.outgoing.navigator;
 
-import habbo.habbos.data.navigator.IHabboNavigatorWindowSettings;
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.navigator.NewNavigatorSettingsComposerDTO;
 
-public interface INewNavigatorSettingsComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<IHabboNavigatorWindowSettings> {
+public interface INewNavigatorSettingsComposer extends IOutgoingEvent<NewNavigatorSettingsComposerDTO> {
 }

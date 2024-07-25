@@ -1,8 +1,7 @@
 package packets.outgoing.achievements;
 
-import networking.packets.IPacketDTO;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.achievemetns.AchievementListComposerDTO;
 
-public interface IAchievementListComposer extends IOutgoingEvent, IOutgoingDTOSerializer<IPacketDTO> {
+public interface IAchievementListComposer extends IOutgoingEvent<AchievementListComposerDTO> {
 }

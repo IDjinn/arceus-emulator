@@ -1,5 +1,9 @@
 package networking.packets.outgoing;
 
-public interface IOutgoingEvent {
+import networking.packets.IPacketDTO;
+import networking.packets.IPacketWriter;
+
+public interface IOutgoingEvent <DTO extends IPacketDTO> {
     int getHeaderId();
+    void compose(final IPacketWriter writer, final DTO dto);
 }

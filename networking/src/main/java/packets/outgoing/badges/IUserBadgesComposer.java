@@ -1,9 +1,7 @@
 package packets.outgoing.badges;
 
-import networking.packets.IPacketDTO;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import networking.packets.outgoing.IOutgoingEvent;
-import packets.dto.outgoing.badges.UserBadgesDTO;
+import packets.dto.outgoing.badges.UserBadgesComposerDTO;
 
-public interface IUserBadgesComposer extends IOutgoingEvent, IOutgoingDTOSerializer<UserBadgesDTO> {
+public interface IUserBadgesComposer extends IOutgoingEvent<UserBadgesComposerDTO> {
 }

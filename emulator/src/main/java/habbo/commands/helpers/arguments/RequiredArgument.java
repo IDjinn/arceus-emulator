@@ -2,7 +2,6 @@ package habbo.commands.helpers.arguments;
 
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public record RequiredArgument(String key, ArgumentType argumentType) implements ICommandParameter, ICommandArgument {
 

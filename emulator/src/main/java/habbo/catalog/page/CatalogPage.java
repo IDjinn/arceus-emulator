@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.CatalogPageType;
 import habbo.catalog.pages.ICatalogPage;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 

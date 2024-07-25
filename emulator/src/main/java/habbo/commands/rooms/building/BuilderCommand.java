@@ -8,7 +8,7 @@ import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.variables.Variable;
 import org.jetbrains.annotations.NotNull;
-import packets.outgoing.rooms.prepare.RoomRightsComposer;
+import packets.outgoing.rooms.session.RoomRightsComposer;
 
 import java.util.Optional;
 

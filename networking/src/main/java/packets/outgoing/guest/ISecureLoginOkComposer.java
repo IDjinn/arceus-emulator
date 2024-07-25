@@ -1,6 +1,7 @@
 package packets.outgoing.guest;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.guest.SecureLoginOkComposerDTO;
 
-public interface ISecureLoginOkComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO> {
+public interface ISecureLoginOkComposer extends IOutgoingEvent<SecureLoginOkComposerDTO> {
 }

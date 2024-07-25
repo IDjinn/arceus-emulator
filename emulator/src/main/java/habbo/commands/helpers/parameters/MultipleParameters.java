@@ -1,7 +1,5 @@
 package habbo.commands.helpers.parameters;
 
-import networking.packets.outgoing.IOutgoingDTOSerializer;
-
 import java.util.Arrays;
 import java.util.List;
 

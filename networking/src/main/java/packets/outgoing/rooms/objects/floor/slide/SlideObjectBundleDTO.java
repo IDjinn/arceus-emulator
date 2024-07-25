@@ -1,11 +1,12 @@
 package packets.outgoing.rooms.objects.floor.slide;
 
+import networking.packets.IPacketDTO;
 import utils.pathfinder.Position;
 
 import java.util.Collection;
 import java.util.Objects;
 
-public class SlideObjectBundleDTO {
+public class SlideObjectBundleDTO implements IPacketDTO {
     private final Position oldPosition;
     private final Position newPosition;
     private final Collection<SlideObjectEntry> objects;

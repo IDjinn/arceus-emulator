@@ -7,7 +7,6 @@ import habbo.rooms.entities.status.RoomEntityStatus;
 import habbo.rooms.entities.status.StatusBucket;
 import habbo.rooms.entities.variables.IEntityVariablesComponent;
 import networking.client.IClient;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.Objects;
 

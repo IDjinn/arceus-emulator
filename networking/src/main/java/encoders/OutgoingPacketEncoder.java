@@ -3,7 +3,6 @@ package encoders;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public class OutgoingPacketEncoder extends MessageToByteEncoder<IOutgoingDTOSerializer<U>> {
 

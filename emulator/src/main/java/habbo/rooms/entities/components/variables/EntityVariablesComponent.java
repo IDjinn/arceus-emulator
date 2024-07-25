@@ -6,7 +6,6 @@ import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.variables.IVariable;
 import habbo.variables.VariableManager;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.NotNull;
 import packets.outgoing.rooms.entities.variables.EntityVariablesComposer;
 

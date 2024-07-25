@@ -1,6 +1,5 @@
 package habbo.habbos.data.navigator;
 
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;

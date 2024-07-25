@@ -1,6 +1,7 @@
 package packets.outgoing.session.buildersclub;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.session.buildersclub.BuildersClubExpiredComposerDTO;
 
-public interface IBuildersClubExpiredComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO>{
+public interface IBuildersClubExpiredComposer extends IOutgoingEvent<BuildersClubExpiredComposerDTO> {
 }

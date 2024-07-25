@@ -1,6 +1,7 @@
 package packets.outgoing.rooms.gamemap;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.room.gamemap.RoomRelativeMapComposerDTO;
 
-public interface IRoomRelativeMapComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO>{
+public interface IRoomRelativeMapComposer extends IOutgoingEvent<RoomRelativeMapComposerDTO> {
 }

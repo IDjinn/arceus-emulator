@@ -1,6 +1,7 @@
 package packets.outgoing.rooms.gamemap;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.room.gamemap.UpdateStackHeightComposerDTO;
 
-public interface IUpdateStackHeightComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO>{
+public interface IUpdateStackHeightComposer extends IOutgoingEvent<UpdateStackHeightComposerDTO> {
 }

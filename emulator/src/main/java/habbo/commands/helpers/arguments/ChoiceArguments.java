@@ -3,7 +3,6 @@ package habbo.commands.helpers.arguments;
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
 import habbo.internationalization.LocalizedString;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.List;
 

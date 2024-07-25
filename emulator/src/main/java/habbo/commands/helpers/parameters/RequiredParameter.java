@@ -1,7 +1,5 @@
 package habbo.commands.helpers.parameters;
 
-import networking.packets.outgoing.IOutgoingDTOSerializer;
-
 public class RequiredParameter implements ICommandParameter {
     private final ICommandParameter parameter;
 

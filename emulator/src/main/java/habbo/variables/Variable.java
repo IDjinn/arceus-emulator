@@ -1,6 +1,5 @@
 package habbo.variables;
 
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -4,5 +4,5 @@ import networking.packets.IPacketDTO;
 
 import java.util.Map;
 
-public record UserBadgesDTO(int userId, Map<Integer, String> badges) implements IPacketDTO {
+public record UserBadgesComposerDTO(int userId, Map<Integer, String> badges) implements IPacketDTO {
 }

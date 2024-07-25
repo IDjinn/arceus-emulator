@@ -1,7 +1,6 @@
 package habbo.catalog.page.layouts;
 
 import habbo.catalog.page.CatalogPage;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 public class DefaultCatalogPage extends CatalogPage {
 

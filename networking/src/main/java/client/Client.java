@@ -3,7 +3,6 @@ package client;
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 
 import java.util.List;
 

@@ -18,7 +18,6 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;

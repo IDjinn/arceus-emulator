@@ -13,7 +13,6 @@ import habbo.rooms.components.rights.IRoomRightsManager;
 import habbo.rooms.components.variables.IRoomVariablesManager;
 import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
-import networking.packets.outgoing.IOutgoingDTOSerializer;
 import org.jetbrains.annotations.Nullable;
 import utils.interfaces.IDisposable;
 

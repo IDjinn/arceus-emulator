@@ -4,5 +4,5 @@ import networking.packets.IPacketDTO;
 
 import java.util.List;
 
-public record AddHabboItemComposerDTO(AddHabboItemCategory category, List<Integer> itemIds) implements IPacketDTO {
+public record AddHabboItemComposerDTO(AddHabboItemCategoryComposerDTO category, List<Integer> itemIds) implements IPacketDTO {
 }
