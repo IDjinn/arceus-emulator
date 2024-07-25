@@ -1,6 +1,7 @@
 package packets.outgoing.inventory;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.inventory.AddHabboItemComposerDTO;
 
-public interface IAddHabboItemComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO> {
+public interface IAddHabboItemComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<AddHabboItemComposerDTO> {
 }

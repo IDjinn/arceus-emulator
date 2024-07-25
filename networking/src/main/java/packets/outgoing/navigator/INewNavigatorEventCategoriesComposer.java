@@ -1,6 +1,7 @@
 package packets.outgoing.navigator;
 
 import networking.packets.outgoing.IOutgoingEvent;
+import packets.dto.outgoing.navigator.NewNavigatorEventCategoriesComposerDTO;
 
-public interface INewNavigatorEventCategoriesComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<networking.packets.IPacketDTO> {
+public interface INewNavigatorEventCategoriesComposer extends IOutgoingEvent, networking.packets.outgoing.IOutgoingDTOSerializer<NewNavigatorEventCategoriesComposerDTO> {
 }
