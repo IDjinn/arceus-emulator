@@ -3,6 +3,8 @@ package client;
 import habbo.habbos.IHabbo;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
+import networking.packets.IPacketDTO;
+import networking.packets.outgoing.IOutgoingEvent;
 
 import java.util.List;
 
@@ -19,26 +21,23 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessage(IOutgoingDTOSerializer<U> packet) {
-        this.ctx.channel().write(packet);
+    public void sendMessage(IPacketDTO payload) {
+        this.ctx.channel().write(payload);
+    }
+
+    @Override
+    public void sendMessages(List<IPacketDTO> payloads) {
+        for (final var payload : payloads) {
+            this.ctx.channel().write(payload);
+        }
         this.ctx.channel().flush();
     }
 
     @Override
-    public void sendMessages(List<IOutgoingDTOSerializer<U>> messages) {
-        for (var message : messages) {
-            this.ctx.channel().write(message);
+    public void sendMessages(IPacketDTO... payloads) {
+        for (final var payload : payloads) {
+            this.ctx.channel().write(payload);
         }
-
-        this.ctx.channel().flush();
-    }
-
-    @Override
-    public void sendMessages(IOutgoingDTOSerializer<U>... messages) {
-        for (var message : messages) {
-            this.ctx.channel().write(message);
-        }
-
         this.ctx.channel().flush();
     }
 

@@ -9,6 +9,10 @@ import habbo.habbos.factories.IHabboInventoryItemFactory;
 import habbo.rooms.components.objects.items.LimitedData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import packets.dto.outgoing.catalog.CatalogPurchaseOkComposerDTO;
+import packets.dto.outgoing.inventory.AddHabboItemCategory;
+import packets.dto.outgoing.inventory.AddHabboItemComposerDTO;
+import packets.dto.outgoing.inventory.InventoryRefreshComposerDTO;
 import packets.outgoing.catalog.PurchaseOkComposer;
 import packets.outgoing.inventory.AddHabboItemCategory;
 import packets.outgoing.inventory.AddHabboItemComposer;
@@ -67,9 +71,9 @@ public class TeleportPurchaseHandler implements ICatalogPurchaseHandler {
         }
 
         habbo.getClient().sendMessages(
-                new AddHabboItemComposer(AddHabboItemCategory.OwnedFurni, unseen),
-                new PurchaseOkComposer(item),
-                new InventoryRefreshComposer()
+                AddHabboItemComposerDTO.of(AddHabboItemCategory.OwnedFurni, unseen),
+                CatalogPurchaseOkComposerDTO.of(item),
+                InventoryRefreshComposerDTO.of()
         );
         return true;
     }

@@ -1,6 +1,6 @@
 package packets.dto.outgoing.inventory;
 
-public enum AddHabboItemCategoryComposerDTO {
+public enum AddHabboItemCategory {
     Unknown(0),
     OwnedFurni(1),
     RentedFurni(2),
@@ -13,7 +13,7 @@ public enum AddHabboItemCategoryComposerDTO {
 
     private final int id;
 
-    AddHabboItemCategoryComposerDTO(int id) {
+    AddHabboItemCategory(int id) {
         this.id = id;
     }
 

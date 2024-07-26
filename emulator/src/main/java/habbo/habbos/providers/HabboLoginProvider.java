@@ -9,20 +9,16 @@ import networking.client.IClient;
 import networking.client.IClientFactory;
 import networking.client.IClientManager;
 import networking.util.GameNetowrkingAttributes;
-import packets.outgoing.PingComposer;
-import packets.outgoing.guest.SecureLoginOkComposer;
-import packets.outgoing.inventory.InventoryAchievementsComposer;
-import packets.outgoing.inventory.InventoryRefreshComposer;
-import packets.outgoing.session.CfhTopicsMessageComposer;
-import packets.outgoing.session.MysteryBoxKeysComposer;
-import packets.outgoing.session.buildersclub.BuildersClubExpiredComposer;
-import packets.outgoing.session.calendar.AdventCalendarDataComposer;
-import packets.outgoing.session.habboclub.UserClubComposer;
-import packets.outgoing.session.hotel.AvailabilityStatusMessageComposer;
-import packets.outgoing.session.logindata.*;
-import packets.outgoing.session.rooms.FavoriteRoomsCountComposer;
-import packets.outgoing.session.rooms.UserHomeRoomComposer;
-import packets.outgoing.session.wardobe.UserClothesComposer;
+import packets.dto.outgoing.guest.SecureLoginOkComposerDTO;
+import packets.dto.outgoing.inventory.InventoryAchievementsComposerDTO;
+import packets.dto.outgoing.inventory.InventoryRefreshComposerDTO;
+import packets.dto.outgoing.session.PingComposerDTO;
+import packets.dto.outgoing.session.buildersclub.BuildersClubExpiredComposerDTO;
+import packets.dto.outgoing.session.calendar.AdventCalendarDataComposerDTO;
+import packets.dto.outgoing.session.habboclub.UserClubComposerDTO;
+import packets.dto.outgoing.session.hotel.AvailabilityStatusMessageComposerDTO;
+import packets.dto.outgoing.session.logindata.*;
+import packets.dto.outgoing.session.wardobe.UserClothesComposerDTO;
 import storage.repositories.habbo.IHabboRepository;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -85,24 +81,26 @@ public class HabboLoginProvider implements ILoginProvider {
     }
 
     private void sendLoginPackets(IClient client) {
-        client.sendMessages(new SecureLoginOkComposer()
-                , new UserEffectsListComposer()
-                , new UserClothesComposer()
-                , new NewUserIdentityComposer()
-                , new UserPermissionsComposer()
-                , new AvailabilityStatusMessageComposer()
-                , new PingComposer()
-                , new EnableNotificationsComposer()
-                , new UserAchievementScoreComposer()
-                , new IsFirstLoginOfDayComposer()
-                , new MysteryBoxKeysComposer()
-                , new BuildersClubExpiredComposer()
-                , new CfhTopicsMessageComposer()
-                , new FavoriteRoomsCountComposer()
-                , new AdventCalendarDataComposer()
-                , new UserClubComposer()
-                , new InventoryRefreshComposer()
-                , new InventoryAchievementsComposer()
-                , new UserHomeRoomComposer(0, 0));
+        client.sendMessages(
+                new SecureLoginOkComposerDTO()
+                , new UserEffectsListComposerDTO()
+                , new UserClothesComposerDTO()
+                , new NewUserIdentityComposerDTO()
+                , new UserPermissionsComposerDTO()
+                , new AvailabilityStatusMessageComposerDTO()
+                , new PingComposerDTO()
+                , new EnableNotificationsComposerDTO()
+                , new UserAchievementScoreComposerDTO()
+                , new IsFirstLoginOfDayComposerDTO()
+//                , new MysteryBoxKeysComposerDTO()
+                , new BuildersClubExpiredComposerDTO()
+//                , new CfhTopicsMessageComposerDTO()
+//                , new FavoriteRoomsCountComposerDTO()
+                , new AdventCalendarDataComposerDTO()
+                , new UserClubComposerDTO()
+                , new InventoryRefreshComposerDTO()
+                , new InventoryAchievementsComposerDTO()
+//                , new UserHomeRoomComposerDTO(0, 0)
+        );
     }
 }
