@@ -6,6 +6,7 @@ import networking.client.IClient;
 import networking.packets.IPacketDTO;
 import networking.packets.outgoing.IOutgoingEvent;
 
+import java.util.Collection;
 import java.util.List;
 
 public class Client implements IClient {
@@ -26,7 +27,7 @@ public class Client implements IClient {
     }
 
     @Override
-    public void sendMessages(List<IPacketDTO> payloads) {
+    public void sendMessages(Collection<IPacketDTO> payloads) {
         for (final var payload : payloads) {
             this.ctx.channel().write(payload);
         }

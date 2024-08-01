@@ -5,5 +5,5 @@ import networking.packets.IPacketWriter;
 
 public interface IOutgoingEvent <DTO extends IPacketDTO> {
     int getHeaderId();
-    void compose(final IPacketWriter writer, final DTO dto);
+    void encode(final IPacketWriter writer, final DTO dto);
 }

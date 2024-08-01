@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.function.BiConsumer;
 
 public class PacketWriter implements IPacketWriter {
     private static final String STRING_EMPTY = "";
@@ -19,6 +21,11 @@ public class PacketWriter implements IPacketWriter {
 
     public PacketWriter() {
         this.channelBuffer = Unpooled.buffer();
+        this.stream = new ByteBufOutputStream(this.channelBuffer);
+    }
+
+    public PacketWriter(ByteBuf buffer) {
+        this.channelBuffer = buffer;
         this.stream = new ByteBufOutputStream(this.channelBuffer);
     }
 
@@ -144,6 +151,13 @@ public class PacketWriter implements IPacketWriter {
         } catch (IOException e) {
             LOGGER.error(e.getLocalizedMessage(), e);
         }
+        return this;
+    }
+
+    @Override
+    public <T> IPacketWriter appendList(Collection<T> values, BiConsumer<IPacketWriter, T> consumer) {
+        this.appendInt(values.size());
+        values.forEach(value -> consumer.accept(this, value));
         return this;
     }
 }

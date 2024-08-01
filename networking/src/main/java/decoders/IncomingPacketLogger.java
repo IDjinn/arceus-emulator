@@ -19,6 +19,8 @@ public class IncomingPacketLogger extends MessageToMessageDecoder<IIncomingPacke
     private static final Logger logger = LogManager.getLogger();
     @Override
     protected void decode(ChannelHandlerContext ctx, IIncomingPacket packet, List<Object> out) {
+        if (!this.packetManager.isLoggingEnabled()) return;
+        
         try {
             logger.debug("[-> incoming] {} packet {} [{}]",
                     packet.getHeader(),

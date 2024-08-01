@@ -8,9 +8,11 @@ import core.configuration.IConfigurationManager;
 import io.netty.channel.ChannelHandlerContext;
 import networking.client.IClient;
 import networking.client.IClientManager;
+import networking.packets.IPacketDTO;
 import networking.packets.incoming.IIncomingEvent;
 import networking.packets.incoming.IIncomingPacket;
 import networking.packets.IPacketManager;
+import networking.packets.outgoing.IOutgoingEvent;
 import networking.util.NoAuth;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +21,7 @@ import utils.ReflectionHelpers;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -115,5 +118,10 @@ public class PacketManager implements IPacketManager {
             this.clientManager.disconnectGuest(ctx);
             this.logger.error(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Optional<IOutgoingEvent<IPacketDTO>> getOugoingFromDTOClazz(Class<? extends IPacketDTO> clazz) {
+        return Optional.empty();
     }
 }

@@ -3,7 +3,6 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import decoders.*;
 import encoders.OutgoingPacketEncoder;
-import encoders.OutgoingPacketLogger;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
@@ -23,8 +22,6 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
     private final WebSocketServerProtocolConfig config;
 
     @Inject private IncomingPacketLogger incomingPacketLogger;
-    @Inject
-    private OutgoingPacketLogger outgoingPacketLogger;
     @Inject
     private PacketParser packetParser;
     @Inject
@@ -63,16 +60,11 @@ public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel>
         this.injector.injectMembers(byteDecoder);
         ch.pipeline().addLast(byteDecoder);
 
-        if (this.packetManager.isLoggingEnabled()) {
-            ch.pipeline().addLast(this.incomingPacketLogger);
-        }
+        ch.pipeline().addLast(this.incomingPacketLogger);
 
         ch.pipeline().addLast(this.packetParser);
         
         ch.pipeline().addLast(new OutgoingPacketEncoder());
-        if (this.packetManager.isLoggingEnabled()) {
-            ch.pipeline().addLast(this.outgoingPacketLogger);
-        }
     }
 
     public boolean isSSL() {

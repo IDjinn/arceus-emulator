@@ -6,12 +6,14 @@ import decoders.PacketParser;
 import networking.INetworkingManager;
 import networking.client.IClientFactory;
 import networking.client.IClientManager;
+import networking.packets.IPacketWriterFactory;
 import networking.packets.incoming.IIncomingPacketProvider;
 import networking.packets.IPacketManager;
 import networking.packets.IPacketWriter;
 import packets.IncomingPacketProvider;
 import packets.PacketManager;
 import packets.PacketWriter;
+import packets.PacketWriterFactory;
 
 public class NetworkModule extends AbstractModule {
     @Override
@@ -24,5 +26,6 @@ public class NetworkModule extends AbstractModule {
         this.bind(PacketParser.class);
         this.bind(IPacketWriter.class).to(PacketWriter.class);
         this.bind(IIncomingPacketProvider.class).to(IncomingPacketProvider.class);
+        this.bind(IPacketWriterFactory.class).to(PacketWriterFactory.class);
     }
 }

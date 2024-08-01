@@ -22,6 +22,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import packets.dto.outgoing.room.data.*;
+import packets.dto.outgoing.room.gamemap.RoomHeightMapComposerDTO;
+import packets.dto.outgoing.room.gamemap.RoomRelativeMapComposerDTO;
+import packets.dto.outgoing.room.items.floor.RoomFloorItemsComposerDTO;
+import packets.dto.outgoing.room.items.wall.RoomWallItemsComposerDTO;
+import packets.dto.outgoing.room.session.HideDoorbellComposerDTO;
+import packets.dto.outgoing.room.session.RoomOpenComposerDTO;
 import packets.outgoing.rooms.entities.RoomEntitiesComposer;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
 import packets.outgoing.rooms.entities.chat.CommandListComposer;
@@ -173,44 +180,42 @@ public class Room implements IRoom {
 
         habbo.setPlayerEntity(entity);
 
-        habbo.getClient().sendMessage(RoomScoreComposer.class, 1, 2, 34, 45);
-
         habbo.getClient().sendMessages(
-                new HideDoorbellComposer(),
-                new RoomOpenComposer(),
-                new RoomDataComposer(this, habbo, false, true),
-                new RoomModelComposer(this.getData().getModelName(), this.getData().getId()),
-                new RoomPaintComposer("landscape", "0.0"),
-                new RoomRightsComposer(this.getRightsManager().getRightLevelFor(habbo)),
-                new RoomScoreComposer(0, true),
-                new RoomPromotionMessageComposer(),
-                new RoomRelativeMapComposer(this.getGameMap()),
-                new RoomHeightMapComposer(this.getGameMap()),
-                new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
-                new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems())
+                new HideDoorbellComposerDTO(),
+                new RoomOpenComposerDTO(),
+                new RoomDataComposerDTO(this, habbo, false, true),
+                new RoomModelComposerDTO(this.getData().getModelName(), this.getData().getId()),
+                new RoomPaintComposerDTO("landscape", "0.0"),
+                new RoomRightsComposerDTO(this.getRightsManager().getRightLevelFor(habbo)),
+                new RoomScoreComposerDTO(0, true),
+                new RoomPromotionMessageComposerDTO(),
+                new RoomRelativeMapComposerDTO(this.getGameMap()),
+                new RoomHeightMapComposerDTO(this.getGameMap()),
+                new RoomFloorItemsComposerDTO(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
+                new RoomWallItemsComposerDTO(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems())
         );
     }
 
     @Override
     public void join(IHabbo habbo) {
         habbo.getClient().sendMessages(
-                new RoomOpenComposer(),
-                new HideDoorbellComposer(),
-                new RoomRelativeMapComposer(this.getGameMap()),
-                new RoomHeightMapComposer(this.getGameMap()),
-                new RoomDataComposer(this, habbo, false, true),
-                new RoomFloorItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
-                new RoomWallItemsComposer(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
+                new RoomOpenComposerDTO(),
+                new HideDoorbellComposerDTO(),
+                new RoomRelativeMapComposerDTO(this.getGameMap()),
+                new RoomHeightMapComposerDTO(this.getGameMap()),
+                new RoomDataComposerDTO(this, habbo, false, true),
+                new RoomFloorItemsComposerDTO(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllFloorItems()),
+                new RoomWallItemsComposerDTO(this.getObjectManager().getFurnitureOwners(), this.getObjectManager().getAllWallItems()),
                 new IOutgoingDTOSerializer<U>(2402).appendInt(0),
-                new CommandListComposer(
+                new CommandListComposerDTO(
                         this.getCommandManager().getCommands().values().stream().toList(),
                         this.internationalizationManager,
                         habbo.getData().getLocale()
                 )
         );
         this.broadcastMessages(
-                new RoomEntitiesComposer(this.getEntityManager().getEntities()),
-                new RoomUserStatusComposer(this.getEntityManager().getEntities())
+                new RoomEntitiesComposerDTO(this.getEntityManager().getEntities()),
+                new RoomUserStatusComposerDTO(this.getEntityManager().getEntities())
         );
     }
 
