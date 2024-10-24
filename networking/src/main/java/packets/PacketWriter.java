@@ -160,4 +160,9 @@ public class PacketWriter implements IPacketWriter {
         values.forEach(value -> consumer.accept(this, value));
         return this;
     }
+
+    @Override
+    public <T> IPacketWriter serialize(T value) {
+        return null;
+    }
 }

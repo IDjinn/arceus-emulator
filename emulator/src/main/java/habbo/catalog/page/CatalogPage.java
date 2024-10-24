@@ -148,10 +148,6 @@ public abstract class CatalogPage implements ICatalogPage {
         this.enabled = result.getString("enabled").equals("1");
     }
 
-    public void serializeExtra(IOutgoingDTOSerializer<U> packet) {
-
-    }
-
     @Override
     public boolean isVisible() {
         return this.visible;

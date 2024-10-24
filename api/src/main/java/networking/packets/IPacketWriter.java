@@ -41,4 +41,6 @@ public interface IPacketWriter {
     IPacketWriter appendShort(int value, String debugContext);
 
     <T> IPacketWriter appendList(Collection<T> values, BiConsumer<IPacketWriter, T> consumer);
+    
+    <T> IPacketWriter serialize(T value);
 }

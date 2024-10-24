@@ -3,6 +3,8 @@ package habbo.commands.helpers.arguments;
 import habbo.commands.helpers.parameters.CommandParameterType;
 import habbo.commands.helpers.parameters.ICommandParameter;
 import habbo.internationalization.LocalizedString;
+import networking.packets.IPacketSerializer;
+import networking.packets.IPacketWriter;
 
 import java.util.List;
 
@@ -14,14 +16,14 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeArgument(final IOutgoingDTOSerializer<U> packet) {
-        packet.appendInt(this.value.size());
+    public void serializeArgument(final IPacketWriter writer) {
+        writer.appendInt(this.value.size());
         for (final var value : this.value) {
-            packet.appendInt(this.argumentType.getCode());
+            writer.appendInt(this.argumentType.getCode());
             if (value instanceof LocalizedString localizedString)
-                packet.appendString(localizedString.toString());
+                writer.appendString(localizedString.toString());
 
-            packet.appendString("");
+            writer.appendString("");
         }
     }
 
@@ -31,8 +33,8 @@ public record ChoiceArguments<T>(String key, ArgumentType argumentType,
     }
 
     @Override
-    public void serializeParameter(final IOutgoingDTOSerializer<U> packet) {
-        packet.appendInt(this.getParameterType().getCode());
-        this.serializeArgument(packet);
+    public void serializeParameter(IPacketWriter writer) {
+        writer.appendInt(this.getParameterType().getCode());
+        this.serializeArgument(writer);
     }
 }

@@ -13,10 +13,6 @@ import packets.dto.outgoing.catalog.CatalogPurchaseOkComposerDTO;
 import packets.dto.outgoing.inventory.AddHabboItemCategory;
 import packets.dto.outgoing.inventory.AddHabboItemComposerDTO;
 import packets.dto.outgoing.inventory.InventoryRefreshComposerDTO;
-import packets.outgoing.catalog.PurchaseOkComposer;
-import packets.outgoing.inventory.AddHabboItemCategory;
-import packets.outgoing.inventory.AddHabboItemComposer;
-import packets.outgoing.inventory.InventoryRefreshComposer;
 import storage.repositories.furniture.IFurnitureRepository;
 import storage.repositories.habbo.IHabboInventoryRepository;
 

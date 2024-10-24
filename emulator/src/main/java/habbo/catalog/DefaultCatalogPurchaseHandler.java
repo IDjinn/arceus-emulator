@@ -6,10 +6,10 @@ import habbo.furniture.extra.data.LegacyExtraData;
 import habbo.habbos.IHabbo;
 import habbo.habbos.factories.IHabboInventoryItemFactory;
 import habbo.rooms.components.objects.items.LimitedData;
-import packets.outgoing.catalog.PurchaseOkComposer;
-import packets.outgoing.inventory.AddHabboItemCategory;
-import packets.outgoing.inventory.AddHabboItemComposer;
-import packets.outgoing.inventory.InventoryRefreshComposer;
+import packets.dto.outgoing.catalog.CatalogPurchaseOkComposerDTO;
+import packets.dto.outgoing.inventory.AddHabboItemCategory;
+import packets.dto.outgoing.inventory.AddHabboItemComposerDTO;
+import packets.dto.outgoing.inventory.InventoryRefreshComposerDTO;
 import storage.repositories.habbo.IHabboInventoryRepository;
 
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ public class DefaultCatalogPurchaseHandler implements ICatalogPurchaseHandler {
         });
 
         habbo.getClient().sendMessages(
-                new AddHabboItemComposer(AddHabboItemCategory.OwnedFurni, unseen),
-                new PurchaseOkComposer(item),
-                new InventoryRefreshComposer()
+                new AddHabboItemComposerDTO(AddHabboItemCategory.OwnedFurni, unseen),
+                new CatalogPurchaseOkComposerDTO(item),
+                new InventoryRefreshComposerDTO()
         );
         return true;
     }
