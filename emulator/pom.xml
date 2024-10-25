@@ -26,6 +26,11 @@
     <artifactId>emulator</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>dev.dominion.ecs</groupId>
+            <artifactId>dominion-ecs-engine</artifactId>
+            <version>0.9.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>

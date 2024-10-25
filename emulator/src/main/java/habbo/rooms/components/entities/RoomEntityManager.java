@@ -2,6 +2,7 @@ package habbo.rooms.components.entities;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import core.ecs.IDomain;
 import habbo.commands.ICommandManager;
 import habbo.habbos.IHabbo;
 import habbo.internationalization.IInternationalizationManager;
@@ -9,6 +10,9 @@ import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
 import habbo.rooms.entities.IRoomEntity;
 import habbo.rooms.entities.PlayerEntity;
+import habbo.rooms.entities.components.status.EntityStatusComponent;
+import habbo.rooms.entities.components.status.UpdateEntityStatusSystem;
+import habbo.rooms.entities.status.IEntityStatusComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import packets.outgoing.rooms.entities.RoomUserStatusComposer;
@@ -33,12 +37,14 @@ public class RoomEntityManager implements IRoomEntityManager {
     private IRoom room;
     private final ICommandManager commandManager;
     private final Injector injector;
+    private final IDomain domain;
 
     @Inject
-    public RoomEntityManager(IInternationalizationManager internationalizationManager, ICommandManager commandManager, final Injector injector) {
+    public RoomEntityManager(IInternationalizationManager internationalizationManager, ICommandManager commandManager, final Injector injector, IDomain domain) {
         this.internationalizationManager = internationalizationManager;
         this.commandManager = commandManager;
         this.injector = injector;
+        this.domain = domain;
         this.entities = new ConcurrentHashMap<>();
         this.entitiesByVirtualId = new ConcurrentHashMap<>();
         this.players = new ConcurrentHashMap<>();
@@ -52,6 +58,17 @@ public class RoomEntityManager implements IRoomEntityManager {
 
     @Override
     public IPlayerEntity createHabboEntity(IHabbo habbo) {
+
+        var a = domain.getDominion().createEntity(habbo.getData().getUsername(),
+            new EntityStatusComponent()
+        );
+
+       var systems = domain.getDominion()
+                .createScheduler();
+
+        systems.parallelSchedule(new UpdateEntityStatusSystem(domain));
+        systems.tickAtFixedRate(2);
+
         var entity = new PlayerEntity(habbo);
         this.injector.injectMembers(entity);
         this.entities.put(entity.getVirtualId(), entity);

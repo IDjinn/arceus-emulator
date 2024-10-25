@@ -10,6 +10,5 @@ public class RoomEntityModule extends AbstractModule {
     @Override
     protected void configure() {
         this.bind(IEntityPositionComponent.class).to(EntityPositionComponent.class);
-        this.bind(IEntityStatusComponent.class).to(EntityStatusComponent.class);
     }
 }

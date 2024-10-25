@@ -9,6 +9,7 @@ import core.configuration.ConfigurationManager;
 import core.configuration.ConfigurationModule;
 import core.configuration.IConfigurationManager;
 import core.configuration.IEmulatorSettings;
+import core.ecs.Domain;
 import core.events.EventHandler;
 import core.events.IEventHandler;
 import core.locking.ConcurrentLock;
@@ -99,6 +100,7 @@ public class Emulator extends AbstractModule implements IEmulator {
         this.bind(IVariableManager.class).to(VariableManager.class);
         this.bind(IVariableMessageFactory.class).to(VariableMessageFactory.class);
         this.bind(IRace.class).to(Race.class);
+        this.bind(Domain.class);
     }
 
     @Override

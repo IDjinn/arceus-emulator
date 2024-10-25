@@ -13,7 +13,6 @@
         <module>api</module>
         <module>networking</module>
         <module>storage</module>
-        <module>performance</module>
     </modules>
 
     <properties>

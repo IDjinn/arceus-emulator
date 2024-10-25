@@ -29,24 +29,6 @@ public interface IRoomEntity extends ISerializable, ICycle {
     String getName();
 
     void setName(String name);
-
-    Map<Class<? extends IEntityComponent>, IEntityComponent> getEntityComponents();
-
-    void registerEntityComponent(Class<? extends IEntityComponent> componentClass, IEntityComponent component);
-
-    <T extends IEntityComponent> void registerEntityComponent(IEntityComponent component);
-
-    void unregisterEntityComponent(Class<? extends IEntityComponent> componentClass);
-
-    <T extends IEntityComponent> T getEntityComponent(Class<? extends IEntityComponent> component);
-    
-    <T extends IEntityComponent> Optional<T> getSafeEntityComponent(Class<? extends IEntityComponent> component);
     
     IEventHandler getEventHandler();
-
-    IEntityVariablesComponent getEntityVariablesComponent();
-
-    IEntityStatusComponent getStatusComponent();
-
-    IEntityPositionComponent getPositionComponent();
 }

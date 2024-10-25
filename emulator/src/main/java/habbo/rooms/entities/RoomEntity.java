@@ -54,53 +54,6 @@ public abstract class RoomEntity implements IRoomEntity {
     }
 
     @Override
-    public Map<Class<? extends IEntityComponent>, IEntityComponent> getEntityComponents() {
-        return this.components;
-    }
-
-    @Override
-    public void registerEntityComponent(final Class<? extends IEntityComponent> componentClass, final IEntityComponent component) {
-        assert componentClass != null;
-        assert component != null;
-        assert componentClass.isInstance(component);
-        this.components.put(componentClass, component);
-        component.init(this);
-    }
-
-    @Override
-    public <T extends IEntityComponent> void registerEntityComponent(final IEntityComponent component) {
-        assert component != null;
-        this.components.put(component.getClass(), component);
-        component.init(this);
-    }
-
-    @Override
-    public void unregisterEntityComponent(final Class<? extends IEntityComponent> componentClass) {
-        assert componentClass != null;
-        final var component = this.components.remove(componentClass);
-        if (component != null)
-            component.destroy();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends IEntityComponent> T getEntityComponent(final Class<? extends IEntityComponent> component) {
-        return (T) this.components.get(component);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T extends IEntityComponent> Optional<T> getSafeEntityComponent(final Class<? extends IEntityComponent> component) {
-        if (!this.components.containsKey(component)) return Optional.empty();
-
-        final var instance = this.components.get(component);
-        if (instance == null || !instance.getClass().isInstance(component))
-            return Optional.empty();
-
-        return Optional.of((T) instance);
-    }
-
-    @Override
     public String getName() {
         return this.name;
     }
