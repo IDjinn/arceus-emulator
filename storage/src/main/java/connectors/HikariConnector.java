@@ -24,7 +24,7 @@ public class HikariConnector implements IConnector {
         try {
             this.initializeHikari();
         } catch (Exception e) {
-            this.logger.error(STR."Failed to initialize Hikari: \{e.getMessage()}");
+            this.logger.error("Failed to initialize Hikari:{}", e.getMessage());
         }
     }
 
@@ -33,7 +33,15 @@ public class HikariConnector implements IConnector {
 
         databaseConfiguration.setMaximumPoolSize(this.config.getInt("db.pool.maxsize", 50));
         databaseConfiguration.setMinimumIdle(this.config.getInt("db.pool.minsize", 10));
-        databaseConfiguration.setJdbcUrl(STR."jdbc:mysql://\{this.config.getString("db.hostname", "localhost")}:\{this.config.getString("db.port", "3306")}/\{this.config.getString("db.database", "habbo")}\{this.config.getString("db.params")}");
+        databaseConfiguration.setJdbcUrl(
+                "jdbc:mysql://"
+                        + this.config.getString("db.hostname", "localhost")
+                        + ":"
+                        + this.config.getString("db.port", "3306")
+                        + "/"
+                        + this.config.getString("db.database", "habbo")
+                        + this.config.getString("db.params", "")
+        );
         databaseConfiguration.addDataSourceProperty("serverName", this.config.getString("db.hostname", "localhost"));
         databaseConfiguration.addDataSourceProperty("port", this.config.getString("db.port", "3306"));
         databaseConfiguration.addDataSourceProperty("databaseName", this.config.getString("db.database", "habbo"));

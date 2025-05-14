@@ -16,15 +16,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RoomGameMap implements IRoomGameMap {
-    private final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(RoomGameMap.class);
+
     @Inject
     private IRoomManager roomManager;
-
 
     private IRoom room;
     private IRoomTile[][] tiles;
     private int mapSize;
-
 
     private final Pool<TileMetadata> tileMetadataPool = Pool
             .from(new TileMetadataAllocator())
@@ -67,9 +66,8 @@ public class RoomGameMap implements IRoomGameMap {
             case 'U' -> 30;
             case 'V' -> 31;
             case 'W' -> 32;
-
             case 'X' -> Short.MAX_VALUE;
-            default -> throw new IllegalArgumentException(STR."Invalid character: \{tile}");
+            default -> throw new IllegalArgumentException("Invalid character: " + tile);
         };
     }
 
@@ -81,9 +79,12 @@ public class RoomGameMap implements IRoomGameMap {
     @Override
     public void init(IRoom room) {
         this.room = room;
-        if (this.getRoom().getModel() == null)
-            throw new IllegalArgumentException(STR."invalid room model \{this.getRoom().getData().getModelName()}");
-        
+        if (this.getRoom().getModel() == null) {
+            throw new IllegalArgumentException(
+                    "Invalid room model: " + this.getRoom().getData().getModelName()
+            );
+        }
+
         try {
             var map = this.getRoom().getModel().getHeightMap().split("\n");
             var maxX = map[0].length();
@@ -98,7 +99,7 @@ public class RoomGameMap implements IRoomGameMap {
                 }
             }
         } catch (Exception e) {
-            this.logger.error(e);
+            logger.error("Error initializing game map for room {}", this.getRoom().getData().getId(), e);
         }
     }
 
@@ -129,7 +130,6 @@ public class RoomGameMap implements IRoomGameMap {
                 result.add(currentMetadata);
             }
         }
-
 
         return tile.getMetadata();
     }
@@ -162,7 +162,7 @@ public class RoomGameMap implements IRoomGameMap {
 
     @Override
     public void destroy() {
-
+        // no-op
     }
 
     @Override
@@ -210,8 +210,7 @@ public class RoomGameMap implements IRoomGameMap {
         return x >= 0
                 && x < this.getMaxX()
                 && y >= 0
-                && y < this.getMaxY()
-                ;
+                && y < this.getMaxY();
     }
 
     @Override
@@ -243,8 +242,13 @@ public class RoomGameMap implements IRoomGameMap {
             metadata.setWalkableHeight(tile.getPosition().getZ());
             tile.getMetadata().add(metadata);
         } catch (Exception e) {
-            this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
-                    tile.getX(), tile.getY(), e);
+            logger.error(
+                    "Error creating metadata room {} tile {}:{}",
+                    this.getRoom().getData().getId(),
+                    tile.getX(),
+                    tile.getY(),
+                    e
+            );
         }
 
         final var itemsAt = this.getRoom().getObjectManager().getAllFloorItemsSortedAt(tile.getPosition());
@@ -260,8 +264,13 @@ public class RoomGameMap implements IRoomGameMap {
                 item.getStackHeight().ifPresent(metadata::setStackHeight);
                 tile.getMetadata().add(metadata);
             } catch (Exception e) {
-                this.logger.error("error creating metadata room {} tile {}:{}", this.getRoom().getData().getId(),
-                        tile.getX(), tile.getY(), e);
+                logger.error(
+                        "Error creating metadata room {} tile {}:{}",
+                        this.getRoom().getData().getId(),
+                        tile.getX(),
+                        tile.getY(),
+                        e
+                );
             }
         }
     }

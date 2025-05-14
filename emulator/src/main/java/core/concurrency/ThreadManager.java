@@ -39,17 +39,22 @@ public class ThreadManager implements IThreadManager {
         assert hardwareThreadCount > 0;
         assert softwareThreadCount > 0;
 
-        this.hardwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(hardwareThreadCount, runnable -> {
-            var currentId = this.hardwareThreadCounter.incrementAndGet();
+        this.hardwareThreadExecutor = new AtomicReference<>(
+                new ScheduledThreadPoolExecutor(hardwareThreadCount, runnable -> {
+                    var currentId = this.hardwareThreadCounter.incrementAndGet();
 
-            var hardwareThread = new Thread(runnable);
-            hardwareThread.setName(STR."Hardware-Thread-\{currentId}");
+                    Thread hardwareThread = new Thread(runnable);
+                    String threadName = "Hardware-Thread-" + currentId;
+                    hardwareThread.setName(threadName);
 
-            var log = LogManager.getLogger(STR."Hardware-Thread-\{currentId}");
-            hardwareThread.setUncaughtExceptionHandler((t, e) -> log.error("Exception in hardware thread: {}", e.getMessage(), e));
+                    Logger log = LogManager.getLogger(threadName);
+                    hardwareThread.setUncaughtExceptionHandler((t, e) ->
+                            log.error("Exception in hardware thread: {}", e.getMessage(), e)
+                    );
 
-            return hardwareThread;
-        }));
+                    return hardwareThread;
+                })
+        );
 
         this.softwareThreadExecutor = new AtomicReference<>(new ScheduledThreadPoolExecutor(softwareThreadCount, Thread.ofVirtual().factory()));
         if (this.configurationManager.getBool("orion.monitor.enabled", false)) {

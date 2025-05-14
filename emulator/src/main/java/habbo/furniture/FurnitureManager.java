@@ -18,7 +18,7 @@ public class FurnitureManager implements IFurnitureManager {
     private final IFurnitureRepository furnitureRepository;
     private final HashMap<Integer, IFurniture> furnitures;
     private final IFurnitureFactory furnitureFactory;
-    private final Logger logger = LogManager.getLogger();
+    private final Logger logger = LogManager.getLogger(FurnitureManager.class);
 
     private final HashMap<Integer, Class<? extends ExtraData>> extraDataParsers;
 
@@ -32,7 +32,7 @@ public class FurnitureManager implements IFurnitureManager {
 
     @Override
     public void init() {
-        this.logger.info("Initializing furniture's from database...");
+        logger.info("Initializing furniture's from database...");
         this.extraDataParsers.put(ExtraDataType.Empty.getType(), EmptyExtraData.class);
         this.extraDataParsers.put(ExtraDataType.Legacy.getType(), LegacyExtraData.class);
         this.extraDataParsers.put(ExtraDataType.Map.getType(), MapExtraData.class);
@@ -45,7 +45,10 @@ public class FurnitureManager implements IFurnitureManager {
             this.furnitures.put(furniture.getId(), furniture);
         });
 
-        this.logger.info(STR."Loaded \{this.furnitures.size()} furniture from database.");
+        logger.info(
+                "Loaded {} furniture from database.",
+                this.furnitures.size()
+        );
     }
 
     @Override
@@ -68,17 +71,29 @@ public class FurnitureManager implements IFurnitureManager {
     public IExtraData parseExtraData(String json) {
         if (StringUtil.isNullOrEmpty(json))
             return new LegacyExtraData("");
-        
+
         try {
-            var extraDataType = GsonHelper.getGson().fromJson(json, ExtraData.ExtraDataReader.class).type;
-            if (this.extraDataParsers.containsKey(extraDataType))
-                return GsonHelper.getGson().fromJson(json, this.extraDataParsers.get(extraDataType));
+            var extraDataType = GsonHelper.getGson()
+                    .fromJson(json, ExtraData.ExtraDataReader.class)
+                    .type;
+
+            if (this.extraDataParsers.containsKey(extraDataType)) {
+                return GsonHelper.getGson()
+                        .fromJson(json, this.extraDataParsers.get(extraDataType));
+            }
 
             return GsonHelper.getGson().fromJson(json, LegacyExtraData.class);
+
         } catch (JsonSyntaxException _) {
+            // fall through to fallback
         } catch (Exception e) {
-            this.logger.warn(STR."Failed to parse extra data: \{json}", e);
+            logger.warn(
+                    "Failed to parse extra data: {}",
+                    json,
+                    e
+            );
         }
+
         return LegacyExtraData.fromLegacyString(json);
     }
 }

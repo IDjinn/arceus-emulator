@@ -52,10 +52,14 @@ public class PacketManager implements IPacketManager {
 
     @Override
     public void registerIncoming(IncomingEvent incomingEvent) {
-        this.logger.debug(STR."register incoming \{incomingEvent.getClass().getSimpleName()} with header id \{incomingEvent.getHeaderId()} from \{ReflectionHelpers.getCallerInfo()}");
+        logger.debug(
+                "register incoming {} with header id {} from {}",
+                incomingEvent.getClass().getSimpleName(),
+                incomingEvent.getHeaderId(),
+                ReflectionHelpers.getCallerInfo()
+        );
         this.internalRegisterIncoming(incomingEvent);
     }
-
 
     private void registerGuestEvent(IncomingEvent event) {
         this.guestEvents.put(event.getHeaderId(), event);
