@@ -14,7 +14,7 @@ public record LimitedData(int limitedRare, int limitedRareTotal) implements ILim
 
     @Override
     public String toString() {
-        return STR."\{this.limitedRare}:\{this.limitedRareTotal}";
+        return limitedRare + ":" + limitedRareTotal;
     }
 
     @Override

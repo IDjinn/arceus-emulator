@@ -17,10 +17,11 @@ public enum TileState {
     ;
 
     static {
-        var flags = new HashSet<Integer>();
+        final var flags = new HashSet<Integer>();
         for (TileState state : TileState.values()) {
-            if (!flags.add(state.flags))
-                throw new IllegalStateException(STR."Illegal state flag \{state}");
+            if (!flags.add(state.flags)) {
+                throw new IllegalStateException("Illegal state flag " + state);
+            }
         }
     }
 

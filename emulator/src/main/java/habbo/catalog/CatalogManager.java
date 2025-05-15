@@ -71,8 +71,10 @@ public class CatalogManager implements ICatalogManager {
                 this.logger.error("Error while trying to fetch catalog item {}", result.getInt("id"), e);
             }
         });
-        this.logger.info(STR."Loaded \{this.catalogItems.size()} catalog items from database.");
-
+        this.logger.info(
+                "Loaded {} catalog items from database.",
+                this.catalogItems.size()
+        );
 
         this.catalogRepository.getAllCatalogPages(result -> {
             if (result == null) return;
@@ -91,7 +93,10 @@ public class CatalogManager implements ICatalogManager {
                 this.logger.error("Error while trying to fetch catalog page{}", result.getInt("id"), e);
             }
         });
-        this.logger.info(STR."Loaded \{this.catalogPages.size()} catalog pages from database.");
+        this.logger.info(
+                "Loaded {} catalog pages from database.",
+                this.catalogPages.size()
+        );
 
         for (var catalogPage : this.catalogPages.values()) {
             var parent = this.catalogPages.get(catalogPage.getParentId());

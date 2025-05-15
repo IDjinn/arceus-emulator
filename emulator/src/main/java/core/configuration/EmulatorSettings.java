@@ -39,7 +39,10 @@ public class EmulatorSettings implements IEmulatorSettings {
             this.settings.put(result.getString("key"), result.getString("value"));
         });
 
-        this.logger.info(STR."Loaded \{this.settings.size()} emulator settings from database.");
+        this.logger.info(
+                "Loaded {} emulator settings from database.",
+                this.settings.size()
+        );
 
         this.isLoaded = true;
     }

@@ -54,9 +54,11 @@ public class EventHandler implements IEventHandler {
         for (File file : files) {
             if (file.isDirectory()) {
                 assert !file.getName().contains(".");
-                classes.addAll(this.findClasses(file, STR."\{packageName}.\{file.getName()}"));
+                String subPackage = packageName + "." + file.getName();
+                classes.addAll(this.findClasses(file, subPackage));
             } else if (file.getName().endsWith(".class")) {
-                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+                String className = file.getName().substring(0, file.getName().length() - 6);
+                classes.add(Class.forName(packageName + '.' + className));
             }
         }
         return classes;

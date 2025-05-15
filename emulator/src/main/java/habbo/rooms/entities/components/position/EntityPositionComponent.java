@@ -183,8 +183,14 @@ public class EntityPositionComponent implements IEntityPositionComponent {
 
         this.getEntity().getStatusComponent().removeStatus(RoomEntityStatus.SIT);
         this.getEntity().getStatusComponent().removeStatus(RoomEntityStatus.LAY);
-        this.getEntity().getStatusComponent().setStatus(new StatusBucket(RoomEntityStatus.MOVE,
-                STR."\{this.getNextPosition().getX()},\{this.getNextPosition().getY()},\{this.getNextPosition().getZ()}"));
+        this.getEntity().getStatusComponent().setStatus(
+                new StatusBucket(
+                        RoomEntityStatus.MOVE,
+                        this.getNextPosition().getX() + ","
+                                + this.getNextPosition().getY() + ","
+                                + this.getNextPosition().getZ()
+                )
+        );
         this.getEntity().getStatusComponent().setNeedUpdateStatus(true);
     }
 

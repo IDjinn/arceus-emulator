@@ -7,16 +7,16 @@ import java.io.File;
 
 public final class SSLCertificateLoader {
     private static final String filePath = "ssl";
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(SSLCertificateLoader.class);
 
     public static SslContext getContext() {
-        SslContext context;
         try {
-            context = SslContextBuilder.forServer(new File(STR."\{filePath}\{File.separator}cert.pem"), new File(STR."\{filePath + File.separator}privkey.pem")).build();
-        } catch ( Exception e ) {
+            File certFile = new File(filePath + File.separator + "cert.pem");
+            File keyFile  = new File(filePath + File.separator + "privkey.pem");
+            return SslContextBuilder.forServer(certFile, keyFile).build();
+        } catch (Exception e) {
             logger.info("Unable to load ssl: {}", e.getMessage());
-            context = null;
+            return null;
         }
-        return context;
     }
 }

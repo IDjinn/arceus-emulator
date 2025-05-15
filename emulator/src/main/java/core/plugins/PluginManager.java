@@ -106,7 +106,13 @@ public class PluginManager implements IPluginManager {
                     final var classLoader = URLClassLoader.newInstance(new URL[]{pluginFile.toURI().toURL()},
                             this.getClass().getClassLoader());
                     final var pluginConfiguration = new Properties();
-                    pluginConfiguration.load(new FileReader(STR."\{pluginFile.getParent()}\\plugin.ini"));
+                    pluginConfiguration.load(
+                            new FileReader(
+                                    pluginFile.getParent()
+                                            + File.separator
+                                            + "plugin.ini"
+                            )
+                    );
                     final var pluginClass = classLoader.loadClass(pluginConfiguration.getProperty("plugin.entrypoint"));
                     final var pluginInstance = ((IPlugin) pluginClass.getDeclaredConstructor().newInstance());
                     final var pluginClasses = getClassesInPackage(pluginClass.getPackageName(), pluginFile.getPath(),

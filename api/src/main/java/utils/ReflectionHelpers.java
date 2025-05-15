@@ -12,7 +12,7 @@ public final class ReflectionHelpers {
     public record CallerInfo(String className, String methodName, int line) {
         @Override
         public String toString() {
-            return STR."\{this.className}.\{this.methodName}:\{this.line}";
+            return className + "." + methodName + ":" + line;
         }
     }
 }
