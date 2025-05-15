@@ -7,12 +7,12 @@ import java.time.Instant;
 public final class InstantTypeAdapter implements JsonSerializer<Instant>, JsonDeserializer<Instant> {
 
     @Override
-    public JsonElement serialize(Instant src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(final Instant src, final Type typeOfSrc, final JsonSerializationContext context) {
         return new JsonPrimitive(src.toString());
     }
 
     @Override
-    public Instant deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Instant deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
         try {
             return Instant.parse(json.getAsString());
         } catch (Exception e) {
