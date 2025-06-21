@@ -1,5 +1,7 @@
 package habbo.rooms.components.objects.items;
 
+import org.jetbrains.annotations.NotNull;
+
 public record LimitedData(int limitedRare, int limitedRareTotal) implements ILimitedData {
     public static final LimitedData NONE = new LimitedData(0, 0);
 
@@ -13,7 +15,7 @@ public record LimitedData(int limitedRare, int limitedRareTotal) implements ILim
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return limitedRare + ":" + limitedRareTotal;
     }
 

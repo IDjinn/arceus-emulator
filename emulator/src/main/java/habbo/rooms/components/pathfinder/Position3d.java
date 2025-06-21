@@ -1,5 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import stormpot.Poolable;
 import stormpot.Slot;
@@ -10,8 +12,14 @@ import java.util.Objects;
 public class Position3d implements Poolable, Comparable<Position3d> {
 
     private final Slot slot;
+    @Getter
+    @Setter
     private int x;
+    @Getter
+    @Setter
     private int y;
+    @Getter
+    @Setter
     private float z;
 
 
@@ -44,30 +52,6 @@ public class Position3d implements Poolable, Comparable<Position3d> {
     @Override
     public void release() {
         this.slot.release(this);
-    }
-
-    public int getX() {
-        return this.x;
-    }
-
-    public void setX(final int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public void setY(final int y) {
-        this.y = y;
-    }
-
-    public float getZ() {
-        return this.z;
-    }
-
-    public void setZ(final float z) {
-        this.z = z;
     }
 
     public void setFromPosition(final Position position) {

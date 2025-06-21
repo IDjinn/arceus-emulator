@@ -18,6 +18,7 @@ import habbo.rooms.data.IRoomData;
 import habbo.rooms.data.IRoomModelData;
 import habbo.rooms.data.RoomData;
 import habbo.rooms.writers.RoomWriter;
+import lombok.Getter;
 import networking.packets.OutgoingPacket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,6 +39,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Room implements IRoom {
     private static final Logger LOGGER = LogManager.getLogger();
+    @Getter
     private final IRoomData data;
 
     private final Map<Class<? extends IRoomComponent>, IRoomComponent> customComponents;
@@ -78,10 +80,6 @@ public class Room implements IRoom {
     public Room(IConnectionResult data) {
         this.data = new RoomData(data);
         this.customComponents = new ConcurrentHashMap<>();
-    }
-
-    public IRoomData getData() {
-        return this.data;
     }
 
     @Override
@@ -173,7 +171,7 @@ public class Room implements IRoom {
         habbo.setRoom(this);
         var entity = this.getEntityManager().createHabboEntity(habbo);
 
-        habbo.setPlayerEntity(entity);
+        habbo.setEntity(entity);
 
         habbo.getClient().sendMessages(
                 new HideDoorbellComposer(),

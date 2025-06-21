@@ -1,16 +1,22 @@
 package habbo.rooms.components.objects.items;
 
 import habbo.furniture.extra.data.IExtraData;
+import lombok.Getter;
+import lombok.Setter;
 import utils.pathfinder.Position;
 
 public class RoomItemData implements IRoomItemData {
+    @Getter
     private final int id;
     private final int itemId;
+    @Getter
     private final int ownerId;
     private IExtraData data;
     private int rotation;
     private Position floorPosition;
     private String wallPosition;
+    @Getter
+    @Setter
     private String wiredData;
 
     public RoomItemData(
@@ -36,19 +42,11 @@ public class RoomItemData implements IRoomItemData {
         this.wiredData = wiredData;
     }
 
-    public int getId() {
-        return this.id;
-    }
-
     @Override
     public int getFurnitureId() {
         return this.itemId;
     }
 
-    public int getOwnerId() {
-        return this.ownerId;
-    }
-    
     @Override
     public Position getPosition() {
         return this.floorPosition;
@@ -89,11 +87,4 @@ public class RoomItemData implements IRoomItemData {
         this.data = data;
     }
 
-    public String getWiredData() {
-        return this.wiredData;
-    }
-
-    public void setWiredData(final String wiredData) {
-        this.wiredData = wiredData;
-    }
 }

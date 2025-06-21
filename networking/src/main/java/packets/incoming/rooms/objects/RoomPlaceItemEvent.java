@@ -20,7 +20,7 @@ public class RoomPlaceItemEvent extends IncomingEvent {
     public void parse(IIncomingPacket packet, IClient client) {
         if (client.getHabbo().getRoom() == null) return;
 
-        if (!client.getHabbo().getPlayerEntity().hasRights())
+        if (!client.getHabbo().getEntity().hasRights())
             return; // TODO: CHECK RIGHTS IN SPACE TO PLACE
         
         var data = packet.readString().split(" ");

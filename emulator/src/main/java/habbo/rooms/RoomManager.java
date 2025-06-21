@@ -16,10 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import storage.repositories.rooms.IRoomRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,16 +27,11 @@ public class RoomManager implements IRoomManager {
     private final Logger logger = LogManager.getLogger();
 
     private final IRoomFactory roomFactory;
-
     private final IRoomRepository roomRepository;
-
     private final INavigatorManager navigatorManager;
-
-    private final ConcurrentHashMap<Integer, IRoom> rooms;
-
-    private final HashMap<Integer, IRoomCategory> roomCategories;
-
-    private final HashMap<String, IRoomModelData> roomModels;
+    private final Map<Integer, IRoom> rooms;
+    private final Map<Integer, IRoomCategory> roomCategories;
+    private final Map<String, IRoomModelData> roomModels;
     private final IHotel hotel;
 
     @Inject
@@ -166,12 +158,12 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
-    public ConcurrentHashMap<Integer, IRoom> getLoadedRooms() {
+    public Map<Integer, IRoom> getLoadedRooms() {
         return this.rooms;
     }
 
     @Override
-    public HashMap<Integer, IRoomCategory> getRoomCategories() {
+    public Map<Integer, IRoomCategory> getRoomCategories() {
         return this.roomCategories;
     }
 
@@ -183,7 +175,7 @@ public class RoomManager implements IRoomManager {
     }
 
     @Override
-    public HashMap<String, IRoomModelData> getRoomModels() {
+    public Map<String, IRoomModelData> getRoomModels() {
         return this.roomModels;
     }
 

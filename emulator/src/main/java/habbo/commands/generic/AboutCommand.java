@@ -6,6 +6,7 @@ import habbo.commands.ICommandContext;
 import habbo.habbos.IHabboManager;
 import habbo.internationalization.LocalizedString;
 import habbo.variables.Variable;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;

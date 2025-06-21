@@ -2,6 +2,8 @@ package habbo.furniture.extra.data;
 
 import habbo.rooms.components.objects.items.ILimitedData;
 import habbo.rooms.components.objects.items.LimitedData;
+import lombok.Getter;
+import lombok.Setter;
 import networking.packets.OutgoingPacket;
 
 @SuppressWarnings("UnnecessaryModifier")
@@ -9,10 +11,13 @@ public abstract class ExtraData implements IExtraData {
     public static transient final int LTD_FLAG = 0xFF00;
     public static transient final int DATA_MASK = 0xFF;
 
+    @Getter
+    @Setter
+    private int state = 0;
+
+    private LimitedData limitedData = LimitedData.NONE;
     private final transient ExtraDataType dataType;
     private final int type;
-    private int state = 0;
-    private LimitedData limitedData = LimitedData.NONE;
 
     public ExtraData(ExtraDataType type) {
         this.dataType = type;
@@ -44,17 +49,9 @@ public abstract class ExtraData implements IExtraData {
         return this.limitedData;
     }
 
-    public int getState() {
-        return this.state;
-    }
-
     @Override
     public ExtraDataType getExtraDataType() {
         return this.dataType;
-    }
-
-    public void setState(final int state) {
-        this.state = state;
     }
 
     public abstract void serializeValue(final OutgoingPacket packet);

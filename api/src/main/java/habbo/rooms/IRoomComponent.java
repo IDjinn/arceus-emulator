@@ -13,5 +13,7 @@ public interface IRoomComponent {
 
     }
 
-    void destroy();
+    default void destroy() {
+
+    }
 }

@@ -1,5 +1,7 @@
 package habbo.rooms.components.pathfinder.pool;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import stormpot.Poolable;
@@ -10,8 +12,14 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
     private final Slot slot;
     public Position position;
     public @Nullable PathfinderNodeFucked parentNode;
+    @Getter
+    @Setter
     public float gCosts;
+    @Getter
+    @Setter
     public float hCosts;
+    @Getter
+    @Setter
     private boolean free = true;
 
     public PathfinderNodeFucked(Slot slot) {
@@ -47,30 +55,6 @@ public class PathfinderNodeFucked implements Poolable, Comparable<PathfinderNode
 
     public float getFCosts() {
         return this.gCosts + this.hCosts;
-    }
-
-    public float getGCosts() {
-        return this.gCosts;
-    }
-
-    public void setGCosts(float gCosts) {
-        this.gCosts = gCosts;
-    }
-
-    public float getHCosts() {
-        return this.hCosts;
-    }
-
-    public void setHCosts(float hCosts) {
-        this.hCosts = hCosts;
-    }
-
-    public boolean isFree() {
-        return this.free;
-    }
-
-    public void setFree(boolean isOpen) {
-        this.free = isOpen;
     }
 
     @Override

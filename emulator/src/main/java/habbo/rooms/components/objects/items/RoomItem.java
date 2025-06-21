@@ -5,11 +5,15 @@ import habbo.furniture.IFurniture;
 import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.data.IHabboData;
 import habbo.rooms.IRoom;
+import lombok.Getter;
+import lombok.Setter;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+@Getter
+@Setter
 public abstract class RoomItem implements IRoomItem {
     private static final int TickDisabled = -1;
     private final IRoomItemData itemData;
@@ -17,7 +21,7 @@ public abstract class RoomItem implements IRoomItem {
     private final int virtualId;
     private final IFurniture furniture;
     private @Nullable IHabboData ownerData;
-    private boolean needSave;
+    private boolean isNeedSave;
 
 
     public RoomItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
@@ -29,36 +33,8 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public int getVirtualId() {
-        return this.virtualId;
-    }
-
-    @Override
-    public void onRoomLoaded() {
-
-        IRoomItem.super.onRoomLoaded();
-    }
-
-    @Override
-    public void init() {
-
-        IRoomItem.super.init();
-    }
-
-    @Override
-    public void destroy() {
-
-        IRoomItem.super.destroy();
-    }
-
-    @Override
     public int getId() {
         return this.getItemData().getId();
-    }
-
-    @Override
-    public IRoom getRoom() {
-        return this.room;
     }
 
     @Override
@@ -67,23 +43,8 @@ public abstract class RoomItem implements IRoomItem {
     }
 
     @Override
-    public void setOwnerData(IHabboData ownerData) {
-        this.ownerData = ownerData;
-    }
-
-    @Override
     public int getGroup() {
         return 0;
-    }
-
-    @Override
-    public IRoomItemData getItemData() {
-        return this.itemData;
-    }
-
-    @Override
-    public IFurniture getFurniture() {
-        return this.furniture;
     }
 
 
@@ -97,16 +58,6 @@ public abstract class RoomItem implements IRoomItem {
     @Override
     public IExtraData getExtraData() {
         return this.getItemData().getData();
-    }
-
-    @Override
-    public boolean needSave() {
-        return this.needSave;
-    }
-
-    @Override
-    public void setNeedSave(final boolean needSave) {
-        this.needSave = needSave;
     }
 
     @Override

@@ -1,9 +1,13 @@
 package habbo.habbos.data.badges;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+@Getter
+@Setter
 public class HabboBadge implements IHabboBadge {
     private final String code;
     private int slot;
@@ -17,17 +21,6 @@ public class HabboBadge implements IHabboBadge {
     public Optional<Integer> getSlot() {
         return this.slot > 0 ? Optional.of(this.slot) : Optional.empty();
     }
-
-    @Override
-    public void setSlot(final int slot) {
-        this.slot = slot;
-    }
-
-    @Override
-    public String getCode() {
-        return this.code;
-    }
-
     @Override
     public @Nullable String getName() {
         return null;

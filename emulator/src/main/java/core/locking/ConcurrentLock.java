@@ -4,11 +4,12 @@ import com.google.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 import utils.StringBuilderHelper;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Singleton
 public class ConcurrentLock implements IConcurrentLock {
-    private final ConcurrentHashMap<String, Object> lock = new ConcurrentHashMap<>();
+    private final Map<String, Object> lock = new ConcurrentHashMap<>();
 
     @Override
     public boolean lock(@NotNull ILockValue lockerKey) {
@@ -24,12 +25,12 @@ public class ConcurrentLock implements IConcurrentLock {
 
     @Override
     public boolean isLocked(@NotNull ILockValue lockerKey) {
-        return this.lock.contains(lockerKey.key());
+        return this.lock.containsKey(lockerKey.key());
     }
 
     @Override
     public boolean isLocked(@NotNull String key) {
-        return this.lock.contains(key);
+        return this.lock.containsKey(key);
     }
 
     @Override

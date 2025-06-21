@@ -15,16 +15,16 @@ public class RoomUserTalkEvent extends IncomingEvent {
 
     @Override
     public void parse(final IIncomingPacket packet, final IClient client) {
-        if (client.getHabbo().getRoom() == null || client.getHabbo().getPlayerEntity() == null) return;
+        if (client.getHabbo().getRoom() == null || client.getHabbo().getEntity() == null) return;
 
-        if (!client.getHabbo().getRoom().getRightsManager().canTalk(client.getHabbo().getPlayerEntity()))
+        if (!client.getHabbo().getRoom().getRightsManager().canTalk(client.getHabbo().getEntity()))
             return;
 
         final var message = packet.readString(); // TODO MESSAGE LENGTH LIMIT / FILTERING
         final var bubble = packet.readInt(); // TODO VERIFY THIS
 
         client.getHabbo().getRoom().getChatComponent().talk(
-                client.getHabbo().getPlayerEntity(),
+                client.getHabbo().getEntity(),
                 message,
                 bubble
         );

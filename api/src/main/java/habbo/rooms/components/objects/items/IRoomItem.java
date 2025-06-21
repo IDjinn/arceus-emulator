@@ -36,9 +36,9 @@ public interface IRoomItem extends IRoomObject {
 
     OutgoingPacket serializePosition(OutgoingPacket packet);
 
-    boolean needSave();
+    boolean isNeedSave();
 
-    void setNeedSave(boolean needSave);
+    void setNeedSave(boolean needSabe);
 
     boolean canUse();
 

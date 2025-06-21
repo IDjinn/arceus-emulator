@@ -28,7 +28,7 @@ public interface ICatalogItem extends IFillable, ISerializable {
 
     int getLimitedSells();
 
-    boolean allowOffer();
+    boolean isAllowOffer();
 
     boolean hasBadge();
 

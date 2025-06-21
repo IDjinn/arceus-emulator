@@ -2,6 +2,7 @@ package habbo.habbos.data;
 
 import com.google.inject.Inject;
 import habbo.habbos.IHabbo;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.repositories.habbo.IHabboRepository;
@@ -11,30 +12,49 @@ import utils.interfaces.IFillable;
 import java.util.Locale;
 
 public class HabboData implements IHabboData, IFillable {
+    @Getter
     private final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
     @Inject
     private IHabboRepository habboRepository;
 
     private int id;
+    @Getter
     private String username;
+    @Getter
     private String email;
+    @Getter
     private String accountCreated;
+    @Getter
     private String lastLogin;
+    @Getter
     private String lastOnline;
+    @Getter
     private String motto;
+    @Getter
     private String look;
+    @Getter
     private String gender;
     private int rank;
+    @Getter
     private int credits;
+    @Getter
     private int pixels;
+    @Getter
     private int diamonds;
+    @Getter
     private int seasonalPoints;
+    @Getter
     private boolean isOnline;
+    @Getter
     private String authTicket;
+    @Getter
     private String registerIp;
+    @Getter
     private String currentIp;
+    @Getter
     private String machineId;
+    @Getter
     private int homeRoom;
 
     public HabboData(IHabbo habbo, IConnectionResult data) {
@@ -50,10 +70,6 @@ public class HabboData implements IHabboData, IFillable {
         }
     }
 
-    public Logger getLogger() {
-        return this.logger;
-    }
-
     @Override
     public int getId() {
         return this.id;
@@ -67,78 +83,6 @@ public class HabboData implements IHabboData, IFillable {
     @Override
     public Locale getLocale() {
         return Locale.ENGLISH; // TODO THIS
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getAccountCreated() {
-        return this.accountCreated;
-    }
-
-    public String getLastLogin() {
-        return this.lastLogin;
-    }
-
-    public String getLastOnline() {
-        return this.lastOnline;
-    }
-
-    public String getMotto() {
-        return this.motto;
-    }
-
-    public String getLook() {
-        return this.look;
-    }
-
-    public String getGender() {
-        return this.gender;
-    }
-
-    public int getCredits() {
-        return this.credits;
-    }
-
-    public int getPixels() {
-        return this.pixels;
-    }
-
-    public int getDiamonds() {
-        return this.diamonds;
-    }
-
-    public int getSeasonalPoints() {
-        return this.seasonalPoints;
-    }
-
-    public boolean isOnline() {
-        return this.isOnline;
-    }
-
-    public String getAuthTicket() {
-        return this.authTicket;
-    }
-
-    public String getRegisterIp() {
-        return this.registerIp;
-    }
-
-    public String getCurrentIp() {
-        return this.currentIp;
-    }
-
-    public String getMachineId() {
-        return this.machineId;
-    }
-
-    public int getHomeRoom() {
-        return this.homeRoom;
     }
 
     @Override

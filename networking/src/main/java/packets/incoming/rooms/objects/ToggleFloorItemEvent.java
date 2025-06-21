@@ -15,7 +15,7 @@ public class ToggleFloorItemEvent extends IncomingEvent {
 
     @Override
     public void parse(final IIncomingPacket packet, final IClient client) {
-        if (client.getHabbo().getRoom() == null || client.getHabbo().getPlayerEntity() == null) return;
+        if (client.getHabbo().getRoom() == null || client.getHabbo().getEntity() == null) return;
 
         final var itemId = packet.readInt();
         final var state = packet.readInt();
@@ -23,10 +23,10 @@ public class ToggleFloorItemEvent extends IncomingEvent {
         if (item == null)
             return;
 
-        if (!item.canUse(client.getHabbo().getPlayerEntity()) || !item.canInteract(client.getHabbo().getPlayerEntity()))
+        if (!item.canUse(client.getHabbo().getEntity()) || !item.canInteract(client.getHabbo().getEntity()))
             return;
 
 //        item.toggleState(state);
-        item.onInteract(client.getHabbo().getPlayerEntity());
+        item.onInteract(client.getHabbo().getEntity());
     }
 }

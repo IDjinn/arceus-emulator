@@ -16,13 +16,13 @@ public class RoomUserStartTypingEvent extends IncomingEvent {
 
     @Override
     public void parse(final IIncomingPacket packet, final IClient client) {
-        if (client.getHabbo().getRoom() == null || client.getHabbo().getPlayerEntity() == null) return;
+        if (client.getHabbo().getRoom() == null || client.getHabbo().getEntity() == null) return;
 
-        if (!client.getHabbo().getRoom().getRightsManager().canType(client.getHabbo().getPlayerEntity()))
+        if (!client.getHabbo().getRoom().getRightsManager().canType(client.getHabbo().getEntity()))
             return;
 
         client.getHabbo().getRoom().broadcastMessage(
-                new RoomUserTypingComposer(client.getHabbo().getPlayerEntity(),
+                new RoomUserTypingComposer(client.getHabbo().getEntity(),
                         true
                 ));
     }

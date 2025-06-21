@@ -49,11 +49,11 @@ public interface IRoomData {
 
     boolean isStaffPicked();
 
-    boolean allowPets();
+    boolean isAllowPets();
 
-    boolean allowPetsEat();
+    boolean isAllowPetsEat();
 
-    boolean allowWalkthrough();
+    boolean isAllowWalkthrough();
 
     int getChatMode();
 
@@ -79,7 +79,7 @@ public interface IRoomData {
 
     int getTradeMode();
 
-    boolean canMoveDiagonally();
+    boolean getCanMoveDiagonally();
 
     boolean hasJukeboxActive();
 

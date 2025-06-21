@@ -2,6 +2,8 @@ package habbo.navigator.data;
 
 import habbo.navigator.enums.NavigatorDisplayMode;
 import habbo.rooms.IRoom;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
@@ -15,6 +17,7 @@ public class NavigatorPublicCategory implements INavigatorPublicCategory, IFilla
 
     private int id;
     private String name;
+    @Setter
     private List<IRoom> rooms;
     private NavigatorDisplayMode displayMode;
     private int order;
@@ -48,10 +51,6 @@ public class NavigatorPublicCategory implements INavigatorPublicCategory, IFilla
 
     public void removeRoom(IRoom room) {
         this.rooms.remove(room);
-    }
-
-    public void setRooms(List<IRoom> rooms) {
-        this.rooms = rooms;
     }
 
     @Override

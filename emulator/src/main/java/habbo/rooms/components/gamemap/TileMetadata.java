@@ -1,12 +1,14 @@
 package habbo.rooms.components.gamemap;
 
 import habbo.rooms.components.objects.items.floor.IFloorFloorItem;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import stormpot.Slot;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+@Setter
 public class TileMetadata implements ITileMetadata {
     private static final double InvalidHeight = -1d;
 
@@ -25,11 +27,6 @@ public class TileMetadata implements ITileMetadata {
     @Override
     public IRoomTile getRoomTile() {
         return this.roomTile;
-    }
-
-    @Override
-    public void setRoomTile(final IRoomTile roomTile) {
-        this.roomTile = roomTile;
     }
 
     @Override
@@ -57,28 +54,13 @@ public class TileMetadata implements ITileMetadata {
     }
 
     @Override
-    public void setWalkableHeight(@Nullable final Double walkableHeight) {
-        this.walkableHeight = walkableHeight;
-    }
-
-    @Override
     public Optional<Double> getSitHeight() {
         return Optional.ofNullable(this.sitHeight);
     }
 
     @Override
-    public void setSitHeight(@Nullable final Double sitHeight) {
-        this.sitHeight = sitHeight;
-    }
-
-    @Override
     public Optional<Double> getLayHeight() {
         return Optional.ofNullable(this.layHeight);
-    }
-
-    @Override
-    public void setLayHeight(@Nullable final Double layHeight) {
-        this.layHeight = layHeight;
     }
 
     @Override
@@ -89,16 +71,6 @@ public class TileMetadata implements ITileMetadata {
     @Override
     public Optional<IFloorFloorItem> getItem() {
         return Optional.ofNullable(this.item);
-    }
-
-    @Override
-    public void setItem(@Nullable final IFloorFloorItem item) {
-        this.item = item;
-    }
-
-    @Override
-    public void setStackHeight(@Nullable final Double stackHeight) {
-        this.stackHeight = stackHeight;
     }
 
     @Override

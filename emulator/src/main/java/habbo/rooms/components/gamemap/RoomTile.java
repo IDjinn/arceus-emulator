@@ -1,5 +1,7 @@
 package habbo.rooms.components.gamemap;
 
+import lombok.Getter;
+import lombok.Setter;
 import utils.pathfinder.Position;
 
 import java.util.LinkedList;

@@ -46,7 +46,7 @@ public class CommandHelpers implements ICommandHelpers {
     @Override
     public Optional<IRoomEntity> resolveEntity(@NotNull final IRoom room, @NotNull final String resolvable) {
         if (resolvable.startsWith(HABBO_MENTION_PREFIX))
-            return this.resolveHabbo(resolvable).flatMap(habbo -> Optional.ofNullable(habbo.getPlayerEntity()));
+            return this.resolveHabbo(resolvable).flatMap(habbo -> Optional.ofNullable(habbo.getEntity()));
 
         for (final IRoomEntity entity : room.getEntityManager().getEntities()) { // TODO CULTURE INVARIANT, IGNORE 
             // CASE ETC

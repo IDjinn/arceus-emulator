@@ -12,10 +12,11 @@ import storage.results.IConnectionResult;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class CatalogFactory implements ICatalogFactory {
-    private final HashMap<String, ICatalogPage> catalogPageTypes = new HashMap<>();
+    private final Map<String, ICatalogPage> catalogPageTypes = new HashMap<>();
     @Inject
     private IFurnitureManager furnitureManager;
 

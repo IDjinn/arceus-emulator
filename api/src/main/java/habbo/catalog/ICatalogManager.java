@@ -6,13 +6,13 @@ import habbo.catalog.pages.ICatalogPage;
 import habbo.habbos.IHabbo;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ICatalogManager extends IHotelService {
-    HashMap<Integer, ICatalogItem> getCatalogItems();
+    Map<Integer, ICatalogItem> getCatalogItems();
 
-    HashMap<Integer, ICatalogPage> getCatalogPages();
+    Map<Integer, ICatalogPage> getCatalogPages();
 
     List<ICatalogPage> getCatalogPagesForHabbo(int parentId, IHabbo habbo);
 

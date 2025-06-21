@@ -9,24 +9,24 @@ import habbo.habbos.data.wallet.IHabboWallet;
 import habbo.habbos.inventory.IHabboInventory;
 import habbo.rooms.IRoom;
 import habbo.rooms.entities.IPlayerEntity;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import networking.client.IClient;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
-public class Habbo implements IHabbo {
-    private final IClient client;
-
+@Getter
+@Setter
+public final class Habbo implements IHabbo {
     private @Nullable IRoom room;
     private @Nullable IPlayerEntity entity;
 
+    private final IClient client;
     private final IHabboData data;
-
     private final IHabboSettings settings;
-
     private final IHabboInventory inventory;
-
     private final IHabboNavigator navigator;
-
     private final IHabboRooms rooms;
     private final IHabboWallet wallet;
     private final IHabboBadgesComponent badgesComponent;
@@ -67,11 +67,6 @@ public class Habbo implements IHabbo {
     }
 
     @Override
-    public void onLoaded() {
-
-    }
-
-    @Override
     public void update() {
         this.data.update();
         this.settings.update();
@@ -85,7 +80,7 @@ public class Habbo implements IHabbo {
     @Override
     public void destroy() {
         this.setRoom(null);
-        this.setPlayerEntity(null);
+        this.setEntity(null);
         this.data.destory();
         this.settings.destory();
         this.inventory.destory();
@@ -93,68 +88,6 @@ public class Habbo implements IHabbo {
         this.rooms.destory();
         this.wallet.destory();
         this.badgesComponent.destory();
-    }
-
-
-    public IClient getClient() {
-        return this.client;
-    }
-
-    @Override
-    public void setRoom(@Nullable IRoom room) {
-        this.room = room;
-    }
-
-    @Nullable
-    @Override
-    public IRoom getRoom() {
-        return this.room;
-    }
-
-    @Nullable
-    @Override
-    public IPlayerEntity getPlayerEntity() {
-        return this.entity;
-    }
-
-    @Override
-    public void setPlayerEntity(@Nullable IPlayerEntity entity) {
-        this.entity = entity;
-    }
-
-    @Override
-    public IHabboData getData() {
-        return this.data;
-    }
-
-    @Override
-    public IHabboSettings getSettings() {
-        return this.settings;
-    }
-
-    @Override
-    public IHabboInventory getInventory() {
-        return this.inventory;
-    }
-
-    @Override
-    public IHabboNavigator getNavigator() {
-        return this.navigator;
-    }
-
-    @Override
-    public IHabboRooms getRooms() {
-        return this.rooms;
-    }
-
-    @Override
-    public IHabboWallet getWallet() {
-        return this.wallet;
-    }
-
-    @Override
-    public IHabboBadgesComponent getBadgesComponent() {
-        return this.badgesComponent;
     }
 }
 

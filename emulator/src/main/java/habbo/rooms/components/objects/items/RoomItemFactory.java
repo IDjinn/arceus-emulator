@@ -39,11 +39,11 @@ public class RoomItemFactory implements IRoomItemFactory {
 
     @Inject
     public RoomItemFactory(IFurnitureManager furnitureManager, IHabboManager habboManager, Injector injector) {
-        this.furnitureManager       = furnitureManager;
-        this.habboManager          = habboManager;
-        this.injector               = injector;
-        this.itemDefinitionMap      = new HashMap<>();
-        this.itemConstructorCache   = new HashMap<>();
+        this.furnitureManager = furnitureManager;
+        this.habboManager = habboManager;
+        this.injector = injector;
+        this.itemDefinitionMap = new HashMap<>();
+        this.itemConstructorCache = new HashMap<>();
 
         this.initInteractions();
     }
@@ -80,103 +80,62 @@ public class RoomItemFactory implements IRoomItemFactory {
     public IRoomItem create(IRoomItemData itemData, IRoom room) {
         var furnitureData = this.furnitureManager.get(itemData.getFurnitureId());
         if (furnitureData == null) {
-            throw new IllegalArgumentException(
-                    "Furniture data not found for id " + itemData.getFurnitureId()
-            );
+            throw new IllegalArgumentException("Furniture data not found for id " + itemData.getFurnitureId());
         }
 
         IRoomItem item = switch (furnitureData.getType()) {
             case FLOOR -> this.createFloorObject(itemData, room, furnitureData);
-            case WALL  -> this.createWallObject(itemData, room, furnitureData);
-            default    -> throw new IllegalArgumentException(
-                    "Furniture type " + furnitureData.getType() + " is not a valid object"
-            );
+            case WALL -> this.createWallObject(itemData, room, furnitureData);
+            default ->
+                    throw new IllegalArgumentException("Furniture type " + furnitureData.getType() + " is not a valid object");
         };
 
         this.injector.injectMembers(item);
 
-        this.habboManager.getHabboData(itemData.getOwnerId())
-                .ifPresent(item::setOwnerData);
+        this.habboManager.getHabboData(itemData.getOwnerId()).ifPresent(item::setOwnerData);
 
         return item;
     }
 
-    private IFloorFloorItem createFloorObject(
-            IRoomItemData data,
-            IRoom room,
-            IFurniture furnitureData
-    ) {
+    private IFloorFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         IRoomItem object = this.createRoomObject(data, room, furnitureData);
         if (object == null) {
-            throw new IllegalArgumentException(
-                    "Furniture type " + furnitureData.getId()
-                            + " couldn't be created with interaction type "
-                            + furnitureData.getInteractionType()
-                            + ". No constructors were found."
-            );
+            throw new IllegalArgumentException("Furniture type " + furnitureData.getId() + " couldn't be created with interaction type " + furnitureData.getInteractionType() + ". No constructors were found.");
         }
         return (IFloorFloorItem) object;
     }
 
-    private IWallItem createWallObject(
-            IRoomItemData data,
-            IRoom room,
-            IFurniture furnitureData
-    ) {
+    private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         IRoomItem object = this.createRoomObject(data, room, furnitureData);
         if (object == null) {
-            throw new IllegalArgumentException(
-                    "Furniture type " + furnitureData.getId()
-                            + " couldn't be created with interaction type "
-                            + furnitureData.getInteractionType()
-                            + ". No constructors were found."
-            );
+            throw new IllegalArgumentException("Furniture type " + furnitureData.getId() + " couldn't be created with interaction type " + furnitureData.getInteractionType() + ". No constructors were found.");
         }
         return (IWallItem) object;
     }
 
-    private @Nullable IRoomItem createRoomObject(
-            IRoomItemData data,
-            IRoom room,
-            IFurniture furniture
-    ) {
+    private @Nullable IRoomItem createRoomObject(IRoomItemData data, IRoom room, IFurniture furniture) {
         assert furniture != null;
         assert room != null;
 
         if (this.itemDefinitionMap.containsKey(furniture.getInteractionType())) {
             try {
-                Constructor<? extends IRoomItem> constructor =
-                        this.itemConstructorCache.computeIfAbsent(
-                                furniture.getInteractionType(),
-                                key -> {
-                                    try {
-                                        return this.itemDefinitionMap
-                                                .get(key)
-                                                .getConstructor(IRoomItemData.class, IRoom.class, IFurniture.class);
-                                    } catch (NoSuchMethodException e) {
-                                        return null;
-                                    }
-                                }
-                        );
+                Constructor<? extends IRoomItem> constructor = this.itemConstructorCache.computeIfAbsent(furniture.getInteractionType(), key -> {
+                    try {
+                        return this.itemDefinitionMap.get(key).getConstructor(IRoomItemData.class, IRoom.class, IFurniture.class);
+                    } catch (NoSuchMethodException e) {
+                        return null;
+                    }
+                });
 
                 if (constructor != null) {
                     return constructor.newInstance(data, room, furniture);
                 }
             } catch (Exception e) {
-                logger.warn(
-                        "Failed to create instance for item: {}, type: {}",
-                        furniture.getId(),
-                        furniture.getInteractionType(),
-                        e
-                );
+                logger.warn("Failed to create instance for item: {}, type: {}", furniture.getId(), furniture.getInteractionType(), e);
             }
         }
 
-        logger.warn(
-                "Interaction type {} was not found to create instance for item {}",
-                furniture.getInteractionType(),
-                data.getId()
-        );
+        logger.warn("Interaction type {} was not found to create instance for item {}", furniture.getInteractionType(), data.getId());
 
         if (furniture.isCanSit()) {
             return new SitFloorItem(data, room, furniture);
@@ -195,73 +154,29 @@ public class RoomItemFactory implements IRoomItemFactory {
     }
 
     private IRoomItemData createItemDataFromResult(IConnectionResult result) throws Exception {
-        final var id          = result.getInt("id");
-        final var itemId      = result.getInt("item_id");
-        final var ownerId     = result.getInt("user_id");
-        final var x           = result.getInt("x");
-        final var y           = result.getInt("y");
-        final var z           = result.getDouble("z");
-        final var rotation    = result.getInt("rot");
-        final var wallPosition= result.getString("wall_pos");
-        final var wiredData   = result.getString("wired_data");
+        final var id = result.getInt("id");
+        final var itemId = result.getInt("item_id");
+        final var ownerId = result.getInt("user_id");
+        final var x = result.getInt("x");
+        final var y = result.getInt("y");
+        final var z = result.getDouble("z");
+        final var rotation = result.getInt("rot");
+        final var wallPosition = result.getString("wall_pos");
+        final var wiredData = result.getString("wired_data");
 
-        final IExtraData extraData = this.furnitureManager
-                .parseExtraData(result.getString("extra_data"));
-        extraData.setLimitedData(
-                LimitedData.fromString(result.getString("limited_data"))
-        );
+        final IExtraData extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
+        extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));
 
-        return new RoomItemData(
-                id,
-                itemId,
-                ownerId,
-                new Position(x, y, z),
-                rotation,
-                extraData,
-                wallPosition,
-                wiredData
-        );
+        return new RoomItemData(id, itemId, ownerId, new Position(x, y, z), rotation, extraData, wallPosition, wiredData);
     }
 
     @Override
-    public IRoomItemData createItemData(
-            final int id,
-            final int furnitureId,
-            final int ownerId,
-            final Position position,
-            final int rotation,
-            final IExtraData extraData,
-            final String wiredData
-    ) {
-        return new RoomItemData(
-                id,
-                furnitureId,
-                ownerId,
-                position,
-                rotation,
-                extraData,
-                "",
-                wiredData
-        );
+    public IRoomItemData createItemData(final int id, final int furnitureId, final int ownerId, final Position position, final int rotation, final IExtraData extraData, final String wiredData) {
+        return new RoomItemData(id, furnitureId, ownerId, position, rotation, extraData, "", wiredData);
     }
 
     @Override
-    public IRoomItemData createItemData(
-            int id,
-            int furnitureId,
-            int ownerId,
-            String wallPosition,
-            IExtraData extraData
-    ) {
-        return new RoomItemData(
-                id,
-                furnitureId,
-                ownerId,
-                new Position(-1, -1, 0d),
-                0,
-                extraData,
-                wallPosition,
-                ""
-        );
+    public IRoomItemData createItemData(int id, int furnitureId, int ownerId, String wallPosition, IExtraData extraData) {
+        return new RoomItemData(id, furnitureId, ownerId, new Position(-1, -1, 0d), 0, extraData, wallPosition, "");
     }
 }

@@ -114,9 +114,9 @@ public class HabboManager implements IHabboManager {
         try {
             habbo.update();
 
-            if (habbo.getRoom() != null && habbo.getPlayerEntity() != null) {
-                habbo.getRoom().getEntityManager().kick(habbo.getPlayerEntity());
-                habbo.getRoom().broadcastMessage(new RoomUserRemoveComposer(habbo.getPlayerEntity()));
+            if (habbo.getRoom() != null && habbo.getEntity() != null) {
+                habbo.getRoom().getEntityManager().kick(habbo.getEntity());
+                habbo.getRoom().broadcastMessage(new RoomUserRemoveComposer(habbo.getEntity()));
             }
             
             habbo.destroy();

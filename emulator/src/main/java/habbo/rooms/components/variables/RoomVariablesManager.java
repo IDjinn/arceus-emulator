@@ -15,9 +15,4 @@ public class RoomVariablesManager extends VariableManager implements IRoomVariab
     public void init(final IRoom room) {
         this.room = room;
     }
-
-    @Override
-    public void destroy() {
-
-    }
 }

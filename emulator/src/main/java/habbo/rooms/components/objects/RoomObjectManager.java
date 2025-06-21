@@ -34,9 +34,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 public class RoomObjectManager implements IRoomObjectManager {
-    private final HashMap<Integer, IRoomItem> items;
-    private final HashMap<Integer, IFloorFloorItem> floorItems;
-    private final HashMap<Integer, IWallItem> wallItems;
+    private final Map<Integer, IRoomItem> items;
+    private final Map<Integer, IFloorFloorItem> floorItems;
+    private final Map<Integer, IWallItem> wallItems;
     private final Logger logger = LogManager.getLogger();
     private IRoom room;
     @Inject
@@ -91,7 +91,7 @@ public class RoomObjectManager implements IRoomObjectManager {
     public void update() {
         this.itemsRepository.updateItemsBatch(statement -> {
             for (var item : this.items.values()) {
-                if (!item.needSave()) continue;
+                if (!item.isNeedSave()) continue;
 
                 if (item instanceof IFloorFloorItem floorItem) {
                 } else if (item instanceof IWallItem wallItem) {
@@ -206,13 +206,13 @@ public class RoomObjectManager implements IRoomObjectManager {
             final var tile = this.getRoom().getGameMap().getTile(targetPosition);
             var topItem = this.getTopFloorItemAt(targetPosition, -1);
             if (topItem.isPresent()) {
-                if (!topItem.get().canStack(item.getHabbo().getPlayerEntity()))
+                if (!topItem.get().canStack(item.getHabbo().getEntity()))
                     return;
             }
 
             final var stackHeight =
                     topItem.isEmpty() ? tile.getZ() :
-                            topItem.get().getStackHeight(item.getHabbo().getPlayerEntity()).get();
+                            topItem.get().getStackHeight(item.getHabbo().getEntity()).get();
             targetPosition.setZ(stackHeight);
             this.itemsRepository.placeFloorItemFromInventory(result -> {
                 var itemData = this.roomItemFactory.createItemData(

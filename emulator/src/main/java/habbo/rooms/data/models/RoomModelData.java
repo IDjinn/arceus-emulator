@@ -1,12 +1,14 @@
 package habbo.rooms.data.models;
 
 import habbo.rooms.data.IRoomModelData;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
 import utils.pathfinder.Direction;
 
+@Getter
 public class RoomModelData implements IRoomModelData, IFillable {
     private final Logger logger = LogManager.getLogger();
 
@@ -22,30 +24,6 @@ public class RoomModelData implements IRoomModelData, IFillable {
         } catch (Exception e) {
             this.logger.error("Failed to fill room model data", e);
         }
-    }
-
-    public Logger getLogger() {
-        return this.logger;
-    }
-
-    public int getDoorX() {
-        return this.doorX;
-    }
-
-    public int getDoorY() {
-        return this.doorY;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getHeightMap() {
-        return this.heightMap;
-    }
-
-    public Direction getDoorDirection() {
-        return this.doorDirection;
     }
 
     @Override

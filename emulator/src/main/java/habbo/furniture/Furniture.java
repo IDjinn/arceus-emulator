@@ -1,7 +1,9 @@
 package habbo.furniture;
 
+import lombok.Getter;
 import storage.results.IConnectionResult;
 
+@Getter
 public class Furniture implements IFurniture {
     private int id;
     private int spriteId;
@@ -47,106 +49,5 @@ public class Furniture implements IFurniture {
         this.canRecycle = result.getBoolean("allow_recycle");
         this.canSellOnMarketplace = result.getBoolean("allow_marketplace_sell");
         this.canStackOnInventory = result.getBoolean("allow_inventory_stack");
-    }
-
-    @Override
-    public void destroy() {
-
-        IFurniture.super.destroy();
-    }
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public int getSpriteId() {
-        return this.spriteId;
-    }
-
-    @Override
-    public String getPublicName() {
-        return this.publicName;
-    }
-
-    @Override
-    public String getItemName() {
-        return this.itemName;
-    }
-
-    @Override
-    public FurnitureType getType() {
-        return this.type;
-    }
-
-    @Override
-    public int getWidth() {
-        return this.width;
-    }
-
-    @Override
-    public int getLength() {
-        return this.length;
-    }
-
-    @Override
-    public double getStackHeight() {
-        return this.stackHeight;
-    }
-
-    @Override
-    public String getInteractionType() {
-        return this.interactionType;
-    }
-
-    @Override
-    public int getInteractionModesCount() {
-        return this.interactionModesCount;
-    }
-
-    @Override
-    public boolean isCanStackOnInventory() {
-        return this.canStackOnInventory;
-    }
-
-    @Override
-    public boolean isCanSellOnMarketplace() {
-        return this.canSellOnMarketplace;
-    }
-
-    @Override
-    public boolean isCanRecycle() {
-        return this.canRecycle;
-    }
-
-    @Override
-    public boolean isCanTrade() {
-        return this.canTrade;
-    }
-
-    @Override
-    public boolean isCanGift() {
-        return this.canGift;
-    }
-
-    @Override
-    public boolean isCanStack() {
-        return this.canStack;
-    }
-
-    @Override
-    public boolean isCanLay() {
-        return this.canLay;
-    }
-
-    @Override
-    public boolean isCanWalk() {
-        return this.canWalk;
-    }
-
-    @Override
-    public boolean isCanSit() {
-        return this.canSit;
     }
 }

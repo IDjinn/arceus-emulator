@@ -6,6 +6,7 @@ import habbo.rooms.IRoom;
 import habbo.rooms.components.objects.items.IRoomItemData;
 import habbo.rooms.components.objects.items.floor.DefaultFloorItem;
 import habbo.rooms.entities.IRoomEntity;
+import lombok.Getter;
 import storage.repositories.rooms.IRoomItemsRepository;
 
 public class DoorTeleportItem extends DefaultFloorItem {
@@ -15,14 +16,11 @@ public class DoorTeleportItem extends DefaultFloorItem {
     @Inject
     IRoomItemsRepository itemsRepository;
 
+    @Getter
     private int pairId = InvalidPair;
 
     public DoorTeleportItem(IRoomItemData itemData, IRoom room, IFurniture furniture) {
         super(itemData, room, furniture);
-    }
-
-    public int getPairId() {
-        return this.pairId;
     }
 
     private boolean isValidTeleport() {

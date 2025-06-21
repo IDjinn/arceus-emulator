@@ -5,12 +5,12 @@ import stormpot.Slot;
 
 public class TileMetadataAllocator implements Allocator<TileMetadata> {
     @Override
-    public TileMetadata allocate(final Slot slot) throws Exception {
+    public TileMetadata allocate(final Slot slot)  {
         return new TileMetadata(slot);
     }
 
     @Override
-    public void deallocate(final TileMetadata poolable) throws Exception {
+    public void deallocate(final TileMetadata poolable)  {
 
     }
 }

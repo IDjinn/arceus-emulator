@@ -1,6 +1,7 @@
 package habbo.habbos.data;
 
 import habbo.habbos.IHabbo;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
@@ -12,43 +13,79 @@ public class HabboSettings implements IHabboSettings, IFillable {
     private static final Logger logger = LogManager.getLogger();
     private final IHabbo habbo;
 
+    @Getter
     private int respectPointsReceived;
+    @Getter
     private int achievementScore;
+    @Getter
     private int respectPointsGiven;
+    @Getter
     private int petRespectPointsToGive;
+    @Getter
     private int respectPointsToGive;
+    @Getter
     private boolean blockFollowing;
+    @Getter
     private boolean blockFriendRequests;
+    @Getter
     private boolean blockRoomInvites;
+    @Getter
     private boolean preferOldChat;
+    @Getter
     private boolean blockCameraFollow;
+    @Getter
     private int guild;
+    @Getter
     private String[] tags;
     private boolean allowTrade;
+    @Getter
     private int clubExpireTimestamp;
+    @Getter
     private int loginStreak;
+    @Getter
     private int rentedItemId;
+    @Getter
     private int rentedTimeEnd;
+    @Getter
     private int systemVolume;
+    @Getter
     private int furnitureVolume;
+    @Getter
     private int traxVolume;
+    @Getter
     private int chatColor;
+    @Getter
     private int hofPoints;
+    @Getter
     private boolean blockStaffAlerts;
+    @Getter
     private int citizenshipLevel;
+    @Getter
     private int helpersLevel;
+    @Getter
     private boolean ignoreBots;
+    @Getter
     private boolean ignorePets;
+    @Getter
     private boolean nux;
+    @Getter
     private int muteEndTime;
     private boolean allowNameChange;
+    @Getter
     private boolean perkTrade;
+    @Getter
     private int forumPostsCount;
+    @Getter
     private int uiFlags;
+    @Getter
     private boolean hasGottenDefaultSavedSearches;
+    @Getter
     private int maxFriends;
+    @Getter
     private int maxRooms;
+    @Getter
     private int lastHCPayday;
+    @Getter
     private int hcGiftsClaimed;
 
     public HabboSettings(IHabbo habbo, IConnectionResult result) {
@@ -68,156 +105,12 @@ public class HabboSettings implements IHabboSettings, IFillable {
         return logger;
     }
 
-    public int getRespectPointsReceived() {
-        return this.respectPointsReceived;
-    }
-
-    public int getAchievementScore() {
-        return this.achievementScore;
-    }
-
-    public int getRespectPointsGiven() {
-        return this.respectPointsGiven;
-    }
-
-    public int getPetRespectPointsToGive() {
-        return this.petRespectPointsToGive;
-    }
-
-    public int getRespectPointsToGive() {
-        return this.respectPointsToGive;
-    }
-
-    public boolean isBlockFollowing() {
-        return this.blockFollowing;
-    }
-
-    public boolean isBlockFriendRequests() {
-        return this.blockFriendRequests;
-    }
-
-    public boolean isBlockRoomInvites() {
-        return this.blockRoomInvites;
-    }
-
-    public boolean isPreferOldChat() {
-        return this.preferOldChat;
-    }
-
-    public boolean isBlockCameraFollow() {
-        return this.blockCameraFollow;
-    }
-
-    public int getGuild() {
-        return this.guild;
-    }
-
-    public String[] getTags() {
-        return this.tags;
-    }
-
     public boolean allowTrade() {
         return this.allowTrade;
     }
 
-    public int getClubExpireTimestamp() {
-        return this.clubExpireTimestamp;
-    }
-
-    public int getLoginStreak() {
-        return this.loginStreak;
-    }
-
-    public int getRentedItemId() {
-        return this.rentedItemId;
-    }
-
-    public int getRentedTimeEnd() {
-        return this.rentedTimeEnd;
-    }
-
-    public int getSystemVolume() {
-        return this.systemVolume;
-    }
-
-    public int getFurnitureVolume() {
-        return this.furnitureVolume;
-    }
-
-    public int getTraxVolume() {
-        return this.traxVolume;
-    }
-
-    public int getChatColor() {
-        return this.chatColor;
-    }
-
-    public int getHofPoints() {
-        return this.hofPoints;
-    }
-
-    public boolean isBlockStaffAlerts() {
-        return this.blockStaffAlerts;
-    }
-
-    public int getCitizenshipLevel() {
-        return this.citizenshipLevel;
-    }
-
-    public int getHelpersLevel() {
-        return this.helpersLevel;
-    }
-
-    public boolean isIgnoreBots() {
-        return this.ignoreBots;
-    }
-
-    public boolean isIgnorePets() {
-        return this.ignorePets;
-    }
-
-    public boolean isNux() {
-        return this.nux;
-    }
-
-    public int getMuteEndTime() {
-        return this.muteEndTime;
-    }
-
     public boolean allowNameChange() {
         return this.allowNameChange;
-    }
-
-    public boolean isPerkTrade() {
-        return this.perkTrade;
-    }
-
-    public int getForumPostsCount() {
-        return this.forumPostsCount;
-    }
-
-    public int getUiFlags() {
-        return this.uiFlags;
-    }
-
-    public boolean isHasGottenDefaultSavedSearches() {
-        return this.hasGottenDefaultSavedSearches;
-    }
-
-    public int getMaxFriends() {
-        return this.maxFriends;
-    }
-
-    public int getMaxRooms() {
-        return this.maxRooms;
-    }
-
-    public int getLastHCPayday() {
-        return this.lastHCPayday;
-    }
-
-    public int getHcGiftsClaimed() {
-        return this.hcGiftsClaimed;
     }
 
     @Override

@@ -12,9 +12,10 @@ import packets.outgoing.inventory.InventoryRefreshComposer;
 import storage.repositories.habbo.IHabboInventoryRepository;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class HabboInventory implements IHabboInventory {
-    private final HashMap<Integer, IHabboInventoryItem> items;
+    private final Map<Integer, IHabboInventoryItem> items;
     private final IHabbo habbo;
     private final Logger logger = LogManager.getLogger();
 
@@ -30,7 +31,7 @@ public class HabboInventory implements IHabboInventory {
     }
 
     @Override
-    public HashMap<Integer, IHabboInventoryItem> getItems() {
+    public Map<Integer, IHabboInventoryItem> getItems() {
         return this.items;
     }
 

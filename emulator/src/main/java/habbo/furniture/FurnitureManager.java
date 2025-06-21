@@ -12,15 +12,16 @@ import storage.repositories.furniture.IFurnitureRepository;
 import utils.gson.GsonHelper;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 public class FurnitureManager implements IFurnitureManager {
     private final IFurnitureRepository furnitureRepository;
-    private final HashMap<Integer, IFurniture> furnitures;
+    private final Map<Integer, IFurniture> furnitures;
     private final IFurnitureFactory furnitureFactory;
     private final Logger logger = LogManager.getLogger(FurnitureManager.class);
 
-    private final HashMap<Integer, Class<? extends ExtraData>> extraDataParsers;
+    private final Map<Integer, Class<? extends ExtraData>> extraDataParsers;
 
     @Inject
     public FurnitureManager(IFurnitureRepository furnitureRepository, IFurnitureFactory furnitureFactory) {
@@ -58,7 +59,7 @@ public class FurnitureManager implements IFurnitureManager {
     }
 
     @Override
-    public HashMap<Integer, IFurniture> getAll() {
+    public Map<Integer, IFurniture> getAll() {
         return this.furnitures;
     }
 

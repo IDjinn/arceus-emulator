@@ -34,7 +34,7 @@ public abstract class RoomWriter { // TODO: Maybe make this an interface? Or add
         if (room.getData().getGuildId() > 0) base |= 2;
         if (room.getData().isPromoted()) base |= 4;
         if (!room.getData().isPublic()) base |= 8;
-        if (!room.getData().allowPets()) base |= 16;
+        if (!room.getData().isAllowPets()) base |= 16;
 
         packet.appendInt(base);
 

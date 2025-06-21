@@ -15,13 +15,22 @@ import javax.annotation.Nullable;
 
 public interface IHabbo {
 
-    void init();
+    default void init() {
 
-    void onLoaded();
+    }
 
-    void update(); // TODO
+    default void onLoaded() {
 
-    void destroy();
+    }
+
+    default void update() // TODO
+    {
+
+    }
+
+    default void destroy() {
+
+    }
 
     IClient getClient();
 
@@ -29,9 +38,9 @@ public interface IHabbo {
 
     IRoom getRoom();
 
-    IPlayerEntity getPlayerEntity();
+    IPlayerEntity getEntity();
 
-    void setPlayerEntity(@Nullable IPlayerEntity entity);
+    void setEntity(@Nullable IPlayerEntity entity);
 
     IHabboData getData();
 

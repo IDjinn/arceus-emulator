@@ -3,10 +3,10 @@ package habbo.habbos.inventory;
 import habbo.habbos.IHabboComponent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface IHabboInventory extends IHabboComponent {
-    HashMap<Integer, IHabboInventoryItem> getItems();
+    Map<Integer, IHabboInventoryItem> getItems();
 
     void addItem(IHabboInventoryItem item);
 

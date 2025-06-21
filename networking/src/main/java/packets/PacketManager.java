@@ -19,6 +19,7 @@ import utils.ReflectionHelpers;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -30,14 +31,17 @@ public class PacketManager implements IPacketManager {
     private final IConfigurationManager configuration;
     private final IThreadManager threadManager;
 
-    private final HashMap<Integer, IncomingEvent> incomingEvents = new HashMap<>();
-    private final HashMap<Integer, IncomingEvent> guestEvents = new HashMap<>();
+    private final Map<Integer, IncomingEvent> incomingEvents;
+    private final Map<Integer, IncomingEvent> guestEvents;
 
     @Inject
     public PacketManager(IClientManager clientManager, List<Class<? extends IncomingEvent>> incomings, Injector injector, IConfigurationManager configuration, IThreadManager threadManager) {
         this.clientManager = clientManager;
         this.configuration = configuration;
         this.threadManager = threadManager;
+
+        this.incomingEvents = new HashMap<>();
+        this.guestEvents = new HashMap<>();
 
         for (Class<? extends IncomingEvent> incoming : incomings) {
             if (incoming.isAnnotationPresent(NoAuth.class))

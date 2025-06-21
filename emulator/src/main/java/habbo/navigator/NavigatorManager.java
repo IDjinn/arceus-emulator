@@ -20,17 +20,17 @@ public class NavigatorManager implements INavigatorManager {
 
     private final Injector injector;
 
-    private final HashMap<Integer, INavigatorPublicCategory> publicCategories;
+    private final Map<Integer, INavigatorPublicCategory> publicCategories;
 
     private final INavigatorRepository repository;
 
     private final IEmulatorSettings emulatorSettings;
 
-    private final HashMap<String, INavigatorFilterType> filterTypes;
+    private final Map<String, INavigatorFilterType> filterTypes;
 
-    private final HashMap<Integer, INavigatorEventCategory> eventCategories;
+    private final Map<Integer, INavigatorEventCategory> eventCategories;
 
-    private final HashMap<String, INavigatorTab> tabs;
+    private final Map<String, INavigatorTab> tabs;
 
     @Inject
     public NavigatorManager(Injector injector, INavigatorRepository repository, IEmulatorSettings emulatorSettings) {

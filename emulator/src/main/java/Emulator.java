@@ -31,6 +31,8 @@ import habbo.variables.IVariableManager;
 import habbo.variables.IVariableMessageFactory;
 import habbo.variables.VariableManager;
 import habbo.variables.VariableMessageFactory;
+import lombok.Data;
+import lombok.Getter;
 import networking.INetworkingManager;
 import networking.packets.IPacketManager;
 import org.apache.logging.log4j.LogManager;
@@ -39,6 +41,7 @@ import packets.AutoBindIncomingEventsModule;
 import repositories.RepositoryModule;
 
 
+@Getter
 @Singleton
 public class Emulator extends AbstractModule implements IEmulator {
     private final Logger logger = LogManager.getLogger();

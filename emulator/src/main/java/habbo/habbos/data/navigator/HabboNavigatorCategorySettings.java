@@ -2,11 +2,13 @@ package habbo.habbos.data.navigator;
 
 import habbo.navigator.enums.NavigatorDisplayMode;
 import habbo.navigator.enums.NavigatorLayoutDisplay;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
 import utils.interfaces.IFillable;
 
+@Getter
 public class HabboNavigatorCategorySettings implements IHabboNavigatorCategorySettings, IFillable {
     private final Logger logger = LogManager.getLogger();
 
@@ -20,21 +22,6 @@ public class HabboNavigatorCategorySettings implements IHabboNavigatorCategorySe
         } catch (Exception e) {
             this.logger.error("Failed to fill [HabboNavigatorCategorySettings]", e);
         }
-    }
-
-    @Override
-    public String getCaption() {
-        return this.caption;
-    }
-
-    @Override
-    public NavigatorDisplayMode getDisplayMode() {
-        return this.displayMode;
-    }
-
-    @Override
-    public NavigatorLayoutDisplay getLayoutDisplay() {
-        return this.layoutDisplay;
     }
 
     @Override

@@ -10,6 +10,7 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.catalog.pages.ICatalogPage;
 import habbo.furniture.IFurnitureManager;
 import habbo.habbos.IHabbo;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,7 @@ import storage.repositories.catalog.ICatalogRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class CatalogManager implements ICatalogManager {
@@ -25,12 +27,13 @@ public class CatalogManager implements ICatalogManager {
     private final ICatalogRepository catalogRepository;
     private final ICatalogFactory catalogFactory;
     private final Logger logger = LogManager.getLogger();
+    @Setter
     private HashMap<Integer, ICatalogItem> catalogItems;
-    private final HashMap<Integer, ICatalogPage> catalogPages;
+    private final Map<Integer, ICatalogPage> catalogPages;
 
 
     private static final String DEFAULT_PURCHASE_HANDLER = "default_purchase_handler";
-    private final HashMap<String, ICatalogPurchaseHandler> purchaseHandlers;
+    private final Map<String, ICatalogPurchaseHandler> purchaseHandlers;
 
     @Inject
     public CatalogManager(
@@ -112,16 +115,12 @@ public class CatalogManager implements ICatalogManager {
     }
 
     @Override
-    public HashMap<Integer, ICatalogItem> getCatalogItems() {
+    public Map<Integer, ICatalogItem> getCatalogItems() {
         return this.catalogItems;
     }
 
-    public void setCatalogItems(HashMap<Integer, ICatalogItem> catalogItems) {
-        this.catalogItems = catalogItems;
-    }
-
     @Override
-    public HashMap<Integer, ICatalogPage> getCatalogPages() {
+    public Map<Integer, ICatalogPage> getCatalogPages() {
         return this.catalogPages;
     }
 

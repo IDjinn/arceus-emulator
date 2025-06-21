@@ -2,6 +2,7 @@ package core.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.repositories.emulator.IEmulatorRepository;
@@ -17,6 +18,7 @@ public class EmulatorSettings implements IEmulatorSettings {
 
     private boolean isLoaded = false;
 
+    @Getter
     private HashMap<String, String> settings;
 
     public void init() {
@@ -49,10 +51,6 @@ public class EmulatorSettings implements IEmulatorSettings {
 
     public void reload() {
         this.loadAllSettings(true);
-    }
-
-    public HashMap<String, String> getSettings() {
-        return this.settings;
     }
 
     public String getOrDefault(String key, String defaultValue) {

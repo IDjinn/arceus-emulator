@@ -79,7 +79,7 @@ public class CommandManager implements ICommandManager {
 
     @Override
     public void execute(@NotNull IHabbo habbo, @NotNull final String message) {
-        if (habbo.getPlayerEntity() == null)
+        if (habbo.getEntity() == null)
             return;
 
         if (StringUtil.isNullOrEmpty(message))
@@ -94,7 +94,7 @@ public class CommandManager implements ICommandManager {
         System.arraycopy(split, 1, parameters, 0, split.length - 1);
 
         try {
-            final var ctx = new CommandContext(habbo.getPlayerEntity(), split[0], parameters);
+            final var ctx = new CommandContext(habbo.getEntity(), split[0], parameters);
             this.injector.injectMembers(ctx);
             command.execute(ctx);
         } catch (Exception e) {

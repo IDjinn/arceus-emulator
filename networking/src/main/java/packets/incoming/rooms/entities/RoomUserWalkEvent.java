@@ -15,12 +15,12 @@ public class RoomUserWalkEvent extends IncomingEvent {
 
     @Override
     public void parse(IIncomingPacket packet, IClient client) {
-        if (client.getHabbo().getPlayerEntity() == null) return;
+        if (client.getHabbo().getEntity() == null) return;
 
         final Position goal = new Position(packet.readInt(), packet.readInt());
         final IRoomTile tileGoal = client.getHabbo().getRoom().getGameMap().getTile(goal);
         
-        var player = client.getHabbo().getPlayerEntity();
+        var player = client.getHabbo().getEntity();
         player.getPositionComponent().getWalkPath().clear();
         player.getPositionComponent().setGoal(goal);
     }

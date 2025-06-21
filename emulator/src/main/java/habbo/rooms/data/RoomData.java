@@ -1,6 +1,8 @@
 package habbo.rooms.data;
 
 import habbo.rooms.enums.RoomAccessState;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.results.IConnectionResult;
@@ -9,19 +11,20 @@ import utils.interfaces.IFillable;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class RoomData implements IRoomData, IFillable {
-    private final Logger logger = LogManager.getLogger();
 
+    private final Logger logger = LogManager.getLogger();
     private int id;
     private String name;
     private String description;
-    private String model;
+    private String modelName;
     private int ownerId;
     private String ownerName;
     private int maxUsers;
     private int score;
     private String password;
-    private RoomAccessState state;
+    private RoomAccessState accessState;
     private int guildId;
     private int categoryId;
     //private INavigatorCategory category; TODO
@@ -56,11 +59,9 @@ public class RoomData implements IRoomData, IFillable {
     private boolean hasJukeboxActive;
     private boolean hideWireds;
     private boolean isForSale;
-
+    @Setter
     private PathfinderMode pathfinderMode;
 
-
-  
 
     public RoomData(IConnectionResult data) {
         try {
@@ -70,167 +71,7 @@ public class RoomData implements IRoomData, IFillable {
         }
     }
 
-    public Logger getLogger() {
-        return this.logger;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public String getModelName() {
-        return this.model;
-    }
-
-    public int getOwnerId() {
-        return this.ownerId;
-    }
-
-    public String getOwnerName() {
-        return this.ownerName;
-    }
-
-    public int getMaxUsers() {
-        return this.maxUsers;
-    }
-
-    public int getScore() {
-        return this.score;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public RoomAccessState getAccessState() {
-        return this.state;
-    }
-
-    public int getGuildId() {
-        return this.guildId;
-    }
-
-    public int getCategoryId() {
-        return this.categoryId;
-    }
-
-    public String getPaperFloor() {
-        return this.paperFloor;
-    }
-
-    public String getPaperWall() {
-        return this.paperWall;
-    }
-
-    public String getPaperLandscape() {
-        return this.paperLandscape;
-    }
-
-    public int getThicknessWall() {
-        return this.thicknessWall;
-    }
-
-    public int getWallHeight() {
-        return this.wallHeight;
-    }
-
-    public int getThicknessFloor() {
-        return this.thicknessFloor;
-    }
-
-    public String getMoodlightData() {
-        return this.moodlightData;
-    }
-
-    public List<String> getTags() {
-        return this.tags;
-    }
-
-    public boolean isPublic() {
-        return this.isPublic;
-    }
-
-    public boolean isStaffPicked() {
-        return this.isStaffPicked;
-    }
-
-    public boolean allowPets() {
-        return this.allowPets;
-    }
-
-    public boolean allowPetsEat() {
-        return this.allowPetsEat;
-    }
-
-    public boolean allowWalkthrough() {
-        return this.allowWalkthrough;
-    }
-
-    public boolean isHideWall() {
-        return this.hideWall;
-    }
-
-    public int getChatMode() {
-        return this.chatMode;
-    }
-
-    public int getChatWeight() {
-        return this.chatWeight;
-    }
-
-    public int getChatSpeed() {
-        return this.chatSpeed;
-    }
-
-    public int getChatDistance() {
-        return this.chatDistance;
-    }
-
-    public int getChatProtection() {
-        return this.chatProtection;
-    }
-
-    public boolean isOverrideModel() {
-        return this.overrideModel;
-    }
-
-    public int getWhoCanMute() {
-        return this.whoCanMute;
-    }
-
-    public int getWhoCanKick() {
-        return this.whoCanKick;
-    }
-
-    public int getWhoCanBan() {
-        return this.whoCanBan;
-    }
-
-    public int getPollId() {
-        return this.pollId;
-    }
-
-    public int getRollerSpeed() {
-        return this.rollerSpeed;
-    }
-
-    public boolean isPromoted() {
-        return this.isPromoted;
-    }
-
-    public int getTradeMode() {
-        return this.tradeMode;
-    }
-
-    public boolean canMoveDiagonally() {
+    public boolean getCanMoveDiagonally() {
         return this.canMoveDiagonally;
     }
 
@@ -238,27 +79,19 @@ public class RoomData implements IRoomData, IFillable {
         return this.hasJukeboxActive;
     }
 
-    public boolean isHideWireds() {
-        return this.hideWireds;
-    }
-
-    public boolean isForSale() {
-        return this.isForSale;
-    }
-
     @Override
     public void fill(IConnectionResult result) throws Exception {
         this.id = result.getInt("id");
         this.name = result.getString("name");
         this.description = result.getString("description");
-        this.model = result.getString("model");
+        this.modelName = result.getString("model");
         this.ownerId = result.getInt("owner_id");
         this.ownerName = result.getString("owner_name");
         this.maxUsers = result.getInt("users_max");
         this.guildId = result.getInt("guild_id");
         this.score = result.getInt("score");
         this.password = result.getString("password");
-        this.state = RoomAccessState.fromValue(result.getString("state"));
+        this.accessState = RoomAccessState.fromValue(result.getString("state"));
         this.categoryId = result.getInt("category");
         this.paperFloor = result.getString("paper_floor");
         this.paperWall = result.getString("paper_wall");
@@ -293,16 +126,5 @@ public class RoomData implements IRoomData, IFillable {
         this.isForSale = result.getBoolean("is_forsale");
 
         this.pathfinderMode = PathfinderMode.New3dPathfinder;
-    }
-
-
-    @Override
-    public PathfinderMode getPathfinderMode() {
-        return this.pathfinderMode;
-    }
-
-    @Override
-    public void setPathfinderMode(final PathfinderMode pathfinderMode) {
-        this.pathfinderMode = pathfinderMode;
     }
 }

@@ -1,5 +1,6 @@
 package habbo.furniture.extra.data;
 
+import lombok.Getter;
 import networking.packets.OutgoingPacket;
 import utils.gson.GsonHelper;
 
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+@Getter
 public class MapExtraData extends ExtraData implements IExtraData {
     private static final String STATE = "state";
     private static final String RARITY = "rarity";
@@ -62,7 +64,4 @@ public class MapExtraData extends ExtraData implements IExtraData {
         return GsonHelper.getGson().toJson(this);
     }
 
-    public Map<String, String> getValues() {
-        return this.values;
-    }
 }

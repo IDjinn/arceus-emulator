@@ -19,7 +19,7 @@ public abstract class RoomEntity implements IRoomEntity {
     private @Inject IEntityPositionComponent positionComponent;
     private @Inject IEventHandler eventHandler;
 
-    private final ConcurrentHashMap<Class<? extends IEntityComponent>, IEntityComponent> components;
+    private final Map<Class<? extends IEntityComponent>, IEntityComponent> components;
 
     public RoomEntity(IRoom room, int virtualId) {
         this.room = room;

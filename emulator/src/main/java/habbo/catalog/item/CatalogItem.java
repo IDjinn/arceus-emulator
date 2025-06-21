@@ -5,121 +5,36 @@ import habbo.catalog.items.ICatalogItem;
 import habbo.furniture.IFurniture;
 import habbo.furniture.IFurnitureManager;
 import io.netty.util.internal.StringUtil;
+import lombok.Getter;
 import networking.packets.OutgoingPacket;
 import storage.results.IConnectionResult;
 
+@Getter
 public class CatalogItem implements ICatalogItem {
-
     private final IFurnitureManager furnitureManager;
-
-
-    private int id;
-
-    private IFurniture furniture;
-
-
-    private String displayName;
-
-
-    private int costCredits;
-
-
-    private int costActivityPoints;
-
-
-    private int costDiamonds;
-
-
-    private int costSeasonal;
-
-
-    private int amount;
-
-
-    private boolean vip;
-
-    private String items;
-    private int limitedTotal;
-
-    private int limitedSells;
-
-    private boolean allowOffer;
-
-
-    private String badgeId;
-
-    private String presetData;
-
-    private int pageId;
-
-    private int orderNum;
 
     @Inject
     public CatalogItem(IFurnitureManager furnitureManager) {
         this.furnitureManager = furnitureManager;
     }
 
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public IFurniture getFurniture() {
-        return this.furniture;
-    }
-
-
-    @Override
-    public String getDisplayName() {
-        return this.displayName;
-    }
-
-    @Override
-    public int getCostCredits() {
-        return this.costCredits;
-    }
-
-    @Override
-    public int getCostActivityPoints() {
-        return this.costActivityPoints;
-    }
-
-    @Override
-    public int getCostDiamonds() {
-        return this.costDiamonds;
-    }
-
-    @Override
-    public int getCostSeasonal() {
-        return this.costSeasonal;
-    }
-
-    @Override
-    public int getAmount() {
-        return this.amount;
-    }
-
-    @Override
-    public boolean isVip() {
-        return this.vip;
-    }
-
-    @Override
-    public int getLimitedTotal() {
-        return this.limitedTotal;
-    }
-
-    @Override
-    public int getLimitedSells() {
-        return this.limitedSells;
-    }
-
-    @Override
-    public boolean allowOffer() {
-        return this.allowOffer;
-    }
+    private int id;
+    private IFurniture furniture;
+    private String displayName;
+    private int costCredits;
+    private int costActivityPoints;
+    private int costDiamonds;
+    private int costSeasonal;
+    private int amount;
+    private boolean vip;
+    private String items;
+    private int limitedTotal;
+    private int limitedSells;
+    private boolean isAllowOffer;
+    private String badgeId;
+    private String presetData;
+    private int pageId;
+    private int order;
 
 
     @Override
@@ -132,29 +47,8 @@ public class CatalogItem implements ICatalogItem {
         return this.hasBadge() && this.items.isEmpty();
     }
 
-    @Override
-    public String getBadgeId() {
-        return this.badgeId;
-    }
-
-    @Override
-    public String getPresetData() {
-        return this.presetData;
-    }
-
-    @Override
-    public int getPageId() {
-        return this.pageId;
-    }
-
-
-    @Override
-    public int getOrder() {
-        return this.orderNum;
-    }
-
     public int compareTo(ICatalogItem item) {
-        return this.orderNum - item.getOrder();
+        return this.order - item.getOrder();
     }
 
     @Override
@@ -172,11 +66,11 @@ public class CatalogItem implements ICatalogItem {
         this.items = "";
         this.limitedTotal = result.getInt("limited_stack");
         this.limitedSells = result.getInt("limited_sells");
-        this.allowOffer = result.getBoolean("have_offer");
+        this.isAllowOffer = result.getBoolean("have_offer");
         this.badgeId = "";//result.getString("badge_id");
         this.presetData = result.getString("extradata");
         this.pageId = result.getInt("page_id");
-        this.orderNum = result.getInt("order_number");
+        this.order = result.getInt("order_number");
     }
 
     @Override
@@ -204,7 +98,7 @@ public class CatalogItem implements ICatalogItem {
 
         packet
                 .appendInt(0) // TODO clubOnly
-                .appendBoolean(this.allowOffer(), "_bundlePurchaseAllowed") // TODO
+                .appendBoolean(this.isAllowOffer(), "_bundlePurchaseAllowed") // TODO
                 .appendBoolean(false, "_isPet")
                 .appendString(this.getDisplayName() + ".png");
     }

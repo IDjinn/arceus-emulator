@@ -1,5 +1,7 @@
 package habbo.rooms.components.pathfinder;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import stormpot.Poolable;
@@ -7,18 +9,19 @@ import stormpot.Slot;
 
 public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
     private final Slot slot;
+    @Getter
+    @Setter
     public Position3d position;
     public @Nullable PathfinderNode parentNode;
+    @Getter
+    @Setter
     public float gCosts;
+    @Getter
+    @Setter
     public float hCosts;
 
     public PathfinderNode(Slot slot) {
         this.slot = slot;
-    }
-
-
-    public Position3d getPosition() {
-        return this.position;
     }
 
 
@@ -32,26 +35,6 @@ public class PathfinderNode implements Comparable<PathfinderNode>, Poolable {
 
     public float getFCosts() {
         return this.gCosts + this.hCosts;
-    }
-
-    public float getGCosts() {
-        return this.gCosts;
-    }
-
-    public void setGCosts(float gCosts) {
-        this.gCosts = gCosts;
-    }
-
-    public float getHCosts() {
-        return this.hCosts;
-    }
-
-    public void setHCosts(float hCosts) {
-        this.hCosts = hCosts;
-    }
-
-    public void setPosition(final Position3d position) {
-        this.position = position;
     }
 
     @Override

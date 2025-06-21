@@ -8,10 +8,12 @@ import habbo.furniture.extra.data.IExtraData;
 import habbo.habbos.IHabbo;
 import habbo.habbos.inventory.IHabboInventoryItem;
 import habbo.rooms.components.objects.items.LimitedData;
+import lombok.Getter;
 import networking.packets.OutgoingPacket;
 import org.jetbrains.annotations.Nullable;
 import storage.results.IConnectionResult;
 
+@Getter
 public class HabboInventoryItem implements IHabboInventoryItem {
     private int id;
     private IFurniture furniture;
@@ -40,33 +42,6 @@ public class HabboInventoryItem implements IHabboInventoryItem {
 
     @Inject
     private IFurnitureManager furnitureManager;
-
-    @Override
-    public int getId() {
-        return this.id;
-    }
-
-    @Override
-    public IHabbo getHabbo() {
-        return this.habbo;
-    }
-
-
-    @Override
-    public IFurniture getFurniture() {
-        return this.furniture;
-    }
-
-    @Override
-    public IExtraData getExtraData() {
-        return this.extraData;
-    }
-
-
-    @Override
-    public @Nullable String getWiredData() {
-        return this.wiredData;
-    }
 
     @Override
     public int getGroup() {
