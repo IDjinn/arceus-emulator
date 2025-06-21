@@ -59,7 +59,7 @@ public class RoomEntityManager implements IRoomEntityManager {
     @Override
     public IPlayerEntity createHabboEntity(IHabbo habbo) {
 
-        var a = domain.getDominion().createEntity(habbo.getData().getUsername(),
+        var domainEntity = domain.getDominion().createEntity(habbo.getData().getUsername(),
             new EntityStatusComponent()
         );
 

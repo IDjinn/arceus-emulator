@@ -22,7 +22,7 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
         try {
             this.fillOrCreate(result);
         } catch (Exception e) {
-            this.logger.error(STR."Failed to create HabboNavigatorWindowSettings from IConnectionResult: \{e.getMessage()}");
+            this.logger.error("Failed to create HabboNavigatorWindowSettings from IConnectionResult: {}", e.getMessage(), e);
         }
     }
 
@@ -57,7 +57,7 @@ public class HabboNavigatorWindowSettings implements IHabboNavigatorWindowSettin
     private void fillOrCreate(IConnectionResult result) throws Exception {
         this.userId = result.getInt("id");
 
-        if(!result.hasColumn("x")) return;
+        if (!result.hasColumn("x")) return;
 
         this.fill(result);
     }

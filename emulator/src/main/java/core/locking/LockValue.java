@@ -5,6 +5,6 @@ import org.jetbrains.annotations.Nullable;
 
 public record LockValue(@NotNull String key) implements ILockValue {
     public static LockValue fromType(ILockType type, @Nullable String key) {
-        return new LockValue(STR."\{type.getLockCode()}}-\{key}");
+        return new LockValue(type.getLockCode() + "-" + key);
     }
 }

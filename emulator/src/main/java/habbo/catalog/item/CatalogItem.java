@@ -205,6 +205,6 @@ public class CatalogItem implements ICatalogItem {
         packet.appendInt(0)// TODO clubOnly
                 .appendBoolean(this.allowOffer(), "_bundlePurchaseAllowed") // TODO
                 .appendBoolean(false, "_isPet")
-                .appendString(STR."\{this.getDisplayName()}.png");
+                .appendString(this.getDisplayName() + ".png");
     }
 }

@@ -8,6 +8,7 @@ import core.configuration.IConfigurationManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import storage.connectors.IConnector;
+import utils.StringBuilderHelper;
 
 @Singleton
 public class HikariConnector implements IConnector {
@@ -24,7 +25,7 @@ public class HikariConnector implements IConnector {
         try {
             this.initializeHikari();
         } catch (Exception e) {
-            this.logger.error(STR."Failed to initialize Hikari: \{e.getMessage()}");
+            this.logger.error("Failed to initialize Hikari: {}", e.getMessage(), e);
         }
     }
 
@@ -33,7 +34,12 @@ public class HikariConnector implements IConnector {
 
         databaseConfiguration.setMaximumPoolSize(this.config.getInt("db.pool.maxsize", 50));
         databaseConfiguration.setMinimumIdle(this.config.getInt("db.pool.minsize", 10));
-        databaseConfiguration.setJdbcUrl(STR."jdbc:mysql://\{this.config.getString("db.hostname", "localhost")}:\{this.config.getString("db.port", "3306")}/\{this.config.getString("db.database", "habbo")}\{this.config.getString("db.params")}");
+
+        final var urlBuilder = StringBuilderHelper.getBuilder();
+        urlBuilder.append("jdbc:mysql://").append(this.config.getString("db.hostname", "localhost")).append(":").append(this.config.getString("db.port", "3306"));
+        urlBuilder.append("/").append(this.config.getString("db.database", "habbo")).append(this.config.getString("db.params"));
+        databaseConfiguration.setJdbcUrl(urlBuilder.toString());
+
         databaseConfiguration.addDataSourceProperty("serverName", this.config.getString("db.hostname", "localhost"));
         databaseConfiguration.addDataSourceProperty("port", this.config.getString("db.port", "3306"));
         databaseConfiguration.addDataSourceProperty("databaseName", this.config.getString("db.database", "habbo"));

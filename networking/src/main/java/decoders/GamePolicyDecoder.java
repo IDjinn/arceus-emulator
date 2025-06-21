@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GamePolicyDecoder extends ByteToMessageDecoder {
 
-    private static final String POLICY = STR."<?xml version=\"1.0\"?>\n  <!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\n  <cross-domain-policy>\n  <allow-access-from domain=\"*\" to-ports=\"1-31111\" />\n  </cross-domain-policy>\{(char) 0}";
+    private static final String POLICY = "<?xml version=\"1.0\"?>\n  <!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\n  <cross-domain-policy>\n  <allow-access-from domain=\"*\" to-ports=\"1-31111\" />\n  </cross-domain-policy>" + (char) 0;
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {

@@ -41,7 +41,7 @@ public class ConnectionRepository implements IConnectionRepository {
                 resultConsumer.accept(connectionResult);
             }
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing SELECT query: \{query}", e);
+            this.logger.error("Error while executing SELECT query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeResultSet(selectResult);
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
@@ -70,7 +70,7 @@ public class ConnectionRepository implements IConnectionRepository {
                 resultConsumer.accept(connectionResult);
             }
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing UPDATE query: \{query}", e);
+            this.logger.error("Error while executing UPDATE query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeResultSet(updateResult);
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
@@ -94,7 +94,7 @@ public class ConnectionRepository implements IConnectionRepository {
 
             consumer.accept(isUpdated);
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing UPDATE query: \{query}", e);
+            this.logger.error("Error while executing UPDATE query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
             this.connection.getConnectionContext().getProvider().closeConnection(connection);
@@ -122,7 +122,7 @@ public class ConnectionRepository implements IConnectionRepository {
                 resultConsumer.accept(connectionResult);
             }
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing INSERT query: \{query}", e);
+            this.logger.error("Error while executing INSERT query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeResultSet(insertResult);
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
@@ -151,7 +151,7 @@ public class ConnectionRepository implements IConnectionRepository {
                 consumer.accept(connectionResult);
             }
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing INSERT query: \{query}", e);
+            this.logger.error("Error while executing INSERT query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeResultSet(insertResult);
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
@@ -174,7 +174,7 @@ public class ConnectionRepository implements IConnectionRepository {
 
             consumer.accept(isDeleted);
         } catch (Exception e) {
-            this.logger.error(STR."Error while executing DELETE query: \{query}", e);
+            this.logger.error("Error while executing DELETE query {}: {}", query, e.getMessage(), e);
         } finally {
             this.connection.getConnectionContext().getProvider().closeStatement(preparedStatement);
             this.connection.getConnectionContext().getProvider().closeConnection(connection);

@@ -8,6 +8,6 @@ public class UserCreditsComposer extends OutgoingPacket {
     public UserCreditsComposer(IHabbo habbo) {
         super(OutgoingHeaders.UserCreditsComposer);
 
-        this.appendString(STR."\{habbo.getData().getCredits()}");
+        this.appendString(String.valueOf(habbo.getData().getCredits()));
     }
 }

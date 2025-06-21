@@ -45,7 +45,7 @@ public class FurnitureManager implements IFurnitureManager {
             this.furnitures.put(furniture.getId(), furniture);
         });
 
-        this.logger.info(STR."Loaded \{this.furnitures.size()} furniture from database.");
+        this.logger.info("Loaded {} furniture from database.", this.furnitures.size());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class FurnitureManager implements IFurnitureManager {
             return GsonHelper.getGson().fromJson(json, LegacyExtraData.class);
         } catch (JsonSyntaxException _) {
         } catch (Exception e) {
-            this.logger.warn(STR."Failed to parse extra data: \{json}", e);
+            this.logger.warn("Failed to parse extra data: {}", json, e);
         }
         return LegacyExtraData.fromLegacyString(json);
     }

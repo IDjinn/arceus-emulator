@@ -1,5 +1,7 @@
 package utils;
 
+import org.jetbrains.annotations.NotNull;
+
 public final class ReflectionHelpers {
     public static CallerInfo getCallerInfo() {
         final var stackTraceElement = Thread.currentThread().getStackTrace()[3];
@@ -11,8 +13,8 @@ public final class ReflectionHelpers {
 
     public record CallerInfo(String className, String methodName, int line) {
         @Override
-        public String toString() {
-            return STR."\{this.className}.\{this.methodName}:\{this.line}";
+        public @NotNull String toString() {
+            return StringBuilderHelper.getBuilder().append(this.className).append('.').append(this.methodName).append('.').append(this.line).toString();
         }
     }
 }

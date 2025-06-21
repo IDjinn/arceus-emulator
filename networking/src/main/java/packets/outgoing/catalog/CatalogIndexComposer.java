@@ -30,7 +30,7 @@ public class CatalogIndexComposer extends OutgoingPacket {
         this.appendInt(catalogPage.getIcon());
         this.appendInt(catalogPage.isEnabled() ? catalogPage.getId() : -1);
         this.appendString(catalogPage.getCaption());
-        this.appendString(showId ? STR."\{catalogPage.getCaption()} (\{catalogPage.getId()})" : catalogPage.getCaption());
+        this.appendString(showId ? String.format("%s (%s)",catalogPage.getCaption(),catalogPage.getId()) : catalogPage.getCaption());
         this.appendInt(0, "offer-ids size");
 
         this.appendInt(catalogPage.getChildren().size());

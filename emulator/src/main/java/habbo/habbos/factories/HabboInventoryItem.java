@@ -78,7 +78,7 @@ public class HabboInventoryItem implements IHabboInventoryItem {
         this.id = result.getInt("id");
         this.furniture = this.furnitureManager.get(result.getInt("item_id"));
         if (this.furniture == null)
-            throw new IllegalArgumentException(STR."Invalid furniture base id for item id \{this.id}");
+            throw new IllegalArgumentException("Invalid furniture base id for item id " + this.id);
 
         this.extraData = this.furnitureManager.parseExtraData(result.getString("extra_data"));
         this.extraData.setLimitedData(LimitedData.fromString(result.getString("limited_data")));

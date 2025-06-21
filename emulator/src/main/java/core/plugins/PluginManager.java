@@ -101,12 +101,12 @@ public class PluginManager implements IPluginManager {
         for (final var pluginFolder : Objects.requireNonNull(pluginsDirectory.listFiles(File::isDirectory))) {
             for (final var pluginFile : Arrays.stream(Objects.requireNonNull(pluginFolder.listFiles())).toList()) {
                 if (!pluginFile.getPath().endsWith(".jar") && !pluginFile.getPath().endsWith(".class")) continue;
-                
+
                 try {
                     final var classLoader = URLClassLoader.newInstance(new URL[]{pluginFile.toURI().toURL()},
                             this.getClass().getClassLoader());
                     final var pluginConfiguration = new Properties();
-                    pluginConfiguration.load(new FileReader(STR."\{pluginFile.getParent()}\\plugin.ini"));
+                    pluginConfiguration.load(new FileReader(pluginFile.getParent() + "\\plugin.ini"));
                     final var pluginClass = classLoader.loadClass(pluginConfiguration.getProperty("plugin.entrypoint"));
                     final var pluginInstance = ((IPlugin) pluginClass.getDeclaredConstructor().newInstance());
                     final var pluginClasses = getClassesInPackage(pluginClass.getPackageName(), pluginFile.getPath(),
@@ -118,6 +118,7 @@ public class PluginManager implements IPluginManager {
             }
         }
     }
+
     @Override
     public void destroy() {
 

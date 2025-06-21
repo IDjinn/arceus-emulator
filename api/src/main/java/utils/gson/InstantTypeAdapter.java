@@ -16,7 +16,7 @@ public final class InstantTypeAdapter implements JsonSerializer<Instant>, JsonDe
         try {
             return Instant.parse(json.getAsString());
         } catch (Exception e) {
-            throw new JsonParseException(STR."Error parsing Instant: \{json.getAsString()}", e);
+            throw new JsonParseException("Error parsing Instant: " + json.getAsString(), e);
         }
     }
 }

@@ -20,7 +20,7 @@ public enum TileState {
         var flags = new HashSet<Integer>();
         for (TileState state : TileState.values()) {
             if (!flags.add(state.flags))
-                throw new IllegalStateException(STR."Illegal state flag \{state}");
+                throw new IllegalStateException("Illegal state flag " + state.flags);
         }
     }
 

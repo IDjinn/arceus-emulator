@@ -42,7 +42,7 @@ public class HabboData implements IHabboData, IFillable {
         try {
             this.fill(data);
         } catch (Exception e) {
-            this.logger.error(STR."Failed to create HabboData from IConnectionResult: \{e.getMessage()}");
+            this.logger.error("Failed to create HabboData from IConnectionResult: {}", e.getMessage(), e);
         }
     }
 

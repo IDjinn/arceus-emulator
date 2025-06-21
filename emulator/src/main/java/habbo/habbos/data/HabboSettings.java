@@ -56,7 +56,7 @@ public class HabboSettings implements IHabboSettings, IFillable {
         try {
             this.fill(result);
         } catch (Exception e) {
-            logger.error(STR."Failed to create HabboSettings from IConnectionResult: \{e.getMessage()}");
+            logger.error("Failed to create HabboSettings from IConnectionResult: {}", e.getMessage());
         }
     }
 

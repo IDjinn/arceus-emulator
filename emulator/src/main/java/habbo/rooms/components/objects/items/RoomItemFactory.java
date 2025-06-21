@@ -54,7 +54,7 @@ public class RoomItemFactory implements IRoomItemFactory {
         this.itemDefinitionMap.put(LayFloorItem.INTERACTION_NAME, LayFloorItem.class);
         this.itemDefinitionMap.put(RollerFloorItem.INTERACTION_NAME, RollerFloorItem.class);
         // TODO: DETECT DUPLICATE CLASSES/INTERACTION
-        this.logger.info(STR."RoomItemFactory initialized with total of \{this.itemDefinitionMap.size()} interactions");
+        this.logger.info("RoomItemFactory initialized with total of {} interactions", this.itemDefinitionMap.size());
     }
 
     @Override
@@ -80,13 +80,13 @@ public class RoomItemFactory implements IRoomItemFactory {
     public IRoomItem create(IRoomItemData itemData, IRoom room) {
         var furnitureData = this.furnitureManager.get(itemData.getFurnitureId());
         if (furnitureData == null)
-            throw new IllegalArgumentException(STR."Furniture data  not found for id \{itemData.getFurnitureId()}");
+            throw new IllegalArgumentException("Furniture data  not found for id " + itemData.getFurnitureId());
 
         var item = switch (furnitureData.getType()) {
             case FLOOR -> this.createFloorObject(itemData, room, furnitureData);
             case WALL -> this.createWallObject(itemData, room, furnitureData);
             case null, default ->
-                    throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getType().toString()} is not valid object");
+                    throw new IllegalArgumentException("Furniture type " + furnitureData.getType().toString() + " is not valid object");
         };
         this.injector.injectMembers(item);
 
@@ -98,7 +98,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     private IFloorFloorItem createFloorObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         var object = this.createRoomObject(data, room, furnitureData);
         if (object == null)
-            throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
+            throw new IllegalArgumentException("Furniture type " + furnitureData.getId() + " couldn't be created with interaction type " + furnitureData.getInteractionType() + ". No constructors were found.");
 
         return (IFloorFloorItem) object;
     }
@@ -106,7 +106,7 @@ public class RoomItemFactory implements IRoomItemFactory {
     private IWallItem createWallObject(IRoomItemData data, IRoom room, IFurniture furnitureData) {
         var object = this.createRoomObject(data, room, furnitureData);
         if (object == null)
-            throw new IllegalArgumentException(STR."Furniture type \{furnitureData.getId()} couldn't be created with interaction type \{furnitureData.getInteractionType()}. No constructors were found.");
+            throw new IllegalArgumentException("Furniture type " + furnitureData.getId() + " couldn't be created with interaction type " + furnitureData.getInteractionType() + ". No constructors were found.");
 
         return (IWallItem) object;
     }
@@ -133,7 +133,7 @@ public class RoomItemFactory implements IRoomItemFactory {
                 if (constructor != null)
                     return constructor.newInstance(data, room, furniture);
             } catch (Exception e) {
-                this.logger.warn(STR."Failed to create instance for item: \{furniture.getId()}, type: \{furniture.getInteractionType()}", e);
+                this.logger.warn("Failed to create instance for item: {}, type: {}, error: {}", furniture.getId(), furniture.getInteractionType(), e.getMessage(), e);
             }
         }
 
@@ -142,7 +142,7 @@ public class RoomItemFactory implements IRoomItemFactory {
             return new SitFloorItem(data, room, furniture);
         if (furniture.isCanLay())
             return new LayFloorItem(data, room, furniture);
-        
+
         if (furniture.getType().equals(FurnitureType.FLOOR))
             return new DefaultFloorItem(data, room, furniture);
         if (furniture.getType().equals(FurnitureType.WALL))

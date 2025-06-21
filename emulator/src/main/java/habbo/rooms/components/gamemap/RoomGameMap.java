@@ -69,7 +69,7 @@ public class RoomGameMap implements IRoomGameMap {
             case 'W' -> 32;
 
             case 'X' -> Short.MAX_VALUE;
-            default -> throw new IllegalArgumentException(STR."Invalid character: \{tile}");
+            default -> throw new IllegalArgumentException("Invalid character: " + tile);
         };
     }
 
@@ -82,8 +82,8 @@ public class RoomGameMap implements IRoomGameMap {
     public void init(IRoom room) {
         this.room = room;
         if (this.getRoom().getModel() == null)
-            throw new IllegalArgumentException(STR."invalid room model \{this.getRoom().getData().getModelName()}");
-        
+            throw new IllegalArgumentException("invalid room model " + this.getRoom().getData().getModelName());
+
         try {
             var map = this.getRoom().getModel().getHeightMap().split("\n");
             var maxX = map[0].length();

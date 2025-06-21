@@ -18,29 +18,24 @@ import java.util.ArrayList;
 import java.util.SequencedCollection;
 import java.util.concurrent.TimeUnit;
 
-public class EntityPositionComponent implements IEntityPositionComponent {
-    private static final Timeout PATHFINDER_DEFAULT_TIMEOUT = new Timeout(100, TimeUnit.MILLISECONDS);
-    private static final double PLAYER_HEIGHT = 2d;
-    private final SequencedCollection<Position> walkPath = new ArrayList<>();
+public final class EntityPositionComponent  {
+    public final SequencedCollection<Position> walkPath = new ArrayList<>();
 
-    private @Nullable Position goal;
-    private @Nullable Position nextPosition;
-    private @Nullable IFloorFloorItem onItem;
-    private @Inject IRace race;
+    public @Nullable Position goal;
+    public @Nullable Position nextPosition;
+    public @Nullable IFloorFloorItem onItem;
+    public @Inject IRace race;
 
-    private Position position;
-    private Direction direction;
+    public Position position;
+    public Direction direction;
 
-    private @NotNull IRoomEntity entity;
-
-    public void init(final IRoomEntity entity) {
-        this.entity = entity;
-
-        // TODO REMOVE ME
-        final var door = this.getEntity().getRoom().getGameMap().getTile(this.getEntity().getRoom().getModel().getDoorX(),
-                this.getEntity().getRoom().getModel().getDoorY());
-        this.position = door.getPosition();
-        this.direction = this.getEntity().getRoom().getModel().getDoorDirection();
-    }
-
+//    public void init(final IRoomEntity entity) {
+//        this.entity = entity;
+//
+//        // TODO REMOVE ME
+//        final var door = this.getEntity().getRoom().getGameMap().getTile(this.getEntity().getRoom().getModel().getDoorX(),
+//                this.getEntity().getRoom().getModel().getDoorY());
+//        this.position = door.getPosition();
+//        this.direction = this.getEntity().getRoom().getModel().getDoorDirection();
+//    }
 }
